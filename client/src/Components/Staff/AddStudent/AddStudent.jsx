@@ -235,7 +235,7 @@ const AddStudent = () => {
 
         </div>
       </div>
-
+``
     </div>
 
     
