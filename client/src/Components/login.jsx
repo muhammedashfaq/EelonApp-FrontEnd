@@ -4,7 +4,7 @@ import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import { loginValidate } from "../Helper/Validations/validations";
 import { logintouserhome } from "../Helper/api/api";
 import { toast } from "react-hot-toast";
-import logoImage from "../assets/Logo.png";
+import logoImage from "../assets/EelonLogo.png";
 import axios from "../api/axios.jsx";
 import { LoginUserTab } from "./LoginUserSelectTab.jsx";
 import LoginUserSelectButton from "./LoginUserSelectButton.jsx";
@@ -50,7 +50,7 @@ const Login = () => {
   return (
     <div>
       <div className="shadow-md p-0 flex justify-center ">
-        <img src={logoImage} className="w-40 h-40 " />
+        <img src={logoImage} className="w-25 h-20 p-2" />
       </div>
       <div className="h-full mt-20">
         {/* <div className="flex justify-center">
