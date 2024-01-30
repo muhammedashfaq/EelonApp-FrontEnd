@@ -4,7 +4,7 @@ import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import { loginValidate } from "../Helper/Validations/validations";
 import { logintouserhome } from "../Helper/api/api";
 import { toast } from "react-hot-toast";
-
+import logoImage from '../assets/Logo.png'
 const Login = () => {
   const [user, setUser] = useState("");
   const [errors, setError] = useState([]);
@@ -50,9 +50,9 @@ const handleSubmit = async( e)=>{
 
   return (
     <div>
-      <div className="shadow-xl p-9 flex justify-center ">
-        {/* logo */}
-        <h1>LOGO</h1>
+      <div className="shadow-md p-0 flex justify-center ">
+      
+        <img src={logoImage} className="w-40 h-40 "/>
       </div>
       <div className="h-full flex justify-center items-center mt-32 ">
         <div className="flex h-auto xl:w-2/3  ">

@@ -212,20 +212,139 @@ const navBar = () => {
       </nav>
 
       <div className="container m-10 border-2 ">
-        <div className="  flex-row gap-6 p-10 grid grid-rows-4 grid-flow-col">
-          <Input variant="standard" label="Name" placeholder="Enter Your Name" />
-          <Input variant="standard" label="Standard" placeholder="Standard" />
-          <Input variant="standard" label="Standard" placeholder="Standard" />
-          <Input variant="standard" label="Standard" placeholder="Standard" />
-          <Input variant="standard" label="Standard" placeholder="Standard" />
-          <Input variant="standard" label="Standard" placeholder="Standard" />
-          <Input variant="standard" label="Standard" placeholder="Standard" />
-          <Input variant="standard" label="Standard" placeholder="Standard" />
-          <Input variant="standard" label="Standard" placeholder="Standard" />
-          <Input variant="standard" label="Standard" placeholder="Standard" />
-          <Input variant="standard" label="Standard" placeholder="Standard" />
-          <Input variant="standard" label="Standard" placeholder="Standard" />
-          <Select variant="standard" label="Select Version">
+        <div className="  flex-row gap-6 p-10 grid grid-cols-4 ">
+          <Input
+            type="file"
+            variant="standard"
+            label="Standard"
+            placeholder="Standard"
+          />
+          <Input
+            variant="standard"
+            label="Admition Number"
+            placeholder="Admition Number"
+          />
+          <Input
+            variant="standard"
+            label="Name"
+            placeholder="Enter Your Name"
+          />
+          <Input
+            variant="standard"
+            label="Name In Tamil"
+            placeholder="Name In Tamil"
+          />
+          <Select variant="standard" label="Gender">
+            <Option>Male</Option>
+            <Option>Female</Option>
+            <Option>Others</Option>
+          </Select>
+          <Input
+            variant="standard"
+            label="Adhar Number"
+            placeholder="Adhar Number"
+          />
+          <Input
+            variant="standard"
+            label="Contact Number"
+            placeholder="Contact Number"
+          />
+          <Input
+            variant="standard"
+            label="Alternate Number"
+            placeholder="Alternate Number"
+          />
+          <Input
+            variant="standard"
+            label="Father's Name"
+            placeholder="Father's Name"
+          />
+          <Input
+            variant="standard"
+            label="Father's Name in Tamil"
+            placeholder="Father's Name in Tamil"
+          />
+          <Input
+            type="file"
+            variant="standard"
+            label="Standard"
+            placeholder="Standard"
+          />
+          <Input
+            variant="standard"
+            label="Father's Occupation"
+            placeholder="Father's Occupation"
+          />
+          <Input
+            variant="standard"
+            label="Mother's Name"
+            placeholder="Mother's Name"
+          />
+          <Input
+            variant="standard"
+            label="Mother's Name in Tamil"
+            placeholder="Mother's Name in Tamil"
+          />
+          <Input
+            variant="standard"
+            label="Mother's Occupation"
+            placeholder="Mother's Occupation"
+          />
+          <Input
+            type="file"
+            variant="standard"
+            label="Standard"
+            placeholder="Standard"
+          />
+          <Input
+            variant="standard"
+            label="Guardian's Name"
+            placeholder="Guardian's Name"
+          />
+          <Input
+            variant="standard"
+            label="Guardian's Name in Tamil"
+            placeholder="Guardian's Name in Tamil"
+          />
+          <Input
+            variant="standard"
+            label="Guardian's Occupation"
+            placeholder="Guardian's Occupation"
+          />
+          Annual Income{" "}
+          <Input
+            variant="standard"
+            label="Standard"
+            placeholder="Annual Income"
+          />
+          <Input variant="standard" label="Weight" placeholder="Weight" />
+          <Input variant="standard" label="Height" placeholder="Height" />
+          <Select variant="standard" label="Class">
+            <Option>Material Tailwind HTML</Option>
+            <Option>Material Tailwind React</Option>
+            <Option>Material Tailwind Vue</Option>
+            <Option>Material Tailwind Angular</Option>
+            <Option>Material Tailwind Svelte</Option>
+          </Select>
+          <Select variant="standard" label="Section">
+            <Option>Material Tailwind HTML</Option>
+            <Option>Material Tailwind React</Option>
+            <Option>Material Tailwind Vue</Option>
+            <Option>Material Tailwind Angular</Option>
+            <Option>Material Tailwind Svelte</Option>
+          </Select>
+          <Input
+            variant="standard"
+            label="Email"
+            placeholder="Enter Your Email"
+          />
+          <Input
+            type="password"
+            variant="standard"
+            label="Password"
+            placeholder="********"
+          />
+        <Select variant="standard" label="Bloog Group">
             <Option>Material Tailwind HTML</Option>
             <Option>Material Tailwind React</Option>
             <Option>Material Tailwind Vue</Option>
@@ -233,11 +352,105 @@ const navBar = () => {
             <Option>Material Tailwind Svelte</Option>
           </Select>
 
-          <Input type="file" variant="standard" label="Standard" placeholder="Standard" />
+
+          <Select variant="standard" label="Mother Tongue">
+            <Option>Material Tailwind HTML</Option>
+            <Option>Material Tailwind React</Option>
+            <Option>Material Tailwind Vue</Option>
+            <Option>Material Tailwind Angular</Option>
+            <Option>Material Tailwind Svelte</Option>
+          </Select>
+
+          <Select variant="standard" label="Religion">
+            <Option>Material Tailwind HTML</Option>
+            <Option>Material Tailwind React</Option>
+            <Option>Material Tailwind Vue</Option>
+            <Option>Material Tailwind Angular</Option>
+            <Option>Material Tailwind Svelte</Option>
+          </Select>
+          <Input variant="standard" label="Cast" placeholder="Cast" />
+          <Input variant="standard" label="SubCast" placeholder="SubCast" />
+
+          <Select variant="standard" label="Community">
+            <Option>Material Tailwind HTML</Option>
+            <Option>Material Tailwind React</Option>
+            <Option>Material Tailwind Vue</Option>
+            <Option>Material Tailwind Angular</Option>
+            <Option>Material Tailwind Svelte</Option>
+          </Select>
+
+
+          
+          <Input variant="standard" label="Address" placeholder="address" />
+          <Input variant="standard" label="state" placeholder="Standard" />
+          <Input variant="standard" label="city" placeholder="Standard" />
+          <Input variant="standard" label="Pin" placeholder="Standard" />
+
+          <Input type="date" variant="standard" />
+
+          <Select variant="standard" label="Class Of Joining">
+            <Option>Material Tailwind HTML</Option>
+            <Option>Material Tailwind React</Option>
+            <Option>Material Tailwind Vue</Option>
+            <Option>Material Tailwind Angular</Option>
+            <Option>Material Tailwind Svelte</Option>
+          </Select>
+
+          <Input variant="standard" label="EMIS Number" placeholder="EMIS Number" />
+          <Input variant="standard" label="Nationality" placeholder="Standard" />
+          
+          <Select variant="standard" label="Medium of Instruction">
+            <Option>Material Tailwind HTML</Option>
+            <Option>Material Tailwind React</Option>
+            <Option>Material Tailwind Vue</Option>
+            <Option>Material Tailwind Angular</Option>
+            <Option>Material Tailwind Svelte</Option>
+          </Select>
+
+          <Select variant="standard" label="Concession Student">
+            <Option>Material Tailwind HTML</Option>
+            <Option>Material Tailwind React</Option>
+            <Option>Material Tailwind Vue</Option>
+            <Option>Material Tailwind Angular</Option>
+            <Option>Material Tailwind Svelte</Option>
+          </Select>
+
+          <Select variant="standard" label="Academic Year">
+            <Option>Material Tailwind HTML</Option>
+            <Option>Material Tailwind React</Option>
+            <Option>Material Tailwind Vue</Option>
+            <Option>Material Tailwind Angular</Option>
+            <Option>Material Tailwind Svelte</Option>
+          </Select>
+
+          <Select variant="standard" label="Category" placeholder="Student Category">
+            <Option>Material Tailwind HTML</Option>
+            <Option>Material Tailwind React</Option>
+            <Option>Material Tailwind Vue</Option>
+            <Option>Material Tailwind Angular</Option>
+            <Option>Material Tailwind Svelte</Option>
+          </Select>
+
+          <Select variant="standard" label="Student Group" placeholder="Student Group">
+            <Option>Material Tailwind HTML</Option>
+            <Option>Material Tailwind React</Option>
+            <Option>Material Tailwind Vue</Option>
+            <Option>Material Tailwind Angular</Option>
+            <Option>Material Tailwind Svelte</Option>
+          </Select>
+          <Input
+            type="file"
+            variant="standard"
+            label="Certificate"
+            placeholder="Certificate"
+          />
 
           
         </div>
+        <div className="w-full">
         <Button color="blue">color blue</Button>
+
+        </div>
       </div>
     </div>
   );
