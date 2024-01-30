@@ -4,6 +4,10 @@ import Login from "../Pages/Login/loginPage";
 import { useSelector } from "react-redux";
 import { Toaster } from "react-hot-toast";
 import Test from "../Components/Test";
+import AdminHomepage from "../Pages/Users/AdminHomepage";
+import AdminStudentPage from "../Pages/Users/Admin/AdminStudentPage";
+import Allstudents from "../Pages/Users/Admin/Allstudents";
+
 const AppRoutes = () => {
   const { loading } = useSelector((state) => state.alerts);
 
@@ -20,6 +24,12 @@ const AppRoutes = () => {
 
       <Routes>
         <Route path={RouteObjects.root} element={<Login />} />
+        <Route path={RouteObjects.home} element={<AdminHomepage />} />
+        <Route
+          path={RouteObjects.AdminStudentPage}
+          element={<AdminStudentPage />}
+        />
+        <Route path={RouteObjects.AllstudentsPage} element={<Allstudents />} />
         <Route path="/test" element={<Test />} />
       </Routes>
     </div>
