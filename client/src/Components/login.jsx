@@ -5,6 +5,7 @@ import { loginValidate } from "../Helper/Validations/validations";
 import { logintouserhome } from "../Helper/api/api";
 import { toast } from "react-hot-toast";
 import logoImage from '../assets/Logo.png'
+import axios from '../api/axios.jsx'
 const Login = () => {
   const [user, setUser] = useState("");
   const [errors, setError] = useState([]);
