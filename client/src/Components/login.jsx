@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import loginimage from "../assets/login.jpg";
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import { loginValidate } from "../Helper/Validations/validations";
@@ -9,44 +9,38 @@ const Login = () => {
   const [user, setUser] = useState("");
   const [errors, setError] = useState([]);
 
-  const [formData,setFormData]=useState({
-    name:"",
-    password:""
-  })
-  const handleInputChange = (e)=>{
-    const{name , value} =e.target
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
 
-    setFormData((pre)=>({
+    setFormData((pre) => ({
       ...pre,
-      [name]:value
-    }))
+      [name]: value,
+    }));
+  };
 
-    
-  }
-
-const handleSubmit = async( e)=>{
-  try {
-    e.preventDefault();
-    const error = loginValidate(formData.email, formData.password);
-    setError(error);
-    if (Object.values(error).every(value => value === "")) {
-      const response = await logintouserhome(formData)
-      if (response.data.success) {
-        toast.success(response.data.message);
-        localStorage.setItem("token", response.data.data);
-
-
-        
-        
-      } else {
-        toast.error(response.data.message);
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const response = await axios.post("/auth", formData);
+      console.log(response);
+      const error = loginValidate(formData.email, formData.password);
+      setError(error);
+      if (Object.values(error).every((value) => value === "")) {
+        if (response.data.success) {
+          toast.success(response.data.message);
+          localStorage.setItem("token", response.data.data);
+        } else {
+          toast.error(response.data.message);
+        }
       }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
-    
-  }
-}
+  };
 
   return (
     <div>
@@ -63,11 +57,14 @@ const handleSubmit = async( e)=>{
             <Card color="transparent" shadow={false} className="">
               <div className=" flex justify-center ">
                 <Typography variant="h2" color="blue-gray" className="">
-                   {user}Sign In
+                  {user}Sign In
                 </Typography>
               </div>
 
-              <form onSubmit={handleSubmit} className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+              <form
+                onSubmit={handleSubmit}
+                className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
+              >
                 <div className="mb-1 flex flex-col gap-7">
                   <div className="relative inline-block">
                     <select
@@ -105,7 +102,7 @@ const handleSubmit = async( e)=>{
                       className: "before:content-none after:content-none",
                     }}
                   />
-                  
+
                   <Input
                     type="password"
                     size="lg"
@@ -122,6 +119,7 @@ const handleSubmit = async( e)=>{
                 <Button
                   className="mt-6 w-full bg-red-400 hover:bg-red-500  p-2 font-semibold text-white rounded-md"
                   fullWidth
+                  type="submit"
                 >
                   sign up
                 </Button>
