@@ -1,9 +1,9 @@
-import { Routes,Route } from "react-router-dom"
-import { RouteObjects } from "./RoutObjects"
-import Login from "../Pages/Login/loginPage"
+import { Routes, Route } from "react-router-dom";
+import { RouteObjects } from "./RoutObjects";
+import Login from "../Pages/Login/loginPage";
 import { useSelector } from "react-redux";
 import { Toaster } from "react-hot-toast";
-import Test from '../Components/Test'
+import Test from "../Components/Test";
 const AppRoutes = () => {
   const { loading } = useSelector((state) => state.alerts);
 
@@ -16,16 +16,14 @@ const AppRoutes = () => {
           <div className="w-4 h-4 rounded-full animate-pulse dark:bg-white"></div>
         </div>
       )}
-            <Toaster position="bottom-center" reverseOrder={false} />
+      <Toaster position="bottom-center" reverseOrder={false} />
 
-        <Routes>
-            <Route path={RouteObjects.root} element={<Login/>}/>
-            <Route path= "/test" element={<Test/>}/>
-
-            
-        </Routes>
+      <Routes>
+        <Route path={RouteObjects.root} element={<Login />} />
+        <Route path="/test" element={<Test />} />
+      </Routes>
     </div>
-  )
-}
+  );
+};
 
-export default AppRoutes
+export default AppRoutes;
