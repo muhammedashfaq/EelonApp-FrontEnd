@@ -4,7 +4,7 @@ import Login from "../Pages/Login/loginPage";
 import { useSelector } from "react-redux";
 import { Toaster } from "react-hot-toast";
 import Test from "../Components/Test";
-import AdminHomepage from "../Pages/Users/AdminHomepage";
+import StaffHome from "../Pages/Staff/Home/Dashboard";
 import AdminStudentPage from "../Pages/Users/Admin/AdminStudentPage";
 import Allstudents from "../Pages/Users/Admin/Allstudents";
 
@@ -24,7 +24,7 @@ const AppRoutes = () => {
 
       <Routes>
         <Route path={RouteObjects.root} element={<Login />} />
-        <Route path={RouteObjects.home} element={<AdminHomepage />} />
+        <Route path={RouteObjects.home} element={<StaffHome />} />
         <Route
           path={RouteObjects.AdminStudentPage}
           element={<AdminStudentPage />}
