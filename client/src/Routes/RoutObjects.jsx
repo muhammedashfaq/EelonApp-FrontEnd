@@ -3,4 +3,5 @@ export const RouteObjects = {
   home: "/home",
   AdminStudentPage: "/admin/student",
   AllstudentsPage: "/admin/student/allstudents",
+  Addstudentspage: "/admin/student/addstudents",
 };

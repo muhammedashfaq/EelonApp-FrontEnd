@@ -38,10 +38,14 @@ export function StudentListsAcc({ studentData }) {
           {studentData.studentName}
         </AccordionHeader>
         <AccordionBody>
-          We&apos;re not always in the position that we want to be at.
-          We&apos;re constantly growing. We&apos;re constantly making mistakes.
-          We&apos;re constantly trying to express ourselves and actualize our
-          dreams.
+          <div>
+            Aadhar no:
+            {studentData?.AadharNo}
+          </div>
+          <div>
+            Admission no:
+            {studentData?.admnNo}
+          </div>
         </AccordionBody>
       </Accordion>
     </>

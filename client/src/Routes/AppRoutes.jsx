@@ -7,6 +7,7 @@ import Test from "../Components/Test";
 import AdminHomepage from "../Pages/Users/AdminHomepage";
 import AdminStudentPage from "../Pages/Users/Admin/AdminStudentPage";
 import Allstudents from "../Pages/Users/Admin/Allstudents";
+import AddStudentPage from "../Components/Staff/AddStudent/AddStudentPage";
 
 const AppRoutes = () => {
   const { loading } = useSelector((state) => state.alerts);
@@ -30,6 +31,10 @@ const AppRoutes = () => {
           element={<AdminStudentPage />}
         />
         <Route path={RouteObjects.AllstudentsPage} element={<Allstudents />} />
+        <Route
+          path={RouteObjects.Addstudentspage}
+          element={<AddStudentPage />}
+        />
         <Route path="/test" element={<Test />} />
       </Routes>
     </div>
