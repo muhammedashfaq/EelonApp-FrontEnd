@@ -87,9 +87,7 @@ const SideNavbar = () => {
         </ul>
       </div>
 
-      <div className="p-7">
-        <h1>jhdfjh</h1>
-      </div>
+  
     </div>
   );
 };

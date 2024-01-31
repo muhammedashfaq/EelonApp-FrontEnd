@@ -7,9 +7,9 @@ import { StudentPaymentHistory } from "./Student/DashboardComponent/StudentPayme
 const TestYk = () => {
   return (
     <>
-      {/* <StudentDetails /> */}
-      {/* <StudentFeeInvoicesComponent /> */}
-      {/* <StudentFeeStructure /> */}
+      <StudentDetails />
+      <StudentFeeInvoicesComponent />
+      <StudentFeeStructure />
       <StudentPaymentHistory />
     </>
   );
