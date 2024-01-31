@@ -3,6 +3,10 @@ import StudentFeeInvoicesComponent from "./Student/DashboardComponent/StudentFee
 import StudentDetails from "./Student/DashboardComponent/StudentDetails";
 import { StudentFeeStructure } from "./Student/DashboardComponent/StudentFeeStructure";
 import { StudentPaymentHistory } from "./Student/DashboardComponent/StudentPaymentHistory";
+import { StudentStudyMaterial } from "./Student/DashboardComponent/StudentStudyMaterial";
+import { StudentHomeWorks } from "./Student/DashboardComponent/StudentHomeworks";
+import StudentEvents from "./Student/DashboardComponent/StudentEvents";
+import { StudentTimeTable } from "./Student/DashboardComponent/StudentTimetable";
 
 const TestYk = () => {
   return (
@@ -10,7 +14,11 @@ const TestYk = () => {
       {/* <StudentDetails /> */}
       {/* <StudentFeeInvoicesComponent /> */}
       {/* <StudentFeeStructure /> */}
-      <StudentPaymentHistory />
+      {/* <StudentPaymentHistory /> */}
+      {/* <StudentStudyMaterial /> */}
+      {/* <StudentHomeWorks /> */}
+      {/* <StudentEvents /> */}
+      <StudentTimeTable />
     </>
   );
 };
