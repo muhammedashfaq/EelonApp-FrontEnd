@@ -1,9 +1,9 @@
-
+import StaffHeader from '../../../Components/Staff/Header/StaffHeader.jsx'
 const Dashboard = () => {
   return (
     <div>
         
-        <h1>homedahs</h1>
+        <StaffHeader />
         
         </div>
   )

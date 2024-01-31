@@ -23,7 +23,11 @@ const AppRoutes = () => {
       <Toaster position="bottom-center" reverseOrder={false} />
 
       <Routes>
+
+
         <Route path={RouteObjects.root} element={<Login />} />
+
+
         <Route path={RouteObjects.home} element={<StaffHome />} />
         <Route
           path={RouteObjects.AdminStudentPage}
@@ -31,6 +35,9 @@ const AppRoutes = () => {
         />
         <Route path={RouteObjects.AllstudentsPage} element={<Allstudents />} />
         <Route path="/test" element={<Test />} />
+
+
+        
       </Routes>
     </div>
   );
