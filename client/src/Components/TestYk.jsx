@@ -7,6 +7,8 @@ import { StudentStudyMaterial } from "./Student/DashboardComponent/StudentStudyM
 import { StudentHomeWorks } from "./Student/DashboardComponent/StudentHomeworks";
 import StudentEvents from "./Student/DashboardComponent/StudentEvents";
 import { StudentTimeTable } from "./Student/DashboardComponent/StudentTimetable";
+import { StudentBookIssued } from "./Student/DashboardComponent/StudentBooksIssued";
+import { StudentExamTT } from "./Student/DashboardComponent/StudentExamTT";
 
 const TestYk = () => {
   return (
@@ -18,7 +20,9 @@ const TestYk = () => {
       {/* <StudentStudyMaterial /> */}
       {/* <StudentHomeWorks /> */}
       {/* <StudentEvents /> */}
-      <StudentTimeTable />
+      {/* <StudentTimeTable /> */}
+      {/* <StudentBookIssued /> */}
+      <StudentExamTT />
     </>
   );
 };
