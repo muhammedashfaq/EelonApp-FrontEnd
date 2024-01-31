@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import loginimage from "../assets/login.jpg";
+import loginimage from "../assets/login-resized.jpg";
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import { loginValidate } from "../Helper/Validations/validations";
 import { logintouserhome } from "../Helper/api/api";
@@ -50,7 +50,7 @@ const Login = () => {
   return (
     <div>
       <div className="shadow-md p-0 flex justify-center ">
-        <img src={logoImage} className="w-25 h-20 p-2" />
+        <img src={logoImage} className="w-25 h-20 p-2 cursor-pointer" />
       </div>
       <div className="h-full mt-20">
         {/* <div className="flex justify-center">
@@ -112,7 +112,7 @@ const Login = () => {
                         name="email"
                         placeholder="Enter Your Mail"
                         onChange={handleInputChange}
-                        className=" border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md"
+                        className=" border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md bg-cyan-200"
                         labelProps={{
                           className: "before:content-none after:content-none",
                         }}
@@ -124,7 +124,7 @@ const Login = () => {
                         name="password"
                         placeholder="Enter Password"
                         onChange={handleInputChange}
-                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md"
+                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md  bg-cyan-200"
                         labelProps={{
                           className: "before:content-none after:content-none",
                         }}
