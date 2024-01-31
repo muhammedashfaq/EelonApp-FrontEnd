@@ -1,6 +1,5 @@
 import  { useState } from "react";
-import logo from "../assets/EelonLogo.png";
-const Test = () => {
+const SideNavbar = () => {
   const [open, setOpen] = useState(true);
   const [submenuOpen, setOpenSubmenu] = useState(false);
   const menu = [
@@ -39,35 +38,8 @@ const Test = () => {
         >
           arrow_back
         </span>
-        <div className="inline-flex ">
-          <div className="flex items-center">
-            <img
-              src={logo}
-              className={`w-20 h-20 ${open && "rotate-[360deg]"}`}
-            />
-            <h1
-              className={`text-white origin-left font-medium m-1 text-3xl  ${
-                !open && "scale-0"
-              }`}
-            >
-              Eelon App
-            </h1>
-          </div>
-        </div>
-        <div
-          className={`flex items-center rounded-lg bg-blue-gray-500  mt-6 ${
-            open ? "px-2.5" : "px-4"
-          } py-2`}
-        >
-          <span className="material-symbols-outlined">search</span>{" "}
-          <input
-            type={"search"}
-            placeholder="search"
-            className={`text-base bg-transparent w-full text-white focus:outline-none ${
-              !open && "hidden"
-            }`}
-          />
-        </div>
+  
+     
 
         <ul className="pt-2">
           {menu.map((item, index) => (
@@ -122,4 +94,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default SideNavbar;
