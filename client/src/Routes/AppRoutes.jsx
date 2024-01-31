@@ -7,6 +7,7 @@ import Test from "../Components/Test";
 import StaffHome from "../Pages/Staff/Home/Dashboard";
 import AdminStudentPage from "../Pages/Users/Admin/AdminStudentPage";
 import Allstudents from "../Pages/Users/Admin/Allstudents";
+import TestYk from "../Components/TestYk";
 
 const AppRoutes = () => {
   const { loading } = useSelector((state) => state.alerts);
@@ -23,10 +24,7 @@ const AppRoutes = () => {
       <Toaster position="bottom-center" reverseOrder={false} />
 
       <Routes>
-
-
         <Route path={RouteObjects.root} element={<Login />} />
-
 
         <Route path={RouteObjects.home} element={<StaffHome />} />
         <Route
@@ -35,9 +33,7 @@ const AppRoutes = () => {
         />
         <Route path={RouteObjects.AllstudentsPage} element={<Allstudents />} />
         <Route path="/test" element={<Test />} />
-
-
-        
+        <Route path="/testyk" element={<TestYk />} />
       </Routes>
     </div>
   );
