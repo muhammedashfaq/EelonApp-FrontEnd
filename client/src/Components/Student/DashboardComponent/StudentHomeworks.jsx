@@ -3,7 +3,6 @@ import {
   Accordion,
   AccordionHeader,
   AccordionBody,
-  Button,
 } from "@material-tailwind/react";
 import { StudentHWmodal } from "./StudentHWmodal";
 
@@ -28,14 +27,14 @@ function Icon({ id, open }) {
   );
 }
 
-export function StudentHomeWorks() {
+export default function StudentHomeWorks() {
   const [open, setOpen] = React.useState(0);
 
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
   return (
     <>
-      <div
+      <div className="w-full m-20"
         style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
       >
         <div className="container xl">

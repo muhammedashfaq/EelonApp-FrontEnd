@@ -1,33 +1,47 @@
 import  { useState } from "react";
+import { Link } from "react-router-dom";
+import{RouteObjects} from '../../../Routes/RoutObjects'
+
 const SideNavbar = () => {
   const [open, setOpen] = useState(true);
   const [submenuOpen, setOpenSubmenu] = useState(false);
   const menu = [
-    { title: "Dashboard" },
-    { title: "Dashboard" },
+    { title: "Student Info" 
+  ,href:RouteObjects.StudentDashboard},
+    { title: "Fee Invoices",href:RouteObjects.FeeInvoice },
 
-    {
-      title: "Dashboard",
-      submenu: true,
+    // {
+    //   title: "Dashboard",
+    //   submenu: true,
 
-      submenuItems: [
-        { title: "submenu1" },
-        { title: "submenu1" },
-        { title: "submenu1" },
-        { title: "submenu1" },
-        { title: "submenu1" },
-      ],
-    },
-    { title: "Dashboard" },
-    { title: "Dashboard" },
-    { title: "Dashboard" },
-    { title: "Logout" },
+    //   submenuItems: [
+    //     { title: "submenu1" },
+    //     { title: "submenu1" },
+    //     { title: "submenu1" },
+    //     { title: "submenu1" },
+    //     { title: "submenu1" },
+    //   ],
+    // },
+    { title: "Fee Structure" ,href:RouteObjects.FeeStructure},
+    { title: "Home Work" ,href:RouteObjects.HomeWorks},
+    { title: "Payment History" ,href:RouteObjects.Payment},
+    { title: "Study Materials" ,href:RouteObjects.StudyMaterials},
+    { title: "Notice Board" ,href:""},
+    { title: "Events" ,href:""},
+    { title: "Class TimeTable" ,href:""},
+    { title: "Live Classes" ,href:""},
+    { title: "Library" ,href:""},
+    { title: "Exam TimeTable" ,href:""},
+    
+
+
   ];
   return (
+    
     <div className="flex">
       <div
-        className={` bg-dark-purple h-screen p-5 pt-8 ${
-          open ? "w-72" : "w-28"
+        className={` bg-dark-purple h-max p-5 pt-8 ${
+          open ? "w-52" : "w-28"
         } duration-300 relative`}
       >
         <span
@@ -52,13 +66,15 @@ const SideNavbar = () => {
                   widgets
                 </span>
 
+<Link to={item.href}>
                 <span
                   className={`duration-200 flex-1 ${
                     !open && "hidden "
                   } text-base font-medium`}
-                >
+                  >
                   {item.title}
                 </span>
+                  </Link>
 
                 {item.submenuItems && (
                   <span
@@ -83,12 +99,13 @@ const SideNavbar = () => {
                 </ul>
               )}
             </li>
+
           ))}
         </ul>
       </div>
 
-  
     </div>
+  
   );
 };
 

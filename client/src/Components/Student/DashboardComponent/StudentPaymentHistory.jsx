@@ -49,13 +49,13 @@ const TABLE_ROWS = [
   },
 ];
 
-export function StudentPaymentHistory() {
+export default function StudentPaymentHistory() {
   return (
     <>
       <br />
       <br />
 
-      <div
+      <div className="w-full m-20"
         style={{
           display: "flex",
           justifyContent: "center",
