@@ -18,7 +18,8 @@ const TestYk = () => {
       {/* <StudentStudyMaterial /> */}
       {/* <StudentHomeWorks /> */}
       {/* <StudentEvents /> */}
-      <StudentTimeTable />
+      
+
     </>
   );
 };

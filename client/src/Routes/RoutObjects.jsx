@@ -1,6 +1,7 @@
 export const RouteObjects = {
   root: "/",
-  home: "/home",
+  Login: "/login",
+  StudentDashboard:"/studentdash",
   AdminStudentPage: "/admin/student",
   AllstudentsPage: "/admin/student/allstudents",
 };

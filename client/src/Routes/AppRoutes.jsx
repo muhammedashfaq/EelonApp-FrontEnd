@@ -1,13 +1,15 @@
 import { Routes, Route } from "react-router-dom";
 import { RouteObjects } from "./RoutObjects";
-import Login from "../Pages/Login/loginPage";
 import { useSelector } from "react-redux";
 import { Toaster } from "react-hot-toast";
 import Test from "../Components/Test";
-import StaffHome from "../Pages/Staff/Home/Dashboard";
+// import StaffHome from "../Pages/Staff/Home/Dashboard";
 import AdminStudentPage from "../Pages/Users/Admin/AdminStudentPage";
 import Allstudents from "../Pages/Users/Admin/Allstudents";
 import TestYk from "../Components/TestYk";
+import LandingPage from "../Pages/LandingPage/landingPage";
+import Login from '../Pages/Login/loginPage'
+import StudentDashBoard from "../Pages/Student/Dashboard/StudentDashBoard";
 
 const AppRoutes = () => {
   const { loading } = useSelector((state) => state.alerts);
@@ -24,9 +26,11 @@ const AppRoutes = () => {
       <Toaster position="bottom-center" reverseOrder={false} />
 
       <Routes>
-        <Route path={RouteObjects.root} element={<Login />} />
+        <Route path={RouteObjects.root} element={<LandingPage />} />
+        <Route path={RouteObjects.Login} element={<Login />} />
+        <Route path={RouteObjects.StudentDashboard} element={<StudentDashBoard />} />
 
-        <Route path={RouteObjects.home} element={<StaffHome />} />
+
         <Route
           path={RouteObjects.AdminStudentPage}
           element={<AdminStudentPage />}
