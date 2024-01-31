@@ -1,76 +1,46 @@
 import { Card, Typography } from "@material-tailwind/react";
 
 const TABLE_HEAD = [
-  "Subjects",
-  "Period I",
-  "Period II",
-  "Period III",
-  "Period IV",
-  "Period V",
-  "Period VI",
-  "Period VII",
-  "Period VIII",
+  "Book title",
+  "Issued quantity",
+  "Date issued",
+  "Return date",
+  "Return status",
+  "Author",
+  "Genre",
+  "Rack no.",
+  "Book no.",
+  "Isbn no.",
 ];
 
 const TABLE_ROWS = [
   {
-    day: "Monday",
-    first: "Physics",
-    second: "Maths",
-    third: "Chemistry",
-    fourth: "Botany",
-    fifth: "Hindi",
-    sixth: "P.T",
-    seventh: "Zoology",
-    eighth: "English",
+    bookTitle: "Wings of fire",
+    qnt: "1",
+    dateIssued: "01/01/2024",
+    dateReturn: "12/01/2024",
+    status: "returned",
+    author: "A.P.J",
+    genre: "Biography",
+    rackNo: "02",
+    bookNo: "100",
+    isbnNo: "4897238",
   },
   {
-    day: "Tuesday",
-    first: "Physics",
-    second: "Maths",
-    third: "Chemistry",
-    fourth: "Botany",
-    fifth: "Hindi",
-    sixth: "P.T",
-    seventh: "Zoology",
-    eighth: "English",
-  },
-  {
-    day: "Wednesday",
-    first: "Physics",
-    second: "Maths",
-    third: "Chemistry",
-    fourth: "Botany",
-    fifth: "Hindi",
-    sixth: "P.T",
-    seventh: "Zoology",
-    eighth: "English",
-  },
-  {
-    day: "Thursday",
-    first: "Physics",
-    second: "Maths",
-    third: "Chemistry",
-    fourth: "Botany",
-    fifth: "Hindi",
-    sixth: "P.T",
-    seventh: "Zoology",
-    eighth: "English",
-  },
-  {
-    day: "Friday",
-    first: "Physics",
-    second: "Maths",
-    third: "Chemistry",
-    fourth: "Botany",
-    fifth: "Hindi",
-    sixth: "P.T",
-    seventh: "Zoology",
-    eighth: "English",
+    bookTitle: "Sapiens",
+    qnt: "1",
+    dateIssued: "01/01/2024",
+    dateReturn: "12/01/2024",
+    status: "returned",
+    author: "A.P.J",
+    genre: "Biography",
+    rackNo: "02",
+    bookNo: "100",
+    isbnNo: "4897238",
   },
 ];
 
-export function StudentTimeTable() {
+export function StudentBookIssued() {
   return (
     <>
       <br />
@@ -92,7 +62,7 @@ export function StudentTimeTable() {
               textAlign: "center",
             }}
           >
-            Time table
+            Books issued
           </h2>
           <br />
           <Card className="h-full w-full overflow-scroll">
@@ -119,15 +89,16 @@ export function StudentTimeTable() {
                 {TABLE_ROWS.map(
                   (
                     {
-                      day,
-                      first,
-                      second,
-                      third,
-                      fourth,
-                      fifth,
-                      sixth,
-                      seventh,
-                      eighth,
+                      bookTitle,
+                      qnt,
+                      dateIssued,
+                      dateReturn,
+                      status,
+                      author,
+                      genre,
+                      rackNo,
+                      bookNo,
+                      isbnNo,
                     },
                     index
                   ) => {
@@ -137,14 +108,14 @@ export function StudentTimeTable() {
                       : "p-4 border-b border-blue-gray-50";
 
                     return (
-                      <tr key={day}>
+                      <tr key={bookTitle}>
                         <td className={classes}>
                           <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {day}
+                            {bookTitle}
                           </Typography>
                         </td>
                         <td className={classes}>
@@ -153,7 +124,7 @@ export function StudentTimeTable() {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {first}
+                            {qnt}
                           </Typography>
                         </td>
                         <td className={classes}>
@@ -162,7 +133,7 @@ export function StudentTimeTable() {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {second}
+                            {dateIssued}
                           </Typography>
                         </td>
                         <td className={classes}>
@@ -171,7 +142,7 @@ export function StudentTimeTable() {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {third}
+                            {dateReturn}
                           </Typography>
                         </td>
                         <td className={classes}>
@@ -180,7 +151,7 @@ export function StudentTimeTable() {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {fourth}
+                            {status}
                           </Typography>
                         </td>
                         <td className={classes}>
@@ -189,7 +160,7 @@ export function StudentTimeTable() {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {fifth}
+                            {author}
                           </Typography>
                         </td>
                         <td className={classes}>
@@ -198,7 +169,7 @@ export function StudentTimeTable() {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {sixth}
+                            {genre}
                           </Typography>
                         </td>
                         <td className={classes}>
@@ -207,7 +178,7 @@ export function StudentTimeTable() {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {seventh}
+                            {rackNo}
                           </Typography>
                         </td>
                         <td className={classes}>
@@ -216,7 +187,16 @@ export function StudentTimeTable() {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {eighth}
+                            {bookNo}
+                          </Typography>
+                        </td>
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {isbnNo}
                           </Typography>
                         </td>
                       </tr>
