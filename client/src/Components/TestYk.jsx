@@ -1,10 +1,10 @@
 import React from "react";
-import StudentDetails from "./Student/DashboardComponent/StudentDetails";
+import StudentFeeInvoicesComponent from "./Student/DashboardComponent/StudentFeeInvoicesComponent";
 
 const TestYk = () => {
   return (
     <>
-      <StudentDetails />
+      <StudentFeeInvoicesComponent />
     </>
   );
 };
