@@ -14,40 +14,59 @@ const TABLE_HEAD = [
 
 const TABLE_ROWS = [
   {
-    recieptNo: "7985824",
-    amount: "2000 rs",
-    payMethod: "Per term",
-    transactionId: "2000rs",
-    date: "01/01/2024",
-    invoice: "Registration",
-    print: "Print",
+    day: "Monday",
+    first: "Physics",
+    second: "Maths",
+    third: "Chemistry",
+    fourth: "Botany",
+    fifth: "Hindi",
+    sixth: "P.T",
+    seventh: "Zoology",
+    eighth: "English",
   },
   {
-    recieptNo: "237648",
-    amount: "2000 rs",
-    payMethod: "Per term",
-    transactionId: "2000rs",
-    date: "01/01/2024",
-    invoice: "Registration",
-    print: "Print",
+    day: "Tuesday",
+    first: "Physics",
+    second: "Maths",
+    third: "Chemistry",
+    fourth: "Botany",
+    fifth: "Hindi",
+    sixth: "P.T",
+    seventh: "Zoology",
+    eighth: "English",
   },
   {
-    recieptNo: "8923749",
-    amount: "2000 rs",
-    payMethod: "Per term",
-    transactionId: "2000rs",
-    date: "01/01/2024",
-    invoice: "Registration",
-    print: "Print",
+    day: "Wednesday",
+    first: "Physics",
+    second: "Maths",
+    third: "Chemistry",
+    fourth: "Botany",
+    fifth: "Hindi",
+    sixth: "P.T",
+    seventh: "Zoology",
+    eighth: "English",
   },
   {
-    recieptNo: "9872347",
-    amount: "2000 rs",
-    payMethod: "Per term",
-    transactionId: "2000rs",
-    date: "01/01/2024",
-    invoice: "Registration",
-    print: "Print",
+    day: "Thursday",
+    first: "Physics",
+    second: "Maths",
+    third: "Chemistry",
+    fourth: "Botany",
+    fifth: "Hindi",
+    sixth: "P.T",
+    seventh: "Zoology",
+    eighth: "English",
+  },
+  {
+    day: "Friday",
+    first: "Physics",
+    second: "Maths",
+    third: "Chemistry",
+    fourth: "Botany",
+    fifth: "Hindi",
+    sixth: "P.T",
+    seventh: "Zoology",
+    eighth: "English",
   },
 ];
 
@@ -100,13 +119,15 @@ export function StudentTimeTable() {
                 {TABLE_ROWS.map(
                   (
                     {
-                      recieptNo,
-                      amount,
-                      payMethod,
-                      transactionId,
-                      date,
-                      invoice,
-                      print,
+                      day,
+                      first,
+                      second,
+                      third,
+                      fourth,
+                      fifth,
+                      sixth,
+                      seventh,
+                      eighth,
                     },
                     index
                   ) => {
@@ -116,14 +137,14 @@ export function StudentTimeTable() {
                       : "p-4 border-b border-blue-gray-50";
 
                     return (
-                      <tr key={recieptNo}>
+                      <tr key={day}>
                         <td className={classes}>
                           <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {recieptNo}
+                            {day}
                           </Typography>
                         </td>
                         <td className={classes}>
@@ -132,7 +153,7 @@ export function StudentTimeTable() {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {amount}
+                            {first}
                           </Typography>
                         </td>
                         <td className={classes}>
@@ -141,7 +162,7 @@ export function StudentTimeTable() {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {payMethod}
+                            {second}
                           </Typography>
                         </td>
                         <td className={classes}>
@@ -150,7 +171,7 @@ export function StudentTimeTable() {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {transactionId}
+                            {third}
                           </Typography>
                         </td>
                         <td className={classes}>
@@ -159,7 +180,7 @@ export function StudentTimeTable() {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {date}
+                            {fourth}
                           </Typography>
                         </td>
                         <td className={classes}>
@@ -168,7 +189,7 @@ export function StudentTimeTable() {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {invoice}
+                            {fifth}
                           </Typography>
                         </td>
                         <td className={classes}>
@@ -177,7 +198,25 @@ export function StudentTimeTable() {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {print}
+                            {sixth}
+                          </Typography>
+                        </td>
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {seventh}
+                          </Typography>
+                        </td>
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {eighth}
                           </Typography>
                         </td>
                       </tr>
