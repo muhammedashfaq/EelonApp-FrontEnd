@@ -1,13 +1,21 @@
-import SideNavbar from '../../../Components/Student/SideNav/SideNavbar'
-import LandingPagHead from '../../../Components/Staff/Header/landingPageHeader'
+import SideNavbar from "../../../Components/Student/SideNav/SideNavbar";
+import LandingPagHead from "../../../Components/Staff/Header/landingPageHeader";
+import StudentDetails from "../../../Components/Student/DashboardComponent/StudentDetails";
 
 const StudentDashBoard = () => {
   return (
     <div>
-<LandingPagHead />
-        <SideNavbar />
-    </div>
-  )
-}
+      <LandingPagHead />
+<div className="flex">
 
-export default StudentDashBoard
+      <SideNavbar />
+      <StudentDetails />
+
+</div>
+
+    
+    </div>
+  );
+};
+
+export default StudentDashBoard;

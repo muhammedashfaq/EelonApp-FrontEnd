@@ -27,14 +27,14 @@ function Icon({ id, open }) {
   );
 }
 
-export function StudentStudyMaterial() {
+export default function StudentStudyMaterial() {
   const [open, setOpen] = React.useState(0);
 
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
   return (
     <>
-      <div
+      <div className="w-full m-20"
         style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
       >
         <div className="container xl">

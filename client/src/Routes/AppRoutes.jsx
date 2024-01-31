@@ -6,11 +6,15 @@ import Test from "../Components/Test";
 // import StaffHome from "../Pages/Staff/Home/Dashboard";
 import AdminStudentPage from "../Pages/Users/Admin/AdminStudentPage";
 import Allstudents from "../Pages/Users/Admin/Allstudents";
-import TestYk from "../Components/TestYk";
+// import TestYk from "../Components/TestYk";
 import LandingPage from "../Pages/LandingPage/landingPage";
 import Login from '../Pages/Login/loginPage'
 import StudentDashBoard from "../Pages/Student/Dashboard/StudentDashBoard";
-
+import StudentFeeInvoice from "../Pages/Student/Dashboard/StudentFeeInvoice";
+import StudentFeeStructure from "../Pages/Student/Dashboard/StudentFeeStructure";
+import StudentHomeWorks from '../Pages/Student/Dashboard/StudentsHomeWorks'
+import PaymentHistory from "../Pages/Student/Dashboard/StudentPaymentHistory";
+import StudyMaterials from "../Pages/Student/Dashboard/StudyMaterials";
 const AppRoutes = () => {
   const { loading } = useSelector((state) => state.alerts);
 
@@ -26,9 +30,21 @@ const AppRoutes = () => {
       <Toaster position="bottom-center" reverseOrder={false} />
 
       <Routes>
+        {/* STUDENTS ROUTS */}
         <Route path={RouteObjects.root} element={<LandingPage />} />
         <Route path={RouteObjects.Login} element={<Login />} />
-        <Route path={RouteObjects.StudentDashboard} element={<StudentDashBoard />} />
+        <Route path={RouteObjects.StudentDashboard} element={<StudentDashBoard/>} />
+        <Route path={RouteObjects.FeeInvoice} element={<StudentFeeInvoice/>} />
+        <Route path={RouteObjects.FeeStructure} element={<StudentFeeStructure/>} />
+        <Route path={RouteObjects.HomeWorks} element={<StudentHomeWorks/>} />
+        <Route path={RouteObjects.Payment} element={<PaymentHistory/>} />
+        <Route path={RouteObjects.StudyMaterials} element={<StudyMaterials/>} />
+
+
+
+
+
+
 
 
         <Route
@@ -37,7 +53,7 @@ const AppRoutes = () => {
         />
         <Route path={RouteObjects.AllstudentsPage} element={<Allstudents />} />
         <Route path="/test" element={<Test />} />
-        <Route path="/testyk" element={<TestYk />} />
+        {/* <Route path="/testyk" element={<TestYk />} /> */}
       </Routes>
     </div>
   );

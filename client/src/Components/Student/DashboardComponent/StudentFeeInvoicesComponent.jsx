@@ -3,7 +3,7 @@ import React from "react";
 const StudentFeeInvoicesComponent = () => {
   return (
     <>
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center w-full m-20">
         <div className="container lg p-10">
           <div
             className="flex justify-center items-center"
