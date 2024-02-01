@@ -42,6 +42,7 @@ const StaffIssueBookManagement = () => {
     <div className="w-full">
       <div className=" bg-blue-700 h-20 flex justify-center">LIBRARY</div>
 
+
       <Button onClick={openDrawer}>Open Drawer</Button>
       <Drawer open={open} onClose={closeDrawer}>
         <div className="flex items-center justify-between px-4 pb-2">
@@ -82,6 +83,10 @@ const StaffIssueBookManagement = () => {
       </Drawer>
 
       {/* <div className="flex justify-center">
+
+      
+      <div className="flex justify-center">
+
         <LibraryBooksAddModal getBooks={getBooks} />
       </div> */}
       <div
