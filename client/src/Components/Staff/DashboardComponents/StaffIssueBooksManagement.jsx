@@ -10,15 +10,24 @@ import {
 import { useEffect, useState } from "react";
 import axios from "../../../api/axios";
 import LibraryBooksAddModal from "./LibraryBooksAddModal";
+import LibraryIssueStudentModal from "./LibraryIssueStudentModal";
+import { hideloading, showloading } from "../../../Helper/Redux/alertSlice";
+import { useDispatch } from "react-redux";
 
 const StaffIssueBookManagement = () => {
   const [bookData, setbookData] = useState();
+  const dispatch = useDispatch();
 
   const getBooks = async () => {
     try {
+      dispatch(showloading());
+
       const response = await axios.get("/library/books");
+      dispatch(hideloading());
       setbookData(response.data);
+      console.log(response.data);
     } catch (error) {
+      dispatch(hideloading());
       console.log(error);
     }
   };
@@ -72,9 +81,9 @@ const StaffIssueBookManagement = () => {
         </form>
       </Drawer>
 
-      <div className="flex justify-center">
+      {/* <div className="flex justify-center">
         <LibraryBooksAddModal getBooks={getBooks} />
-      </div>
+      </div> */}
       <div
         className=" m-20"
         style={{
@@ -180,6 +189,24 @@ const StaffIssueBookManagement = () => {
                       Language
                     </Typography>
                   </th>
+                  <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal leading-none opacity-70"
+                    >
+                      Currently issued to
+                    </Typography>
+                  </th>
+                  <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal leading-none opacity-70"
+                    >
+                      Issue book
+                    </Typography>
+                  </th>
                   {/* <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
                       <Typography
                         variant="small"
@@ -280,6 +307,27 @@ const StaffIssueBookManagement = () => {
                             className="font-normal"
                           >
                             {data?.language}
+                          </Typography>
+                        </td>
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {data?.students?.currentlyIssued}
+                          </Typography>
+                        </td>
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            <LibraryIssueStudentModal
+                              bookId={data?._id}
+                              getBooks={getBooks}
+                            />
                           </Typography>
                         </td>
                       </tr>
