@@ -6,14 +6,19 @@ import { Link } from "react-router-dom";
 const StaffHeader = () => {
   return (
     <div>
-      {" "}
+      
       <div className=" p-4 shadow-md">
-        <ul className="flex flex-row justify-end items-center space-x-6 pr-8">
+        <ul className="flex justify-between items-start space-x-6 pr-8">
+          <div >
+
           <li className="mr-auto">
             <Link to="/">
               <img src={logoimage} className="w-16" />
             </Link>
           </li>
+          </div>
+          <div className="flex justify-center items-center space-x-6">
+
           <li>
             <a className="hover:text-blue-400" href="#">
               Home
@@ -45,9 +50,41 @@ const StaffHeader = () => {
                 alt="avatar"
                 withBorder={true}
                 className="p-0.5"
-              />
+                />
             </Link>
           </li>
+                </div>
+          <div className="flex justify-center items-center space-x-6">
+
+          <li className="">
+            <a className="hover:text-blue-400" href="#">
+              Contact
+            </a>
+          </li>
+          <li className="">
+            <a className="hover:text-blue-400" href="#">
+              Contact
+            </a>
+          </li>
+          <li className="">
+            <a className="hover:text-blue-400" href="#">
+              Contact
+            </a>
+          </li>
+
+          <li>
+          <span className="material-symbols-outlined">
+close
+</span>
+          </li>
+
+          <li >
+          <span className="material-symbols-outlined">
+menu
+</span>
+            
+          </li>
+          </div>
         </ul>
       </div>
     </div>

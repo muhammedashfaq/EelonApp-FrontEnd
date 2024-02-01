@@ -1,6 +1,6 @@
 import SideNavbar from "../../../Components/Student/SideNav/SideNavbar";
 import LandingPagHead from "../../../Components/Staff/Header/landingPageHeader";
-import StudentDetails from "../../../Components/Student/DashboardComponent/StudentDetails";
+import StudentDetails from "../../../Components/Student/DashboardComponents/StudentDetails";
 
 const StudentDashBoard = () => {
   return (

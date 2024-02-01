@@ -1,6 +1,6 @@
 import SideNavbar from "../../../Components/Student/SideNav/SideNavbar";
 import LandingPagHead from "../../../Components/Staff/Header/landingPageHeader";
-import StudentHomeWorks from '../../../Components/Student/DashboardComponent/StudentHomeworks'
+import StudentHomeWorks from '../../../Components/Student/DashboardComponents/StudentHomeworks'
 const HomeWork = () => {
   return (
     <div>
