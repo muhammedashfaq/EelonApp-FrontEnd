@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import loginimage from "../assets/login-resized.jpg";
-import { Card, Input, Button, Typography } from "@material-tailwind/react";
+import {
+  Card,
+  Input,
+  Button,
+  Typography,
+  Alert,
+} from "@material-tailwind/react";
 import { loginValidate } from "../Helper/Validations/validations";
 import { logintouserhome } from "../Helper/api/api";
 import { toast } from "react-hot-toast";
@@ -8,17 +14,23 @@ import logoImage from "../assets/EelonLogo.png";
 import axios from "../api/axios.jsx";
 import { LoginUserTab } from "./LoginUserSelectTab.jsx";
 import LoginUserSelectButton from "./LoginUserSelectButton.jsx";
+import useAuth from "../Hooks/useAuth.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [user, setUser] = useState("");
   const [errors, setError] = useState([]);
   const [userType, setuserType] = useState();
+  const [errorMsg, seterrorMsg] = useState();
+  const { setAuth } = useAuth();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const handleInputChange = (e) => {
+    seterrorMsg("");
     const { name, value } = e.target;
 
     setFormData((pre) => ({
@@ -26,12 +38,18 @@ const Login = () => {
       [name]: value,
     }));
   };
-
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const response = await axios.post("/auth", formData);
+      seterrorMsg("");
+      const type = userType.toLowerCase();
+      const response = await axios.post(`/auth/${type}`, formData);
       console.log(response);
+      const accessToken = response?.data?.accessToken;
+      const roles = response?.data?.roles;
+      setAuth({ accessToken, roles });
+      navigate("/");
+
       const error = loginValidate(formData.email, formData.password);
       setError(error);
       if (Object.values(error).every((value) => value === "")) {
@@ -44,6 +62,15 @@ const Login = () => {
       }
     } catch (error) {
       console.log(error);
+      if (!error?.response) {
+        seterrorMsg("No server response");
+      } else if (error.response.status === 404) {
+        seterrorMsg("Email not found");
+      } else if (error.response?.status === 401) {
+        seterrorMsg("Wrong password");
+      } else {
+        seterrorMsg("Login error");
+      }
     }
   };
 
@@ -75,6 +102,11 @@ const Login = () => {
                       {userType && `${userType} `}Sign In
                     </Typography>
                   </div>
+                  {errorMsg && (
+                    <div>
+                      <Alert variant="ghost">{errorMsg}</Alert>
+                    </div>
+                  )}
 
                   <form
                     onSubmit={handleSubmit}
