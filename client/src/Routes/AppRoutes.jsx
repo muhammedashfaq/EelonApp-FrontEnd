@@ -15,6 +15,8 @@ import StudentFeeStructure from "../Pages/Student/Dashboard/StudentFeeStructure"
 import StudentHomeWorks from '../Pages/Student/Dashboard/StudentsHomeWorks'
 import PaymentHistory from "../Pages/Student/Dashboard/StudentPaymentHistory";
 import StudyMaterials from "../Pages/Student/Dashboard/StudyMaterials";
+import StaffDashBoard from "../Pages/Staff/Dashboard/StaffDashBoard";
+import LibraryManagemnet from "../Pages/Staff/Dashboard/Library";
 const AppRoutes = () => {
   const { loading } = useSelector((state) => state.alerts);
 
@@ -39,6 +41,12 @@ const AppRoutes = () => {
         <Route path={RouteObjects.HomeWorks} element={<StudentHomeWorks/>} />
         <Route path={RouteObjects.Payment} element={<PaymentHistory/>} />
         <Route path={RouteObjects.StudyMaterials} element={<StudyMaterials/>} />
+
+
+
+        <Route path={RouteObjects.StaffDashboard} element={<StaffDashBoard/>} />
+        <Route path={RouteObjects.Stafflibrary} element={<LibraryManagemnet/>} />
+
 
 
 

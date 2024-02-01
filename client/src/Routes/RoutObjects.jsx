@@ -8,6 +8,8 @@ export const RouteObjects = {
   Payment :"/paymenthistory",
   StudyMaterials:"/studymaterials",
 
+  StaffDashboard:"/staffdash",
+  Stafflibrary :'/stafflibrary',
   AdminStudentPage: "/admin/student",
   AllstudentsPage: "/admin/student/allstudents",
 };

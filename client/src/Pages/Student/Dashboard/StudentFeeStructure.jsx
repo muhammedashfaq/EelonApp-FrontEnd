@@ -1,6 +1,6 @@
 import SideNavbar from "../../../Components/Student/SideNav/SideNavbar";
 import LandingPagHead from "../../../Components/Staff/Header/landingPageHeader";
-import StudentFeeStructure from "../../../Components/Student/DashboardComponent/StudentFeeStructure";
+import StudentFeeStructure from "../../../Components/Student/DashboardComponents/StudentFeeStructure";
 const FeeStructures = () => {
   return (
     <div>
