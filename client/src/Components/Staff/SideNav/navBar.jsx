@@ -7,6 +7,10 @@ const Navbar = () => {
   const [submenuOpen, setOpenSubmenu] = useState(false);
   const menu = [
     {
+      title: "Home",
+      icon: <span className="material-symbols-outlined">grid_view</span>,      href: RouteObjects.root,
+
+    },{
       title: "Dashboard",
       icon: <span className="material-symbols-outlined">grid_view</span>,
     },
