@@ -3,24 +3,24 @@ import { RouteObjects } from "./RoutObjects";
 import { useSelector } from "react-redux";
 import { Toaster } from "react-hot-toast";
 import Test from "../Components/Test";
-// import StaffHome from "../Pages/Staff/Home/Dashboard";
 import AdminStudentPage from "../Pages/Users/Admin/AdminStudentPage";
 import Allstudents from "../Pages/Users/Admin/Allstudents";
-// import TestYk from "../Components/TestYk";
 import LandingPage from "../Pages/LandingPage/landingPage";
-import Login from '../Pages/Login/loginPage'
+import Login from "../Pages/Login/loginPage";
 import StudentDashBoard from "../Pages/Student/Dashboard/StudentDashBoard";
 import StudentFeeInvoice from "../Pages/Student/Dashboard/StudentFeeInvoice";
 import StudentFeeStructure from "../Pages/Student/Dashboard/StudentFeeStructure";
-import StudentHomeWorks from '../Pages/Student/Dashboard/StudentsHomeWorks'
+import StudentHomeWorks from "../Pages/Student/Dashboard/StudentsHomeWorks";
 import PaymentHistory from "../Pages/Student/Dashboard/StudentPaymentHistory";
 import StudyMaterials from "../Pages/Student/Dashboard/StudyMaterials";
 import StaffDashBoard from "../Pages/Staff/Dashboard/StaffDashBoard";
 import LibraryManagemnet from "../Pages/Staff/Dashboard/Library";
+import TestYk from "../Components/TestYk";
 import AddBooks from "../Pages/Staff/Dashboard/AddBooks";
 import IssueBooks from "../Pages/Staff/Dashboard/IssueBooks";
 import Issuecards from "../Pages/Staff/Dashboard/Issuecards";
 import StudentLibrary from '../Pages/Student/Dashboard/SudentLibrary'
+
 const AppRoutes = () => {
   const { loading } = useSelector((state) => state.alerts);
 
@@ -48,32 +48,18 @@ const AppRoutes = () => {
         <Route path={RouteObjects.StudentLibrary} element={<StudentLibrary/>} />
 
 
-
-
         <Route path={RouteObjects.StaffDashboard} element={<StaffDashBoard/>} />
         <Route path={RouteObjects.Stafflibrary} element={<LibraryManagemnet/>} />
         <Route path={RouteObjects.Bookmanagment} element={<AddBooks/>} />
         <Route path={RouteObjects.Issuebooks} element={<IssueBooks/>} />
         <Route path={RouteObjects.Issuecards} element={<Issuecards/>} />
-
-
-
-
-
-
-
-
-
-
-
-
         <Route
           path={RouteObjects.AdminStudentPage}
           element={<AdminStudentPage />}
         />
         <Route path={RouteObjects.AllstudentsPage} element={<Allstudents />} />
         <Route path="/test" element={<Test />} />
-        {/* <Route path="/testyk" element={<TestYk />} /> */}
+        <Route path="/testyk" element={<TestYk />} />
       </Routes>
     </div>
   );
