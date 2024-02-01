@@ -17,6 +17,10 @@ import PaymentHistory from "../Pages/Student/Dashboard/StudentPaymentHistory";
 import StudyMaterials from "../Pages/Student/Dashboard/StudyMaterials";
 import StaffDashBoard from "../Pages/Staff/Dashboard/StaffDashBoard";
 import LibraryManagemnet from "../Pages/Staff/Dashboard/Library";
+import AddBooks from "../Pages/Staff/Dashboard/AddBooks";
+import IssueBooks from "../Pages/Staff/Dashboard/IssueBooks";
+import Issuecards from "../Pages/Staff/Dashboard/Issuecards";
+import StudentLibrary from '../Pages/Student/Dashboard/SudentLibrary'
 const AppRoutes = () => {
   const { loading } = useSelector((state) => state.alerts);
 
@@ -41,11 +45,19 @@ const AppRoutes = () => {
         <Route path={RouteObjects.HomeWorks} element={<StudentHomeWorks/>} />
         <Route path={RouteObjects.Payment} element={<PaymentHistory/>} />
         <Route path={RouteObjects.StudyMaterials} element={<StudyMaterials/>} />
+        <Route path={RouteObjects.StudentLibrary} element={<StudentLibrary/>} />
+
 
 
 
         <Route path={RouteObjects.StaffDashboard} element={<StaffDashBoard/>} />
         <Route path={RouteObjects.Stafflibrary} element={<LibraryManagemnet/>} />
+        <Route path={RouteObjects.Bookmanagment} element={<AddBooks/>} />
+        <Route path={RouteObjects.Issuebooks} element={<IssueBooks/>} />
+        <Route path={RouteObjects.Issuecards} element={<Issuecards/>} />
+
+
+
 
 
 

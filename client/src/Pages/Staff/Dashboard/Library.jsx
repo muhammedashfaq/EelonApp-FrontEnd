@@ -1,4 +1,4 @@
-import StaffLibraryManagemnt from "../../../Components/Staff/DashboardComponents/StaffLibraryManagemnt"
+import StaffLibraryManagemnt from "../../../Components/Staff/DashboardComponents/StaffLibraryManagement"
 import SideNavbar from '../../../Components/Staff/SideNav/navBar'
 
 const Library = () => {

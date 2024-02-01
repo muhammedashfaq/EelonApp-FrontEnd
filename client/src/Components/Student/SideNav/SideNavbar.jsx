@@ -8,6 +8,7 @@ const SideNavbar = () => {
   const menu = [
     { title: "Student Info" 
   ,href:RouteObjects.StudentDashboard},
+  { title: "Library" ,href:RouteObjects.StudentLibrary},
     { title: "Fee Invoices",href:RouteObjects.FeeInvoice },
 
     // {
@@ -30,7 +31,6 @@ const SideNavbar = () => {
     { title: "Events" ,href:""},
     { title: "Class TimeTable" ,href:""},
     { title: "Live Classes" ,href:""},
-    { title: "Library" ,href:""},
     { title: "Exam TimeTable" ,href:""},
     
 
