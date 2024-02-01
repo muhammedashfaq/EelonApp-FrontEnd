@@ -1,18 +1,18 @@
 import {
   Card,
   Typography,
-  Drawer,
+  CardHeader,
+  CardBody,
   Button,
-  IconButton,
-  Input,
-  Textarea,
+  Dialog,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import axios from "../../../api/axios";
 import LibraryBooksAddModal from "./LibraryBooksAddModal";
 
-const TABLE_HEAD = ["Fee type", "Amount", "Period", "Total"];
 const SatffAddBookManagement = () => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen((cur) => !cur);
   const [bookData, setbookData] = useState();
 
   const getBooks = async () => {
@@ -28,72 +28,9 @@ const SatffAddBookManagement = () => {
     getBooks();
   }, []);
 
-  const TABLE_ROWS = [
-    {
-      feeType: "Term fee",
-      amount: "2000 rs",
-      period: "Per term",
-      total: "2000rs",
-    },
-    {
-      feeType: "Term fee",
-      amount: "2000 rs",
-      period: "Per term",
-      total: "2000rs",
-    },
-    {
-      feeType: "Term fee",
-      amount: "2000 rs",
-      period: "Per term",
-      total: "2000rs",
-    },
-  ];
-  const [open, setOpen] = useState(false);
-  const openDrawer = () => setOpen(true);
-  const closeDrawer = () => setOpen(false);
   return (
     <div className="w-full">
       <div className=" bg-blue-700 h-20 flex justify-center">LIBRARY</div>
-
-      <Button onClick={openDrawer}>Open Drawer</Button>
-      <Drawer open={open} onClose={closeDrawer}>
-        <div className="flex items-center justify-between px-4 pb-2">
-          <Typography variant="h5" color="blue-gray">
-            Contact Us
-          </Typography>
-          <IconButton variant="text" color="blue-gray" onClick={closeDrawer}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="h-5 w-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </IconButton>
-        </div>
-        <div className="mb-5 px-4">
-          <Typography variant="small" color="gray" className="font-normal ">
-            Write the message and then click button.
-          </Typography>
-        </div>
-        <form className="flex flex-col gap-6 p-4">
-          <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Your Email
-          </Typography>
-          <Input type="email" label="Email" />
-          <Input label="Subject" />
-          <Textarea rows={6} label="Message" />
-          <Button>Send Message</Button>
-        </form>
-      </Drawer>
-
       <div className="flex justify-center">
         <LibraryBooksAddModal getBooks={getBooks} />
       </div>
@@ -204,8 +141,8 @@ const SatffAddBookManagement = () => {
                   </th>
                   {/* <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
                     <Typography
-                      variant="small"
-                      color="blue-gray"
+                    variant="small"
+                    color="blue-gray"
                       className="font-normal leading-none opacity-70"
                     >
                       Issue date
@@ -303,6 +240,52 @@ const SatffAddBookManagement = () => {
                           >
                             {data?.language}
                           </Typography>
+                        </td>
+                        <td className={classes}>
+                          <Button onClick={handleOpen}>Connect Wallet</Button>
+
+                          <Dialog open={open} handler={handleOpen}>
+                            <Card className="w-full max-w-[48rem] flex-row">
+                              <CardHeader
+                                shadow={false}
+                                floated={false}
+                                className="m-0 w-2/5 shrink-0 rounded-r-none"
+                              >
+                                <img
+                                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80"
+                                  alt="card-image"
+                                  className="h-full w-full object-cover"
+                                />
+                              </CardHeader>
+                              <CardBody>
+                                <Typography
+                                  variant="h4"
+                                  color="blue-gray"
+                                  className="mb-2"
+                                >
+                                  Book Name:
+                                </Typography>
+                                <Typography
+                                  color="gray"
+                                  className="mb-3 font-normal"
+                                >
+                                  Genre
+                                </Typography>
+                                <Typography
+                                  color="gray"
+                                  className="mb-3 font-normal"
+                                >
+                                  Ref No:
+                                </Typography>
+                                <Typography
+                                  color="gray"
+                                  className="mb-8 font-normal"
+                                >
+                                  Description
+                                </Typography>
+                              </CardBody>
+                            </Card>
+                          </Dialog>
                         </td>
                       </tr>
                     );
