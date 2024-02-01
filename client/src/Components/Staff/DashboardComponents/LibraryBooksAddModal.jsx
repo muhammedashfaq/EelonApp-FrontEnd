@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { hideloading, showloading } from "../../../Helper/Redux/alertSlice";
 import {
   Button,
   Dialog,
@@ -13,8 +14,10 @@ import {
   Option,
 } from "@material-tailwind/react";
 import axios from "../../../api/axios";
+import { useDispatch } from "react-redux";
 
 export default function LibraryBooksAddModal({ getBooks }) {
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
 
   const [bookName, setbookName] = useState();
@@ -50,10 +53,14 @@ export default function LibraryBooksAddModal({ getBooks }) {
         refSub,
         year,
       };
+      dispatch(showloading());
       const response = await axios.post("/library/books", data);
-      console.log(response);
+      dispatch(hideloading());
+      
       handleClose();
     } catch (error) {
+      dispatch(hideloading());
+
       console.log(error);
     }
   };

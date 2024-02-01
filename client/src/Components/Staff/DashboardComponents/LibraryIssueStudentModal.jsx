@@ -24,7 +24,6 @@ export default function LibraryIssueStudentModal({ bookId, getBooks }) {
       const response = await axios.post(`/library/books/issuelist/${bookId}`, {
         studentId,
       });
-      console.log(response);
       getBooks();
       handleClose();
     } catch (error) {
