@@ -1,13 +1,13 @@
-import SideNavbar from '../../../Components/Staff/SideNav/navBar'
-
+import SideNavbar from "../../../Components/Staff/SideNav/navBar";
+import StaffIssueBookManagement from "../../../Components/Staff/DashboardComponents/StaffIssueBooksManagement";
 
 const IssueBooks = () => {
   return (
-    <div>
-
-        <SideNavbar />
+    <div className="flex">
+      <SideNavbar />
+      <StaffIssueBookManagement />
     </div>
-  )
-}
+  );
+};
 
-export default IssueBooks
+export default IssueBooks;

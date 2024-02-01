@@ -14,7 +14,7 @@ import {
 } from "@material-tailwind/react";
 import axios from "../../../api/axios";
 
-export default function LibraryBooksAddModal() {
+export default function LibraryBooksAddModal({ getBooks }) {
   const [open, setOpen] = React.useState(false);
 
   const [bookName, setbookName] = useState();
@@ -23,8 +23,17 @@ export default function LibraryBooksAddModal() {
   const [bookId, setbookId] = useState();
   const [IsbnNo, setIsbnNo] = useState();
   const [description, setdescription] = useState();
+  const [refNo, setrefNo] = useState();
+  const [language, setlanguage] = useState();
+  const [barcode, setbarcode] = useState();
+  const [refSub, setrefSub] = useState();
+  const [year, setyear] = useState();
 
-  const handleOpen = () => setOpen(!open);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
+    getBooks();
+  };
 
   const addBook = async () => {
     try {
@@ -35,9 +44,15 @@ export default function LibraryBooksAddModal() {
         bookId,
         IsbnNo,
         description,
+        refNo,
+        language,
+        barcode,
+        refSub,
+        year,
       };
       const response = await axios.post("/library/books", data);
       console.log(response);
+      handleClose();
     } catch (error) {
       console.log(error);
     }
@@ -91,6 +106,13 @@ export default function LibraryBooksAddModal() {
               />
               <Input
                 variant="standard"
+                label="Reference no."
+                placeholder="Reference no."
+                onChange={(e) => setrefNo(e.target.value)}
+                value={refNo}
+              />
+              <Input
+                variant="standard"
                 label="Isbn no."
                 placeholder="Enter Isbn no."
                 onChange={(e) => setIsbnNo(e.target.value)}
@@ -103,13 +125,41 @@ export default function LibraryBooksAddModal() {
                 onChange={(e) => setdescription(e.target.value)}
                 value={description}
               />
+              <Input
+                variant="standard"
+                label="Language"
+                placeholder="Language"
+                onChange={(e) => setlanguage(e.target.value)}
+                value={language}
+              />
+              <Input
+                variant="standard"
+                label="Publishing year"
+                placeholder="Publishing year"
+                onChange={(e) => setyear(e.target.value)}
+                value={year}
+              />
+              <Input
+                variant="standard"
+                label="Barcode"
+                placeholder="Barcode"
+                onChange={(e) => setbarcode(e.target.value)}
+                value={barcode}
+              />
+              <Input
+                variant="standard"
+                label="Reference subject"
+                placeholder="Reference subject"
+                onChange={(e) => setrefSub(e.target.value)}
+                value={refSub}
+              />
             </div>
           </DialogBody>
           <DialogFooter className="gap-5">
             <Button
               variant="text"
               color="red"
-              onClick={handleOpen}
+              onClick={handleClose}
               className="mr-1"
             >
               <span>Cancel</span>

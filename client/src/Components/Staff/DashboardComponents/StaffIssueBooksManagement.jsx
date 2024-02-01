@@ -11,15 +11,13 @@ import { useEffect, useState } from "react";
 import axios from "../../../api/axios";
 import LibraryBooksAddModal from "./LibraryBooksAddModal";
 
-const TABLE_HEAD = ["Fee type", "Amount", "Period", "Total"];
-const SatffAddBookManagement = () => {
+const StaffIssueBookManagement = () => {
   const [bookData, setbookData] = useState();
 
   const getBooks = async () => {
     try {
       const response = await axios.get("/library/books");
       setbookData(response.data);
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -28,26 +26,6 @@ const SatffAddBookManagement = () => {
     getBooks();
   }, []);
 
-  const TABLE_ROWS = [
-    {
-      feeType: "Term fee",
-      amount: "2000 rs",
-      period: "Per term",
-      total: "2000rs",
-    },
-    {
-      feeType: "Term fee",
-      amount: "2000 rs",
-      period: "Per term",
-      total: "2000rs",
-    },
-    {
-      feeType: "Term fee",
-      amount: "2000 rs",
-      period: "Per term",
-      total: "2000rs",
-    },
-  ];
   const [open, setOpen] = useState(false);
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
@@ -203,14 +181,14 @@ const SatffAddBookManagement = () => {
                     </Typography>
                   </th>
                   {/* <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal leading-none opacity-70"
-                    >
-                      Issue date
-                    </Typography>
-                  </th> */}
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal leading-none opacity-70"
+                      >
+                        Issue date
+                      </Typography>
+                    </th> */}
                 </tr>
               </thead>
               <tbody>
@@ -316,4 +294,4 @@ const SatffAddBookManagement = () => {
   );
 };
 
-export default SatffAddBookManagement;
+export default StaffIssueBookManagement;
