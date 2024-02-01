@@ -9,18 +9,25 @@ import {
 import { useEffect, useState } from "react";
 import axios from "../../../api/axios";
 import LibraryBooksAddModal from "./LibraryBooksAddModal";
+import { hideloading, showloading } from "../../../Helper/Redux/alertSlice";
+import { useDispatch } from "react-redux";
 
 const SatffAddBookManagement = () => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [bookData, setbookData] = useState();
 
   const getBooks = async () => {
     try {
+      // dispatch(showloading());
       const response = await axios.get("/library/books");
+      // dispatch(hideloading());
+
       setbookData(response.data);
       console.log(response.data);
     } catch (error) {
+      dispatch(hideloading());
       console.log(error);
     }
   };
@@ -139,6 +146,15 @@ const SatffAddBookManagement = () => {
                       Language
                     </Typography>
                   </th>
+                  <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal leading-none opacity-70"
+                    >
+                      Info
+                    </Typography>
+                  </th>
                   {/* <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
                     <Typography
                     variant="small"
@@ -242,7 +258,7 @@ const SatffAddBookManagement = () => {
                           </Typography>
                         </td>
                         <td className={classes}>
-                          <Button onClick={handleOpen}>Connect Wallet</Button>
+                          <Button onClick={handleOpen}>Info</Button>
 
                           <Dialog open={open} handler={handleOpen}>
                             <Card className="w-full max-w-[48rem] flex-row">
