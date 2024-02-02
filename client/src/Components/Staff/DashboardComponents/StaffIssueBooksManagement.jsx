@@ -368,6 +368,7 @@ const StaffIssueBookManagement = () => {
                             <LibraryIssueStudentModal
                               bookId={data?._id}
                               getBooks={getBooks}
+                              currentlyIssued={data?.students?.currentlyIssued}
                             />
                           </Typography>
                         </td>

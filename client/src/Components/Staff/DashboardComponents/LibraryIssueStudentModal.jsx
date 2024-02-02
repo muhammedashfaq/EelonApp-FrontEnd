@@ -13,7 +13,11 @@ import {
 import axios from "../../../api/axios";
 import { useState } from "react";
 
-export default function LibraryIssueStudentModal({ bookId, getBooks }) {
+export default function LibraryIssueStudentModal({
+  bookId,
+  getBooks,
+  currentlyIssued,
+}) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const handleClose = () => setOpen(false);
@@ -31,6 +35,20 @@ export default function LibraryIssueStudentModal({ bookId, getBooks }) {
       const response = await axios.post(`/library/books/issuelist/${bookId}`, {
         studentId,
       });
+      getBooks();
+      handleClose();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const unIssuebook = async () => {
+    if (!checked) return;
+    try {
+      const response = await axios.post(
+        `/library/books/issuelist/${bookId}`,
+        {}
+      );
       getBooks();
       handleClose();
     } catch (error) {
@@ -114,9 +132,15 @@ export default function LibraryIssueStudentModal({ bookId, getBooks }) {
                 <br />
               </>
             )}
-            <Button variant="gradient" onClick={issuebook} fullWidth>
-              Issue book
-            </Button>
+            {currentlyIssued === studentId ? (
+              <Button variant="gradient" onClick={unIssuebook} fullWidth>
+                <span>Remove student from issue list</span>
+              </Button>
+            ) : (
+              <Button variant="gradient" onClick={issuebook} fullWidth>
+                <span>Issue book</span>
+              </Button>
+            )}
           </CardFooter>
         </Card>
       </Dialog>
