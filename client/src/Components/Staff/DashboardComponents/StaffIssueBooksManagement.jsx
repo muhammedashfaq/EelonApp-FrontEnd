@@ -6,6 +6,8 @@ import {
   IconButton,
   Input,
   Textarea,
+  Select,
+  Option,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import axios from "../../../api/axios";
@@ -16,6 +18,9 @@ import { useDispatch } from "react-redux";
 
 const StaffIssueBookManagement = () => {
   const [bookData, setbookData] = useState();
+  const [searchBookName, setSearchBookName] = useState();
+  const [searchData, setsearchData] = useState();
+
   const dispatch = useDispatch();
 
   const getBooks = async () => {
@@ -38,10 +43,21 @@ const StaffIssueBookManagement = () => {
   const [open, setOpen] = useState(false);
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
+
+  const searchBook = async () => {
+    try {
+      const response = await axios.get(
+        `library/books/issuelist/search/${searchBookName}`
+      );
+      console.log(response.data);
+      setsearchData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="w-full">
       <div className=" bg-blue-700 h-20 flex justify-center">LIBRARY</div>
-
 
       <Button onClick={openDrawer}>Open Drawer</Button>
       <Drawer open={open} onClose={closeDrawer}>
@@ -108,6 +124,26 @@ const StaffIssueBookManagement = () => {
           >
             Books
           </h2>
+          <br />
+          <div className="flex gap-8">
+            <div className="w-72">
+              <Select label="Select Version">
+                <Option>Genre</Option>
+                <Option>Auther</Option>
+                <Option>Language</Option>
+              </Select>
+            </div>
+            <div className="w-full md:w-72 flex ">
+              <Input
+                label="Search"
+                onChange={(e) => setSearchBookName(e.target.value)}
+                // icon={<MagnifyingGlassIco className="h-5 w-5" />}
+              />
+              <Button size="sm" variant="text" onClick={searchBook}>
+                Search
+              </Button>
+            </div>
+          </div>
           <br />
           <Card className="h-full w-full overflow-scroll">
             <table className="w-full min-w-max table-auto text-left">
@@ -224,8 +260,8 @@ const StaffIssueBookManagement = () => {
                 </tr>
               </thead>
               <tbody>
-                {bookData &&
-                  bookData.map((data, index) => {
+                {searchData &&
+                  searchData.map((data, index) => {
                     const isLast = index === bookData.length - 1;
                     const classes = isLast
                       ? "p-4"
