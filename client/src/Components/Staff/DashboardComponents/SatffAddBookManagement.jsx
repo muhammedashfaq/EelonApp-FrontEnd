@@ -21,6 +21,11 @@ const SatffAddBookManagement = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [bookData, setbookData] = useState();
+  const [genre, setgenre] = useState();
+
+  useEffect(() => {
+    console.log(genre);
+  }, [genre]);
 
   const getBooks = async () => {
     try {
@@ -45,10 +50,13 @@ const SatffAddBookManagement = () => {
       <div className=" m-20">
         <div className=" w-full h-auto  flex justify-around mb-2 border-2 p-1 rounded-lg shadow-md">
           <div className="w-72">
-            <Select label="Select Version">
-              <Option>Genre</Option>
-              <Option>Auther</Option>
-              <Option>Language</Option>
+            <Select label="Select Genre" onChange={(e) => setgenre(e)}>
+              <Option value="Story">Story</Option>
+              <Option value="Poem">Poem</Option>
+              <Option value="Biography">Biography</Option>
+              <Option value="Mystery">Mystery</Option>
+              <Option value="Fiction">Fiction</Option>
+              <Option value="Non-fiction">Non-fiction</Option>
             </Select>
           </div>
           <div className="w-full md:w-72">
