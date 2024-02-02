@@ -21,16 +21,19 @@ const Navbar = () => {
     },
 
     {
-      title: "Dashboard",
-      icon: <span className="material-symbols-outlined">library_books</span>,
+      title: "Students",
+      icon: <span className="material-symbols-outlined">
+      person
+      </span>,
       submenu: true,
 
       submenuItems: [
-        { title: "submenu1" },
-        { title: "submenu1" },
-        { title: "submenu1" },
-        { title: "submenu1" },
-        { title: "submenu1" },
+        { title: "Students List ", href: RouteObjects.StudentsList,icon:<span className="material-symbols-outlined">
+        person_add
+        </span> },
+        { title: "Add Student" , href: RouteObjects.AddStudent, },
+        { title: "Add Form Requirments", href: RouteObjects.RequireForms, },
+       
       ],
     },
     {
@@ -126,13 +129,19 @@ const Navbar = () => {
               </div>
 
               {item.submenuItems && submenuOpen && open && (
-                <ul className=" left-full top-0 mt-2 bg-white rounded-md shadow-md">
+                <ul className=" ">
                   {item.submenuItems.map((subitems, i) => (
+                    
                     <li
-                      className={`text-gray-700 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-blue-gray-100`}
-                      key={i}
+                    className={` text-sm flex items-center gap-x-8 cursor-pointer p-3 hover:bg-blue-500 rounded-lg text-white`}
+                    key={i}
                     >
+                    <Link to={subitems.href}>
+                      <span>
+
                       {subitems.title}
+                      </span>
+                      </Link>
                     </li>
                   ))}
                 </ul>

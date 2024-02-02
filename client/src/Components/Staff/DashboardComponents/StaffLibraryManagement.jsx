@@ -5,22 +5,22 @@ import {
     Typography,
     Button,
   } from "@material-tailwind/react";
-  import bookimage from '../../../assets/librarybooks.png'
+  // import bookimage from './images/librarybooks.png'
 import { Link } from "react-router-dom";
 import { RouteObjects } from "../../../Routes/RoutObjects";
    
 const StaffLibraryManagement = () => {
   return (
-    <div >
+    <div>
       <div className="w-full bg-blue-700 h-20 flex justify-center" >
 LIBRARY
       </div>
      <div className="flex" >
       
-
-    <Card className="mt-6 m-20 h-72 hover:scale-110 transition-all duration-200 " >
+    
+    <Card className="mt-6 m-20 h-72 hover:scale-110 transition-all duration-200  "  >
         <Link to={RouteObjects.Bookmanagment}>
-      <CardBody>
+      <CardBody >
         <Typography variant="h5" color="blue-gray" className="mb-2">
         Books
         </Typography>
