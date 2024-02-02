@@ -1,11 +1,11 @@
-import SideNavbar from '../../../Components/Staff/SideNav/navBar'
 import StaffHeader from "../../../Components/Staff/Header/landingPageHeader"
+import StudentsList from "../../../Components/Staff/DashboardComponents/StudentsList"
 const StudentsLists = () => {
   return (
     <div>
 
-        <SideNavbar/>
         <StaffHeader />
+        <StudentsList />
     </div>
   )
 }
