@@ -47,8 +47,16 @@ const Login = () => {
       console.log(response);
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
-      setAuth({ accessToken, roles });
-      navigate("/");
+      // setAuth({ accessToken, roles });
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("roles", roles);
+      if (userType === "Student") {
+        navigate("/studentdash");
+      } else if (userType === "Staff") {
+        navigate("/staffdash");
+      } else if (userType === "Admin") {
+        navigate("/staffdash");
+      }
 
       const error = loginValidate(formData.email, formData.password);
       setError(error);
