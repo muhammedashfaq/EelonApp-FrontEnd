@@ -5,6 +5,9 @@ import {
   CardBody,
   Button,
   Dialog,
+  Input,
+  Select,
+  Option,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import axios from "../../../api/axios";
@@ -38,38 +41,41 @@ const SatffAddBookManagement = () => {
   return (
     <div className="w-full">
       <div className=" bg-blue-700 h-20 flex justify-center">LIBRARY</div>
-      <div className="flex justify-center">
-        <LibraryBooksAddModal getBooks={getBooks} />
-      </div>
+     
       <div
-        className=" m-20"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+        className=" m-20">
+        <div className=" w-full h-auto  flex justify-around mb-2 border-2 p-1 rounded-lg shadow-md">
+
+        <div className="w-72">
+      <Select label="Select Version" >
+        <Option>Genre</Option>
+        <Option>Auther</Option>
+        <Option>Language</Option>
+    
+      </Select>
+    </div>
+        <div className="w-full md:w-72">
+              <Input
+                label="Search"
+                // icon={<MagnifyingGlassIco className="h-5 w-5" />}
+              />
+            </div>
+            <div>
+
+          <LibraryBooksAddModal getBooks={getBooks} />
+            </div>
+        </div>
+
         <div className="container xl">
-          <h2
-            style={{
-              fontSize: "1.4rem",
-              fontFamily: "monospace",
-              fontWeight: "bolder",
-              textAlign: "center",
-            }}
-          >
-            Books
-          </h2>
-          <br />
-          <Card className="h-full w-full overflow-scroll">
-            <table className="w-full min-w-max table-auto text-left">
-              <thead>
+          <Card className="h-96 w-full overflow-y-scroll">
+            <table className="w-full min-w-max table-auto text-left ">
+              <thead className=" ">
                 <tr>
                   <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
                     <Typography
                       variant="small"
                       color="blue-gray"
-                      className="font-normal leading-none opacity-70"
+                      className=" text-blue-900 border-l  "
                     >
                       No.
                     </Typography>
@@ -166,7 +172,7 @@ const SatffAddBookManagement = () => {
                   </th> */}
                 </tr>
               </thead>
-              <tbody>
+              <tbody >
                 {bookData &&
                   bookData.map((data, index) => {
                     const isLast = index === bookData.length - 1;
@@ -310,6 +316,8 @@ const SatffAddBookManagement = () => {
             </table>
           </Card>
         </div>
+
+
       </div>
     </div>
   );
