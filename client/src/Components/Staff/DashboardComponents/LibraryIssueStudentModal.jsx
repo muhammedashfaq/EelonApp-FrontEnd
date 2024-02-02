@@ -24,7 +24,10 @@ export default function LibraryIssueStudentModal({
 }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setsearchData(null);
+    setOpen(false);
+  };
   const [studentId, setstudentId] = useState();
   const [searchData, setsearchData] = useState();
   const [checked, setchecked] = useState();
@@ -50,10 +53,9 @@ export default function LibraryIssueStudentModal({
   const unIssuebook = async () => {
     if (!checked) return;
     try {
-      const response = await axios.post(
-        `/library/books/issuelist/${bookId}`,
-        {}
-      );
+      const response = await axios.put(`/library/books/issuelist/${bookId}`, {
+        studentId,
+      });
       getBooks();
       handleClose();
     } catch (error) {
@@ -111,7 +113,7 @@ export default function LibraryIssueStudentModal({
               size="lg"
               onChange={(e) => setstudentId(e.target.value)}
             />
-            <Button variant="gradient" onClick={searchStudent} fullWidth>
+            <Button variant="outlined" onClick={searchStudent} fullWidth>
               Search student
             </Button>
           </CardBody>
@@ -143,7 +145,12 @@ export default function LibraryIssueStudentModal({
                 <span>Remove student from issue list</span>
               </Button>
             ) : (
-              <Button variant="gradient" onClick={issuebook} fullWidth>
+              <Button
+                variant="gradient"
+                onClick={issuebook}
+                fullWidth
+                disabled={!checked}
+              >
                 <span>Issue book</span>
               </Button>
             )}

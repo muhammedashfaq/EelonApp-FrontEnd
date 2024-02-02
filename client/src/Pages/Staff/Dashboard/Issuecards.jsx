@@ -5,7 +5,7 @@ const Issuecards = () => {
     <div>
         <StaffHeader />
     </div>
-  )
-}
+  );
+};
 
-export default Issuecards
+export default Issuecards;
