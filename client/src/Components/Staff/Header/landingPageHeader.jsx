@@ -3,9 +3,12 @@ import logoimage from "../../../assets/EelonLogo.png";
 import { Avatar, Button } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
+import useLogout from "../../../Hooks/useLogout";
 
 const StaffHeader = () => {
   const { auth } = useAuth();
+  const logOut = useLogout();
+
   console.log(auth);
   return (
     <div>
@@ -40,19 +43,22 @@ const StaffHeader = () => {
               </a>
             </li>
             <li>
-              {!auth ? (
+              {!auth?.accessToken ? (
                 <Link to={RouteObjects.Login}>
                   <Button className="bg-yellow-900">Login</Button>
                 </Link>
               ) : (
-                <Link to={RouteObjects.StudentDashboard}>
-                  <Avatar
-                    src="https://docs.material-tailwind.com/img/face-2.jpg"
-                    alt="avatar"
-                    withBorder={true}
-                    className="p-0.5"
-                  />
-                </Link>
+                <span>
+                  <Link to={RouteObjects.StudentDashboard}>
+                    <Avatar
+                      src="https://docs.material-tailwind.com/img/face-2.jpg"
+                      alt="avatar"
+                      withBorder={true}
+                      className="p-0.5"
+                    />
+                  </Link>
+                  <Button onClick={logOut}>Log out</Button>
+                </span>
               )}
             </li>
           </div>

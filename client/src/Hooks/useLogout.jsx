@@ -1,11 +1,17 @@
-import React from "react";
 import useAuth from "./useAuth";
+import { useNavigate } from "react-router-dom";
 
 const useLogout = () => {
   const { setAuth } = useAuth();
-  localStorage.removeItem("accessToken");
-  localStorage.removeItem("roles");
-  setAuth({});
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("roles");
+    setAuth({});
+    navigate("/");
+  };
+  return logout;
 };
 
 export default useLogout;
