@@ -1,11 +1,13 @@
-import SideNavbar from '../../../Components/Staff/SideNav/navBar'
+import SideNavbar from "../../../Components/Staff/SideNav/navBar";
+import StaffLibraryCardPage from "../../../Components/Staff/DashboardComponents/StaffLibraryCardPage";
 
 const Issuecards = () => {
   return (
-    <div>
-        <SideNavbar />
+    <div className="flex">
+      <SideNavbar />
+      <StaffLibraryCardPage />
     </div>
-  )
-}
+  );
+};
 
-export default Issuecards
+export default Issuecards;
