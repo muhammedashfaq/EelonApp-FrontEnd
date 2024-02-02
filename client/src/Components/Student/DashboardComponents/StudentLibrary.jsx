@@ -5,7 +5,9 @@ import {
   Typography,
   Button,
   Tooltip,
+  Alert,
 } from "@material-tailwind/react";
+import { useState } from "react";
 
 const TABLE_HEAD = ["SL NO","Book Name", "IssuedBy", "Date","Ref No" ,"Status"];
 
@@ -31,22 +33,26 @@ const TABLE_ROWS = [
   },
 ];
 const StudentLibrary = () => {
+  const [libraryCard,setLibraryCard] = useState(true)
+  const [open, setOpen] = useState(true);
   return (
     <div className="w-screen m-10 ">
 
+{libraryCard ?(
 
-      <div className="flex justify-center ">
+  
+  <div className="flex justify-center ">
         <Card className=" max-w-[50rem] flex-row bg-blue-gray-200">
           <CardHeader
             shadow={false}
             floated={false}
             className="m-0 w-2/5 shrink-0 rounded-r-none"
-          >
+            >
             <img
               src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg"
               alt="card-image"
               className="h-full w-full object-cover"
-            />
+              />
           </CardHeader>
           <CardBody className="w-full">
 
@@ -63,7 +69,7 @@ const StudentLibrary = () => {
               variant="h7"
               color="blue-gray"
               className="font-sm font-semibold"
-            >
+              >
               Name:
             </Typography>
             <hr className="m-2" />
@@ -72,7 +78,7 @@ const StudentLibrary = () => {
               variant="h7"
               color="blue-gray"
               className="font-sm font-semibold"
-            >
+              >
               Class:
             </Typography>
             <hr className="m-2" />
@@ -96,7 +102,7 @@ const StudentLibrary = () => {
               variant="h7"
               color="blue-gray"
               className="font-sm font-semibold"
-            >
+              >
               Issued Date:
             </Typography>
             <hr className="m-2" />
@@ -104,16 +110,29 @@ const StudentLibrary = () => {
           </CardBody>
         </Card>
       </div>
+):
+(
 
 
+   
+  
+  <Alert open={open} onClose={() => setOpen(false)}>
+There is no library card for the student.
 
-      <div
-      className="mt-16"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
+</Alert>
+
+) 
+}
+
+{libraryCard ?(
+
+  <div
+  className="mt-16"
+  style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
       >
         <div className="container xl">
           <h2 className="bg-dark-purple text-white rounded-md"
@@ -140,7 +159,7 @@ const StudentLibrary = () => {
                         variant="small"
                         color="blue-gray"
                         className="font-normal leading-none opacity-70"
-                      >
+                        >
                         {head}
                       </Typography>
                     </th>
@@ -188,7 +207,7 @@ const StudentLibrary = () => {
                           variant="small"
                           color="blue-gray"
                           className="font-normal"
-                        >
+                          >
                           {marks}
                         </Typography>
                       </td>
@@ -197,7 +216,7 @@ const StudentLibrary = () => {
                           variant="small"
                           color="blue-gray"
                           className="font-normal"
-                        >
+                          >
                           {head}
                         </Typography>
                       </td>
@@ -218,6 +237,7 @@ const StudentLibrary = () => {
           </Card>
         </div>
       </div>
+        ):""}
     </div>
   );
 };

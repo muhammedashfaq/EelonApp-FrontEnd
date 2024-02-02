@@ -1,14 +1,16 @@
 import SatffAddBookManagement from '../../../Components/Staff/DashboardComponents/SatffAddBookManagement'
-import SideNavbar from '../../../Components/Staff/SideNav/navBar'
+import StaffHeader from "../../../Components/Staff/Header/landingPageHeader"
 
 const AddBooks = () => {
-  return (
+  return (<div>
+
+        <StaffHeader />
     <div className='flex'>
-        <SideNavbar />
     
         <SatffAddBookManagement/>
     
     </div>
+  </div>
   )
 }
 

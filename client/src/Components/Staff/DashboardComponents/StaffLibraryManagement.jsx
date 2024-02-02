@@ -8,13 +8,12 @@ import {
   // import bookimage from './images/librarybooks.png'
 import { Link } from "react-router-dom";
 import { RouteObjects } from "../../../Routes/RoutObjects";
+import Banner from "../../Banner/Banner";
    
 const StaffLibraryManagement = () => {
   return (
     <div>
-      <div className="w-full bg-blue-700 h-20 flex justify-center" >
-LIBRARY
-      </div>
+      <Banner/>
      <div className="flex" >
       
     

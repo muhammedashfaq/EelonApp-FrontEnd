@@ -4,6 +4,7 @@ import { Avatar, Button } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
 import useLogout from "../../../Hooks/useLogout";
+import NavBar from "../SideNav/navBar";
 
 const StaffHeader = () => {
   const { auth } = useAuth();
@@ -61,6 +62,7 @@ const StaffHeader = () => {
                 </span>
               )}
             </li>
+                <NavBar />
           </div>
           <div className="flex justify-center items-center space-x-6">
             <li className="">

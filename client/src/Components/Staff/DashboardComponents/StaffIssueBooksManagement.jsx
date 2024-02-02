@@ -8,6 +8,7 @@ import {
   Textarea,
   Select,
   Option,
+  Alert,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import axios from "../../../api/axios";
@@ -15,8 +16,11 @@ import LibraryBooksAddModal from "./LibraryBooksAddModal";
 import LibraryIssueStudentModal from "./LibraryIssueStudentModal";
 import { hideloading, showloading } from "../../../Helper/Redux/alertSlice";
 import { useDispatch } from "react-redux";
+import Banner from "../../Banner/Banner";
 
 const StaffIssueBookManagement = () => {
+
+  const [alert,setAlert] =useState(false)
   const [bookData, setbookData] = useState();
   const [searchBookName, setSearchBookName] = useState();
   const [searchData, setsearchData] = useState();
@@ -40,9 +44,8 @@ const StaffIssueBookManagement = () => {
     getBooks();
   }, []);
 
-  const [open, setOpen] = useState(false);
-  const openDrawer = () => setOpen(true);
-  const closeDrawer = () => setOpen(false);
+  const [openAlert, setOpenAlert] = useState(true);
+
 
   const searchBook = async () => {
     try {
@@ -57,47 +60,20 @@ const StaffIssueBookManagement = () => {
   };
   return (
     <div className="w-full">
-      <div className=" bg-blue-700 h-20 flex justify-center">LIBRARY</div>
+      <Banner /> 
 
-      <Button onClick={openDrawer}>Open Drawer</Button>
-      <Drawer open={open} onClose={closeDrawer}>
-        <div className="flex items-center justify-between px-4 pb-2">
-          <Typography variant="h5" color="blue-gray">
-            Contact Us
-          </Typography>
-          <IconButton variant="text" color="blue-gray" onClick={closeDrawer}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="h-5 w-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </IconButton>
-        </div>
-        <div className="mb-5 px-4">
-          <Typography variant="small" color="gray" className="font-normal ">
-            Write the message and then click button.
-          </Typography>
-        </div>
-        <form className="flex flex-col gap-6 p-4">
-          <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Your Email
-          </Typography>
-          <Input type="email" label="Email" />
-          <Input label="Subject" />
-          <Textarea rows={6} label="Message" />
-          <Button>Send Message</Button>
-        </form>
-      </Drawer>
+{
+  alert && (
 
+    <Alert open={open} onClose={() => setOpenAlert(false)}>
+    There is no library card for the student.
+    
+    </Alert>  )
+}
+
+     
+
+      
       {/* <div className="flex justify-center">
 
       
@@ -365,9 +341,12 @@ const StaffIssueBookManagement = () => {
                             color="blue-gray"
                             className="font-normal"
                           >
+
+                            
                             <LibraryIssueStudentModal
+                              setAlert={setAlert}
                               bookId={data?._id}
-                              getBooks={getBooks}
+                              getBooks={searchBook}
                               currentlyIssued={data?.students?.currentlyIssued}
                             />
                           </Typography>
