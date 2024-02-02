@@ -187,9 +187,13 @@ const StaffLibraryCardPage = () => {
                             color="blue-gray"
                             className=" text-blue-900 border-l  "
                           >
-                            <StaffStudentLibrarycardModal
-                              studentData={searchData}
-                            />
+                            {searchData?.libCardStatus ? (
+                              <StaffStudentLibrarycardModal
+                                studentData={searchData}
+                              />
+                            ) : (
+                              <span>Card not issued</span>
+                            )}
                           </Typography>
                         </td>
                         <td class="p-4 border-b border-blue-gray-50">

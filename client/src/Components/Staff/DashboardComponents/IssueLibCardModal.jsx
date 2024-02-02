@@ -25,7 +25,6 @@ export default function IssueLibCardModal({
   const handleOpen = () => setOpen((cur) => !cur);
   const handleClose = () => {
     setOpen(false);
-    getStudents();
   };
 
   useEffect(() => {
@@ -41,6 +40,7 @@ export default function IssueLibCardModal({
         { libCardNo: libCdNo, libCardStatus: checkBx }
       );
       console.log(response);
+      getStudents();
       handleClose();
     } catch (error) {
       console.log(error.message);
