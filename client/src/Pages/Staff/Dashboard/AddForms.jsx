@@ -1,10 +1,10 @@
-import SideNavbar from '../../../Components/Staff/SideNav/navBar'
+import StaffHeader from "../../../Components/Staff/Header/landingPageHeader"
 
 const AddForms = () => {
   return (
     <div>
 
-<SideNavbar/>
+<StaffHeader/>
     </div>
   )
 }

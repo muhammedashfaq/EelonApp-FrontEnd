@@ -1,11 +1,14 @@
-import SideNavbar from "../../../Components/Staff/SideNav/navBar";
+import StaffHeader from "../../../Components/Staff/Header/landingPageHeader"
 import StaffIssueBookManagement from "../../../Components/Staff/DashboardComponents/StaffIssueBooksManagement";
 
 const IssueBooks = () => {
   return (
+    <div>
+
+      <StaffHeader />
     <div className="flex">
-      <SideNavbar />
       <StaffIssueBookManagement />
+    </div>
     </div>
   );
 };

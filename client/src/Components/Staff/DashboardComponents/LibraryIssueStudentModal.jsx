@@ -9,14 +9,18 @@ import {
   Typography,
   Input,
   Checkbox,
+  Alert,
 } from "@material-tailwind/react";
 import axios from "../../../api/axios";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function LibraryIssueStudentModal({
+  setAlert,
   bookId,
   getBooks,
   currentlyIssued,
+
 }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
@@ -38,6 +42,7 @@ export default function LibraryIssueStudentModal({
       const response = await axios.post(`/library/books/issuelist/${bookId}`, {
         studentId,
       });
+      setAlert(true)
       getBooks();
       handleClose();
     } catch (error) {
@@ -81,6 +86,7 @@ export default function LibraryIssueStudentModal({
       >
         Issue book
       </Button>
+      
       <Dialog
         size="xs"
         open={open}

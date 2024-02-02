@@ -1,11 +1,9 @@
-import SideNavbar from "../../../Components/Staff/SideNav/navBar";
-import StaffLibraryCardPage from "../../../Components/Staff/DashboardComponents/StaffLibraryCardPage";
+import StaffHeader from "../../../Components/Staff/Header/landingPageHeader"
 
 const Issuecards = () => {
   return (
-    <div className="flex">
-      <SideNavbar />
-      <StaffLibraryCardPage />
+    <div>
+        <StaffHeader />
     </div>
   );
 };

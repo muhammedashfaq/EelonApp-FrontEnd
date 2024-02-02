@@ -1,44 +1,77 @@
-import  { useState } from "react";
-import logo from "../assets/EelonLogo.png";
+  import React, { useState } from "react";
+  import {
+    Drawer,
+    Button,
+    Typography,
+    IconButton,
+  } from "@material-tailwind/react";
+  import { Link } from "react-router-dom";
+  import { RouteObjects } from "../Routes/RoutObjects";
+  
 const Test = () => {
-  const [open, setOpen] = useState(true);
+  // const [open, setOpen] = useState(true);
+
+  const [open, setOpen] = React.useState(false);
   const [submenuOpen, setOpenSubmenu] = useState(false);
   const menu = [
-    { title: "Dashboard" },
-    { title: "Dashboard" },
+    {
+      title: "Home",
+      icon: <span className="material-symbols-outlined">grid_view</span>,      href: RouteObjects.root,
+
+    },{
+      title: "Dashboard",
+      icon: <span className="material-symbols-outlined">grid_view</span>,
+    },
+    {
+      title: "Library",
+      icon: <span className="material-symbols-outlined">library_books</span>,
+      href: RouteObjects.Stafflibrary,
+    },
 
     {
-      title: "Dashboard",
+      title: "Students",
+      icon: <span className="material-symbols-outlined">
+      person
+      </span>,
       submenu: true,
 
       submenuItems: [
-        { title: "submenu1" },
-        { title: "submenu1" },
-        { title: "submenu1" },
-        { title: "submenu1" },
-        { title: "submenu1" },
+        { title: "Students List ", href: RouteObjects.StudentsList,icon:<span className="material-symbols-outlined">
+        person_add
+        </span> },
+        { title: "Add Student" , href: RouteObjects.AddStudent, },
+        { title: "Add Form Requirments", href: RouteObjects.RequireForms, },
+       
       ],
     },
-    { title: "Dashboard" },
-    { title: "Dashboard" },
-    { title: "Dashboard" },
-    { title: "Logout" },
+    {
+      title: "Dashboard",
+      icon: <span className="material-symbols-outlined">library_books</span>,
+    },
+    {
+      title: "Dashboard",
+      icon: <span className="material-symbols-outlined">library_books</span>,
+    },
+    {
+      title: "Dashboard",
+      icon: <span className="material-symbols-outlined">library_books</span>,
+    },
+    {
+      title: "Logout",
+      icon: <span className="material-symbols-outlined">library_books</span>,
+    },
   ];
+ 
+  const openDrawer = () => setOpen(true);
+  const closeDrawer = () => setOpen(false);
   return (
-    <div className="flex">
-      <div
-        className={` bg-dark-purple h-screen p-5 pt-8 ${
-          open ? "w-72" : "w-28"
-        } duration-300 relative`}
-      >
-        <span
-          onClick={() => setOpen(!open)}
-          className={`material-symbols-outlined bg-white text-dark-purple text-1xl rounded-full absolute -right-3 broder border  cursor-pointer ${
-            !open && "rotate-180"
-          }`}
-        >
-          arrow_back
-        </span>
+    <div>
+      <Button onClick={openDrawer}>Open Drawer</Button>
+      <Drawer open={open} onClose={closeDrawer} className="p-4 bg-dark-purple">
+        
+        
+
+        {/*         
         <div className="inline-flex ">
           <div className="flex items-center">
             <img
@@ -67,26 +100,26 @@ const Test = () => {
               !open && "hidden"
             }`}
           />
-        </div>
+        </div> */}
 
         <ul className="pt-2">
           {menu.map((item, index) => (
             <li
-              className={`text-gray-300 text-sm flex flex-col cursor-pointer p-2 hover:bg-blue-gray-500 rounded-md mt-2 relative`}
+              className={`text-gray-200 text-sm flex flex-col cursor-pointer p-2 hover:bg-deep-orange-500 rounded-md mt-2 relative`}
               key={index}
             >
               <div className="flex items-center gap-x-4">
-                <span className="material-symbols-outlined float-left text-2xl">
-                  widgets
-                </span>
+                {item.icon}
 
-                <span
-                  className={`duration-200 flex-1 ${
-                    !open && "hidden "
-                  } text-base font-medium`}
-                >
-                  {item.title}
-                </span>
+                <Link to={item.href}>
+                  <span
+                    className={`duration-200 flex-1 ${
+                      !open && "hidden "
+                    } text-base font-medium`}
+                  >
+                    {item.title}
+                  </span>
+                </Link>
 
                 {item.submenuItems && (
                   <span
@@ -99,13 +132,19 @@ const Test = () => {
               </div>
 
               {item.submenuItems && submenuOpen && open && (
-                <ul className=" left-full top-0 mt-2 bg-white rounded-md shadow-md">
+                <ul className=" ">
                   {item.submenuItems.map((subitems, i) => (
+                    
                     <li
-                      className={`text-gray-700 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-blue-gray-100`}
-                      key={i}
+                    className={` text-sm flex items-center gap-x-8 cursor-pointer p-3 hover:bg-blue-500 rounded-lg text-white`}
+                    key={i}
                     >
+                    <Link to={subitems.href}>
+                      <span>
+
                       {subitems.title}
+                      </span>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -113,13 +152,11 @@ const Test = () => {
             </li>
           ))}
         </ul>
-      </div>
+    
 
-      <div className="p-7">
-        <h1>jhdfjh</h1>
-      </div>
+      </Drawer>
     </div>
-  );
-};
+  )
+}
 
-export default Test;
+export default Test

@@ -1,12 +1,15 @@
 import React from 'react'
 import AddStudent from '../../../Components/Staff/DashboardComponents/AddStudent'
-import SideNavbar from '../../../Components/Staff/SideNav/navBar'
+import StaffHeader from "../../../Components/Staff/Header/landingPageHeader"
 
 const AddStudents = () => {
   return (
+    <div>
+
+        <StaffHeader/>
     <div className='flex'>
-        <SideNavbar/>
         <AddStudent/>
+    </div>
     </div>
   )
 }
