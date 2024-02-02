@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Button,
   Dialog,
@@ -13,13 +13,24 @@ import {
 import axios from "../../../api/axios";
 import { useState } from "react";
 
-export default function LibraryIssueStudentModal({ bookId, getBooks }) {
+export default function LibraryIssueStudentModal({
+  bookId,
+  getBooks,
+  currentlyIssued,
+}) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const handleClose = () => setOpen(false);
   const [studentId, setstudentId] = useState();
+  const [searchData, setsearchData] = useState();
+  const [checked, setchecked] = useState();
+
+  useEffect(() => {
+    console.log(checked);
+  }, [checked]);
 
   const issuebook = async () => {
+    if (!checked) return;
     try {
       const response = await axios.post(`/library/books/issuelist/${bookId}`, {
         studentId,
@@ -30,6 +41,34 @@ export default function LibraryIssueStudentModal({ bookId, getBooks }) {
       console.log(error);
     }
   };
+
+  const unIssuebook = async () => {
+    if (!checked) return;
+    try {
+      const response = await axios.post(
+        `/library/books/issuelist/${bookId}`,
+        {}
+      );
+      getBooks();
+      handleClose();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const searchStudent = async () => {
+    try {
+      const response = await axios.get(`users/student/search/${studentId}`);
+      console.log(response);
+      setsearchData(response.data);
+      setstudentId(response.data.email);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    console.log(searchData);
+  }, [searchData]);
 
   return (
     <>
@@ -66,11 +105,42 @@ export default function LibraryIssueStudentModal({ bookId, getBooks }) {
               size="lg"
               onChange={(e) => setstudentId(e.target.value)}
             />
+            <Button variant="gradient" onClick={searchStudent} fullWidth>
+              Search student
+            </Button>
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" onClick={issuebook} fullWidth>
-              Issue book
-            </Button>
+            {searchData && (
+              <>
+                <div
+                  style={{
+                    border: "1px solid gray",
+                    borderRadius: "5px",
+                    padding: "10px",
+                    display: "flex",
+                    justifyContent: "space-evenly",
+                  }}
+                >
+                  <span className="pt-2">{searchData.email}</span>
+                  <span>
+                    <Checkbox
+                      value={checked}
+                      onChange={(e) => setchecked(e.target.checked)}
+                    />
+                  </span>
+                </div>
+                <br />
+              </>
+            )}
+            {currentlyIssued === studentId ? (
+              <Button variant="gradient" onClick={unIssuebook} fullWidth>
+                <span>Remove student from issue list</span>
+              </Button>
+            ) : (
+              <Button variant="gradient" onClick={issuebook} fullWidth>
+                <span>Issue book</span>
+              </Button>
+            )}
           </CardFooter>
         </Card>
       </Dialog>

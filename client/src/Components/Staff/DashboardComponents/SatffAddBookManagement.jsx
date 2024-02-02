@@ -41,29 +41,25 @@ const SatffAddBookManagement = () => {
   return (
     <div className="w-full">
       <div className=" bg-blue-700 h-20 flex justify-center">LIBRARY</div>
-     
-      <div
-        className=" m-20">
+
+      <div className=" m-20">
         <div className=" w-full h-auto  flex justify-around mb-2 border-2 p-1 rounded-lg shadow-md">
-
-        <div className="w-72">
-      <Select label="Select Version" >
-        <Option>Genre</Option>
-        <Option>Auther</Option>
-        <Option>Language</Option>
-    
-      </Select>
-    </div>
-        <div className="w-full md:w-72">
-              <Input
-                label="Search"
-                // icon={<MagnifyingGlassIco className="h-5 w-5" />}
-              />
-            </div>
-            <div>
-
-          <LibraryBooksAddModal getBooks={getBooks} />
-            </div>
+          <div className="w-72">
+            <Select label="Select Version">
+              <Option>Genre</Option>
+              <Option>Auther</Option>
+              <Option>Language</Option>
+            </Select>
+          </div>
+          <div className="w-full md:w-72">
+            <Input
+              label="Search"
+              // icon={<MagnifyingGlassIco className="h-5 w-5" />}
+            />
+          </div>
+          <div>
+            <LibraryBooksAddModal getBooks={getBooks} />
+          </div>
         </div>
 
         <div className="container xl">
@@ -172,7 +168,7 @@ const SatffAddBookManagement = () => {
                   </th> */}
                 </tr>
               </thead>
-              <tbody >
+              <tbody>
                 {bookData &&
                   bookData.map((data, index) => {
                     const isLast = index === bookData.length - 1;
@@ -316,8 +312,6 @@ const SatffAddBookManagement = () => {
             </table>
           </Card>
         </div>
-
-
       </div>
     </div>
   );
