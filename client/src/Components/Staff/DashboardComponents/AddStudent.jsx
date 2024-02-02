@@ -2,9 +2,9 @@ import { Button, Input, Option, Select } from "@material-tailwind/react";
 
 const AddStudent = () => {
   return (
-    <div>
-      <div className="m-10 border-2 rounded-lg shadow-lg">
-        <div className=" flex flex-wrap gap-6 p-10 lg:grid lg:grid-cols-4 ">
+    <div className="flex justify-center">
+      <div className=" border-2 rounded-lg shadow-lg  ">
+        <div className=" flex flex-wrap gap-2 p-8 lg:grid lg:grid-cols-5 ">
           <Input
             type="file"
             variant="standard"
@@ -103,10 +103,10 @@ const AddStudent = () => {
             label="Guardian's Occupation"
             placeholder="Guardian's Occupation"
           />
-          Annual Income{" "}
+        
           <Input
             variant="standard"
-            label="Standard"
+            label="Annual Income"
             placeholder="Annual Income"
           />
           <Input variant="standard" label="Weight" placeholder="Weight" />

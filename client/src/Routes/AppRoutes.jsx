@@ -20,6 +20,9 @@ import AddBooks from "../Pages/Staff/Dashboard/AddBooks";
 import IssueBooks from "../Pages/Staff/Dashboard/IssueBooks";
 import Issuecards from "../Pages/Staff/Dashboard/Issuecards";
 import StudentLibrary from '../Pages/Student/Dashboard/SudentLibrary'
+import AddStudents from "../Pages/Staff/Dashboard/AddStudents";
+import StudentsList from "../Pages/Staff/Dashboard/StudentsList";
+import AddForms from "../Pages/Staff/Dashboard/AddForms";
 
 const AppRoutes = () => {
   const { loading } = useSelector((state) => state.alerts);
@@ -48,11 +51,18 @@ const AppRoutes = () => {
         <Route path={RouteObjects.StudentLibrary} element={<StudentLibrary/>} />
 
 
+
         <Route path={RouteObjects.StaffDashboard} element={<StaffDashBoard/>} />
         <Route path={RouteObjects.Stafflibrary} element={<LibraryManagemnet/>} />
         <Route path={RouteObjects.Bookmanagment} element={<AddBooks/>} />
         <Route path={RouteObjects.Issuebooks} element={<IssueBooks/>} />
         <Route path={RouteObjects.Issuecards} element={<Issuecards/>} />
+        <Route path={RouteObjects.StudentsList} element={<StudentsList/>} />
+
+        <Route path={RouteObjects.AddStudent} element={<AddStudents/>} />
+        <Route path={RouteObjects.RequireForms} element={<AddForms/>} />
+
+
         <Route
           path={RouteObjects.AdminStudentPage}
           element={<AdminStudentPage />}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { hideloading, showloading } from "../Helper/Redux/alertSlice.jsx";
 import loginimage from "../assets/login-resized.jpg";
 import {
   Card,
@@ -16,8 +17,10 @@ import { LoginUserTab } from "./LoginUserSelectTab.jsx";
 import LoginUserSelectButton from "./LoginUserSelectButton.jsx";
 import useAuth from "../Hooks/useAuth.jsx";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [user, setUser] = useState("");
   const [errors, setError] = useState([]);
   const [userType, setuserType] = useState();
@@ -43,8 +46,10 @@ const Login = () => {
       e.preventDefault();
       seterrorMsg("");
       const type = userType.toLowerCase();
+      dispatch(showloading());
       const response = await axios.post(`/auth/${type}`, formData);
-      console.log(response);
+      dispatch(hideloading());
+
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
       // setAuth({ accessToken, roles });
@@ -69,6 +74,7 @@ const Login = () => {
         }
       }
     } catch (error) {
+      dispatch(hideloading());
       console.log(error);
       if (!error?.response) {
         seterrorMsg("No server response");
