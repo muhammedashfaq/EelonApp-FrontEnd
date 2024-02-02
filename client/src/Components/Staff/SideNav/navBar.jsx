@@ -53,7 +53,7 @@ const Navbar = () => {
   return (
     <div className="flex">
       <div
-        className={` bg-dark-purple h-screen p-5 pt-8 ${
+        className={` bg-dark-purple h-screen shadow-xl p-5 pt-8 ${
           open ? "w-48" : "w-28"
         } duration-300 relative`}
       >
