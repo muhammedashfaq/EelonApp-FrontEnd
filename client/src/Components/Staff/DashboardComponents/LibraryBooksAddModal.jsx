@@ -56,7 +56,7 @@ export default function LibraryBooksAddModal({ getBooks }) {
       dispatch(showloading());
       const response = await axios.post("/library/books", data);
       dispatch(hideloading());
-      
+
       handleClose();
     } catch (error) {
       dispatch(hideloading());
@@ -96,13 +96,25 @@ export default function LibraryBooksAddModal({ getBooks }) {
                 onChange={(e) => setAuthor(e.target.value)}
                 value={author}
               />
-              <Input
+              {/* <Input
                 variant="standard"
                 label="Genre"
                 placeholder="Enter book genre"
                 onChange={(e) => setgenre(e.target.value)}
                 value={genre}
-              />
+              /> */}
+              <Select
+                variant="standard"
+                label="Select genre"
+                onChange={(e) => setgenre(e)}
+              >
+                <Option value="Story">Story</Option>
+                <Option value="Poem">Poem</Option>
+                <Option value="Biography">Biography</Option>
+                <Option value="Mystery">Mystery</Option>
+                <Option value="Fiction">Fiction</Option>
+                <Option value="Non-fiction">Non-fiction</Option>
+              </Select>
 
               <Input
                 variant="standard"

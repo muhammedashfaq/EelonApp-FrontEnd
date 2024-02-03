@@ -24,6 +24,13 @@ const SatffAddBookManagement = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [bookData, setbookData] = useState();
+  const [genre, setgenre] = useState();
+  const [searchQuery, setsearchQuery] = useState();
+  const [searchData, setsearchData] = useState();
+
+  useEffect(() => {
+    console.log(genre);
+  }, [genre]);
 
   const getBooks = async () => {
     try {
@@ -42,23 +49,48 @@ const SatffAddBookManagement = () => {
     getBooks();
   }, []);
 
+  const getBookByName = async (e) => {
+    e.preventDefault();
+    try {
+      if (!searchQuery) return;
+      const response = await axios.get(
+        `library/books/issuelist/search/${searchQuery}`
+      );
+      console.log(response.data);
+      setsearchData(response.data);
+      setbookData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="w-full">
       <Banner />
       <div className=" m-20">
         <div className=" w-full h-auto  flex justify-around mb-2 border-2 p-1 rounded-lg shadow-md">
           <div className="w-72">
-            <Select label="Select Version">
-              <Option>Genre</Option>
-              <Option>Auther</Option>
-              <Option>Language</Option>
+            <Select label="Select Genre" onChange={(e) => setgenre(e)}>
+              <Option value="Story">Story</Option>
+              <Option value="Poem">Poem</Option>
+              <Option value="Biography">Biography</Option>
+              <Option value="Mystery">Mystery</Option>
+              <Option value="Fiction">Fiction</Option>
+              <Option value="Non-fiction">Non-fiction</Option>
             </Select>
           </div>
-          <div className="w-full md:w-72">
-            <Input
-              label="Search"
-              // icon={<MagnifyingGlassIco className="h-5 w-5" />}
-            />
+          <div className="w-full md:w-72 flex">
+            <form onSubmit={getBookByName}>
+              <Input
+                label="Search books"
+                onChange={(e) => setsearchQuery(e.target.value)}
+                value={searchQuery}
+                // icon={<MagnifyingGlassIco className="h-5 w-5" />}
+              />
+            </form>
+            <Button variant="text" onClick={getBooks}>
+              Reset
+            </Button>
           </div>
           <div>
             <LibraryBooksAddModal getBooks={getBooks} />
@@ -293,25 +325,31 @@ const SatffAddBookManagement = () => {
                                   color="blue-gray"
                                   className="mb-2"
                                 >
-                                  Book Name:
+                                  Book Name: {data?.bookName}
                                 </Typography>
                                 <Typography
                                   color="gray"
                                   className="mb-3 font-normal"
                                 >
-                                  Genre
+                                  Author: {data?.author}
                                 </Typography>
                                 <Typography
                                   color="gray"
                                   className="mb-3 font-normal"
                                 >
-                                  Ref No:
+                                  Genre: {data?.genre}
+                                </Typography>
+                                <Typography
+                                  color="gray"
+                                  className="mb-3 font-normal"
+                                >
+                                  Ref No: {data?.refNo}
                                 </Typography>
                                 <Typography
                                   color="gray"
                                   className="mb-8 font-normal"
                                 >
-                                  Description
+                                  Description: {data?.description}
                                 </Typography>
                               </CardBody>
                             </Card>
