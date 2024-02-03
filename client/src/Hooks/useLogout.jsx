@@ -10,6 +10,8 @@ const useLogout = () => {
     localStorage.removeItem("roles");
     setAuth({});
     navigate("/");
+    location.reload()
+
   };
   return logout;
 };

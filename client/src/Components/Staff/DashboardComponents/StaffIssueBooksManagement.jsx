@@ -14,7 +14,6 @@ import { useEffect, useState } from "react";
 import axios from "../../../api/axios";
 import LibraryBooksAddModal from "./LibraryBooksAddModal";
 import LibraryIssueStudentModal from "./LibraryIssueStudentModal";
-import { hideloading, showloading } from "../../../Helper/Redux/alertSlice";
 import { useDispatch } from "react-redux";
 import Banner from "../../Banner/Banner";
 
@@ -30,10 +29,8 @@ const StaffIssueBookManagement = () => {
 
   const getBooks = async () => {
     try {
-      dispatch(showloading());
 
       const response = await axios.get("/library/books");
-      dispatch(hideloading());
       setbookData(response.data);
       console.log(response.data);
     } catch (error) {

@@ -25,11 +25,10 @@ import StudentsList from "../Pages/Staff/Dashboard/StudentsList";
 import AddForms from "../Pages/Staff/Dashboard/AddForms";
 
 const AppRoutes = () => {
-  const { loading } = useSelector((state) => state.alerts);
-
+  const isLoading = useSelector((state) => state.loading.isLoading);  
   return (
     <div>
-      {loading && (
+      {isLoading && (
         <div className="flex justify-center items-center bg-slate-950 opacity-60 fixed top-0 left-0 w-full h-full z-50 space-x-3">
           <div className="w-4 h-4 rounded-full  animate-pulse dark:bg-white"></div>
           <div className="w-4 h-4 rounded-full  animate-pulse dark:bg-white"></div>

@@ -5,23 +5,28 @@ import { Link } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
 import useLogout from "../../../Hooks/useLogout";
 import NavBar from "../SideNav/navBar";
+import { useUserContext } from "../../../Context/userContext";
+// import Test from "../../Test";
+import UserAvatar from "./UserAvatar";
 
 const StaffHeader = () => {
   const { auth } = useAuth();
   const logOut = useLogout();
+  const { userRoles } = useUserContext();
+
 
   console.log(auth);
   return (
     <div>
       <div className=" p-4 shadow-md">
         <ul className="flex justify-between items-start space-x-6 pr-8">
-          <div>
-            <li className="mr-auto">
-              <Link to="/">
-                <img src={logoimage} className="w-16" />
-              </Link>
-            </li>
-          </div>
+            <div>
+              <li className="mr-auto">
+                <Link to="/">
+                  <img src={logoimage} className="w-16" />
+                </Link>
+              </li>
+            </div>
           <div className="flex justify-center items-center space-x-6">
             <li>
               <a className="hover:text-blue-400" href="#">
@@ -40,29 +45,23 @@ const StaffHeader = () => {
             </li>
             <li>
               <a className="hover:text-blue-400" href="#">
-                Contact
+                Contact  {userRoles}
               </a>
             </li>
             <li>
               {auth?.accessToken ? (
-                <span>
-                  <Link to={RouteObjects.StudentDashboard}>
-                    <Avatar
-                      src="https://docs.material-tailwind.com/img/face-2.jpg"
-                      alt="avatar"
-                      withBorder={true}
-                      className="p-0.5"
-                    />
-                  </Link>
-                  <Button onClick={logOut}>Log out</Button>
-                </span>
-              ) : (
+                  ""           ) : (
                 <Link to={RouteObjects.Login}>
                   <Button className="bg-yellow-900">Login</Button>
                 </Link>
               )}
             </li>
-            <NavBar />
+            {
+              userRoles == 5151 &&(
+
+                <NavBar />
+              )
+            }
 
           </div>
           <div className="flex justify-center items-center space-x-6">
@@ -77,9 +76,22 @@ const StaffHeader = () => {
               </a>
             </li>
             <li className="">
-              <a className="hover:text-blue-400" href="#">
-                Contact
-              </a>
+              {userRoles ==5151 ?(
+            <UserAvatar dash ={""} />
+
+                ):userRoles ==999 ?(
+                  
+                  <UserAvatar dash={RouteObjects.StudentDashboard} />
+
+
+              ):userRoles == 200 ?(
+                <UserAvatar dash ={""}/>
+
+
+              ):""
+
+              }
+              
             </li>
 
             <li>
@@ -92,6 +104,7 @@ const StaffHeader = () => {
           </div>
         </ul>
       </div>
+       
     </div>
   );
 };
