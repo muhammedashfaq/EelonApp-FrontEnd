@@ -1,4 +1,4 @@
-import { PencilIcon } from "@heroicons/react/24/solid"
+import { PencilIcon } from "@heroicons/react/24/solid";
 import {
   Card,
   Typography,
@@ -18,6 +18,8 @@ import LibraryBooksAddModal from "./LibraryBooksAddModal";
 import { hideloading, showloading } from "../../../Helper/Redux/alertSlice";
 import { useDispatch } from "react-redux";
 import Banner from "../../Banner/Banner";
+import LIbraryBookDetailsModal from "./LIbraryBookDetailsModal";
+import LibraryEditBooksModal from "./LibraryEditBooksModal";
 
 const SatffAddBookManagement = () => {
   const dispatch = useDispatch();
@@ -28,10 +30,6 @@ const SatffAddBookManagement = () => {
   const [searchQuery, setsearchQuery] = useState();
   const [searchData, setsearchData] = useState();
 
-  useEffect(() => {
-    console.log(genre);
-  }, [genre]);
-
   const getBooks = async () => {
     try {
       // dispatch(showloading());
@@ -39,7 +37,6 @@ const SatffAddBookManagement = () => {
       // dispatch(hideloading());
 
       setbookData(response.data);
-      console.log(response.data);
     } catch (error) {
       dispatch(hideloading());
       console.log(error);
@@ -56,7 +53,6 @@ const SatffAddBookManagement = () => {
       const response = await axios.get(
         `library/books/issuelist/search/${searchQuery}`
       );
-      console.log(response.data);
       setsearchData(response.data);
       setbookData(response.data);
     } catch (error) {
@@ -304,65 +300,15 @@ const SatffAddBookManagement = () => {
                           </Typography>
                         </td>
                         <td className={classes}>
-                          <Button onClick={handleOpen}>Info</Button>
-
-                          <Dialog open={open} handler={handleOpen}>
-                            <Card className="w-full max-w-[48rem] flex-row">
-                              <CardHeader
-                                shadow={false}
-                                floated={false}
-                                className="m-0 w-2/5 shrink-0 rounded-r-none"
-                              >
-                                <img
-                                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80"
-                                  alt="card-image"
-                                  className="h-full w-full object-cover"
-                                />
-                              </CardHeader>
-                              <CardBody>
-                                <Typography
-                                  variant="h4"
-                                  color="blue-gray"
-                                  className="mb-2"
-                                >
-                                  Book Name: {data?.bookName}
-                                </Typography>
-                                <Typography
-                                  color="gray"
-                                  className="mb-3 font-normal"
-                                >
-                                  Author: {data?.author}
-                                </Typography>
-                                <Typography
-                                  color="gray"
-                                  className="mb-3 font-normal"
-                                >
-                                  Genre: {data?.genre}
-                                </Typography>
-                                <Typography
-                                  color="gray"
-                                  className="mb-3 font-normal"
-                                >
-                                  Ref No: {data?.refNo}
-                                </Typography>
-                                <Typography
-                                  color="gray"
-                                  className="mb-8 font-normal"
-                                >
-                                  Description: {data?.description}
-                                </Typography>
-                              </CardBody>
-                            </Card>
-                          </Dialog>
+                          <LIbraryBookDetailsModal data={data} />
                         </td>
 
                         <td className={classes}>
-                      <Tooltip content="Edit Book">
-                        <IconButton variant="text">
-                          <PencilIcon className="h-4 w-4" />
-                        </IconButton>
-                      </Tooltip>
-                    </td>
+                          <LibraryEditBooksModal
+                            data={data}
+                            getBooks={getBooks}
+                          />
+                        </td>
                       </tr>
                     );
                   })}
