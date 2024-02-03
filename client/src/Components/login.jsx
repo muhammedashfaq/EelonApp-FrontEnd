@@ -56,16 +56,17 @@ const Login = () => {
     try {
       e.preventDefault();
 
-      seterrorMsg("");
       const type = userType.toLowerCase();
 
       const error = loginValidate(formData.email);
-      setFrntError(error);
-      if (Object.values(error).every((value) => value === "")) {
+      if (!Object.values(error).every((value) => value === "")) {
+        setFrntError(error);
+        return;
+      } else {
         setIsLoading(true);
         const response = await axios.post(`/auth/${type}`, formData);
         setIsLoading(false);
-        
+
         const accessToken = response?.data?.accessToken;
         const roles = response?.data?.roles;
         setUserRoles(roles);
@@ -100,7 +101,6 @@ const Login = () => {
   return (
     <div>
       {isLoading && <Spinner />}
-      
 
       <div className="shadow-md p-0 flex justify-center ">
         <img src={logoImage} className="w-25 h-20 p-2 cursor-pointer" />
@@ -117,19 +117,19 @@ const Login = () => {
                 />
               </div>
               <div className="bg-cyan-600 p-8 rounded-r-lg">
-                    <div>
-                      {FrntError.email && (
-                        <Alert color="red" variant="ghost" >{FrntError.email}</Alert>
-                      )}
-                    </div>
+                <div>
+                  {FrntError.email && (
+                    <Alert color="red" variant="ghost">
+                      {FrntError.email}
+                    </Alert>
+                  )}
+                </div>
                 <Card color="transparent" shadow={false} className="">
                   <div className=" flex justify-center ">
                     <Typography variant="h2" color="blue-gray" className="">
                       {userType && `${userType} `}Sign In
                     </Typography>
                   </div>
-                
-                
 
                   <form
                     onSubmit={handleSubmit}
@@ -162,29 +162,43 @@ const Login = () => {
                         </div>
                       </div>
 
-                      <Input
-                        size="lg"
-                        name="email"
-                        placeholder="Enter Your Mail"
-                        onChange={handleInputChange}
-                        className=" border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md bg-cyan-200"
-                        labelProps={{
-                          className: "before:content-none after:content-none",
-                        }}
-                      />
+                      {FrntError.email ? (
 
-                      <Input
-                        type="password"
-                        size="lg"
-                        name="password"
-                        placeholder="Enter Password"
-                        onChange={handleInputChange}
-                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md  bg-cyan-200"
-                        labelProps={{
-                          className: "before:content-none after:content-none",
-                        }}
-                      />
-                    </div>
+                        <Input error/>
+                        ):(
+                          <Input
+    
+                            size="lg"
+                            name="email"
+                            placeholder="Enter Your Mail"
+                            onChange={handleInputChange}
+                            className=" border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md bg-cyan-200"
+                            labelProps={{
+                              className: "before:content-none after:content-none",
+                            }}
+                          />
+
+                        )
+                      }
+                { FrntError.password ?(
+
+                  <Input error />
+                ):(
+
+                  <Input
+                  type="password"
+                  size="lg"
+                  name="password"
+                  placeholder="Enter Password"
+                  onChange={handleInputChange}
+                  className=" !border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md  bg-cyan-200"
+                  labelProps={{
+                    className: "before:content-none after:content-none",
+                  }}
+                  />
+                  )
+                }
+                </div>
 
                     <Button
                       className="mt-6 w-full bg-red-400 hover:bg-red-500  p-2 font-semibold text-white rounded-md"
