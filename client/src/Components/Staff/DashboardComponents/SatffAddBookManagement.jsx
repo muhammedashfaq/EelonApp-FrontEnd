@@ -15,7 +15,6 @@ import {
 import { useEffect, useState } from "react";
 import axios from "../../../api/axios";
 import LibraryBooksAddModal from "./LibraryBooksAddModal";
-import { hideloading, showloading } from "../../../Helper/Redux/alertSlice";
 import { useDispatch } from "react-redux";
 import Banner from "../../Banner/Banner";
 import LIbraryBookDetailsModal from "./LIbraryBookDetailsModal";
@@ -38,7 +37,6 @@ const SatffAddBookManagement = () => {
 
       setbookData(response.data);
     } catch (error) {
-      dispatch(hideloading());
       console.log(error);
     }
   };

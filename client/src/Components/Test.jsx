@@ -1,161 +1,102 @@
-  import React, { useState } from "react";
-  import {
-    Drawer,
-    Button,
-    Typography,
-    IconButton,
-  } from "@material-tailwind/react";
-  import { Link } from "react-router-dom";
-  import { RouteObjects } from "../Routes/RoutObjects";
-  
+import {
+  UserCircleIcon,
+  ChevronDownIcon,
+  Cog6ToothIcon,
+  InboxArrowDownIcon,
+  LifebuoyIcon,
+  PowerIcon,
+} from "@heroicons/react/24/solid";
+import {
+  Typography,
+  Button,
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+  Avatar,
+} from "@material-tailwind/react";
+import { createElement, useState } from "react";
+
+
+const profileMenuItems = [
+  {
+    label: "My Profile",
+    icon: UserCircleIcon,
+  },
+  {
+    label: "Edit Profile",
+    icon: Cog6ToothIcon,
+  },
+  {
+    label: "Inbox",
+    icon: InboxArrowDownIcon,
+  },
+  {
+    label: "Help",
+    icon: LifebuoyIcon,
+  },
+  {
+    label: "Sign Out",
+    icon: PowerIcon,
+  },
+];
 const Test = () => {
-  // const [open, setOpen] = useState(true);
-
-  const [open, setOpen] = React.useState(false);
-  const [submenuOpen, setOpenSubmenu] = useState(false);
-  const menu = [
-    {
-      title: "Home",
-      icon: <span className="material-symbols-outlined">grid_view</span>,      href: RouteObjects.root,
-
-    },{
-      title: "Dashboard",
-      icon: <span className="material-symbols-outlined">grid_view</span>,
-    },
-    {
-      title: "Library",
-      icon: <span className="material-symbols-outlined">library_books</span>,
-      href: RouteObjects.Stafflibrary,
-    },
-
-    {
-      title: "Students",
-      icon: <span className="material-symbols-outlined">
-      person
-      </span>,
-      submenu: true,
-
-      submenuItems: [
-        { title: "Students List ", href: RouteObjects.StudentsList,icon:<span className="material-symbols-outlined">
-        person_add
-        </span> },
-        { title: "Add Student" , href: RouteObjects.AddStudent, },
-        { title: "Add Form Requirments", href: RouteObjects.RequireForms, },
-       
-      ],
-    },
-    {
-      title: "Dashboard",
-      icon: <span className="material-symbols-outlined">library_books</span>,
-    },
-    {
-      title: "Dashboard",
-      icon: <span className="material-symbols-outlined">library_books</span>,
-    },
-    {
-      title: "Dashboard",
-      icon: <span className="material-symbols-outlined">library_books</span>,
-    },
-    {
-      title: "Logout",
-      icon: <span className="material-symbols-outlined">library_books</span>,
-    },
-  ];
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
  
-  const openDrawer = () => setOpen(true);
-  const closeDrawer = () => setOpen(false);
+  const closeMenu = () => setIsMenuOpen(false);
   return (
-    <div>
-      <Button onClick={openDrawer}>Open Drawer</Button>
-      <Drawer open={open} onClose={closeDrawer} className="p-4 bg-dark-purple">
-        
-        
-
-        {/*         
-        <div className="inline-flex ">
-          <div className="flex items-center">
-            <img
-              src={logo}
-              className={`w-20 h-20 ${open && "rotate-[360deg]"}`}
-            />
-            <h1
-              className={`text-white origin-left font-medium m-1 text-3xl  ${
-                !open && "scale-0"
-              }`}
-            >
-              Eelon App
-            </h1>
-          </div>
-        </div>
-        <div
-          className={`flex items-center rounded-lg bg-blue-gray-500  mt-6 ${
-            open ? "px-2.5" : "px-4"
-          } py-2`}
-        >
-          <span className="material-symbols-outlined">search</span>{" "}
-          <input
-            type={"search"}
-            placeholder="search"
-            className={`text-base bg-transparent w-full text-white focus:outline-none ${
-              !open && "hidden"
+    <div><Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
+    <MenuHandler>
+      <Button
+        variant="text"
+        color="blue-gray"
+        className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
+      >
+        <Avatar
+          variant="circular"
+          size="sm"
+          alt="tania andrew"
+          className="border border-gray-900 p-0.5"
+          src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+        />
+        <ChevronDownIcon
+          strokeWidth={2.5}
+          className={`h-3 w-3 transition-transform ${
+            isMenuOpen ? "rotate-180" : ""
+          }`}
+        />
+      </Button>
+    </MenuHandler>
+    <MenuList className="p-1">
+      {profileMenuItems.map(({ label, icon }, key) => {
+        const isLastItem = key === profileMenuItems.length - 1;
+        return (
+          <MenuItem
+            key={label}
+            onClick={closeMenu}
+            className={`flex items-center gap-2 rounded ${
+              isLastItem
+                ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                : ""
             }`}
-          />
-        </div> */}
-
-        <ul className="pt-2">
-          {menu.map((item, index) => (
-            <li
-              className={`text-gray-200 text-sm flex flex-col cursor-pointer p-2 hover:bg-deep-orange-500 rounded-md mt-2 relative`}
-              key={index}
+          >
+            {createElement(icon, {
+              className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
+              strokeWidth: 2,
+            })}
+            <Typography
+              as="span"
+              variant="small"
+              className="font-normal"
+              color={isLastItem ? "red" : "inherit"}
             >
-              <div className="flex items-center gap-x-4">
-                {item.icon}
-
-                <Link to={item.href}>
-                  <span
-                    className={`duration-200 flex-1 ${
-                      !open && "hidden "
-                    } text-base font-medium`}
-                  >
-                    {item.title}
-                  </span>
-                </Link>
-
-                {item.submenuItems && (
-                  <span
-                    className="material-symbols-outlined"
-                    onClick={() => setOpenSubmenu(!submenuOpen)}
-                  >
-                    {submenuOpen && open ? "expand_less" : "expand_more"}
-                  </span>
-                )}
-              </div>
-
-              {item.submenuItems && submenuOpen && open && (
-                <ul className=" ">
-                  {item.submenuItems.map((subitems, i) => (
-                    
-                    <li
-                    className={` text-sm flex items-center gap-x-8 cursor-pointer p-3 hover:bg-blue-500 rounded-lg text-white`}
-                    key={i}
-                    >
-                    <Link to={subitems.href}>
-                      <span>
-
-                      {subitems.title}
-                      </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
-        </ul>
-    
-
-      </Drawer>
-    </div>
+              {label}
+            </Typography>
+          </MenuItem>
+        );
+      })}
+    </MenuList>
+  </Menu></div>
   )
 }
 

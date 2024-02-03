@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { hideloading, showloading } from "../Helper/Redux/alertSlice.jsx";
+import { useState } from "react";
 import loginimage from "../assets/login-resized.jpg";
 import {
   Card,
@@ -9,19 +8,21 @@ import {
   Alert,
 } from "@material-tailwind/react";
 import { loginValidate } from "../Helper/Validations/validations";
-import { logintouserhome } from "../Helper/api/api";
+// import { logintouserhome } from "../Helper/api/api";
+import Spinner from "./spinner/Spinner.jsx";
 import { toast } from "react-hot-toast";
 import logoImage from "../assets/EelonLogo.png";
 import axios from "../api/axios.jsx";
-import { LoginUserTab } from "./LoginUserSelectTab.jsx";
+// import { LoginUserTab } from "./LoginUserSelectTab.jsx";
 import LoginUserSelectButton from "./LoginUserSelectButton.jsx";
 import useAuth from "../Hooks/useAuth.jsx";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useUserContext } from "../Context/userContext.jsx";
+import { RouteObjects } from "../Routes/RoutObjects.jsx";
 
 const Login = () => {
-  const dispatch = useDispatch();
-  const [user, setUser] = useState("");
+  const { setUserRoles } = useUserContext();
+  const [isLoading, setIsLoading] = useState(false);
   const [errors, setError] = useState([]);
   const [userType, setuserType] = useState();
   const [errorMsg, seterrorMsg] = useState();
@@ -43,26 +44,29 @@ const Login = () => {
   };
   const handleSubmit = async (e) => {
     try {
-      dispatch(showloading());
       e.preventDefault();
       seterrorMsg("");
       const type = userType.toLowerCase();
+
+      setIsLoading(true);
+
       const response = await axios.post(`/auth/${type}`, formData);
-      // dispatch(hideloading());
-      
+      setIsLoading(false);
+
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
+      setUserRoles(roles);
       // setAuth({ accessToken, roles });
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("roles", roles);
       if (userType === "Student") {
-        navigate("/studentdash");
+        navigate(RouteObjects.root);
       } else if (userType === "Staff") {
-        navigate("/staffdash");
+        navigate(RouteObjects.root);
       } else if (userType === "Admin") {
-        navigate("/staffdash");
+        navigate(RouteObjects.root);
       }
-      location.reload()
+      location.reload();
 
       const error = loginValidate(formData.email, formData.password);
       setError(error);
@@ -75,7 +79,8 @@ const Login = () => {
         }
       }
     } catch (error) {
-      dispatch(hideloading());
+      setIsLoading(false);
+
       console.log(error);
       if (!error?.response) {
         seterrorMsg("No server response");
@@ -89,14 +94,14 @@ const Login = () => {
     }
   };
 
-
   return (
     <div>
+      {isLoading && <Spinner />}
+
       <div className="shadow-md p-0 flex justify-center ">
         <img src={logoImage} className="w-25 h-20 p-2 cursor-pointer" />
       </div>
       <div className="h-full mt-20">
-   
         <LoginUserSelectButton setuserType={setuserType} />
         {userType && (
           <div className="flex justify-center items-center">
