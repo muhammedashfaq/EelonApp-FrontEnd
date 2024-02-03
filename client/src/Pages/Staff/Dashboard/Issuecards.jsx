@@ -1,11 +1,13 @@
-import StaffHeader from "../../../Components/Staff/Header/landingPageHeader";
-import StaffLibraryCardPage from "../../../Components/Staff/DashboardComponents/StaffLibraryCardPage";
+
+import Cards from "../../../Components/Staff/DashboardComponents/StaffLibraryCardPage";
+import StaffHeader from "../../../Components/Staff/Header/landingPageHeader"
+
 
 const Issuecards = () => {
   return (
     <div>
-      <StaffHeader />
-      <StaffLibraryCardPage />
+        <StaffHeader />
+        <Cards />
     </div>
   );
 };

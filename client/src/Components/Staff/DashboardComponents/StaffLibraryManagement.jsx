@@ -20,13 +20,11 @@ const StaffLibraryManagement = () => {
     <Card className="mt-6 m-20 h-72 hover:scale-110 transition-all duration-200  "  >
         <Link to={RouteObjects.Bookmanagment}>
       <CardBody >
-        <Typography variant="h5" color="blue-gray" className="mb-2">
+        <Typography variant="h5" color="blue-gray" className="mb-2 flex  font-extrabold text-2xl">
         Books
         </Typography>
         <Typography>
-          The place is close to Barceloneta Beach and bus stop just 2 min by
-          walk and near to &quot;Naviglio&quot; where you can enjoy the main
-          night life in Barcelona.
+        Explore our extensive collection of books. Click on any book to view detailed information and expand your literary horizons.
         </Typography>
       </CardBody>
       <CardFooter className="pt-0">
@@ -38,13 +36,11 @@ const StaffLibraryManagement = () => {
     <Card className="mt-6 h-72 m-20 hover:scale-110 transition-all duration-200">
         <Link to={RouteObjects.Issuebooks}>
       <CardBody>
-        <Typography variant="h5" color="blue-gray" className="mb-2">
+        <Typography variant="h5" color="blue-gray" className="mb-2 font-extrabold text-2xl">
         Issue Books
         </Typography>
         <Typography>
-          The place is close to Barceloneta Beach and bus stop just 2 min by
-          walk and near to &quot;Naviglio&quot; where you can enjoy the main
-          night life in Barcelona.
+        As part of our commitment to education and learning, we offer a dedicated service to issue books to students.
         </Typography>
       </CardBody>
       <CardFooter className="pt-0">
@@ -57,13 +53,11 @@ const StaffLibraryManagement = () => {
     <Card className="mt-6 m-20 h-72 hover:scale-110 transition-all duration-300">
         <Link to={RouteObjects.Issuecards}>
       <CardBody>
-        <Typography variant="h5" color="blue-gray" className="mb-2">
+        <Typography variant="h5" color="blue-gray" className="mb-2 font-extrabold text-2xl">
           Library Cards
         </Typography>
         <Typography>
-          The place is close to Barceloneta Beach and bus stop just 2 min by
-          walk and near to &quot;Naviglio&quot; where you can enjoy the main
-          night life in Barcelona.
+         With a library card, you gain access to our extensive collection of books, resources, and services. Follow the simple steps below to get started:
         </Typography>
       </CardBody>
       <CardFooter className="pt-0">
