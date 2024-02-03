@@ -19,8 +19,9 @@ import { useDispatch } from "react-redux";
 import Banner from "../../Banner/Banner";
 
 const StaffIssueBookManagement = () => {
+  const [alertunissue, setAlertunissue] = useState(false);
 
-  const [alert,setAlert] =useState(false)
+  const [alertissue, setAlertissue] = useState(false);
   const [bookData, setbookData] = useState();
   const [searchBookName, setSearchBookName] = useState();
   const [searchData, setsearchData] = useState();
@@ -44,8 +45,7 @@ const StaffIssueBookManagement = () => {
     getBooks();
   }, []);
 
-  const [openAlert, setOpenAlert] = useState(true);
-
+  const [open, setOpen] = useState(true);
 
   const searchBook = async () => {
     try {
@@ -60,20 +60,19 @@ const StaffIssueBookManagement = () => {
   };
   return (
     <div className="w-full">
-      <Banner /> 
+      <Banner />
 
-{
-  alert && (
+      {alertissue && (
+        <Alert color="red" open={open} onClose={() => setOpen(false)}>
+          A Book Issued to student Name
+        </Alert>
+      )}
+      {alertunissue && (
+        <Alert color="red" open={open} onClose={() => setOpen(false)}>
+          A Book Recalled from student Name
+        </Alert>
+      )}
 
-    <Alert open={open} onClose={() => setOpenAlert(false)}>
-    There is no library card for the student.
-    
-    </Alert>  )
-}
-
-     
-
-      
       {/* <div className="flex justify-center">
 
       
@@ -90,16 +89,6 @@ const StaffIssueBookManagement = () => {
         }}
       >
         <div className="container xl">
-          <h2
-            style={{
-              fontSize: "1.4rem",
-              fontFamily: "monospace",
-              fontWeight: "bolder",
-              textAlign: "center",
-            }}
-          >
-            Books
-          </h2>
           <br />
           <div className="flex gap-8">
             <div className="w-72">
@@ -121,7 +110,7 @@ const StaffIssueBookManagement = () => {
             </div>
           </div>
           <br />
-          <Card className="h-full w-full overflow-scroll">
+          <Card className="h-full w-full">
             <table className="w-full min-w-max table-auto text-left">
               <thead>
                 <tr>
@@ -341,10 +330,9 @@ const StaffIssueBookManagement = () => {
                             color="blue-gray"
                             className="font-normal"
                           >
-
-                            
                             <LibraryIssueStudentModal
-                              setAlert={setAlert}
+                              unissueAlert={setAlertunissue}
+                              setAlert={setAlertissue}
                               bookId={data?._id}
                               getBooks={searchBook}
                               currentlyIssued={data?.students?.currentlyIssued}

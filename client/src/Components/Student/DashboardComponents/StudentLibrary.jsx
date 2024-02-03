@@ -7,7 +7,8 @@ import {
   Tooltip,
   Alert,
 } from "@material-tailwind/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "../../../api/axios";
 
 const TABLE_HEAD = ["SL NO","Book Name", "IssuedBy", "Date","Ref No" ,"Status"];
 
@@ -35,6 +36,17 @@ const TABLE_ROWS = [
 const StudentLibrary = () => {
   const [libraryCard,setLibraryCard] = useState(true)
   const [open, setOpen] = useState(true);
+  const getData=async()=>{
+    try {
+      // const response = await axios.get('/')
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(()=>{
+    getData()
+  })
   return (
     <div className="w-screen m-10 ">
 

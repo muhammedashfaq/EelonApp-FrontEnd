@@ -44,11 +44,7 @@ const StaffHeader = () => {
               </a>
             </li>
             <li>
-              {!auth?.accessToken ? (
-                <Link to={RouteObjects.Login}>
-                  <Button className="bg-yellow-900">Login</Button>
-                </Link>
-              ) : (
+              {auth?.accessToken ? (
                 <span>
                   <Link to={RouteObjects.StudentDashboard}>
                     <Avatar
@@ -60,9 +56,16 @@ const StaffHeader = () => {
                   </Link>
                   <Button onClick={logOut}>Log out</Button>
                 </span>
+              ) : (
+                <Link to={RouteObjects.Login}>
+                  <Button className="bg-yellow-900">Login</Button>
+                </Link>
               )}
             </li>
-                <NavBar />
+            
+              <NavBar />
+
+            
           </div>
           <div className="flex justify-center items-center space-x-6">
             <li className="">

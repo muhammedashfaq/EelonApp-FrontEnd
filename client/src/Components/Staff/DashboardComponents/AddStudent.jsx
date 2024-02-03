@@ -8,6 +8,7 @@ import {
 import { useState } from "react";
 
 const AddStudent = () => {
+  const [classes,setClasses]=useState("")
   const [formData, setFormdata] = useState({
     admitionnumber: "",
     name: "",
