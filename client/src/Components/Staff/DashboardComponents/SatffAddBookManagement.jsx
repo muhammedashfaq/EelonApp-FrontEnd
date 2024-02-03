@@ -19,6 +19,7 @@ import { useDispatch } from "react-redux";
 import Banner from "../../Banner/Banner";
 import LIbraryBookDetailsModal from "./LIbraryBookDetailsModal";
 import LibraryEditBooksModal from "./LibraryEditBooksModal";
+import Spinner from "../../spinner/Spinner";
 
 const SatffAddBookManagement = () => {
   const dispatch = useDispatch();
@@ -28,16 +29,19 @@ const SatffAddBookManagement = () => {
   const [genre, setgenre] = useState();
   const [searchQuery, setsearchQuery] = useState();
   const [searchData, setsearchData] = useState();
+  const [isLoading, setisLoading] = useState(false);
 
   const getBooks = async () => {
     try {
-      // dispatch(showloading());
+      setisLoading(true);
       const response = await axios.get("/library/books");
       // dispatch(hideloading());
 
       setbookData(response.data);
+      setisLoading(false);
     } catch (error) {
       console.log(error);
+      setisLoading(false);
     }
   };
   useEffect(() => {
@@ -47,28 +51,36 @@ const SatffAddBookManagement = () => {
   const getBookByName = async (e) => {
     e.preventDefault();
     try {
+      setisLoading(true);
       if (!searchQuery) return;
       const response = await axios.get(
         `library/books/issuelist/search/${searchQuery}`
       );
       setsearchData(response.data);
+      setisLoading(false);
     } catch (error) {
       console.log(error);
+      setisLoading(false);
     }
   };
 
   const getBookByGenre = async (value) => {
     try {
+      setisLoading(true);
+
       const response = await axios.get(
         `library/books/issuelist/searchGenre/${value}`
       );
       setsearchData(response.data);
+      setisLoading(false);
     } catch (error) {
       console.log(error);
+      setisLoading(false);
     }
   };
   return (
     <div className="w-full">
+      {isLoading && <Spinner />}
       <Banner />
       <div className=" m-20">
         <div className=" w-full h-auto  flex justify-around mb-2 border-2 p-1 rounded-lg shadow-md">
