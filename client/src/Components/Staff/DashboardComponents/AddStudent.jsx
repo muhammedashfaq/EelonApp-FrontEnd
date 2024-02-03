@@ -95,10 +95,8 @@ const AddStudent = () => {
       studentCategory,
       studentGp,
     };
-    console.log(reqData);
     try {
       const response = await axios.post("/users/student", formData);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
