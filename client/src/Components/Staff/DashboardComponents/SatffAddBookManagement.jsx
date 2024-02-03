@@ -22,6 +22,8 @@ const SatffAddBookManagement = () => {
   const handleOpen = () => setOpen((cur) => !cur);
   const [bookData, setbookData] = useState();
   const [genre, setgenre] = useState();
+  const [searchQuery, setsearchQuery] = useState();
+  const [searchData, setsearchData] = useState();
 
   useEffect(() => {
     console.log(genre);
@@ -44,6 +46,21 @@ const SatffAddBookManagement = () => {
     getBooks();
   }, []);
 
+  const getBookByName = async (e) => {
+    e.preventDefault();
+    try {
+      if (!searchQuery) return;
+      const response = await axios.get(
+        `library/books/issuelist/search/${searchQuery}`
+      );
+      console.log(response.data);
+      setsearchData(response.data);
+      setbookData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="w-full">
       <Banner />
@@ -59,11 +76,18 @@ const SatffAddBookManagement = () => {
               <Option value="Non-fiction">Non-fiction</Option>
             </Select>
           </div>
-          <div className="w-full md:w-72">
-            <Input
-              label="Search"
-              // icon={<MagnifyingGlassIco className="h-5 w-5" />}
-            />
+          <div className="w-full md:w-72 flex">
+            <form onSubmit={getBookByName}>
+              <Input
+                label="Search books"
+                onChange={(e) => setsearchQuery(e.target.value)}
+                value={searchQuery}
+                // icon={<MagnifyingGlassIco className="h-5 w-5" />}
+              />
+            </form>
+            <Button variant="text" onClick={getBooks}>
+              Reset
+            </Button>
           </div>
           <div>
             <LibraryBooksAddModal getBooks={getBooks} />
@@ -289,25 +313,31 @@ const SatffAddBookManagement = () => {
                                   color="blue-gray"
                                   className="mb-2"
                                 >
-                                  Book Name:
+                                  Book Name: {data?.bookName}
                                 </Typography>
                                 <Typography
                                   color="gray"
                                   className="mb-3 font-normal"
                                 >
-                                  Genre
+                                  Author: {data?.author}
                                 </Typography>
                                 <Typography
                                   color="gray"
                                   className="mb-3 font-normal"
                                 >
-                                  Ref No:
+                                  Genre: {data?.genre}
+                                </Typography>
+                                <Typography
+                                  color="gray"
+                                  className="mb-3 font-normal"
+                                >
+                                  Ref No: {data?.refNo}
                                 </Typography>
                                 <Typography
                                   color="gray"
                                   className="mb-8 font-normal"
                                 >
-                                  Description
+                                  Description: {data?.description}
                                 </Typography>
                               </CardBody>
                             </Card>

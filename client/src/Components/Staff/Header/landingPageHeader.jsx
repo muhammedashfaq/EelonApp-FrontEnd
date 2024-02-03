@@ -62,7 +62,7 @@ const StaffHeader = () => {
                 </span>
               )}
             </li>
-                <NavBar />
+            <NavBar />
           </div>
           <div className="flex justify-center items-center space-x-6">
             <li className="">
