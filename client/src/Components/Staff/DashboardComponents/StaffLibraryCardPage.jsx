@@ -1,6 +1,6 @@
-import { Button, Typography } from "@material-tailwind/react";
+import { Button, IconButton, Typography } from "@material-tailwind/react";
 import axios from "../../../api/axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import IssueLibCardModal from "./IssueLibCardModal";
 import StaffStudentLibrarycardModal from "./StaffStudentLibrarycardModal";
 import Banner from "../../Banner/Banner";
@@ -8,25 +8,40 @@ import Banner from "../../Banner/Banner";
 const StaffLibraryCardPage = () => {
   const [searchQuery, setsearchQuery] = useState();
   const [searchData, setsearchData] = useState();
+  const [studentData, setstudentData] = useState();
+
   const getStudents = async (e) => {
     e.preventDefault();
     try {
       if (!searchQuery) return;
       const response = await axios.get(`users/student/search/${searchQuery}`);
-      console.log(response.data);
       setsearchData(response.data);
     } catch (error) {
       console.log(error);
     }
   };
+  const getAllStudents = async () => {
+    try {
+      const response = await axios.get(`users/student`);
+      console.log(response.data);
+      setstudentData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllStudents();
+  }, []);
+
   return (
     <>
-        <Banner name="Library Section" />
+      <Banner name="Library Section" />
       <div className=" w-screen mt-10">
         <div>
           <div className="relative flex flex-col w-full h-full text-gray-700 bg-white shadow-md rounded-xl bg-clip-border">
             <div className="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white rounded-none bg-clip-border">
-              <div className="flex flex-col justify-between gap-8 mb-4 md:flex-row md:items-center">
+              <div className="flex flex-col justify-evenly gap-8 mb-4 md:flex-row md:items-center">
                 <div>
                   <h5 className="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
                     Search student
@@ -35,26 +50,10 @@ const StaffLibraryCardPage = () => {
                     Search student by email, library id...etc
                   </p>
                 </div>
-                <div className="flex w-full gap-2 shrink-0 md:w-max">
+                <div className="flex w-full gap-1 shrink-0 md:w-max">
                   <div className="w-full md:w-72">
                     <div className="relative h-10 w-full min-w-[200px]">
-                      <div className="absolute grid w-5 h-5 top-2/4 right-3 -translate-y-2/4 place-items-center text-blue-gray-500">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke-width="1.5"
-                          stroke="currentColor"
-                          aria-hidden="true"
-                          className="w-5 h-5"
-                          >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                          ></path>
-                        </svg>
-                      </div>
+                      <div className="absolute grid w-5 h-5 top-2/4 right-3 -translate-y-2/4 place-items-center text-blue-gray-500"></div>
                       <form
                         style={{ padding: 0, margin: 0 }}
                         onSubmit={getStudents}
@@ -70,8 +69,31 @@ const StaffLibraryCardPage = () => {
                       </form>
                     </div>
                   </div>
-                  <Button variant="text" onClick={getStudents}>
-                    Search
+                  <IconButton variant="outlined" onClick={getStudents}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                      className="w-5 h-5"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                      ></path>
+                    </svg>
+                  </IconButton>
+                  <Button
+                    variant="text"
+                    style={{ textTransform: "none" }}
+                    onClick={() => {
+                      setsearchData();
+                    }}
+                  >
+                    Reset
                   </Button>
                 </div>
               </div>
@@ -123,104 +145,196 @@ const StaffLibraryCardPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {searchData && (
-                    <>
-                      <tr>
-                        <td className="p-4 border-b border-blue-gray-50">
-                          <Typography
-                            variant="h6"
-                            color="blue-gray"
-                            classNameName=" text-blue-900 border-l  "
-                          >
-                            {searchData?.email}
-                          </Typography>
-                        </td>
-                        <td className="p-4 border-b border-blue-gray-50">
-                          <Typography
-                            variant="h6"
-                            color="blue-gray"
-                            classNameName=" text-blue-900 border-l  "
-                          >
-                            {searchData?.name}
-                          </Typography>
-                        </td>
-                        <td className="p-4 border-b border-blue-gray-50">
-                          <Typography
-                            variant="h6"
-                            color="blue-gray"
-                            classNameName=" text-blue-900 border-l  "
-                          >
-                            {searchData?.libCardStatus === true
-                              ? "Issued"
-                              : "Not issued"}
-                          </Typography>
-                        </td>
-                        <td className="p-4 border-b border-blue-gray-50">
-                          <Typography
-                            variant="h6"
-                            color="blue-gray"
-                            classNameName=" text-blue-900 border-l  "
-                          >
-                            {searchData?.libCardNo}
-                          </Typography>
-                        </td>
-                        <td className="p-4 border-b border-blue-gray-50">
-                          <Typography
-                            variant="h6"
-                            color="blue-gray"
-                            classNameName=" text-blue-900 border-l  "
-                          >
-                            {searchData?.className}
-                          </Typography>
-                        </td>
-                        <td className="p-4 border-b border-blue-gray-50">
-                          <Typography
-                            variant="h6"
-                            color="blue-gray"
-                            classNameName=" text-blue-900 border-l  "
-                          >
-                            {searchData?.section}
-                          </Typography>
-                        </td>
-                        <td className="p-4 border-b border-blue-gray-50">
-                          <Typography
-                            variant="h6"
-                            color="blue-gray"
-                            classNameName=" text-blue-900 border-l  "
-                          >
-                            {searchData?.libCardStatus ? (
-                              <StaffStudentLibrarycardModal
-                                studentData={searchData}
-                              />
-                            ) : (
-                              <span>Card not issued</span>
-                            )}
-                          </Typography>
-                        </td>
-                        <td className="p-4 border-b border-blue-gray-50">
-                          <Typography
-                            variant="h6"
-                            color="blue-gray"
-                            classNameName=" text-blue-900 border-l  "
-                          >
-                            <IssueLibCardModal
-                              libCardNo={searchData?.libCardNo}
-                              libCardStatus={searchData?.libCardStatus}
-                              getStudents={getStudents}
-                              studentId={searchData?._id}
-                            />
-                          </Typography>
-                        </td>
-                      </tr>
-                    </>
-                  )}
+                  {searchData
+                    ? searchData.map((data) => (
+                        <>
+                          <tr>
+                            <td className="p-4 border-b border-blue-gray-50">
+                              <Typography
+                                variant="h6"
+                                color="blue-gray"
+                                classNameName=" text-blue-900 border-l  "
+                              >
+                                {data?.email}
+                              </Typography>
+                            </td>
+                            <td className="p-4 border-b border-blue-gray-50">
+                              <Typography
+                                variant="h6"
+                                color="blue-gray"
+                                classNameName=" text-blue-900 border-l  "
+                              >
+                                {data?.name}
+                              </Typography>
+                            </td>
+                            <td className="p-4 border-b border-blue-gray-50">
+                              <Typography
+                                variant="h6"
+                                color="blue-gray"
+                                classNameName=" text-blue-900 border-l  "
+                              >
+                                {data?.libCardStatus === true
+                                  ? "Issued"
+                                  : "Not issued"}
+                              </Typography>
+                            </td>
+                            <td className="p-4 border-b border-blue-gray-50">
+                              <Typography
+                                variant="h6"
+                                color="blue-gray"
+                                classNameName=" text-blue-900 border-l  "
+                              >
+                                {data?.libCardNo}
+                              </Typography>
+                            </td>
+                            <td className="p-4 border-b border-blue-gray-50">
+                              <Typography
+                                variant="h6"
+                                color="blue-gray"
+                                classNameName=" text-blue-900 border-l  "
+                              >
+                                {data?.className}
+                              </Typography>
+                            </td>
+                            <td className="p-4 border-b border-blue-gray-50">
+                              <Typography
+                                variant="h6"
+                                color="blue-gray"
+                                classNameName=" text-blue-900 border-l  "
+                              >
+                                {data?.section}
+                              </Typography>
+                            </td>
+                            <td className="p-4 border-b border-blue-gray-50">
+                              <Typography
+                                variant="h6"
+                                color="blue-gray"
+                                classNameName=" text-blue-900 border-l  "
+                              >
+                                {data?.libCardStatus ? (
+                                  <StaffStudentLibrarycardModal
+                                    studentData={data}
+                                  />
+                                ) : (
+                                  <span>Card not issued</span>
+                                )}
+                              </Typography>
+                            </td>
+                            <td className="p-4 border-b border-blue-gray-50">
+                              <Typography
+                                variant="h6"
+                                color="blue-gray"
+                                classNameName=" text-blue-900 border-l  "
+                              >
+                                <IssueLibCardModal
+                                  libCardNo={data?.libCardNo}
+                                  libCardStatus={data?.libCardStatus}
+                                  getStudents={getStudents}
+                                  studentId={data?._id}
+                                />
+                              </Typography>
+                            </td>
+                          </tr>
+                        </>
+                      ))
+                    : studentData &&
+                      studentData.map((data) => (
+                        <>
+                          <tr>
+                            <td className="p-4 border-b border-blue-gray-50">
+                              <Typography
+                                variant="h6"
+                                color="blue-gray"
+                                classNameName=" text-blue-900 border-l  "
+                              >
+                                {data?.email}
+                              </Typography>
+                            </td>
+                            <td className="p-4 border-b border-blue-gray-50">
+                              <Typography
+                                variant="h6"
+                                color="blue-gray"
+                                classNameName=" text-blue-900 border-l  "
+                              >
+                                {data?.name}
+                              </Typography>
+                            </td>
+                            <td className="p-4 border-b border-blue-gray-50">
+                              <Typography
+                                variant="h6"
+                                color="blue-gray"
+                                classNameName=" text-blue-900 border-l  "
+                              >
+                                {data?.libCardStatus === true
+                                  ? "Issued"
+                                  : "Not issued"}
+                              </Typography>
+                            </td>
+                            <td className="p-4 border-b border-blue-gray-50">
+                              <Typography
+                                variant="h6"
+                                color="blue-gray"
+                                classNameName=" text-blue-900 border-l  "
+                              >
+                                {data?.libCardNo}
+                              </Typography>
+                            </td>
+                            <td className="p-4 border-b border-blue-gray-50">
+                              <Typography
+                                variant="h6"
+                                color="blue-gray"
+                                classNameName=" text-blue-900 border-l  "
+                              >
+                                {data?.className}
+                              </Typography>
+                            </td>
+                            <td className="p-4 border-b border-blue-gray-50">
+                              <Typography
+                                variant="h6"
+                                color="blue-gray"
+                                classNameName=" text-blue-900 border-l  "
+                              >
+                                {data?.section}
+                              </Typography>
+                            </td>
+                            <td className="p-4 border-b border-blue-gray-50">
+                              <Typography
+                                variant="h6"
+                                color="blue-gray"
+                                classNameName=" text-blue-900 border-l  "
+                              >
+                                {data?.libCardStatus ? (
+                                  <StaffStudentLibrarycardModal
+                                    studentData={data}
+                                  />
+                                ) : (
+                                  <span>Card not issued</span>
+                                )}
+                              </Typography>
+                            </td>
+                            <td className="p-4 border-b border-blue-gray-50">
+                              <Typography
+                                variant="h6"
+                                color="blue-gray"
+                                classNameName=" text-blue-900 border-l  "
+                              >
+                                <IssueLibCardModal
+                                  libCardNo={data?.libCardNo}
+                                  libCardStatus={data?.libCardStatus}
+                                  getStudents={getStudents}
+                                  studentId={data?._id}
+                                />
+                              </Typography>
+                            </td>
+                          </tr>
+                        </>
+                      ))}
                 </tbody>
               </table>
             </div>
           </div>
         </div>
       </div>
-                          
     </>
   );
 };

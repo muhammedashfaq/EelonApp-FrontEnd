@@ -23,7 +23,7 @@ export default function StaffStudentLibrarycardModal({ studentData }) {
       </Button>
 
       <Dialog open={open} handler={handleOpen} size="lg">
-        <DialogHeader>Its a simple dialog.</DialogHeader>
+        <DialogHeader className="ml-10 mt-4">Library card</DialogHeader>
         <DialogBody>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Card className=" max-w-[50rem] flex-row bg-blue-gray-200">
