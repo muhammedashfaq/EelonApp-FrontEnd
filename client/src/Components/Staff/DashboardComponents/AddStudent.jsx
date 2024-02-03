@@ -29,28 +29,21 @@ const AddStudent = () => {
     studentName: "",
     nameTamil: "",
     DOB: "",
-    gender: "",
     studentPhoto: "",
     AadharNo: "",
     ContactNo: "",
     AltCnctNo: "",
     address: "",
-    std: "",
-    section: "",
     weight: "",
     height: "",
     email: "",
     password: "",
-    bloodGp: "",
-    motherTongue: "",
     nationality: "",
     mediumOfInstruction: "",
     academicYear: "",
     studentGp: "",
-    religion: "",
     caste: "",
-    subcaste: "",
-    community: "",
+    subCaste: "",
     state: "",
     city: "",
     pincode: "",
@@ -104,8 +97,8 @@ const AddStudent = () => {
     };
     console.log(reqData);
     try {
-      // const response = await axios.post("/users/student", formData);
-      // console.log(response);
+      const response = await axios.post("/users/student", formData);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -439,7 +432,7 @@ const AddStudent = () => {
 
               <Input
                 name="EMSno"
-                type="text"
+                type="number"
                 variant="outlined"
                 label="EMIS Number"
                 placeholder="EMIS Number"
