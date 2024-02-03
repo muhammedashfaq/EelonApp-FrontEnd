@@ -19,39 +19,31 @@ const AddStudent = () => {
   const [community, setcommunity] = useState();
   const [classOfJoin, setclassOfJoin] = useState();
   const [mediumOfInstruction, setmediumOfInstruction] = useState();
-  const [concessionStudent, setconcessionStudent] = useState();
+  const [concessionStudent, setconcessionStudent] = useState(false);
   const [academicYear, setacademicYear] = useState();
-  const [studentGp, setstudentGp] = useState();
   const [studentCategory, setstudentCategory] = useState();
+  const [studentGp, setstudentGp] = useState();
 
   const [formData, setFormdata] = useState({
     admnNo: "",
     studentName: "",
     nameTamil: "",
     DOB: "",
-    gender: "",
     studentPhoto: "",
     AadharNo: "",
     ContactNo: "",
     AltCnctNo: "",
     address: "",
-    std: "",
-    section: "",
     weight: "",
     height: "",
     email: "",
     password: "",
-    bloodGp: "",
-    motherTongue: "",
     nationality: "",
     mediumOfInstruction: "",
-    concessionStudent: "",
     academicYear: "",
     studentGp: "",
-    religion: "",
     caste: "",
-    subcaste: "",
-    community: "",
+    subCaste: "",
     state: "",
     city: "",
     pincode: "",
@@ -70,20 +62,41 @@ const AddStudent = () => {
     annualIncome: "",
   });
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value, type, checked } = event.target;
 
-    setFormdata((pre) => ({
-      ...pre,
-      [name]: value,
+    const inputValue =
+      type === "number"
+        ? parseFloat(value)
+        : type === "checkbox"
+        ? checked
+        : value;
+
+    setFormdata((prev) => ({
+      ...prev,
+      [name]: inputValue,
     }));
   };
 
   const handleSubmitForm = async (event) => {
     event.preventDefault();
-    console.log(formData);
+    const reqData = {
+      ...formData,
+      gender,
+      std,
+      section,
+      bloodGp,
+      motherTongue,
+      religion,
+      community,
+      classOfJoin,
+      mediumOfInstruction,
+      concessionStudent,
+      academicYear,
+      studentCategory,
+      studentGp,
+    };
     try {
       const response = await axios.post("/users/student", formData);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -93,7 +106,7 @@ const AddStudent = () => {
       <div className="flex justify-center ">
         <div className=" border-2 rounded-lg shadow-lg  mt-2">
           <div className="bg-blue-900 rounded-t-lg flex justify-center items-center h-10 text-white ">
-            <h1 className="text-2xl">Students Admition </h1>
+            <h1 className="text-2xl">Add student </h1>
           </div>
           <form onSubmit={handleSubmitForm}>
             
@@ -314,14 +327,14 @@ const AddStudent = () => {
                 label="Bloog Group"
               >
                 <Option value="A+ve">A+ve</Option>
-                <Option value="A+ve">A-ve</Option>
-                <Option>B+ve</Option>
-                <Option>B-ve</Option>
-                <Option>AB+ve</Option>
-                <Option>Ab-ve</Option>
-                <Option>O+ve</Option>
-                <Option>O-ve</Option>
-                <Option>Unknown</Option>
+                <Option value="A-ve">A-ve</Option>
+                <Option value="B+ve">B+ve</Option>
+                <Option value="B-ve">B-ve</Option>
+                <Option value="AB+ve">AB+ve</Option>
+                <Option value="AB-ve">AB-ve</Option>
+                <Option value="O+ve">O+ve</Option>
+                <Option value="O-ve">O-ve</Option>
+                <Option value="Unknown">Unknown</Option>
               </Select>
 
               <Select
@@ -330,8 +343,9 @@ const AddStudent = () => {
                 onChange={(e) => setmotherTongue(e)}
                 label="Mother Tongue"
               >
-                <Option>Tamil</Option>
-                <Option>Hindi</Option>
+                <Option value="Tamil">Tamil</Option>
+                <Option value="Hindi">Hindi</Option>
+                <Option value="Malayalam">Malayalam</Option>
               </Select>
 
               <Select
@@ -340,9 +354,9 @@ const AddStudent = () => {
                 onChange={(e) => setreligion(e)}
                 label="Religion"
               >
-                <Option>Hindu</Option>
-                <Option>Muslim</Option>
-                <Option>Christian</Option>
+                <Option value="Hindu">Hindu</Option>
+                <Option value="Muslim">Muslim</Option>
+                <Option value="Christian">Christian</Option>
               </Select>
               <Input
                 name="caste"
@@ -367,10 +381,10 @@ const AddStudent = () => {
                 onChange={(e) => setcommunity(e)}
                 label="Community"
               >
-                <Option>BC</Option>
-                <Option>OBC</Option>
-                <Option>SC</Option>
-                <Option>ST</Option>
+                <Option value="BC">BC</Option>
+                <Option value="OBC">OBC</Option>
+                <Option value="SC">SC</Option>
+                <Option value="ST">ST</Option>
               </Select>
 
               <Input
@@ -389,7 +403,7 @@ const AddStudent = () => {
               />
               <Input
                 variant="outlined"
-                name="pncode"
+                name="pincode"
                 label="Pin"
                 placeholder="Pin"
                 onChange={handleInputChange}
@@ -417,7 +431,7 @@ const AddStudent = () => {
 
               <Input
                 name="EMSno"
-                type="text"
+                type="number"
                 variant="outlined"
                 label="EMIS Number"
                 placeholder="EMIS Number"
@@ -447,9 +461,8 @@ const AddStudent = () => {
                 onChange={(e) => setmediumOfInstruction(e)}
                 label="Medium of Instruction"
               >
-                <Option>Tamil</Option>
-                <Option>English</Option>
-                <Option>French</Option>
+                <Option value="Tamil">Tamil</Option>
+                <Option value="English">English</Option>
               </Select>
 
               <Select
@@ -496,7 +509,10 @@ const AddStudent = () => {
                 value={studentGp}
                 onChange={(e) => setstudentGp(e)}
               >
-                <Option>Blue</Option>
+                <Option value="Blue">Blue</Option>
+                <Option value="Red">Red</Option>
+                <Option value="Yellow">Yellow</Option>
+                <Option value="Green">Green</Option>
               </Select>
 
               <Textarea
