@@ -5,39 +5,69 @@ import {
   Select,
   Textarea,
 } from "@material-tailwind/react";
+import axios from "../../../api/axios";
 import { useState } from "react";
 
 const AddStudent = () => {
-  const [classes,setClasses]=useState("")
+  const [classes, setClasses] = useState("");
+  const [gender, setgender] = useState();
+  const [std, setstd] = useState();
+  const [section, setsection] = useState();
+  const [bloodGp, setbloodGp] = useState();
+  const [motherTongue, setmotherTongue] = useState();
+  const [religion, setreligion] = useState();
+  const [community, setcommunity] = useState();
+  const [classOfJoin, setclassOfJoin] = useState();
+  const [mediumOfInstruction, setmediumOfInstruction] = useState();
+  const [concessionStudent, setconcessionStudent] = useState();
+  const [academicYear, setacademicYear] = useState();
+  const [studentGp, setstudentGp] = useState();
+  const [studentCategory, setstudentCategory] = useState();
+
   const [formData, setFormdata] = useState({
-    admitionnumber: "",
-    name: "",
-    nametamil: "",
-    adarnumber: "",
-    mobnumber: "",
-    number2: "",
-    fathername: "",
-    fathernametamil: "",
-    fatherjob: "",
-    mothername: "",
-    mothernametamil: "",
-    motherjob: "",
-    guardianname: "",
-    guardiantamil: "",
-    guardianjob: "",
-    anualincom: "",
+    admnNo: "",
+    studentName: "",
+    nameTamil: "",
+    DOB: "",
+    gender: "",
+    studentPhoto: "",
+    AadharNo: "",
+    ContactNo: "",
+    AltCnctNo: "",
+    address: "",
+    std: "",
+    section: "",
     weight: "",
     height: "",
     email: "",
     password: "",
-    cast: "",
-    subcast: "",
+    bloodGp: "",
+    motherTongue: "",
+    nationality: "",
+    mediumOfInstruction: "",
+    concessionStudent: "",
+    academicYear: "",
+    studentGp: "",
+    religion: "",
+    caste: "",
+    subcaste: "",
+    community: "",
     state: "",
     city: "",
-    pin: "",
-    emisnumber: "",
-    nationality: "",
-    address: "",
+    pincode: "",
+    dateOfJoin: "",
+    classOfJoin: "",
+    EMSno: "",
+    FathersName: "",
+    FathersNameTamil: "",
+    FathersJob: "",
+    MothersName: "",
+    MothersNameTamil: "",
+    MothersJob: "",
+    guardianName: "",
+    guardianNameTamil: "",
+    guardiansJob: "",
+    annualIncome: "",
   });
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -48,9 +78,15 @@ const AddStudent = () => {
     }));
   };
 
-  const handleSubmitForm = () => {
+  const handleSubmitForm = async (event) => {
     event.preventDefault();
     console.log(formData);
+    try {
+      const response = await axios.post("/users/student", formData);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className=" w-screen">
@@ -68,15 +104,7 @@ const AddStudent = () => {
                 placeholder="outlined"
               />
               <Input
-                name="admitionnumber"
-                type="number"
-                variant="outlined"
-                label="Admition Number*"
-                placeholder="Admition Number*"
-                onChange={handleInputChange}
-              />
-              <Input
-                name="name"
+                name="studentName"
                 type="text"
                 variant="outlined"
                 label="Student Name*"
@@ -84,20 +112,33 @@ const AddStudent = () => {
                 onChange={handleInputChange}
               />
               <Input
-                name="nametamil"
+                name="admnNo"
+                type="number"
+                variant="outlined"
+                label="Admition Number*"
+                placeholder="Admition Number*"
+                onChange={handleInputChange}
+              />
+              <Input
+                name="nameTamil"
                 type="text"
                 variant="outlined"
                 label="Name In Tamil"
                 placeholder="Name In Tamil"
                 onChange={handleInputChange}
               />
-              <Select variant="outlined" label="Gender">
-                <Option>Male</Option>
-                <Option>Female</Option>
-                <Option>Others</Option>
+              <Select
+                variant="outlined"
+                value={gender}
+                onChange={(e) => setgender(e)}
+                label="Gender"
+              >
+                <Option value="Male">Male</Option>
+                <Option value="Female">Female</Option>
+                <Option value="Others">Others</Option>
               </Select>
               <Input
-                name="adarnumber"
+                name="AadharNo"
                 type="number"
                 variant="outlined"
                 label="Adhar Number"
@@ -105,7 +146,7 @@ const AddStudent = () => {
                 onChange={handleInputChange}
               />
               <Input
-                name="mobnumber"
+                name="ContactNo"
                 type="number"
                 variant="outlined"
                 label="Contact Number"
@@ -114,7 +155,7 @@ const AddStudent = () => {
                 onChange={handleInputChange}
               />
               <Input
-                name="number2"
+                name="AltCnctNo"
                 type="number"
                 variant="outlined"
                 label="Alternate Number"
@@ -122,7 +163,7 @@ const AddStudent = () => {
                 onChange={handleInputChange}
               />
               <Input
-                name="fathername"
+                name="FathersName"
                 type="text"
                 variant="outlined"
                 label="Father's Name"
@@ -130,7 +171,7 @@ const AddStudent = () => {
                 onChange={handleInputChange}
               />
               <Input
-                name="fathernametamil"
+                name="FathersNameTamil"
                 type="text"
                 variant="outlined"
                 label="Father's Name in Tamil"
@@ -139,7 +180,7 @@ const AddStudent = () => {
               />
 
               <Input
-                name="fatherjob"
+                name="FathersJob"
                 type="text"
                 variant="outlined"
                 label="Father's Occupation"
@@ -147,7 +188,7 @@ const AddStudent = () => {
                 onChange={handleInputChange}
               />
               <Input
-                name="mothername"
+                name="MothersName"
                 type="text"
                 variant="outlined"
                 label="Mother's Name"
@@ -155,7 +196,7 @@ const AddStudent = () => {
                 onChange={handleInputChange}
               />
               <Input
-                name="mothernametamil"
+                name="MothersNameTamil"
                 type="text"
                 variant="outlined"
                 label="Mother's Name in Tamil"
@@ -163,7 +204,7 @@ const AddStudent = () => {
                 onChange={handleInputChange}
               />
               <Input
-                name="motherjob"
+                name="MothersJob"
                 type="text"
                 variant="outlined"
                 label="Mother's Occupation"
@@ -172,7 +213,7 @@ const AddStudent = () => {
               />
 
               <Input
-                name="guardianname"
+                name="guardianName"
                 type="text"
                 variant="outlined"
                 label="Guardian's Name"
@@ -180,7 +221,7 @@ const AddStudent = () => {
                 onChange={handleInputChange}
               />
               <Input
-                name="guardiantamil"
+                name="guardianNameTamil"
                 type="text"
                 variant="outlined"
                 label="Guardian's Name in Tamil"
@@ -188,7 +229,7 @@ const AddStudent = () => {
                 onChange={handleInputChange}
               />
               <Input
-                name="guardianjob"
+                name="guardiansJob"
                 type="text"
                 variant="outlined"
                 label="Guardian's Occupation"
@@ -197,7 +238,7 @@ const AddStudent = () => {
               />
 
               <Input
-                name="annualincom"
+                name="annualIncome"
                 type="number"
                 variant="outlined"
                 label="Annual Income"
@@ -220,14 +261,34 @@ const AddStudent = () => {
                 placeholder="Height"
                 onChange={handleInputChange}
               />
-              <Select variant="outlined" label="Class">
-                <Option>Class 1</Option>
-                <Option>Class 1</Option>
-                <Option>Class 1</Option>
+              <Select
+                variant="outlined"
+                value={std}
+                onChange={(e) => setstd(e)}
+                label="Class"
+              >
+                <Option value="01">First std</Option>
+                <Option value="02">Second std</Option>
+                <Option value="03">Third std</Option>
+                <Option value="04">Fourth std</Option>
+                <Option value="05">Fifth std</Option>
+                <Option value="06">Sixth std</Option>
+                <Option value="07">Seventh std</Option>
+                <Option value="08">Eighth std</Option>
+                <Option value="09">Nineth std</Option>
+                <Option value="10">Tenth std</Option>
+                <Option value="11">Plus one</Option>
+                <Option value="12">Plus two</Option>
               </Select>
-              <Select variant="outlined" label="Section">
-                <Option>A</Option>
-                <Option>B</Option>
+              <Select
+                variant="outlined"
+                value={section}
+                onChange={(e) => setsection(e)}
+                label="Section"
+              >
+                <Option value="A">A</Option>
+                <Option value="B">B</Option>
+                <Option value="C">C</Option>
               </Select>
               <Input
                 name="email"
@@ -245,9 +306,14 @@ const AddStudent = () => {
                 placeholder="********"
                 onChange={handleInputChange}
               />
-              <Select variant="outlined" label="Bloog Group">
-                <Option>A+ve</Option>
-                <Option>A-ve</Option>
+              <Select
+                variant="outlined"
+                value={bloodGp}
+                onChange={(e) => setbloodGp(e)}
+                label="Bloog Group"
+              >
+                <Option value="A+ve">A+ve</Option>
+                <Option value="A+ve">A-ve</Option>
                 <Option>B+ve</Option>
                 <Option>B-ve</Option>
                 <Option>AB+ve</Option>
@@ -257,34 +323,49 @@ const AddStudent = () => {
                 <Option>Unknown</Option>
               </Select>
 
-              <Select variant="outlined" label="Mother Tongue">
+              <Select
+                variant="outlined"
+                value={motherTongue}
+                onChange={(e) => setmotherTongue(e)}
+                label="Mother Tongue"
+              >
                 <Option>Tamil</Option>
                 <Option>Hindi</Option>
               </Select>
 
-              <Select variant="outlined" label="Religion">
+              <Select
+                variant="outlined"
+                value={religion}
+                onChange={(e) => setreligion(e)}
+                label="Religion"
+              >
                 <Option>Hindu</Option>
                 <Option>Muslim</Option>
                 <Option>Christian</Option>
               </Select>
               <Input
-                name="cast"
+                name="caste"
                 type="text"
                 variant="outlined"
-                label="Cast"
-                placeholder="Cast"
+                label="Caste"
+                placeholder="Caste"
                 onChange={handleInputChange}
               />
               <Input
-                name="subcast"
+                name="subCaste"
                 type="text"
                 variant="outlined"
-                label="SubCast"
-                placeholder="SubCast"
+                label="SubCaste"
+                placeholder="SubCaste"
                 onChange={handleInputChange}
               />
 
-              <Select variant="outlined" label="Community">
+              <Select
+                variant="outlined"
+                value={community}
+                onChange={(e) => setcommunity(e)}
+                label="Community"
+              >
                 <Option>BC</Option>
                 <Option>OBC</Option>
                 <Option>SC</Option>
@@ -307,29 +388,34 @@ const AddStudent = () => {
               />
               <Input
                 variant="outlined"
-                name="pin"
+                name="pncode"
                 label="Pin"
                 placeholder="Pin"
                 onChange={handleInputChange}
               />
 
-              <Input
-                name="date"
-                type="date"
+              <Select
                 variant="outlined"
-                onChange={handleInputChange}
-              />
-
-              <Select variant="outlined" label="Class Of Joining">
-                <Option>Material Tailwind HTML</Option>
-                <Option>Material Tailwind React</Option>
-                <Option>Material Tailwind Vue</Option>
-                <Option>Material Tailwind Angular</Option>
-                <Option>Material Tailwind Svelte</Option>
+                value={classOfJoin}
+                onChange={(e) => setclassOfJoin(e)}
+                label="Class Of Joining"
+              >
+                <Option value="01">First std</Option>
+                <Option value="02">Second std</Option>
+                <Option value="03">Third std</Option>
+                <Option value="04">Fourth std</Option>
+                <Option value="05">Fifth std</Option>
+                <Option value="06">Sixth std</Option>
+                <Option value="07">Seventh std</Option>
+                <Option value="08">Eighth std</Option>
+                <Option value="09">Nineth std</Option>
+                <Option value="10">Tenth std</Option>
+                <Option value="11">Plus one</Option>
+                <Option value="12">Plus two</Option>
               </Select>
 
               <Input
-                name="emisnumber"
+                name="EMSno"
                 type="text"
                 variant="outlined"
                 label="EMIS Number"
@@ -345,34 +431,69 @@ const AddStudent = () => {
                 onChange={handleInputChange}
               />
 
-              <Select variant="outlined" label="Medium of Instruction">
+              <Input
+                name="academicYear"
+                type="number"
+                variant="outlined"
+                label="academicYear"
+                placeholder="outlined"
+                onChange={handleInputChange}
+              />
+
+              <Select
+                variant="outlined"
+                value={mediumOfInstruction}
+                onChange={(e) => setmediumOfInstruction(e)}
+                label="Medium of Instruction"
+              >
                 <Option>Tamil</Option>
                 <Option>English</Option>
                 <Option>French</Option>
               </Select>
 
-              <Select variant="outlined" label="Concession Student">
-                <Option>Yes</Option>
-                <Option>No</Option>
+              <Select
+                variant="outlined"
+                value={concessionStudent}
+                onChange={(e) => setconcessionStudent(e)}
+                label="Concession Student"
+              >
+                <Option value={true}>Yes</Option>
+                <Option value={false}>No</Option>
               </Select>
 
-              <Select variant="outlined" label="Academic Year">
-                <Option>2023-2024</Option>
+              <Select
+                variant="outlined"
+                value={academicYear}
+                onChange={(e) => setacademicYear(e)}
+                label="Academic Year"
+              >
+                <Option value="2016-2017">2016-2017</Option>
+                <Option value="2017-2018">2017-2018</Option>
+                <Option value="2018-2019">2018-2019</Option>
+                <Option value="2019-2020">2019-2020</Option>
+                <Option value="2020-2021">2020-2021</Option>
+                <Option value="2021-2022">2021-2022</Option>
+                <Option value="2022-2023">2022-2023</Option>
+                <Option value="2023-2024">2023-2024</Option>
               </Select>
 
               <Select
                 variant="outlined"
                 label="Category"
                 placeholder="Student Category"
+                value={studentCategory}
+                onChange={(e) => setstudentCategory(e)}
               >
-                <Option>Day School</Option>
-                <Option>Hostel</Option>
+                <Option value="daySchool">Day School</Option>
+                <Option value="daySchool">Hostel</Option>
               </Select>
 
               <Select
                 variant="outlined"
                 label="Student Group"
                 placeholder="Student Group"
+                value={studentGp}
+                onChange={(e) => setstudentGp(e)}
               >
                 <Option>Blue</Option>
               </Select>

@@ -303,7 +303,7 @@ const StaffIssueBookManagement = () => {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {data?.refSub}
+                            {data?.refSubject}
                           </Typography>
                         </td>
                         <td className={classes}>

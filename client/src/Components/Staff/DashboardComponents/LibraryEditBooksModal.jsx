@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { hideloading, showloading } from "../../../Helper/Redux/alertSlice";
 import {
   Button,
@@ -12,33 +12,37 @@ import {
   Typography,
   Select,
   Option,
+  IconButton,
+  Tooltip,
 } from "@material-tailwind/react";
 import axios from "../../../api/axios";
 import { useDispatch } from "react-redux";
+import { PencilIcon } from "@heroicons/react/24/solid";
 
-export default function LibraryBooksAddModal({ getBooks }) {
+export default function LibraryEditBooksModal({ getBooks, data }) {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
 
-  const [bookName, setbookName] = useState();
-  const [author, setAuthor] = useState();
-  const [genre, setgenre] = useState();
-  const [bookId, setbookId] = useState();
-  const [IsbnNo, setIsbnNo] = useState();
-  const [description, setdescription] = useState();
-  const [refNo, setrefNo] = useState();
-  const [language, setlanguage] = useState();
-  const [barcode, setbarcode] = useState();
-  const [refSubject, setrefSub] = useState();
-  const [year, setyear] = useState();
+  const [bookName, setbookName] = useState(data?.bookName);
+  const [author, setAuthor] = useState(data?.author);
+  const [genre, setgenre] = useState(data?.genre);
+  const [bookId, setbookId] = useState(data?.bookId);
+  const [IsbnNo, setIsbnNo] = useState(data?.IsbnNo);
+  const [description, setdescription] = useState(data?.description);
+  const [refNo, setrefNo] = useState(data?.refNo);
+  const [language, setlanguage] = useState(data?.language);
+  const [barcode, setbarcode] = useState(data?.barcode);
+  const [refSubject, setrefSub] = useState(data?.refSubject);
+  const [year, setyear] = useState(data?.year);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
     getBooks();
   };
+  const dbId = data._id;
 
-  const addBook = async () => {
+  const updateBook = async () => {
     try {
       const data = {
         bookName,
@@ -54,7 +58,7 @@ export default function LibraryBooksAddModal({ getBooks }) {
         year,
       };
       dispatch(showloading());
-      const response = await axios.post("/library/books", data);
+      const response = await axios.put(`/library/books/${dbId}`, data);
       dispatch(hideloading());
 
       handleClose();
@@ -67,19 +71,23 @@ export default function LibraryBooksAddModal({ getBooks }) {
 
   return (
     <>
-      <Button
-        onClick={handleOpen}
-        variant="gradient"
-        style={{ textTransform: "none" }}
+      <Tooltip
+        content="Edit book"
+        animate={{
+          mount: { scale: 1, y: 0 },
+          unmount: { scale: 0, y: 25 },
+        }}
       >
-        Add books
-      </Button>
+        <IconButton variant="text" onClick={handleOpen}>
+          <PencilIcon className="h-6 w-5" />
+        </IconButton>
+      </Tooltip>
       <Dialog open={open} handler={handleOpen} size="xl">
         <div
           className="pt-6 pl-10"
           style={{ overflowX: "hidden", overflowY: "auto" }}
         >
-          <DialogHeader>Add books</DialogHeader>
+          <DialogHeader>Edit book</DialogHeader>
           <DialogBody>
             <div className=" flex flex-wrap gap-6 p-5 lg:grid md:grid md:grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 ">
               <Input
@@ -183,8 +191,8 @@ export default function LibraryBooksAddModal({ getBooks }) {
             >
               <span>Cancel</span>
             </Button>
-            <Button variant="gradient" color="green" onClick={addBook}>
-              <span>Add book</span>
+            <Button variant="gradient" color="green" onClick={updateBook}>
+              <span>Edit book</span>
             </Button>
           </DialogFooter>
         </div>
