@@ -60,7 +60,6 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
 
       handleClose();
     } catch (error) {
-      dispatch(hideloading());
 
       console.log(error);
     }

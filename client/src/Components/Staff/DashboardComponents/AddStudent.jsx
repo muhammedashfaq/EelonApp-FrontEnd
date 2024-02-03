@@ -4,9 +4,11 @@ import {
   Option,
   Select,
   Textarea,
+  Typography,
 } from "@material-tailwind/react";
 import axios from "../../../api/axios";
 import { useState } from "react";
+import DatePicker from "../../DatePicker/datePicker";
 
 const AddStudent = () => {
   const [classes, setClasses] = useState("");
@@ -103,33 +105,24 @@ const AddStudent = () => {
   };
   return (
     <div className=" w-screen">
-      <div className="flex justify-center ">
-        <div className=" border-2 rounded-lg shadow-lg  mt-2">
+      <div className="flex justify-center">
+        <div className=" border-2 rounded-lg shadow-lg  mt-2 ">
           <div className="bg-blue-900 rounded-t-lg flex justify-center items-center h-10 text-white ">
             <h1 className="text-2xl">Add student </h1>
           </div>
           <form onSubmit={handleSubmitForm}>
+            <div className="px-6 pt-6">
+              <Typography variant="lead">Personal Details</Typography>
+              <hr />
+            </div>
+
             <div className=" flex flex-wrap gap-6 p-8 lg:grid lg:grid-cols-4 ">
-              <Input
-                type="file"
-                variant="outlined"
-                label="outlined"
-                placeholder="outlined"
-              />
               <Input
                 name="studentName"
                 type="text"
                 variant="outlined"
                 label="Student Name*"
                 placeholder=" Name*"
-                onChange={handleInputChange}
-              />
-              <Input
-                name="admnNo"
-                type="number"
-                variant="outlined"
-                label="Admition Number*"
-                placeholder="Admition Number*"
                 onChange={handleInputChange}
               />
               <Input
@@ -150,6 +143,13 @@ const AddStudent = () => {
                 <Option value="Female">Female</Option>
                 <Option value="Others">Others</Option>
               </Select>
+
+              <Input
+                type="date"
+                variant="outlined"
+                label="DOB"
+                placeholder="DOB"
+              />
               <Input
                 name="AadharNo"
                 type="number"
@@ -158,6 +158,22 @@ const AddStudent = () => {
                 placeholder="Adhar Number"
                 onChange={handleInputChange}
               />
+              <Select
+                variant="outlined"
+                value={bloodGp}
+                onChange={(e) => setbloodGp(e)}
+                label="Bloog Group"
+              >
+                <Option value="A+ve">A+ve</Option>
+                <Option value="A-ve">A-ve</Option>
+                <Option value="B+ve">B+ve</Option>
+                <Option value="B-ve">B-ve</Option>
+                <Option value="AB+ve">AB+ve</Option>
+                <Option value="AB-ve">AB-ve</Option>
+                <Option value="O+ve">O+ve</Option>
+                <Option value="O-ve">O-ve</Option>
+                <Option value="Unknown">Unknown</Option>
+              </Select>
               <Input
                 name="ContactNo"
                 type="number"
@@ -175,6 +191,122 @@ const AddStudent = () => {
                 placeholder="Alternate Number"
                 onChange={handleInputChange}
               />
+              <Input
+                variant="outlined"
+                name="city"
+                label="City"
+                placeholder="City"
+                onChange={handleInputChange}
+              />
+              <Input
+                variant="outlined"
+                name="state"
+                label="State"
+                placeholder="state"
+                onChange={handleInputChange}
+              />
+
+              <Input
+                name="nationality"
+                type="text"
+                variant="outlined"
+                label="Nationality"
+                placeholder="outlined"
+                onChange={handleInputChange}
+              />
+              <Input
+                variant="outlined"
+                name="pincode"
+                label="Pin"
+                placeholder="Pin"
+                onChange={handleInputChange}
+              />
+
+              <Select
+                variant="outlined"
+                value={motherTongue}
+                onChange={(e) => setmotherTongue(e)}
+                label="Mother Tongue"
+              >
+                <Option value="Tamil">Tamil</Option>
+                <Option value="Hindi">Hindi</Option>
+                <Option value="Malayalam">Malayalam</Option>
+              </Select>
+
+              <Select
+                variant="outlined"
+                value={religion}
+                onChange={(e) => setreligion(e)}
+                label="Religion"
+              >
+                <Option value="Hindu">Hindu</Option>
+                <Option value="Muslim">Muslim</Option>
+                <Option value="Christian">Christian</Option>
+              </Select>
+              <Input
+                name="caste"
+                type="text"
+                variant="outlined"
+                label="Caste"
+                placeholder="Caste"
+                onChange={handleInputChange}
+              />
+              <Input
+                name="subCaste"
+                type="text"
+                variant="outlined"
+                label="SubCaste"
+                placeholder="SubCaste"
+                onChange={handleInputChange}
+              />
+              <Select
+                variant="outlined"
+                value={community}
+                onChange={(e) => setcommunity(e)}
+                label="Community"
+              >
+                <Option value="BC">BC</Option>
+                <Option value="OBC">OBC</Option>
+                <Option value="SC">SC</Option>
+                <Option value="ST">ST</Option>
+              </Select>
+
+              <Input
+                name="weight"
+                type="number"
+                variant="outlined"
+                label="Weight"
+                placeholder="Weight"
+                onChange={handleInputChange}
+              />
+              <Input
+                name="height"
+                type="number"
+                variant="outlined"
+                label="Height"
+                placeholder="Height"
+                onChange={handleInputChange}
+              />
+
+              <Input
+                type="file"
+                variant="outlined"
+                label="Student Image"
+                placeholder="outlined"
+              />
+
+              <Textarea
+                variant="outlined"
+                name="address"
+                label="Address"
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="px-6 pt-6">
+              <Typography variant="lead">Guardian Details</Typography>
+              <hr />
+            </div>
+            <div className=" flex flex-wrap gap-6 p-8 lg:grid lg:grid-cols-4 ">
               <Input
                 name="FathersName"
                 type="text"
@@ -258,20 +390,80 @@ const AddStudent = () => {
                 placeholder="Annual Income"
                 onChange={handleInputChange}
               />
+            </div>
+
+            <div className="px-6 pt-6">
+              <Typography variant="lead">Admission Details</Typography>
+              <hr />
+            </div>
+
+            <div className=" flex flex-wrap gap-6 p-8 lg:grid lg:grid-cols-4 ">
               <Input
-                name="weight"
+                name="admnNo"
                 type="number"
                 variant="outlined"
-                label="Weight"
-                placeholder="Weight"
+                label="Admission Number*"
+                placeholder="Admission Number*"
+                onChange={handleInputChange}
+              />
+              <Select
+                variant="outlined"
+                value={academicYear}
+                onChange={(e) => setacademicYear(e)}
+                label="Academic Year"
+              >
+                <Option value="2016-2017">2016-2017</Option>
+                <Option value="2017-2018">2017-2018</Option>
+                <Option value="2018-2019">2018-2019</Option>
+                <Option value="2019-2020">2019-2020</Option>
+                <Option value="2020-2021">2020-2021</Option>
+                <Option value="2021-2022">2021-2022</Option>
+                <Option value="2022-2023">2022-2023</Option>
+                <Option value="2023-2024">2023-2024</Option>
+              </Select>
+
+              <Input
+                name="email"
+                type="email"
+                variant="outlined"
+                label="Email"
+                placeholder="Enter Your Email"
                 onChange={handleInputChange}
               />
               <Input
-                name="height"
+                name="password"
+                type="password"
+                variant="outlined"
+                label="Password"
+                placeholder="********"
+                onChange={handleInputChange}
+              />
+              <Select
+                variant="outlined"
+                value={classOfJoin}
+                onChange={(e) => setclassOfJoin(e)}
+                label="Class Of Joining"
+              >
+                <Option value="01">First std</Option>
+                <Option value="02">Second std</Option>
+                <Option value="03">Third std</Option>
+                <Option value="04">Fourth std</Option>
+                <Option value="05">Fifth std</Option>
+                <Option value="06">Sixth std</Option>
+                <Option value="07">Seventh std</Option>
+                <Option value="08">Eighth std</Option>
+                <Option value="09">Nineth std</Option>
+                <Option value="10">Tenth std</Option>
+                <Option value="11">Plus one</Option>
+                <Option value="12">Plus two</Option>
+              </Select>
+
+              <Input
+                name="EMSno"
                 type="number"
                 variant="outlined"
-                label="Height"
-                placeholder="Height"
+                label="EMIS Number"
+                placeholder="EMIS Number"
                 onChange={handleInputChange}
               />
               <Select
@@ -303,156 +495,6 @@ const AddStudent = () => {
                 <Option value="B">B</Option>
                 <Option value="C">C</Option>
               </Select>
-              <Input
-                name="email"
-                type="email"
-                variant="outlined"
-                label="Email"
-                placeholder="Enter Your Email"
-                onChange={handleInputChange}
-              />
-              <Input
-                name="password"
-                type="password"
-                variant="outlined"
-                label="Password"
-                placeholder="********"
-                onChange={handleInputChange}
-              />
-              <Select
-                variant="outlined"
-                value={bloodGp}
-                onChange={(e) => setbloodGp(e)}
-                label="Bloog Group"
-              >
-                <Option value="A+ve">A+ve</Option>
-                <Option value="A-ve">A-ve</Option>
-                <Option value="B+ve">B+ve</Option>
-                <Option value="B-ve">B-ve</Option>
-                <Option value="AB+ve">AB+ve</Option>
-                <Option value="AB-ve">AB-ve</Option>
-                <Option value="O+ve">O+ve</Option>
-                <Option value="O-ve">O-ve</Option>
-                <Option value="Unknown">Unknown</Option>
-              </Select>
-
-              <Select
-                variant="outlined"
-                value={motherTongue}
-                onChange={(e) => setmotherTongue(e)}
-                label="Mother Tongue"
-              >
-                <Option value="Tamil">Tamil</Option>
-                <Option value="Hindi">Hindi</Option>
-                <Option value="Malayalam">Malayalam</Option>
-              </Select>
-
-              <Select
-                variant="outlined"
-                value={religion}
-                onChange={(e) => setreligion(e)}
-                label="Religion"
-              >
-                <Option value="Hindu">Hindu</Option>
-                <Option value="Muslim">Muslim</Option>
-                <Option value="Christian">Christian</Option>
-              </Select>
-              <Input
-                name="caste"
-                type="text"
-                variant="outlined"
-                label="Caste"
-                placeholder="Caste"
-                onChange={handleInputChange}
-              />
-              <Input
-                name="subCaste"
-                type="text"
-                variant="outlined"
-                label="SubCaste"
-                placeholder="SubCaste"
-                onChange={handleInputChange}
-              />
-
-              <Select
-                variant="outlined"
-                value={community}
-                onChange={(e) => setcommunity(e)}
-                label="Community"
-              >
-                <Option value="BC">BC</Option>
-                <Option value="OBC">OBC</Option>
-                <Option value="SC">SC</Option>
-                <Option value="ST">ST</Option>
-              </Select>
-
-              <Input
-                variant="outlined"
-                name="state"
-                label="State"
-                placeholder="state"
-                onChange={handleInputChange}
-              />
-              <Input
-                variant="outlined"
-                name="city"
-                label="City"
-                placeholder="City"
-                onChange={handleInputChange}
-              />
-              <Input
-                variant="outlined"
-                name="pincode"
-                label="Pin"
-                placeholder="Pin"
-                onChange={handleInputChange}
-              />
-
-              <Select
-                variant="outlined"
-                value={classOfJoin}
-                onChange={(e) => setclassOfJoin(e)}
-                label="Class Of Joining"
-              >
-                <Option value="01">First std</Option>
-                <Option value="02">Second std</Option>
-                <Option value="03">Third std</Option>
-                <Option value="04">Fourth std</Option>
-                <Option value="05">Fifth std</Option>
-                <Option value="06">Sixth std</Option>
-                <Option value="07">Seventh std</Option>
-                <Option value="08">Eighth std</Option>
-                <Option value="09">Nineth std</Option>
-                <Option value="10">Tenth std</Option>
-                <Option value="11">Plus one</Option>
-                <Option value="12">Plus two</Option>
-              </Select>
-
-              <Input
-                name="EMSno"
-                type="number"
-                variant="outlined"
-                label="EMIS Number"
-                placeholder="EMIS Number"
-                onChange={handleInputChange}
-              />
-              <Input
-                name="nationality"
-                type="text"
-                variant="outlined"
-                label="Nationality"
-                placeholder="outlined"
-                onChange={handleInputChange}
-              />
-
-              <Input
-                name="academicYear"
-                type="number"
-                variant="outlined"
-                label="academicYear"
-                placeholder="outlined"
-                onChange={handleInputChange}
-              />
 
               <Select
                 variant="outlined"
@@ -472,22 +514,6 @@ const AddStudent = () => {
               >
                 <Option value={true}>Yes</Option>
                 <Option value={false}>No</Option>
-              </Select>
-
-              <Select
-                variant="outlined"
-                value={academicYear}
-                onChange={(e) => setacademicYear(e)}
-                label="Academic Year"
-              >
-                <Option value="2016-2017">2016-2017</Option>
-                <Option value="2017-2018">2017-2018</Option>
-                <Option value="2018-2019">2018-2019</Option>
-                <Option value="2019-2020">2019-2020</Option>
-                <Option value="2020-2021">2020-2021</Option>
-                <Option value="2021-2022">2021-2022</Option>
-                <Option value="2022-2023">2022-2023</Option>
-                <Option value="2023-2024">2023-2024</Option>
               </Select>
 
               <Select
@@ -513,13 +539,6 @@ const AddStudent = () => {
                 <Option value="Yellow">Yellow</Option>
                 <Option value="Green">Green</Option>
               </Select>
-
-              <Textarea
-                variant="outlined"
-                name="address"
-                label="Address"
-                onChange={handleInputChange}
-              />
             </div>
             <div className=" flex justify-center w-full">
               <Button type="submit" className="m-2 w-80 font-bold" color="blue">
