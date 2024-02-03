@@ -23,13 +23,17 @@ import { RouteObjects } from "../Routes/RoutObjects.jsx";
 const Login = () => {
   const { setUserRoles } = useUserContext();
   const [isLoading, setIsLoading] = useState(false);
-  const [errors, setError] = useState([]);
   const [userType, setuserType] = useState();
   const [errorMsg, seterrorMsg] = useState();
   const { setAuth } = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [FrntError, setFrntError] = useState({
     email: "",
     password: "",
   });
@@ -41,55 +45,54 @@ const Login = () => {
       ...pre,
       [name]: value,
     }));
+
+    setFrntError((pre) => ({
+      ...pre,
+      [name]: "",
+    }));
   };
+
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+
       seterrorMsg("");
       const type = userType.toLowerCase();
 
-      setIsLoading(true);
-
-      const response = await axios.post(`/auth/${type}`, formData);
-      setIsLoading(false);
-
-      const accessToken = response?.data?.accessToken;
-      const roles = response?.data?.roles;
-      setUserRoles(roles);
-      // setAuth({ accessToken, roles });
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("roles", roles);
-      if (userType === "Student") {
-        navigate(RouteObjects.root);
-      } else if (userType === "Staff") {
-        navigate(RouteObjects.root);
-      } else if (userType === "Admin") {
-        navigate(RouteObjects.root);
-      }
-      location.reload();
-
-      const error = loginValidate(formData.email, formData.password);
-      setError(error);
+      const error = loginValidate(formData.email);
+      setFrntError(error);
       if (Object.values(error).every((value) => value === "")) {
-        if (response.data.success) {
-          toast.success(response.data.message);
-          localStorage.setItem("token", response.data.data);
-        } else {
-          toast.error(response.data.message);
+        setIsLoading(true);
+        const response = await axios.post(`/auth/${type}`, formData);
+        setIsLoading(false);
+        
+        const accessToken = response?.data?.accessToken;
+        const roles = response?.data?.roles;
+        setUserRoles(roles);
+        // setAuth({ accessToken, roles });
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("roles", roles);
+        if (userType === "Student") {
+          navigate(RouteObjects.root);
+        } else if (userType === "Staff") {
+          navigate(RouteObjects.root);
+        } else if (userType === "Admin") {
+          navigate(RouteObjects.root);
         }
+        location.reload();
       }
     } catch (error) {
       setIsLoading(false);
 
       console.log(error);
       if (!error?.response) {
-        seterrorMsg("No server response");
+        toast.error("No server response");
       } else if (error.response.status === 404) {
-        seterrorMsg("Email not found");
+        toast.error("Email not found");
       } else if (error.response?.status === 401) {
         seterrorMsg("Wrong password");
       } else {
-        seterrorMsg("Login error");
+        toast.error("Login error");
       }
     }
   };
@@ -97,6 +100,7 @@ const Login = () => {
   return (
     <div>
       {isLoading && <Spinner />}
+      
 
       <div className="shadow-md p-0 flex justify-center ">
         <img src={logoImage} className="w-25 h-20 p-2 cursor-pointer" />
@@ -113,17 +117,19 @@ const Login = () => {
                 />
               </div>
               <div className="bg-cyan-600 p-8 rounded-r-lg">
+                    <div>
+                      {FrntError.email && (
+                        <Alert color="red" variant="ghost" >{FrntError.email}</Alert>
+                      )}
+                    </div>
                 <Card color="transparent" shadow={false} className="">
                   <div className=" flex justify-center ">
                     <Typography variant="h2" color="blue-gray" className="">
                       {userType && `${userType} `}Sign In
                     </Typography>
                   </div>
-                  {errorMsg && (
-                    <div>
-                      <Alert variant="ghost">{errorMsg}</Alert>
-                    </div>
-                  )}
+                
+                
 
                   <form
                     onSubmit={handleSubmit}

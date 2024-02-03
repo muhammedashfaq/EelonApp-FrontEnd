@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { hideloading, showloading } from "../../../Helper/Redux/alertSlice";
 import {
   Button,
   Dialog,
@@ -57,13 +56,10 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
         refSubject,
         year,
       };
-      dispatch(showloading());
       const response = await axios.put(`/library/books/${dbId}`, data);
-      dispatch(hideloading());
 
       handleClose();
     } catch (error) {
-      dispatch(hideloading());
 
       console.log(error);
     }

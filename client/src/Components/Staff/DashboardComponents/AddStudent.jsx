@@ -96,6 +96,7 @@ const AddStudent = () => {
             <h1 className="text-2xl">Students Admition </h1>
           </div>
           <form onSubmit={handleSubmitForm}>
+            
             <div className=" flex flex-wrap gap-6 p-8 lg:grid lg:grid-cols-4 ">
               <Input
                 type="file"
