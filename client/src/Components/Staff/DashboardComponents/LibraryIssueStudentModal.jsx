@@ -16,6 +16,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 export default function LibraryIssueStudentModal({
+  unissueAlert,
   setAlert,
   bookId,
   getBooks,
@@ -56,6 +57,7 @@ export default function LibraryIssueStudentModal({
       const response = await axios.put(`/library/books/issuelist/${bookId}`, {
         studentId,
       });
+      unissueAlert(true)
       getBooks();
       handleClose();
     } catch (error) {

@@ -1,3 +1,4 @@
+import { PencilIcon } from "@heroicons/react/24/solid"
 import {
   Card,
   Typography,
@@ -8,6 +9,8 @@ import {
   Input,
   Select,
   Option,
+  Tooltip,
+  IconButton,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import axios from "../../../api/axios";
@@ -146,6 +149,15 @@ const SatffAddBookManagement = () => {
                       className="font-normal leading-none opacity-70"
                     >
                       Language
+                    </Typography>
+                  </th>
+                  <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal leading-none opacity-70"
+                    >
+                      Info
                     </Typography>
                   </th>
                   <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
@@ -305,6 +317,14 @@ const SatffAddBookManagement = () => {
                             </Card>
                           </Dialog>
                         </td>
+
+                        <td className={classes}>
+                      <Tooltip content="Edit Book">
+                        <IconButton variant="text">
+                          <PencilIcon className="h-4 w-4" />
+                        </IconButton>
+                      </Tooltip>
+                    </td>
                       </tr>
                     );
                   })}

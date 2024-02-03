@@ -1,5 +1,5 @@
 
-const Banner = () => {
+const Banner = ({name}) => {
   return (
     <div>
         <section className="bg-dark-purple text-gray-100 flex items-center justify-evenly">
@@ -11,7 +11,7 @@ const Banner = () => {
             />
 
             <h1 className="text-4xl font-bold leading-none sm:text-5xl">
-              College Name
+              College Name 
             </h1>
         </div>
             <div className="flex flex-wrap justify-center items-center mt-8">
@@ -26,6 +26,7 @@ const Banner = () => {
                 </select>
               </div>
             </div>
+           {name}
       </section>
     </div>
   )
