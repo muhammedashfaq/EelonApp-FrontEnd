@@ -19,6 +19,7 @@ import { useDispatch } from "react-redux";
 import Banner from "../../Banner/Banner";
 import LIbraryBookDetailsModal from "./LIbraryBookDetailsModal";
 import LibraryEditBooksModal from "./LibraryEditBooksModal";
+import Spinner from "../../spinner/Spinner";
 
 const SatffAddBookManagement = () => {
   const dispatch = useDispatch();
@@ -28,16 +29,19 @@ const SatffAddBookManagement = () => {
   const [genre, setgenre] = useState();
   const [searchQuery, setsearchQuery] = useState();
   const [searchData, setsearchData] = useState();
+  const [isLoading, setisLoading] = useState(false);
 
   const getBooks = async () => {
     try {
-      // dispatch(showloading());
+      setisLoading(true);
       const response = await axios.get("/library/books");
       // dispatch(hideloading());
 
       setbookData(response.data);
+      setisLoading(false);
     } catch (error) {
       console.log(error);
+      setisLoading(false);
     }
   };
   useEffect(() => {
@@ -47,24 +51,48 @@ const SatffAddBookManagement = () => {
   const getBookByName = async (e) => {
     e.preventDefault();
     try {
+      setisLoading(true);
       if (!searchQuery) return;
       const response = await axios.get(
         `library/books/issuelist/search/${searchQuery}`
       );
       setsearchData(response.data);
-      setbookData(response.data);
+      setisLoading(false);
     } catch (error) {
       console.log(error);
+      setisLoading(false);
     }
   };
 
+  const getBookByGenre = async (value) => {
+    try {
+      setisLoading(true);
+
+      const response = await axios.get(
+        `library/books/issuelist/searchGenre/${value}`
+      );
+      setsearchData(response.data);
+      setisLoading(false);
+    } catch (error) {
+      console.log(error);
+      setisLoading(false);
+    }
+  };
   return (
     <div className="w-full">
+      {isLoading && <Spinner />}
       <Banner />
       <div className=" m-20">
         <div className=" w-full h-auto  flex justify-around mb-2 border-2 p-1 rounded-lg shadow-md">
-          <div className="w-72">
-            <Select label="Select Genre" onChange={(e) => setgenre(e)}>
+          <div className="w-auto flex gap-1">
+            <Select
+              label="Select Genre"
+              onChange={(e) => {
+                setgenre(e);
+                getBookByGenre(e);
+              }}
+              value={genre}
+            >
               <Option value="Story">Story</Option>
               <Option value="Poem">Poem</Option>
               <Option value="Biography">Biography</Option>
@@ -72,8 +100,25 @@ const SatffAddBookManagement = () => {
               <Option value="Fiction">Fiction</Option>
               <Option value="Non-fiction">Non-fiction</Option>
             </Select>
+            {/* <Button
+              variant="text"
+              style={{ textTransform: "none" }}
+              onClick={getBookByGenre}
+            >
+              Filter
+            </Button> */}
+            <Button
+              variant="text"
+              onClick={() => {
+                setsearchData();
+                setgenre();
+              }}
+              style={{ textTransform: "none" }}
+            >
+              Reset
+            </Button>
           </div>
-          <div className="w-full md:w-72 flex">
+          <div className="w-full md:w-80 flex gap-1 ">
             <form onSubmit={getBookByName}>
               <Input
                 label="Search books"
@@ -82,7 +127,27 @@ const SatffAddBookManagement = () => {
                 // icon={<MagnifyingGlassIco className="h-5 w-5" />}
               />
             </form>
-            <Button variant="text" onClick={getBooks}>
+            <IconButton variant="outlined">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-5 h-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                />
+              </svg>
+            </IconButton>
+            <Button
+              variant="text"
+              onClick={() => setsearchData()}
+              style={{ textTransform: "none" }}
+            >
               Reset
             </Button>
           </div>
@@ -207,109 +272,212 @@ const SatffAddBookManagement = () => {
                 </tr>
               </thead>
               <tbody>
-                {bookData &&
-                  bookData.map((data, index) => {
-                    const isLast = index === bookData.length - 1;
-                    const classes = isLast
-                      ? "p-4"
-                      : "p-4 border-b border-blue-gray-50";
+                {searchData
+                  ? searchData.map((data, index) => {
+                      const isLast = index === bookData.length - 1;
+                      const classes = isLast
+                        ? "p-4"
+                        : "p-4 border-b border-blue-gray-50";
 
-                    return (
-                      <tr key={data._id}>
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {index + 1}
-                          </Typography>
-                        </td>
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {data?.refNo}
-                          </Typography>
-                        </td>
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {data?.bookName}
-                          </Typography>
-                        </td>
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {data?.IsbnNo}
-                          </Typography>
-                        </td>
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {data?.author}
-                          </Typography>
-                        </td>
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {data?.genre}
-                          </Typography>
-                        </td>
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {data?.barcode}
-                          </Typography>
-                        </td>
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {data?.refSubject}
-                          </Typography>
-                        </td>
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {data?.language}
-                          </Typography>
-                        </td>
-                        <td className={classes}>
-                          <LIbraryBookDetailsModal data={data} />
-                        </td>
+                      return (
+                        <tr key={data._id}>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {index + 1}
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {data?.refNo}
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {data?.bookName}
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {data?.IsbnNo}
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {data?.author}
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {data?.genre}
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {data?.barcode}
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {data?.refSubject}
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {data?.language}
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <LIbraryBookDetailsModal data={data} />
+                          </td>
 
-                        <td className={classes}>
-                          <LibraryEditBooksModal
-                            data={data}
-                            getBooks={getBooks}
-                          />
-                        </td>
-                      </tr>
-                    );
-                  })}
+                          <td className={classes}>
+                            <LibraryEditBooksModal
+                              data={data}
+                              getBooks={getBooks}
+                            />
+                          </td>
+                        </tr>
+                      );
+                    })
+                  : bookData &&
+                    bookData.map((data, index) => {
+                      const isLast = index === bookData.length - 1;
+                      const classes = isLast
+                        ? "p-4"
+                        : "p-4 border-b border-blue-gray-50";
+
+                      return (
+                        <tr key={data._id}>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {index + 1}
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {data?.refNo}
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {data?.bookName}
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {data?.IsbnNo}
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {data?.author}
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {data?.genre}
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {data?.barcode}
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {data?.refSubject}
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {data?.language}
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <LIbraryBookDetailsModal data={data} />
+                          </td>
+
+                          <td className={classes}>
+                            <LibraryEditBooksModal
+                              data={data}
+                              getBooks={getBooks}
+                            />
+                          </td>
+                        </tr>
+                      );
+                    })}
               </tbody>
             </table>
           </Card>

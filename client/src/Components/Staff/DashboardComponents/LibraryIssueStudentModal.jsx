@@ -21,7 +21,6 @@ export default function LibraryIssueStudentModal({
   bookId,
   getBooks,
   currentlyIssued,
-
 }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
@@ -33,17 +32,13 @@ export default function LibraryIssueStudentModal({
   const [searchData, setsearchData] = useState();
   const [checked, setchecked] = useState();
 
-  useEffect(() => {
-    console.log(checked);
-  }, [checked]);
-
   const issuebook = async () => {
     if (!checked) return;
     try {
       const response = await axios.post(`/library/books/issuelist/${bookId}`, {
         studentId,
       });
-      setAlert(true)
+      setAlert(true);
       getBooks();
       handleClose();
     } catch (error) {
@@ -57,7 +52,7 @@ export default function LibraryIssueStudentModal({
       const response = await axios.put(`/library/books/issuelist/${bookId}`, {
         studentId,
       });
-      unissueAlert(true)
+      unissueAlert(true);
       getBooks();
       handleClose();
     } catch (error) {
@@ -75,9 +70,6 @@ export default function LibraryIssueStudentModal({
       console.log(error);
     }
   };
-  useEffect(() => {
-    console.log(searchData);
-  }, [searchData]);
 
   return (
     <>
@@ -88,7 +80,7 @@ export default function LibraryIssueStudentModal({
       >
         Issue book
       </Button>
-      
+
       <Dialog
         size="xs"
         open={open}

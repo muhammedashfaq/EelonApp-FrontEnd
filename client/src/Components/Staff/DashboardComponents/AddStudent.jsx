@@ -8,7 +8,6 @@ import {
 } from "@material-tailwind/react";
 import axios from "../../../api/axios";
 import { useState } from "react";
-import DatePicker from "../../DatePicker/datePicker";
 
 const AddStudent = () => {
   const [classes, setClasses] = useState("");
