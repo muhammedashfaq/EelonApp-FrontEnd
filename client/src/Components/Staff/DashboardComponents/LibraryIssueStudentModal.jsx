@@ -62,7 +62,9 @@ export default function LibraryIssueStudentModal({
 
   const searchStudent = async () => {
     try {
-      const response = await axios.get(`users/student/search/${studentId}`);
+      const response = await axios.get(
+        `users/student/issuelibrarycard/${studentId}`
+      );
       console.log(response);
       setsearchData(response.data);
       setstudentId(response.data.email);
