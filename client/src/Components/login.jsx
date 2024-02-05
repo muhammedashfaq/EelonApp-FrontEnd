@@ -19,6 +19,7 @@ import useAuth from "../Hooks/useAuth.jsx";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../Context/userContext.jsx";
 import { RouteObjects } from "../Routes/RoutObjects.jsx";
+import useAxiosPrivate from "../Hooks/useAxiosPrivate.jsx";
 
 const Login = () => {
   const { setUserRoles } = useUserContext();
@@ -27,6 +28,7 @@ const Login = () => {
   const [errorMsg, seterrorMsg] = useState();
   const { setAuth } = useAuth();
   const navigate = useNavigate();
+  const axiosPrivate = useAxiosPrivate();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -64,18 +66,25 @@ const Login = () => {
         return;
       } else {
         setIsLoading(true);
-        const response = await axios.post(`/auth/${type}`, formData);
+
+        const response = await axiosPrivate.post(`/auth/${type}`, formData);
+
         console.log(response,"login respons");
+
         setIsLoading(false);
 
         const accessToken = response?.data?.accessToken;
         const roles = response?.data?.roles;
+
+        const email = response?.data?.email;
         const userId = response?.data?.userId;
 
         setUserRoles(roles);
         setAuth({ accessToken, roles,userId });
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("roles", roles);
+
+        localStorage.setItem("email", email);
         localStorage.setItem("userId", userId);
 
         if (userType === "Student") {
@@ -168,42 +177,35 @@ const Login = () => {
                       </div>
 
                       {FrntError.email ? (
-
-                        <Input error/>
-                        ):(
-                          <Input
-    
-                            size="lg"
-                            name="email"
-                            placeholder="Enter Your Mail"
-                            onChange={handleInputChange}
-                            className=" border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md bg-cyan-200"
-                            labelProps={{
-                              className: "before:content-none after:content-none",
-                            }}
-                          />
-
-                        )
-                      }
-                { FrntError.password ?(
-
-                  <Input error />
-                ):(
-
-                  <Input
-                  type="password"
-                  size="lg"
-                  name="password"
-                  placeholder="Enter Password"
-                  onChange={handleInputChange}
-                  className=" !border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md  bg-cyan-200"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
-                  />
-                  )
-                }
-                </div>
+                        <Input error />
+                      ) : (
+                        <Input
+                          size="lg"
+                          name="email"
+                          placeholder="Enter Your Mail"
+                          onChange={handleInputChange}
+                          className=" border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md bg-cyan-200"
+                          labelProps={{
+                            className: "before:content-none after:content-none",
+                          }}
+                        />
+                      )}
+                      {FrntError.password ? (
+                        <Input error />
+                      ) : (
+                        <Input
+                          type="password"
+                          size="lg"
+                          name="password"
+                          placeholder="Enter Password"
+                          onChange={handleInputChange}
+                          className=" !border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md  bg-cyan-200"
+                          labelProps={{
+                            className: "before:content-none after:content-none",
+                          }}
+                        />
+                      )}
+                    </div>
 
                     <Button
                       className="mt-6 w-full bg-red-400 hover:bg-red-500  p-2 font-semibold text-white rounded-md"

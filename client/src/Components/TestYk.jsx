@@ -1,11 +1,10 @@
 import React from "react";
-import { Button, Checkbox, Input } from "@material-tailwind/react";
-import LibraryBooksAddModal from "./Staff/DashboardComponents/LibraryBooksAddModal";
+import Classroom from "../Pages/Staff/Dashboard/Classroom.jsx";
 
 const TestYk = () => {
   return (
     <>
-      <LibraryBooksAddModal />
+      <Classroom />
     </>
   );
 };

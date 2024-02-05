@@ -20,6 +20,7 @@ import Banner from "../../Banner/Banner";
 import LIbraryBookDetailsModal from "./LIbraryBookDetailsModal";
 import LibraryEditBooksModal from "./LibraryEditBooksModal";
 import Spinner from "../../spinner/Spinner";
+import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 
 const SatffAddBookManagement = () => {
   const dispatch = useDispatch();
@@ -30,11 +31,12 @@ const SatffAddBookManagement = () => {
   const [searchQuery, setsearchQuery] = useState();
   const [searchData, setsearchData] = useState();
   const [isLoading, setisLoading] = useState(false);
+  const axiosPrivate = useAxiosPrivate();
 
   const getBooks = async () => {
     try {
       setisLoading(true);
-      const response = await axios.get("/library/books");
+      const response = await axiosPrivate.get("/library/books");
       // dispatch(hideloading());
 
       setbookData(response.data);
