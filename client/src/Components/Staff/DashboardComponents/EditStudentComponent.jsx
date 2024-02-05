@@ -8,27 +8,40 @@ import {
 } from "@material-tailwind/react";
 import axios from "../../../api/axios";
 import { useEffect, useState } from "react";
-import { useFetcher, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "../../spinner/Spinner";
 import { RouteObjects } from "../../../Routes/RoutObjects";
+
+const useDropdownState = (initialValue, fetchedValue) => {
+  const [value, setValue] = useState(initialValue);
+
+  useEffect(() => {
+    if (fetchedValue !== undefined) {
+      setValue(fetchedValue);
+    }
+  }, [fetchedValue]);
+
+  return [value, setValue];
+};
 const EditStudentComponent = () => {
-  const navigate = useNavigate()
-  const {id} =useParams()
-  const [fetData,setFetchData]=useState("")
-  const [classes, setClasses] = useState("");
-  const [gender, setgender] = useState(fetData?.gender);
-  const [std, setstd] = useState(fetData?.std);
-  const [section, setsection] = useState(fetData?.section);
-  const [bloodGp, setbloodGp] = useState(fetData?.bloodGp);
-  const [motherTongue, setmotherTongue] = useState(fetData?.motherTongue);
-  const [religion, setreligion] = useState(fetData?.religion);
-  const [community, setcommunity] = useState(fetData?.community);
-  const [classOfJoin, setclassOfJoin] = useState(fetData?.classOfJoin);
-  const [mediumOfInstruction, setmediumOfInstruction] = useState(fetData?.mediumOfInstruction);
-  const [concessionStudent, setconcessionStudent] = useState(fetData?.concessionStudent);
-  const [academicYear, setacademicYear] = useState(fetData?.academicYear);
-  const [studentCategory, setstudentCategory] = useState(fetData?.studentCategory);
-  const [studentGp, setstudentGp] = useState(fetData?.studentGp);
+  const [fetData, setFetchData] = useState("");
+  const stdState = useDropdownState("", fetData?.std);
+  const sectionState = useDropdownState("", fetData?.section);
+  const bloodGpState = useDropdownState("", fetData?.bloodGp);
+  const motherTongueState = useDropdownState("", fetData?.motherTongue);
+  const religionState = useDropdownState("", fetData?.religion);
+  const communityState = useDropdownState("", fetData?.community);
+  const classOfJoinState = useDropdownState("", fetData?.classOfJoin);
+  const mediumOfInstructionState = useDropdownState("", fetData?.mediumOfInstruction);
+  const concessionStudentState = useDropdownState("", fetData?.concessionStudent);
+  const academicYearState = useDropdownState("", fetData?.academicYear);
+  const studentCategoryState = useDropdownState("", fetData?.studentCategory);
+  const studentGpState = useDropdownState("", fetData?.studentGp);
+  const genderState = useDropdownState("", fetData?.gender);
+
+  const navigate = useNavigate();
+  const { id } = useParams();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormdata] = useState({
@@ -88,56 +101,56 @@ const EditStudentComponent = () => {
     event.preventDefault();
     const reqData = {
       ...formData,
-      gender,
-      std,
-      section,
-      bloodGp,
-      motherTongue,
-      religion,
-      community,
-      classOfJoin,
-      mediumOfInstruction,
-      concessionStudent,
-      academicYear,
-      studentCategory,
-      studentGp,
+      gender: genderState[0],
+      std: stdState[0],
+      section: sectionState[0],
+      bloodGp: bloodGpState[0],
+      motherTongue: motherTongueState[0],
+      religion: religionState[0],
+      community: communityState[0],
+      classOfJoin: classOfJoinState[0],
+      mediumOfInstruction: mediumOfInstructionState[0],
+      concessionStudent: concessionStudentState[0],
+      academicYear: academicYearState[0],
+      studentCategory: studentCategoryState[0],
+      studentGp: studentGpState[0],
     };
     try {
-      setIsLoading(true)
+      console.log(reqData,"dfgkhfs")
+      setIsLoading(true);
       const response = await axios.put(`/users/student/${id}`, reqData);
-      setIsLoading(false)
-      navigate(RouteObjects.StudentsList)
+      console.log(response,"respo");
+      setIsLoading(false);
+      navigate(RouteObjects.StudentsList);
     } catch (error) {
-      setIsLoading(false)
+      setIsLoading(false);
 
       console.log(error);
     }
   };
-  
-  const getData =async()=>{
+
+  const getData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
 
-      const response = await axios.get(`/users/student/${id}`)
-      setIsLoading(false)
-      
-      setFetchData(response.data)
-      setFormdata(response.data)
+      const response = await axios.get(`/users/student/${id}`);
+      setIsLoading(false);
 
+      setFetchData(response.data);
+      setFormdata(response.data);
     } catch (error) {
-      setIsLoading(false)
+      setIsLoading(false);
 
-      console.log(error)
-      
+      console.log(error);
     }
-  }
+  };
+  useEffect(() => {
+    getData();
+  }, []);
 
-  useEffect(()=>{
-    getData()
-  },[])
   return (
     <div className=" w-screen">
-            {isLoading && <Spinner />}
+      {isLoading && <Spinner />}
 
       <div className="flex justify-center">
         <div className=" border-2 rounded-lg shadow-lg  mt-2 ">
@@ -157,8 +170,6 @@ const EditStudentComponent = () => {
                 variant="outlined"
                 label="Student Name*"
                 defaultValue={fetData?.studentName}
-
-                
                 onChange={handleInputChange}
               />
               <Input
@@ -172,9 +183,8 @@ const EditStudentComponent = () => {
               />
               <Select
                 variant="outlined"
-                value={gender}
-                onChange={(e) => setgender(e)}
-                
+                value={genderState[0]}
+                onChange={(e) => genderState[1](e)}
                 label="Gender"
               >
                 <Option value="Male">Male</Option>
@@ -187,7 +197,6 @@ const EditStudentComponent = () => {
                 variant="outlined"
                 label="DOB"
                 placeholder="DOB"
-                
               />
               <Input
                 name="AadharNo"
@@ -200,8 +209,8 @@ const EditStudentComponent = () => {
               />
               <Select
                 variant="outlined"
-                value={bloodGp}
-                onChange={(e) => setbloodGp(e)}
+                value={bloodGpState[0]}
+                onChange={(e) => bloodGpState[1](e)}
                 label="Bloog Group"
               >
                 <Option value="A+ve">A+ve</Option>
@@ -269,8 +278,8 @@ const EditStudentComponent = () => {
 
               <Select
                 variant="outlined"
-                value={motherTongue}
-                onChange={(e) => setmotherTongue(e)}
+                value={motherTongueState[0]}
+                onChange={(e) => motherTongueState[1](e)}
                 label="Mother Tongue"
               >
                 <Option value="Tamil">Tamil</Option>
@@ -280,8 +289,8 @@ const EditStudentComponent = () => {
 
               <Select
                 variant="outlined"
-                value={religion}
-                onChange={(e) => setreligion(e)}
+                value={religionState[0]}
+                onChange={(e) => religionState[1](e)}
                 label="Religion"
               >
                 <Option value="Hindu">Hindu</Option>
@@ -308,8 +317,8 @@ const EditStudentComponent = () => {
               />
               <Select
                 variant="outlined"
-                value={community}
-                onChange={(e) => setcommunity(e)}
+                value={communityState[0]}
+                onChange={(e) => communityState[1](e)}
                 label="Community"
               >
                 <Option value="BC">BC</Option>
@@ -469,8 +478,8 @@ const EditStudentComponent = () => {
               />
               <Select
                 variant="outlined"
-                value={academicYear}
-                onChange={(e) => setacademicYear(e)}
+                value={academicYearState[0]}
+                onChange={(e) => academicYearState[1](e)}
                 label="Academic Year"
               >
                 <Option value="2016-2017">2016-2017</Option>
@@ -503,8 +512,8 @@ const EditStudentComponent = () => {
               />
               <Select
                 variant="outlined"
-                value={classOfJoin}
-                onChange={(e) => setclassOfJoin(e)}
+                value={classOfJoinState[0]}
+                onChange={(e) => classOfJoinState[1](e)}
                 label="Class Of Joining"
               >
                 <Option value="01">First std</Option>
@@ -532,8 +541,8 @@ const EditStudentComponent = () => {
               />
               <Select
                 variant="outlined"
-                value={std}
-                onChange={(e) => setstd(e)}
+                value={stdState[0]}
+                onChange={(e) => stdState[1](e)}
                 label="Class"
               >
                 <Option value="01">First std</Option>
@@ -551,8 +560,8 @@ const EditStudentComponent = () => {
               </Select>
               <Select
                 variant="outlined"
-                value={section}
-                onChange={(e) => setsection(e)}
+                value={sectionState[0]}
+                onChange={(e) => sectionState[1](e)}
                 label="Section"
               >
                 <Option value="A">A</Option>
@@ -562,8 +571,8 @@ const EditStudentComponent = () => {
 
               <Select
                 variant="outlined"
-                value={mediumOfInstruction}
-                onChange={(e) => setmediumOfInstruction(e)}
+                value={mediumOfInstructionState[0]}
+                onChange={(e) => mediumOfInstructionState[1](e)}
                 label="Medium of Instruction"
               >
                 <Option value="Tamil">Tamil</Option>
@@ -572,8 +581,8 @@ const EditStudentComponent = () => {
 
               <Select
                 variant="outlined"
-                value={concessionStudent}
-                onChange={(e) => setconcessionStudent(e)}
+                value={concessionStudentState[0]}
+                onChange={(e) => concessionStudentState[1](e)}
                 label="Concession Student"
               >
                 <Option value={true}>Yes</Option>
@@ -584,8 +593,8 @@ const EditStudentComponent = () => {
                 variant="outlined"
                 label="Category"
                 placeholder="Student Category"
-                value={studentCategory}
-                onChange={(e) => setstudentCategory(e)}
+                value={studentCategoryState[0]}
+                onChange={(e) => studentCategoryState[1](e)}
               >
                 <Option value="daySchool">Day School</Option>
                 <Option value="daySchool">Hostel</Option>
@@ -595,8 +604,8 @@ const EditStudentComponent = () => {
                 variant="outlined"
                 label="Student Group"
                 placeholder="Student Group"
-                value={studentGp}
-                onChange={(e) => setstudentGp(e)}
+                value={studentGpState[0]}
+                onChange={(e) => studentGpState[1](e)}
               >
                 <Option value="Blue">Blue</Option>
                 <Option value="Red">Red</Option>
@@ -613,9 +622,7 @@ const EditStudentComponent = () => {
         </div>
       </div>
     </div>
+  );
+};
 
-
-  )
-}
-
-export default EditStudentComponent
+export default EditStudentComponent;

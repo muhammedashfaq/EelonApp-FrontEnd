@@ -65,14 +65,19 @@ const Login = () => {
       } else {
         setIsLoading(true);
         const response = await axios.post(`/auth/${type}`, formData);
+        console.log(response,"login respons");
         setIsLoading(false);
 
         const accessToken = response?.data?.accessToken;
         const roles = response?.data?.roles;
+        const userId = response?.data?.userId;
+
         setUserRoles(roles);
-        // setAuth({ accessToken, roles });
+        setAuth({ accessToken, roles,userId });
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("roles", roles);
+        localStorage.setItem("userId", userId);
+
         if (userType === "Student") {
           navigate(RouteObjects.root);
         } else if (userType === "Staff") {

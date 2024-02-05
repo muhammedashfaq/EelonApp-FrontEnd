@@ -5,12 +5,18 @@ const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({});
 
+  
+
 
   const accessToken = localStorage.getItem("accessToken");
   const roles = localStorage.getItem("roles");
+  const userId = localStorage.getItem("userId");
+
+
+  
   useEffect(() => {
-    setAuth({ accessToken, roles });
-  }, [accessToken, roles]);
+    setAuth({ accessToken, roles,userId });
+  }, [accessToken, roles,userId]);
 
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>

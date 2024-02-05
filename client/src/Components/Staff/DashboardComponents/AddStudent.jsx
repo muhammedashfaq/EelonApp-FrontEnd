@@ -81,6 +81,8 @@ const AddStudent = () => {
       ...prev,
       [name]: inputValue,
     }));
+
+  
   };
 
   const handleSubmitForm = async (event) => {

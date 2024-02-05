@@ -13,22 +13,25 @@ import {
   Option,
 } from "@material-tailwind/react";
 import axios from "../../../api/axios";
+import { bookAddValidation } from "../../../Helper/Validations/validations";
+import { FireIcon } from "@heroicons/react/24/solid";
 // import { useDispatch } from "react-redux";
 
 export default function LibraryBooksAddModal({ getBooks }) {
   const [open, setOpen] = React.useState(false);
 
-  const [bookName, setbookName] = useState();
-  const [author, setAuthor] = useState();
-  const [genre, setgenre] = useState();
-  const [bookId, setbookId] = useState();
-  const [IsbnNo, setIsbnNo] = useState();
-  const [description, setdescription] = useState();
-  const [refNo, setrefNo] = useState();
-  const [language, setlanguage] = useState();
-  const [barcode, setbarcode] = useState();
-  const [refSubject, setrefSub] = useState();
-  const [year, setyear] = useState();
+  const [bookName, setbookName] = useState("");
+  const [author, setAuthor] = useState("");
+  const [genre, setgenre] = useState("");
+  const [bookId, setbookId] = useState("");
+  const [IsbnNo, setIsbnNo] = useState("");
+  const [description, setdescription] = useState("");
+  const [refNo, setrefNo] = useState("");
+  const [language, setlanguage] = useState("");
+  const [barcode, setbarcode] = useState("");
+  const [refSubject, setrefSub] = useState("");
+  const [year, setyear] = useState("");
+  const [FrntError, setFrntError] = useState({});
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
@@ -36,8 +39,10 @@ export default function LibraryBooksAddModal({ getBooks }) {
     getBooks();
   };
 
-  const addBook = async () => {
+  const addBook = async (e) => {
     try {
+      e.preventDefault();
+
       const data = {
         bookName,
         author,
@@ -51,9 +56,15 @@ export default function LibraryBooksAddModal({ getBooks }) {
         refSubject,
         year,
       };
-      const response = await axios.post("/library/books", data);
 
-      handleClose();
+      const error = bookAddValidation(data);
+      if (!Object.values(error).every((value) => value === "")) {
+        setFrntError(error);
+        return;
+      } else {
+        const response = await axios.post("/library/books", data);
+        handleClose();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -94,17 +105,27 @@ export default function LibraryBooksAddModal({ getBooks }) {
             <div className=" flex flex-wrap gap-6 p-5 lg:grid md:grid md:grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 ">
               <Input
                 variant="standard"
-                label="Book name"
+                label={
+                  FrntError && FrntError.bookName
+                    ? FrntError.bookName
+                    : "Book Name"
+                }
                 placeholder="Enter book name"
                 onChange={(e) => setbookName(e.target.value)}
                 value={bookName}
+                error={FrntError?.bookName}
               />
               <Input
                 variant="standard"
-                label="Author"
+                label={
+                  FrntError && FrntError.author
+                    ? FrntError.author
+                    : "Auther Name"
+                }
                 placeholder="Enter book author name"
                 onChange={(e) => setAuthor(e.target.value)}
                 value={author}
+                error={FrntError && FrntError.bookName}
               />
               {/* <Input
                 variant="standard"
@@ -128,52 +149,78 @@ export default function LibraryBooksAddModal({ getBooks }) {
 
               <Input
                 variant="standard"
-                label="Book id"
+                label={
+                  FrntError && FrntError.bookId ? FrntError.bookId : "Book id"
+                }
                 placeholder="Enter book id"
                 onChange={(e) => setbookId(e.target.value)}
                 value={bookId}
+                error={FrntError?.bookId}
               />
               <Input
+                type="number"
                 variant="standard"
-                label="Reference no."
+                label={
+                  FrntError && FrntError.refNo ? FrntError.refNo : "Ref No"
+                }
                 placeholder="Reference no."
                 onChange={(e) => setrefNo(e.target.value)}
                 value={refNo}
+                error={FrntError?.refNo}
               />
+
               <Input
                 variant="standard"
-                label="Isbn no."
+                label={
+                  FrntError && FrntError.IsbnNo ? FrntError.IsbnNo : "ISBN NO"
+                }
                 placeholder="Enter Isbn no."
                 onChange={(e) => setIsbnNo(e.target.value)}
                 value={IsbnNo}
+                error={FrntError?.IsbnNo}
               />
+
               <Input
                 variant="standard"
-                label="Description"
+                label={
+                  FrntError && FrntError.description ? FrntError.description : "Description"
+                }
                 placeholder="Enter description"
                 onChange={(e) => setdescription(e.target.value)}
                 value={description}
+                error={FrntError?.description}
               />
+
               <Input
                 variant="standard"
-                label="Language"
-                placeholder="Language"
+                label={
+                  FrntError && FrntError.language ? FrntError.language : "language"
+                }
+                placeholder="Enter Language"
                 onChange={(e) => setlanguage(e.target.value)}
                 value={language}
+                error={FrntError?.language}
               />
+
               <Input
                 variant="standard"
-                label="Publishing year"
-                placeholder="Publishing year"
+                label={
+                  FrntError && FrntError.year ? FrntError.year : "Publishing Year"
+                }
+                placeholder="Enter Publishing year"
                 onChange={(e) => setyear(e.target.value)}
                 value={year}
+                error={FrntError?.year}
               />
               <Input
                 variant="standard"
-                label="Barcode"
-                placeholder="Barcode"
+                label={
+                  FrntError && FrntError.barcode ? FrntError.barcode : "Barcode"
+                }
+                placeholder="Enter Barcode"
                 onChange={(e) => setbarcode(e.target.value)}
                 value={barcode}
+                error={FrntError?.barcode}
               />
               <Input
                 variant="standard"
