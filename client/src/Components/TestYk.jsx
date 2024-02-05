@@ -1,10 +1,10 @@
 import React from "react";
-import CreateNotificationModal from "./Staff/DashboardComponents/CreateNotificationModal";
+import Classroom from "../Pages/Staff/Dashboard/Classroom.jsx";
 
 const TestYk = () => {
   return (
     <>
-      <CreateNotificationModal />
+      <Classroom />
     </>
   );
 };

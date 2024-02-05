@@ -16,8 +16,28 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-
-
-
-
+.sideBarExpand {
+  transition: all 200ms ease-in-out;
+  width: 50px;
+  height: 100vh;
+  max-width: 20rem;
+  width: 100%;
+  padding: 1rem;
+}
+.sideBarContract {
+  width: 6rem;
+  height: 100vh;
+  padding: 1rem;
+  overflow: hidden;
+}
+.hideComponent {
+  transition: all 1000ms ease-in;
+  display: none;
+}
+.showComponent {
+  transition: all 1000ms ease-in;
+  display: block;
+}
+.classRoomImg {
+  background-image: url("../src/assets/classroomBackground.jpg");
+}
