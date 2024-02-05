@@ -53,7 +53,7 @@ const DetailImagePage = () => {
             ))}
           </TabsHeader>
           <TabsBody>
-            {data.map(({ value, label }) => (
+            {data.map(({ value }) => (
               <TabPanel key={value} value={value}>
                 {value === "1" ? (
                   <div>
