@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   
     useEffect(() => {
     setAuth({ accessToken, roles,userId });
-  }, [accessToken, roles,userId. email]);
+  }, [accessToken, roles,userId, email]);
 
 
   return (
