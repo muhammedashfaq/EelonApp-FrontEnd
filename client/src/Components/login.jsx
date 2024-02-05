@@ -19,7 +19,6 @@ import useAuth from "../Hooks/useAuth.jsx";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../Context/userContext.jsx";
 import { RouteObjects } from "../Routes/RoutObjects.jsx";
-import useAxiosPrivate from "../Hooks/useAxiosPrivate.jsx";
 
 const Login = () => {
   const { setUserRoles } = useUserContext();
@@ -28,7 +27,6 @@ const Login = () => {
   const [errorMsg, seterrorMsg] = useState();
   const { setAuth } = useAuth();
   const navigate = useNavigate();
-  const axiosPrivate = useAxiosPrivate();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -66,26 +64,17 @@ const Login = () => {
         return;
       } else {
         setIsLoading(true);
-
-        const response = await axiosPrivate.post(`/auth/${type}`, formData);
-
-        console.log(response,"login respons");
-
+        const response = await axios.post(`/auth/${type}`, formData);
         setIsLoading(false);
 
         const accessToken = response?.data?.accessToken;
         const roles = response?.data?.roles;
-
         const email = response?.data?.email;
-        const userId = response?.data?.userId;
-
         setUserRoles(roles);
-        setAuth({ accessToken, roles,userId });
+        // setAuth({ accessToken, roles });
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("roles", roles);
-
         localStorage.setItem("email", email);
-        localStorage.setItem("userId", userId);
 
         if (userType === "Student") {
           navigate(RouteObjects.root);

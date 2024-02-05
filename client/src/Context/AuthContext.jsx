@@ -10,11 +10,10 @@ export const AuthProvider = ({ children }) => {
 
   const email = localStorage.getItem("email");
   const userId = localStorage.getItem("userId");
-  
-    useEffect(() => {
-    setAuth({ accessToken, roles,userId });
-  }, [accessToken, roles,userId. email]);
 
+  useEffect(() => {
+    setAuth({ accessToken, roles, userId });
+  }, [accessToken, roles, userId, email]);
 
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
