@@ -267,10 +267,10 @@ const NavBar = () => {
                className={`text-gray-200 text-sm flex flex-col cursor-pointer p-2 hover:bg-deep-orange-500 rounded-md mt-2 relative`}
                key={index}
              >
+             <Link to={item.href}>
                <div className="flex items-center gap-x-4">
                  {item.icon}
  
-                 <Link to={item.href}>
                    <span
                      className={`duration-200 flex-1 ${
                        !open && "hidden "
@@ -278,33 +278,34 @@ const NavBar = () => {
                    >
                      {item.title}
                    </span>
-                 </Link>
  
                  {item.submenuItems && (
                    <span
-                     className="material-symbols-outlined"
-                     onClick={() => setOpenSubmenu(!submenuOpen)}
+                   className="material-symbols-outlined"
+                   onClick={() => setOpenSubmenu(!submenuOpen)}
                    >
                      {submenuOpen && open ? "expand_less" : "expand_more"}
                    </span>
                  )}
                </div>
+                 </Link>
  
                {item.submenuItems && submenuOpen && open && (
                  <ul className=" ">
                    {item.submenuItems.map((subitems, i) => (
+                    <>
+                   <Link to={subitems.href}  >
                      
-                     <li
+                     <li key={i}
                      className={` text-sm flex items-center gap-x-8 cursor-pointer p-3 hover:bg-blue-500 rounded-lg text-white`}
-                     key={i}
                      >
-                     <Link to={subitems.href}>
                        <span>
  
                        {subitems.title}
                        </span>
-                       </Link>
                      </li>
+                   </Link>
+                       </>
                    ))}
                  </ul>
                )}

@@ -7,27 +7,28 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import axios from "../../../api/axios";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useFetcher, useNavigate, useParams } from "react-router-dom";
 import Spinner from "../../spinner/Spinner";
 import { RouteObjects } from "../../../Routes/RoutObjects";
-
-const AddStudent = () => {
-  const navigate =useNavigate()
+const EditStudentComponent = () => {
+  const navigate = useNavigate()
+  const {id} =useParams()
+  const [fetData,setFetchData]=useState("")
   const [classes, setClasses] = useState("");
-  const [gender, setgender] = useState();
-  const [std, setstd] = useState();
-  const [section, setsection] = useState();
-  const [bloodGp, setbloodGp] = useState();
-  const [motherTongue, setmotherTongue] = useState();
-  const [religion, setreligion] = useState();
-  const [community, setcommunity] = useState();
-  const [classOfJoin, setclassOfJoin] = useState();
-  const [mediumOfInstruction, setmediumOfInstruction] = useState();
-  const [concessionStudent, setconcessionStudent] = useState(false);
-  const [academicYear, setacademicYear] = useState();
-  const [studentCategory, setstudentCategory] = useState();
-  const [studentGp, setstudentGp] = useState();
+  const [gender, setgender] = useState(fetData?.gender);
+  const [std, setstd] = useState(fetData?.std);
+  const [section, setsection] = useState(fetData?.section);
+  const [bloodGp, setbloodGp] = useState(fetData?.bloodGp);
+  const [motherTongue, setmotherTongue] = useState(fetData?.motherTongue);
+  const [religion, setreligion] = useState(fetData?.religion);
+  const [community, setcommunity] = useState(fetData?.community);
+  const [classOfJoin, setclassOfJoin] = useState(fetData?.classOfJoin);
+  const [mediumOfInstruction, setmediumOfInstruction] = useState(fetData?.mediumOfInstruction);
+  const [concessionStudent, setconcessionStudent] = useState(fetData?.concessionStudent);
+  const [academicYear, setacademicYear] = useState(fetData?.academicYear);
+  const [studentCategory, setstudentCategory] = useState(fetData?.studentCategory);
+  const [studentGp, setstudentGp] = useState(fetData?.studentGp);
   const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormdata] = useState({
@@ -103,20 +104,40 @@ const AddStudent = () => {
     };
     try {
       setIsLoading(true)
-      const response = await axios.post("/users/student", reqData);
+      const response = await axios.put(`/users/student/${id}`, reqData);
       setIsLoading(false)
       navigate(RouteObjects.StudentsList)
-
-
     } catch (error) {
       setIsLoading(false)
 
       console.log(error);
     }
   };
+  
+  const getData =async()=>{
+    try {
+      setIsLoading(true)
+
+      const response = await axios.get(`/users/student/${id}`)
+      setIsLoading(false)
+      
+      setFetchData(response.data)
+      setFormdata(response.data)
+
+    } catch (error) {
+      setIsLoading(false)
+
+      console.log(error)
+      
+    }
+  }
+
+  useEffect(()=>{
+    getData()
+  },[])
   return (
     <div className=" w-screen">
-                  {isLoading && <Spinner />}
+            {isLoading && <Spinner />}
 
       <div className="flex justify-center">
         <div className=" border-2 rounded-lg shadow-lg  mt-2 ">
@@ -135,7 +156,9 @@ const AddStudent = () => {
                 type="text"
                 variant="outlined"
                 label="Student Name*"
-                placeholder=" Name*"
+                defaultValue={fetData?.studentName}
+
+                
                 onChange={handleInputChange}
               />
               <Input
@@ -144,12 +167,14 @@ const AddStudent = () => {
                 variant="outlined"
                 label="Name In Tamil"
                 placeholder="Name In Tamil"
+                defaultValue={fetData?.nameTamil}
                 onChange={handleInputChange}
               />
               <Select
                 variant="outlined"
                 value={gender}
                 onChange={(e) => setgender(e)}
+                
                 label="Gender"
               >
                 <Option value="Male">Male</Option>
@@ -162,6 +187,7 @@ const AddStudent = () => {
                 variant="outlined"
                 label="DOB"
                 placeholder="DOB"
+                
               />
               <Input
                 name="AadharNo"
@@ -170,6 +196,7 @@ const AddStudent = () => {
                 label="Adhar Number"
                 placeholder="Adhar Number"
                 onChange={handleInputChange}
+                defaultValue={fetData?.AadharNo}
               />
               <Select
                 variant="outlined"
@@ -192,8 +219,8 @@ const AddStudent = () => {
                 type="number"
                 variant="outlined"
                 label="Contact Number"
-                placeholder="Contact Number
-            "
+                placeholder="Contact Number"
+                defaultValue={fetData?.ContactNo}
                 onChange={handleInputChange}
               />
               <Input
@@ -202,6 +229,7 @@ const AddStudent = () => {
                 variant="outlined"
                 label="Alternate Number"
                 placeholder="Alternate Number"
+                defaultValue={fetData?.AltCnctNo}
                 onChange={handleInputChange}
               />
               <Input
@@ -210,6 +238,7 @@ const AddStudent = () => {
                 label="City"
                 placeholder="City"
                 onChange={handleInputChange}
+                defaultValue={fetData?.city}
               />
               <Input
                 variant="outlined"
@@ -217,6 +246,7 @@ const AddStudent = () => {
                 label="State"
                 placeholder="state"
                 onChange={handleInputChange}
+                value={fetData?.state}
               />
 
               <Input
@@ -225,6 +255,7 @@ const AddStudent = () => {
                 variant="outlined"
                 label="Nationality"
                 placeholder="outlined"
+                defaultValue={fetData.nationality}
                 onChange={handleInputChange}
               />
               <Input
@@ -232,6 +263,7 @@ const AddStudent = () => {
                 name="pincode"
                 label="Pin"
                 placeholder="Pin"
+                defaultValue={fetData.pincode}
                 onChange={handleInputChange}
               />
 
@@ -262,6 +294,7 @@ const AddStudent = () => {
                 variant="outlined"
                 label="Caste"
                 placeholder="Caste"
+                defaultValue={fetData?.caste}
                 onChange={handleInputChange}
               />
               <Input
@@ -270,6 +303,7 @@ const AddStudent = () => {
                 variant="outlined"
                 label="SubCaste"
                 placeholder="SubCaste"
+                defaultValue={fetData?.subCaste}
                 onChange={handleInputChange}
               />
               <Select
@@ -290,6 +324,7 @@ const AddStudent = () => {
                 variant="outlined"
                 label="Weight"
                 placeholder="Weight"
+                defaultValue={fetData?.weight}
                 onChange={handleInputChange}
               />
               <Input
@@ -298,6 +333,7 @@ const AddStudent = () => {
                 variant="outlined"
                 label="Height"
                 placeholder="Height"
+                defaultValue={fetData?.height}
                 onChange={handleInputChange}
               />
 
@@ -312,6 +348,7 @@ const AddStudent = () => {
                 variant="outlined"
                 name="address"
                 label="Address"
+                defaultValue={fetData?.address}
                 onChange={handleInputChange}
               />
             </div>
@@ -326,6 +363,7 @@ const AddStudent = () => {
                 variant="outlined"
                 label="Father's Name"
                 placeholder="Father's Name"
+                defaultValue={fetData?.FathersName}
                 onChange={handleInputChange}
               />
               <Input
@@ -334,6 +372,7 @@ const AddStudent = () => {
                 variant="outlined"
                 label="Father's Name in Tamil"
                 placeholder="Father's Name in Tamil"
+                defaultValue={fetData?.FathersNameTamil}
                 onChange={handleInputChange}
               />
 
@@ -343,6 +382,7 @@ const AddStudent = () => {
                 variant="outlined"
                 label="Father's Occupation"
                 placeholder="Father's Occupation"
+                defaultValue={fetData?.FathersJob}
                 onChange={handleInputChange}
               />
               <Input
@@ -351,6 +391,7 @@ const AddStudent = () => {
                 variant="outlined"
                 label="Mother's Name"
                 placeholder="Mother's Name"
+                defaultValue={fetData?.MothersName}
                 onChange={handleInputChange}
               />
               <Input
@@ -359,6 +400,7 @@ const AddStudent = () => {
                 variant="outlined"
                 label="Mother's Name in Tamil"
                 placeholder="Mother's Name in Tamil"
+                defaultValue={fetData?.MothersNameTamil}
                 onChange={handleInputChange}
               />
               <Input
@@ -367,6 +409,7 @@ const AddStudent = () => {
                 variant="outlined"
                 label="Mother's Occupation"
                 placeholder="Mother's Occupation"
+                defaultValue={fetData?.MothersJob}
                 onChange={handleInputChange}
               />
 
@@ -376,6 +419,7 @@ const AddStudent = () => {
                 variant="outlined"
                 label="Guardian's Name"
                 placeholder="Guardian's Name"
+                defaultValue={fetData?.guardianName}
                 onChange={handleInputChange}
               />
               <Input
@@ -384,6 +428,7 @@ const AddStudent = () => {
                 variant="outlined"
                 label="Guardian's Name in Tamil"
                 placeholder="Guardian's Name in Tamil"
+                defaultValue={fetData?.guardianNameTamil}
                 onChange={handleInputChange}
               />
               <Input
@@ -392,6 +437,7 @@ const AddStudent = () => {
                 variant="outlined"
                 label="Guardian's Occupation"
                 placeholder="Guardian's Occupation"
+                defaultValue={fetData?.guardianName}
                 onChange={handleInputChange}
               />
 
@@ -401,6 +447,7 @@ const AddStudent = () => {
                 variant="outlined"
                 label="Annual Income"
                 placeholder="Annual Income"
+                defaultValue={fetData?.annualIncome}
                 onChange={handleInputChange}
               />
             </div>
@@ -417,6 +464,7 @@ const AddStudent = () => {
                 variant="outlined"
                 label="Admission Number*"
                 placeholder="Admission Number*"
+                defaultValue={fetData?.admnNo}
                 onChange={handleInputChange}
               />
               <Select
@@ -441,6 +489,7 @@ const AddStudent = () => {
                 variant="outlined"
                 label="Email"
                 placeholder="Enter Your Email"
+                defaultValue={fetData?.email}
                 onChange={handleInputChange}
               />
               <Input
@@ -449,6 +498,7 @@ const AddStudent = () => {
                 variant="outlined"
                 label="Password"
                 placeholder="********"
+                defaultValue={fetData?.password}
                 onChange={handleInputChange}
               />
               <Select
@@ -477,6 +527,7 @@ const AddStudent = () => {
                 variant="outlined"
                 label="EMIS Number"
                 placeholder="EMIS Number"
+                defaultValue={fetData?.EMSno}
                 onChange={handleInputChange}
               />
               <Select
@@ -562,7 +613,9 @@ const AddStudent = () => {
         </div>
       </div>
     </div>
-  );
-};
 
-export default AddStudent;
+
+  )
+}
+
+export default EditStudentComponent
