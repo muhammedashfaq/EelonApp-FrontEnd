@@ -51,7 +51,6 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
     year: "",
   });
   const handleInputChange = (e) => {
-    console.log(formData);
     const { name, value } = e.target;
     setFormData((pre) => ({
       ...pre,
@@ -74,22 +73,24 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
 
   const updateBook = async () => {
     try {
-      const error = bookAddValidation(data);
+      
+      console.log(formData);
+      const error = bookAddValidation(formData);
       if (!Object.values(error).every((value) => value === "")) {
         setFrntError(error);
-        console.log(error);
         return;
       } else {
         const response = await axios.put(`/library/books/${dbId}`, formData);
         navigate(RouteObjects.Bookmanagment);
       }
     } catch (error) {
+
       console.log(error);
     }
   };
   useState(() => {
     setFormData(data);
-  }, []);
+  }, [data]);
   return (
     <>
       <Tooltip
@@ -122,7 +123,7 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
                 placeholder="Enter book name"
                 onChange={handleInputChange}
                 value={formData.bookName}
-                error={FrntError?.bookName}
+                error={FrntError&&FrntError?.bookName}
               />
               <Input
                 name="author"
@@ -134,8 +135,8 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
                 }
                 placeholder="Enter book author name"
                 onChange={handleInputChange}
-                value={formData.author}
-                error={FrntError && FrntError.bookName}
+                value={formData?.author}
+                error={FrntError && FrntError.author}
               />
               {/* <Input
                 variant="standard"
@@ -166,8 +167,8 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
                 }
                 placeholder="Enter book id"
                 onChange={handleInputChange}
-                value={formData.bookId}
-                error={FrntError?.bookId}
+                value={formData?.bookId}
+                error={FrntError&&FrntError?.bookId}
               />
               <Input
                 name="refNo"
@@ -265,7 +266,7 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
             >
               <span>Cancel</span>
             </Button>
-            <Button variant="gradient" color="green" onClick={updateBook}>
+            <Button  variant="gradient" color="green" onClick={updateBook}>
               <span>Edit book</span>
             </Button>
           </DialogFooter>
