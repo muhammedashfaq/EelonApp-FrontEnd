@@ -1,23 +1,50 @@
 import SideNavbar from "../../../Components/Student/SideNav/SideNavbar";
 import LandingPagHead from "../../../Components/Staff/Header/landingPageHeader";
-import React from "react";
-import ImageCard from "../../../Components/StudentProfile/ImageCard";
-import DetailsPage from "../../../Components/StudentProfile/DetailsPage";
-import DetailImagePage from "../../../Components/StudentProfile/DetailImagePage";
-import StaffHeader from "../../../Components/Staff/Header/landingPageHeader";
+import useAuth from "../../../Hooks/useAuth";
 import Banner from "../../../Components/Banner/Banner";
 import Profile from "../../../Components/StudentProfile/Profile";
+import { useEffect, useState } from "react";
+import axios from "../../../api/axios";
+import { Spinner } from "@material-tailwind/react";
 const StudentDashBoard = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [userData,setUserData] =useState("")
+  // const {auth} = useAuth()
+const userId = localStorage.getItem("userId")
+
+  const getData = async () => {
+    try {
+      setIsLoading(true);
+
+      const response = await axios.get(`/users/student/${userId}`);
+      console.log(response,"res");
+      setIsLoading(false);
+
+      setUserData(response.data);
+    } catch (error) {
+      setIsLoading(false);
+
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <div>
       <LandingPagHead />
-<div className=" flex">
+      <Banner/>
 
       <SideNavbar />
-      <Profile/>
-      
+      {isLoading&&(
+        <Spinner/>
 
-</div>
+      )
+
+      }
+      <Profile userData={userData} />
+
 
     
     </div>

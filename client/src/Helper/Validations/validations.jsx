@@ -7,3 +7,22 @@ export const loginValidate = (email, password) => {
   
     return error;
   };
+
+  export const bookAddValidation = (data) => {
+    const errors = {};
+  
+    errors.bookName = !data.bookName ? "Book name is required" : "";
+    errors.author = !data.author ? "Author name is required" : "";
+    errors.genre = !data.genre ? "Genre is required" : "";
+    errors.bookId = !data.bookId ? "Book ID is required" : "";
+    errors.refNo = !data.refNo ? "Reference number is required" : "";
+    errors.IsbnNo = !data.IsbnNo ? "ISBN number is required" : "";
+    errors.description = !data.description ? "Description is required" : "";
+    errors.language = !data.language ? "Language is required" : "";
+    errors.year = !data.year ? "Publishing year is required" : "";
+    errors.barcode = !data.barcode ? "Barcode is required" : "";
+    errors.refSubject = !data.refSubject ? "Reference subject is required" : "";
+  
+    return errors;
+  };
+  

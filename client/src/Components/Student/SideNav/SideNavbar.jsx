@@ -38,9 +38,9 @@ const SideNavbar = () => {
   ];
   return (
     
-    <div className="flex">
+    <div className="flex ml-10 mt-3">
       <div
-        className={` bg-dark-purple h-max p-5 pt-8 ${
+        className={` bg-dark-purple h-max p-5 pt-8 rounded-lg ${
           open ? "w-52" : "w-28"
         } duration-300 relative`}
       >
@@ -55,9 +55,10 @@ const SideNavbar = () => {
   
      
 
-        <ul className="pt-2">
+        <ul className="pt-2"                                              >
           {menu.map((item, index) => (
-            <li
+            <li  
+
               className={`text-gray-300 text-sm flex flex-col cursor-pointer p-2 hover:bg-blue-gray-500 rounded-md mt-2 relative`}
               key={index}
             >
@@ -66,8 +67,9 @@ const SideNavbar = () => {
                   widgets
                 </span>
 
-<Link to={item.href}>
-                <span
+<Link to={item.href}  >
+  
+                <span 
                   className={`duration-200 flex-1 ${
                     !open && "hidden "
                   } text-base font-medium`}

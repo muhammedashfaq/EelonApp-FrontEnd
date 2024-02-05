@@ -1,5 +1,8 @@
 
   const DetailsPage = ({userData}) => {
+    if (!userData) {
+      return <p>Loading...</p>
+    }
     return (
       <>
 
