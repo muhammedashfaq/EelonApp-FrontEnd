@@ -43,7 +43,7 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
 
   const updateBook = async () => {
     try {
-      const data = {
+      const newdata = {
         bookName,
         author,
         genre,
@@ -56,7 +56,7 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
         refSubject,
         year,
       };
-      const response = await axios.put(`/library/books/${dbId}`, data);
+      const response = await axios.put(`/library/books/${dbId}`, newdata);
 
       handleClose();
     } catch (error) {

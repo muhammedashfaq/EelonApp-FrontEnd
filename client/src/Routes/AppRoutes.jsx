@@ -23,6 +23,8 @@ import StudentLibrary from '../Pages/Student/Dashboard/SudentLibrary'
 import AddStudents from "../Pages/Staff/Dashboard/AddStudents";
 import StudentsList from "../Pages/Staff/Dashboard/StudentsList";
 import AddForms from "../Pages/Staff/Dashboard/AddForms";
+import StudentProfile from "../Pages/Staff/Dashboard/StudentProfile";
+import EditStudent from "../Pages/Staff/Dashboard/EditStudent";
 
 const AppRoutes = () => {
   const isLoading = useSelector((state) => state.loading.isLoading);  
@@ -57,8 +59,11 @@ const AppRoutes = () => {
         <Route path={RouteObjects.Issuebooks} element={<IssueBooks/>} />
         <Route path={RouteObjects.Issuecards} element={<Issuecards/>} />
         <Route path={RouteObjects.StudentsList} element={<StudentsList/>} />
+        <Route path={`${RouteObjects.StudentProfile}/:id`}element={<StudentProfile/>} />
 
         <Route path={RouteObjects.AddStudent} element={<AddStudents/>} />
+        <Route path={`${RouteObjects.EditStudent}/:id`} element={<EditStudent/>} />
+
         <Route path={RouteObjects.RequireForms} element={<AddForms/>} />
 
 
