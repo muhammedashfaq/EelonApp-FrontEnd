@@ -10,6 +10,7 @@ import {
   CardBody,
   Typography,
 } from "@material-tailwind/react";
+import useAuth from "../../../Hooks/useAuth";
 
 export default function StaffStudentLibrarycardModal({ studentData }) {
   const [open, setOpen] = React.useState(false);
@@ -62,7 +63,7 @@ export default function StaffStudentLibrarycardModal({ studentData }) {
                   color="blue-gray"
                   className="font-sm font-semibold"
                 >
-                  Class:
+                  Class: {studentData?.std}
                 </Typography>
                 <hr className="m-2" />
                 <Typography
@@ -70,7 +71,7 @@ export default function StaffStudentLibrarycardModal({ studentData }) {
                   color="blue-gray"
                   className="font-sm font-semibold"
                 >
-                  Section:
+                  Section: {studentData?.section}
                 </Typography>
                 <hr className="m-2" />
                 <Typography

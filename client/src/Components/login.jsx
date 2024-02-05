@@ -69,10 +69,13 @@ const Login = () => {
 
         const accessToken = response?.data?.accessToken;
         const roles = response?.data?.roles;
+        const email = response?.data?.email;
         setUserRoles(roles);
         // setAuth({ accessToken, roles });
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("roles", roles);
+        localStorage.setItem("email", email);
+
         if (userType === "Student") {
           navigate(RouteObjects.root);
         } else if (userType === "Staff") {
@@ -163,42 +166,35 @@ const Login = () => {
                       </div>
 
                       {FrntError.email ? (
-
-                        <Input error/>
-                        ):(
-                          <Input
-    
-                            size="lg"
-                            name="email"
-                            placeholder="Enter Your Mail"
-                            onChange={handleInputChange}
-                            className=" border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md bg-cyan-200"
-                            labelProps={{
-                              className: "before:content-none after:content-none",
-                            }}
-                          />
-
-                        )
-                      }
-                { FrntError.password ?(
-
-                  <Input error />
-                ):(
-
-                  <Input
-                  type="password"
-                  size="lg"
-                  name="password"
-                  placeholder="Enter Password"
-                  onChange={handleInputChange}
-                  className=" !border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md  bg-cyan-200"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
-                  />
-                  )
-                }
-                </div>
+                        <Input error />
+                      ) : (
+                        <Input
+                          size="lg"
+                          name="email"
+                          placeholder="Enter Your Mail"
+                          onChange={handleInputChange}
+                          className=" border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md bg-cyan-200"
+                          labelProps={{
+                            className: "before:content-none after:content-none",
+                          }}
+                        />
+                      )}
+                      {FrntError.password ? (
+                        <Input error />
+                      ) : (
+                        <Input
+                          type="password"
+                          size="lg"
+                          name="password"
+                          placeholder="Enter Password"
+                          onChange={handleInputChange}
+                          className=" !border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md  bg-cyan-200"
+                          labelProps={{
+                            className: "before:content-none after:content-none",
+                          }}
+                        />
+                      )}
+                    </div>
 
                     <Button
                       className="mt-6 w-full bg-red-400 hover:bg-red-500  p-2 font-semibold text-white rounded-md"

@@ -8,10 +8,10 @@ const useLogout = () => {
   const logout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("roles");
+    localStorage.removeItem("email");
     setAuth({});
     navigate("/");
-    location.reload()
-
+    location.reload();
   };
   return logout;
 };
