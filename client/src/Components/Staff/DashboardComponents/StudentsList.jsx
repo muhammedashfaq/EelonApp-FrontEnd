@@ -18,6 +18,8 @@ import {
 } from "@material-tailwind/react";
 import axios from "../../../api/axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { RouteObjects } from "../../../Routes/RoutObjects";
 
 const TABS = [
   {
@@ -57,6 +59,8 @@ const TABLE_ROWS = [
 ];
 
 const StudentsList = () => {
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
   const [studentData, setStudentData] = useState();
   const [searchQuery, setsearchQuery] = useState();
   const [searchData, setsearchData] = useState();
@@ -143,9 +147,12 @@ const StudentsList = () => {
               <Button variant="outlined" size="sm">
                 view all
               </Button>
+              <Link to={RouteObjects.AddStudent}>
+
               <Button className="flex items-center gap-3" size="sm">
                 <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
               </Button>
+              </Link>
             </div>
           </div>
         </CardHeader>
@@ -232,6 +239,15 @@ const StudentsList = () => {
                     className="font-normal leading-none opacity-70"
                   >
                     View details
+                  </Typography>
+                </th>
+                <th className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal leading-none opacity-70"
+                  >
+                    Edit
                   </Typography>
                 </th>
               </tr>
@@ -326,10 +342,21 @@ const StudentsList = () => {
                         </td>
 
                         <td className={classes}>
+                          <Link to={RouteObjects.StudentProfile}>
+
                           <Button className="rounded-r-lg " color="green">
                             View
                           </Button>
+                          </Link>
                         </td>
+                        <td className={classes}>
+
+                        <Link to={`${RouteObjects.StudentProfile}/${data}` }>
+
+<Button className="rounded-r-lg " color="green">
+  Edit
+</Button>
+</Link>                        </td>
                       </tr>
                     );
                   })
@@ -422,9 +449,20 @@ const StudentsList = () => {
                         </td>
 
                         <td className={classes}>
+                          <Link to={`${RouteObjects.StudentProfile}/${data._id}`}>
+
                           <Button className="rounded-r-lg " color="green">
                             View
                           </Button>
+                          </Link>
+                        </td>
+                        <td className={classes}>
+                        <Link to={`${RouteObjects.EditStudent}/${data._id}`}>
+
+<Button className="rounded-r-lg " color="green">
+  Edit
+</Button>
+</Link>
                         </td>
                       </tr>
                     );
@@ -446,6 +484,7 @@ const StudentsList = () => {
           </div>
         </CardFooter>
       </Card>
+      
     </div>
   );
 };

@@ -5,6 +5,7 @@ const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({});
 
+
   const accessToken = localStorage.getItem("accessToken");
   const roles = localStorage.getItem("roles");
   useEffect(() => {

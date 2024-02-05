@@ -15,7 +15,9 @@ export const RouteObjects = {
   Issuebooks:"/issuedbookdetails",
   Issuecards:"/issuedcarddetails",
   StudentsList:"/studentlist",
+  StudentProfile:"/studentprofile",
   AddStudent:"/addstudent",
+  EditStudent:"/editstudent",
   RequireForms:"/forms",
   
 
