@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     setAuth({ accessToken, roles, userId });
-  }, [accessToken, roles, userId, email]);
+  }, []);
 
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>

@@ -73,7 +73,6 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
 
   const updateBook = async () => {
     try {
-      
       console.log(formData);
       const error = bookAddValidation(formData);
       if (!Object.values(error).every((value) => value === "")) {
@@ -81,10 +80,10 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
         return;
       } else {
         const response = await axios.put(`/library/books/${dbId}`, formData);
+        handleClose();
         navigate(RouteObjects.Bookmanagment);
       }
     } catch (error) {
-
       console.log(error);
     }
   };
@@ -123,7 +122,7 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
                 placeholder="Enter book name"
                 onChange={handleInputChange}
                 value={formData.bookName}
-                error={FrntError&&FrntError?.bookName}
+                error={FrntError && FrntError?.bookName}
               />
               <Input
                 name="author"
@@ -168,7 +167,7 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
                 placeholder="Enter book id"
                 onChange={handleInputChange}
                 value={formData?.bookId}
-                error={FrntError&&FrntError?.bookId}
+                error={FrntError && FrntError?.bookId}
               />
               <Input
                 name="refNo"
@@ -266,7 +265,7 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
             >
               <span>Cancel</span>
             </Button>
-            <Button  variant="gradient" color="green" onClick={updateBook}>
+            <Button variant="gradient" color="green" onClick={updateBook}>
               <span>Edit book</span>
             </Button>
           </DialogFooter>
