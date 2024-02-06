@@ -52,6 +52,7 @@ const AppRoutes = () => {
         <Route path={RouteObjects.StudentLibrary} element={<StudentLibrary/>} />
 
 
+                {/* STAFF ROUTS */}
 
         <Route path={RouteObjects.StaffDashboard} element={<StaffDashBoard/>} />
         <Route path={RouteObjects.Stafflibrary} element={<LibraryManagemnet/>} />
@@ -65,6 +66,8 @@ const AppRoutes = () => {
         <Route path={`${RouteObjects.EditStudent}/:id`} element={<EditStudent/>} />
 
         <Route path={RouteObjects.RequireForms} element={<AddForms/>} />
+                  {/* CLASS ROOM ROUTS */}
+        <Route path={RouteObjects.StudentsList} element={<StudentsList/>} />
 
 
         <Route

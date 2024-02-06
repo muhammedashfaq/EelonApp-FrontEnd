@@ -98,7 +98,7 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
         return;
       } else {
         const response = await axios.put(`/library/books/${dbId}`, alldara);
-        navigate(RouteObjects.Bookmanagment);
+        handleClose()
       }
     } catch (error) {
       console.log(error);
