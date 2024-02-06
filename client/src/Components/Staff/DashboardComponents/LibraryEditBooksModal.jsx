@@ -20,10 +20,22 @@ import { PencilIcon } from "@heroicons/react/24/solid";
 import { bookAddValidation } from "../../../Helper/Validations/validations";
 import { useNavigate } from "react-router-dom";
 import { RouteObjects } from "../../../Routes/RoutObjects";
+const useDropdownState = (initialValue, fetchedValue) => {
+  const [value, setValue] = useState(initialValue);
+
+  useEffect(() => {
+    if (fetchedValue !== undefined) {
+      setValue(fetchedValue);
+    }
+  }, [fetchedValue]);
+
+  return [value, setValue];
+};
 
 export default function LibraryEditBooksModal({ getBooks, data }) {
+  
   const [open, setOpen] = React.useState(false);
-
+  
   const [formData, setFormData] = useState({
     bookName: "",
     author: "",
@@ -37,6 +49,7 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
     refSubject: "",
     year: "",
   });
+  const genreState = useDropdownState("", formData?.genre);
   const [FrntError, setFrntError] = useState({
     bookName: "",
     author: "",
@@ -62,6 +75,7 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
       [name]: "",
     }));
   };
+  
   const navigate = useNavigate();
 
   const handleOpen = () => setOpen(true);
@@ -70,17 +84,20 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
     getBooks();
   };
   const dbId = data._id;
+  const alldara ={
+    ...formData,
+    genre:genreState[0]
+  }
 
   const updateBook = async () => {
+
     try {
-      console.log(formData);
       const error = bookAddValidation(formData);
       if (!Object.values(error).every((value) => value === "")) {
         setFrntError(error);
         return;
       } else {
-        const response = await axios.put(`/library/books/${dbId}`, formData);
-        handleClose();
+        const response = await axios.put(`/library/books/${dbId}`, alldara);
         navigate(RouteObjects.Bookmanagment);
       }
     } catch (error) {
@@ -148,7 +165,9 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
                 name=""
                 variant="standard"
                 label="Select genre"
-                // onChange={(e) => setgenre(e)}
+                value={genreState[0]}
+                onChange={(e) => genreState[1](e)}
+
               >
                 <Option value="Story">Story</Option>
                 <Option value="Poem">Poem</Option>
