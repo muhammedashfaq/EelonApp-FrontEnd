@@ -204,7 +204,7 @@ const NavBar = () => {
        ],
      },
      {
-       title: "Dashboard",
+       title: "Classroom",
        icon: <span className="material-symbols-outlined">library_books</span>,
      },
      {
