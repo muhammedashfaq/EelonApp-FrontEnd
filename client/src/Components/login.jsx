@@ -19,7 +19,6 @@ import useAuth from "../Hooks/useAuth.jsx";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../Context/userContext.jsx";
 import { RouteObjects } from "../Routes/RoutObjects.jsx";
-import useAxiosPrivate from "../Hooks/useAxiosPrivate.jsx";
 
 const Login = () => {
   const { setUserRoles } = useUserContext();
@@ -28,7 +27,6 @@ const Login = () => {
   const [errorMsg, seterrorMsg] = useState();
   const { setAuth } = useAuth();
   const navigate = useNavigate();
-  const axiosPrivate = useAxiosPrivate();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -66,26 +64,17 @@ const Login = () => {
         return;
       } else {
         setIsLoading(true);
-
-        const response = await axiosPrivate.post(`/auth/${type}`, formData);
-
-        console.log(response,"login respons");
-
+        const response = await axios.post(`/auth/${type}`, formData);
         setIsLoading(false);
 
         const accessToken = response?.data?.accessToken;
         const roles = response?.data?.roles;
-
         const email = response?.data?.email;
-        const userId = response?.data?.userId;
-
         setUserRoles(roles);
-        setAuth({ accessToken, roles,userId });
+        // setAuth({ accessToken, roles });
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("roles", roles);
-
         localStorage.setItem("email", email);
-        localStorage.setItem("userId", userId);
 
         if (userType === "Student") {
           navigate(RouteObjects.root);
@@ -131,9 +120,7 @@ const Login = () => {
                 />
               </div>
               <div className=" p-8 rounded-r-lg">
-                <div>
-                  
-                </div>
+                <div></div>
                 <Card color="transparent" shadow={false} className="">
                   <div className=" flex justify-center ">
                     <Typography variant="h2" color="blue-gray" className="">
@@ -147,7 +134,7 @@ const Login = () => {
                   >
                     <div className="mb-1 flex flex-col gap-7">
                       {/* <div className="relative inline-block"> */}
-                        {/* <select
+                      {/* <select
                       onChange={(e) => setUser(e.target.value)}
                       className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     >
@@ -156,7 +143,7 @@ const Login = () => {
                       <option value="Staff">Staff</option>
                       <option value="Master">Master</option>
                     </select> */}
-                        {/* <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                      {/* <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                           <svg
                             className="w-4 h-4"
                             xmlns="http://www.w3.org/2000/svg"
@@ -172,46 +159,42 @@ const Login = () => {
                         </div>
                       </div> */}
 
-                      
-                        <Input
-                          size="lg"
-                          name="email"
-                          variant="standard"
-                          label={
-                            FrntError && FrntError.email
-                              ? FrntError.email
-                              : "Enter Email"
-                          }
-                          placeholder="Enter Your Mail"
-                          onChange={handleInputChange}
-                          error={FrntError&&FrntError.email}
-                          className=" border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md bg-cyan-200"
-                          labelProps={{
-                            className: "before:content-none after:content-none",
-                          }}
-                        />
-                  
-               
-                        <Input
-                          type="password"
-                          size="lg"
-                          name="password"
-                          variant="standard"
-                          label={
-                            FrntError && FrntError.password
-                              ? FrntError.password
-                              : "Enter Password"
-                          }
-                          placeholder="Enter Password"
-                          onChange={handleInputChange}
-                          error={FrntError&&FrntError.password}
+                      <Input
+                        size="lg"
+                        name="email"
+                        variant="standard"
+                        label={
+                          FrntError && FrntError.email
+                            ? FrntError.email
+                            : "Enter Email"
+                        }
+                        placeholder="Enter Your Mail"
+                        onChange={handleInputChange}
+                        error={FrntError && FrntError.email}
+                        className=" border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md bg-cyan-200"
+                        labelProps={{
+                          className: "before:content-none after:content-none",
+                        }}
+                      />
 
-                          className=" !border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md  bg-cyan-200"
-                          labelProps={{
-                            className: "before:content-none after:content-none",
-                          }}
-                        />
-                    
+                      <Input
+                        type="password"
+                        size="lg"
+                        name="password"
+                        variant="standard"
+                        label={
+                          FrntError && FrntError.password
+                            ? FrntError.password
+                            : "Enter Password"
+                        }
+                        placeholder="Enter Password"
+                        onChange={handleInputChange}
+                        error={FrntError && FrntError.password}
+                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md  bg-cyan-200"
+                        labelProps={{
+                          className: "before:content-none after:content-none",
+                        }}
+                      />
                     </div>
 
                     <Button
