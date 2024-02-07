@@ -16,6 +16,7 @@ import LibraryBooksAddModal from "./LibraryBooksAddModal";
 import LibraryIssueStudentModal from "./LibraryIssueStudentModal";
 import Banner from "../../Banner/Banner";
 import Spinner from "../../spinner/Spinner";
+import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 
 const StaffIssueBookManagement = () => {
   const [alertunissue, setAlertunissue] = useState(false);
@@ -27,10 +28,12 @@ const StaffIssueBookManagement = () => {
   const [genre, setgenre] = useState();
   const [isLoading, setisLoading] = useState(false);
 
+  const axiosPrivate = useAxiosPrivate();
+
   const getBooks = async () => {
     try {
       setisLoading(true);
-      const response = await axios.get("/library/books");
+      const response = await axiosPrivate.get("/library/books");
       setbookData(response.data);
       setisLoading(false);
     } catch (error) {

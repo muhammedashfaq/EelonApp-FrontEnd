@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardBody, Typography } from "@material-tailwind/react";
 
-const ClassroomBanner = () => {
+const ClassroomBanner = ({ classRoomData }) => {
   return (
     <>
       <Card
@@ -11,14 +11,14 @@ const ClassroomBanner = () => {
         <div style={{ backdropFilter: "blur(4px)" }}>
           <CardBody>
             <Typography variant="h4" color="blue-gray" className="mb-2">
-              Class 10-B
+              {classRoomData?.roomName}
             </Typography>
             <br />
             <br />
             <br />
             <br />
             <Typography variant="paragraph" color="black">
-              Class description
+              {classRoomData?.description}
             </Typography>
           </CardBody>
         </div>
