@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -11,38 +11,36 @@ import {
   CardHeader,
   Select,
   Option,
+  Textarea,
 } from "@material-tailwind/react";
 import axios from "../../../api/axios";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
-const AddClassRoomModal = () => {
+
+const AddClassRoomModal = ({ userId }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [desableButton, setdesableButton] = useState(false);
   const axiosPrivate = useAxiosPrivate();
-
   const [roomName, setRoomName] = useState("");
-
   const [std, setStd] = useState("");
-
   const [section, setSection] = useState("");
-
   const [subject, setSubject] = useState("");
-
   const [description, setDescription] = useState("");
-
-  const formData = {
-    roomName,
-    std,
-    section,
-    subject,
-    description,
-  };
 
   const [FrntError, setFrntError] = useState(null);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const { roomName, std, section, subject, description } = formData;
+    const formData = {
+      roomName,
+      std,
+      section,
+      subject,
+      description,
+      roomId: `${roomName}-${section} ${subject}`,
+      teachers: [userId],
+      createdBy: userId,
+    };
 
     if (!roomName || !std || !section || !subject || !description) {
       setFrntError({
@@ -57,53 +55,55 @@ const AddClassRoomModal = () => {
     try {
       console.log(formData, "kdbkhsbhdbh");
       const response = await axiosPrivate.post("/classroom", formData);
+      console.log(response);
       handleOpen();
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (!std || !section || !subject) return;
+    setRoomName(`${std}-${section} ${subject}`);
+  }, [std, section, subject]);
   return (
     <>
-      <Button onClick={handleOpen}>Sign In</Button>
+      {/* <Button onClick={handleOpen}>Add classroom</Button> */}
+      <p onClick={handleOpen} className="bg-transparent">
+        Add classroom
+      </p>
       <Dialog
         size="xs"
         open={open}
         handler={handleOpen}
         className="bg-transparent shadow-none"
       >
-        <Card className="w-96">
+        <Card className="w-96 p-5">
           <form>
             <div className="pl-4 m-2 flex items-baseline font-semibold">
               <h1>Create Class</h1>
             </div>
             <CardBody className="flex flex-col gap-4">
-              <Input
-                name="roomName"
-                variant="standard"
-                label={
-                  FrntError && FrntError.roomName
-                    ? FrntError.roomName
-                    : "Auther Name"
-                }
-                color="blue"
-                error={FrntError && FrntError.roomName}
-                onChange={(e) => setRoomName(e.target.value)}
-              />
-
               <Select
                 name="std"
                 color="blue"
                 variant="standard"
                 label="Class"
-                value={formData.std}
+                value={std}
                 onChange={(e) => setStd(e)}
               >
-                <Option value="Story">Story</Option>
-                <Option value="Poem">Poem</Option>
-                <Option value="Biography">Biography</Option>
-                <Option value="Mystery">Mystery</Option>
-                <Option value="Fiction">Fiction</Option>
-                <Option value="Non-fiction">Non-fiction</Option>
+                <Option value="1">1</Option>
+                <Option value="2">2</Option>
+                <Option value="3">3</Option>
+                <Option value="4">4</Option>
+                <Option value="5">5</Option>
+                <Option value="6">6</Option>
+                <Option value="7">7</Option>
+                <Option value="8">8</Option>
+                <Option value="9">9</Option>
+                <Option value="10">10</Option>
+                <Option value="11">11</Option>
+                <Option value="12">12</Option>
               </Select>
 
               <Select
@@ -113,13 +113,12 @@ const AddClassRoomModal = () => {
                 label="section"
                 onChange={(e) => setSection(e)}
               >
-                <Option value="Story">Story</Option>
-                <Option value="Poem">Poem</Option>
-                <Option value="Biography">Biography</Option>
-                <Option value="Mystery">Mystery</Option>
-                <Option value="Fiction">Fiction</Option>
-                <Option value="Non-fiction">Non-fiction</Option>
+                <Option value="A">A</Option>
+                <Option value="B">B</Option>
+                <Option value="C">C</Option>
+                <Option value="D">D</Option>
               </Select>
+
               <Select
                 name="subject"
                 color="blue"
@@ -127,15 +126,29 @@ const AddClassRoomModal = () => {
                 label="Subject"
                 onChange={(e) => setSubject(e)}
               >
-                <Option value="Story">Story</Option>
-                <Option value="Poem">Poem</Option>
-                <Option value="Biography">Biography</Option>
-                <Option value="Mystery">Mystery</Option>
-                <Option value="Fiction">Fiction</Option>
-                <Option value="Non-fiction">Non-fiction</Option>
+                <Option value="Physics">Physics</Option>
+                <Option value="Maths">Maths</Option>
+                <Option value="Chemistry">Chemistry</Option>
+                <Option value="Biology">Biology</Option>
+                <Option value="English">English</Option>
+                <Option value="Tamil">Tamil</Option>
               </Select>
 
               <Input
+                name="roomName"
+                variant="standard"
+                value={roomName}
+                label={
+                  FrntError && FrntError.roomName
+                    ? FrntError.roomName
+                    : "Room name"
+                }
+                color="blue"
+                error={FrntError && FrntError.roomName}
+                onChange={(e) => setRoomName(e.target.value)}
+              />
+
+              <Textarea
                 name="description"
                 variant="standard"
                 label="Description"

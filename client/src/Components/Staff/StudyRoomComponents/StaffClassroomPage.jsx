@@ -19,10 +19,34 @@ import { useEffect, useState } from "react";
 import Editor from "./Editor";
 import AddPeople from "./AddPeople/AddPeople";
 import ClassWorks from "./ClassWorks/ClassWorks";
+import { useParams } from "react-router-dom";
+import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import Strems from "./Strems";
 
 export default function StaffClassroomPage() {
   const [tabValue, settabValue] = useState("Stream");
+  const [classRoomData, setclassRoomData] = useState();
+
+  const { classroomId } = useParams();
+  const axiosPrivate = useAxiosPrivate();
+  // useEffect(() => {
+  //   console.log(classroomId);
+  // }, [classroomId]);
+
+  const getClassRoom = async (req, res) => {
+    try {
+      if (!classroomId) return;
+      const response = await axiosPrivate.get(`classroom/${classroomId}`);
+      console.log(response.data);
+      setclassRoomData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getClassRoom();
+  }, []);
 
   return (
     <>
@@ -62,15 +86,20 @@ export default function StaffClassroomPage() {
               >
                 {tabValue === "Stream" ? (
                   <>
+                    <ClassroomBanner classRoomData={classRoomData} />
+                    <div className="flex justify-evenly">
+                      <ClassroomAnnoucementCard />
+                      <ClassroomUpcomingEventsCard />
+                    </div>
                     <Strems/>
                   </>
                 ) : tabValue === "Classwork" ? (
                   <>
-                  <ClassWorks/>
+                    <ClassWorks />
                   </>
                 ) : tabValue === "People" ? (
                   <>
-                  <AddPeople/>
+                    <AddPeople />
                   </>
                 ) : tabValue === "Grades" ? (
                   <></>
