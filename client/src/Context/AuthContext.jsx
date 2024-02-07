@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
-    setAuth({ accessToken, roles, userId });
+    setAuth({ accessToken, roles, userId, email });
   }, [accessToken, roles, userId, email]);
 
   useEffect(() => {
