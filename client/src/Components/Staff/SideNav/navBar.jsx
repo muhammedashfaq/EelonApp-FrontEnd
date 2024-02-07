@@ -204,7 +204,7 @@ const NavBar = () => {
        ],
      },
      {
-       title: "Classroom",
+       title: "Classroom", href:RouteObjects.StudyRoomHome,
        icon: <span className="material-symbols-outlined">library_books</span>,
      },
      {
@@ -225,7 +225,7 @@ const NavBar = () => {
    const closeDrawer = () => setOpen(false);
    return (
      <div>
-       <Button onClick={openDrawer}>Staff Dash</Button>
+       <Button className="bg-teal" onClick={openDrawer}>Staff Dash</Button>
        <Drawer open={open} onClose={closeDrawer} className="p-4 bg-dark-purple">
          
          

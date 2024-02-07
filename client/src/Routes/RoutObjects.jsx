@@ -20,6 +20,11 @@ export const RouteObjects = {
   EditStudent:"/editstudent",
   RequireForms:"/forms",
   
+  StudyRoom:"/studyroom*",
+  StudyRoomHome:"/studyroom/home",
+  StudyRoomHome2:"/studyroom/home2",
+
+
 
 
 

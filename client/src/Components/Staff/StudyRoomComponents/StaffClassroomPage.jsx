@@ -12,10 +12,13 @@ import {
   Tab,
   TabPanel,
 } from "@material-tailwind/react";
-import ClassroomAnnoucementCard from "./ClassroomAnnoucementCard";
-import ClassroomUpcomingEventsCard from "./ClassroomUpEvntCard";
+import ClassroomAnnoucementCard from "../DashboardComponents/ClassroomAnnoucementCard";
+import ClassroomUpcomingEventsCard from "../DashboardComponents/ClassroomUpEvntCard";
 import ClassroomBanner from "./ClassroomBanner";
 import { useEffect, useState } from "react";
+import Editor from "./Editor";
+import AddPeople from "./AddPeople/AddPeople";
+import ClassWorks from "./ClassWorks/ClassWorks";
 
 export default function StaffClassroomPage() {
   const [tabValue, settabValue] = useState("Stream");
@@ -49,18 +52,37 @@ export default function StaffClassroomPage() {
             </TabPanel>
         ))}
       </TabsBody> */}
+              <TabsBody
+                animate={{
+                  initial: { y: 250 },
+                  mount: { y: 0 },
+                  unmount: { y: 250 },
+                }}
+              >
+                {tabValue === "Stream" ? (
+                  <>
+                    <ClassroomBanner />
+                    <div className="flex justify-evenly">
+                      <ClassroomAnnoucementCard />
+                      <ClassroomUpcomingEventsCard />
+                    </div>
+                  </>
+                ) : tabValue === "Classwork" ? (
+                  <>
+                  <ClassWorks/>
+                  </>
+                ) : tabValue === "People" ? (
+                  <>
+                  <AddPeople/>
+                  </>
+                ) : tabValue === "Grades" ? (
+                  <></>
+                ) : (
+                  ""
+                )}
+              </TabsBody>
             </Tabs>
           </div>
-          <br />
-          <br />
-
-          <ClassroomBanner />
-        </div>
-        <br />
-        <br />
-        <div className="flex justify-evenly">
-          <ClassroomAnnoucementCard />
-          <ClassroomUpcomingEventsCard />
         </div>
       </div>
     </>

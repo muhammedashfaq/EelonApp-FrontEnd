@@ -1,5 +1,5 @@
 import React from "react";
-import Classroom from "../Pages/Staff/Dashboard/Classroom.jsx";
+import Classroom from "../Pages/StudyRoom/Staff/DashPage";
 
 const TestYk = () => {
   return (
