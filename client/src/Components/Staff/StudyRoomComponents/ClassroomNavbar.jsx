@@ -48,6 +48,7 @@ export default function ClassroomNavbar() {
         openSidebar ? "sideBarExpand shadow-2xl" : "sideBarContract shadow-2xl"
       }
     >
+      
       <div className="ml-3">
         <IconButton
           variant="text"

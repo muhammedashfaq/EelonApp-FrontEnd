@@ -52,9 +52,8 @@ const AddClassWorksModal = ({ open, onClose }) => {
           
         <Option className="flex items-center gap-2">
           {/* <FontAwesomeIcon icon={[faBrands, faYoutube]} /> */}
-        
-        YouTube</Option>    
-        <Option>Google Frive</Option>
+      YouTube</Option>    
+        <Option>Google Drive</Option>
         <Option>Web Documents</Option>
         
       </Select>
