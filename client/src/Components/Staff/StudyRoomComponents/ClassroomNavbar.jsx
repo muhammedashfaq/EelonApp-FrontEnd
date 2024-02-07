@@ -12,6 +12,7 @@ import {
   AccordionBody,
   IconButton,
 } from "@material-tailwind/react";
+import { IoIosAddCircleOutline } from "react-icons/io";
 import {
   PresentationChartBarIcon,
   ShoppingBagIcon,
@@ -21,6 +22,7 @@ import {
   PowerIcon,
   HomeIcon,
   AcademicCapIcon,
+  
 } from "@heroicons/react/24/solid";
 import {
   ChevronRightIcon,
@@ -29,6 +31,8 @@ import {
   Bars3Icon,
 } from "@heroicons/react/24/outline";
 import { SidebarOpen } from "lucide-react";
+import { RouteObjects } from "../../../Routes/RoutObjects";
+import { Link } from "react-router-dom";
 
 export default function ClassroomNavbar() {
   const [open, setOpen] = React.useState(0);
@@ -58,7 +62,6 @@ export default function ClassroomNavbar() {
           color="blue-gray"
           className={openSidebar ? "visible" : "invisible"}
         >
-          Classroom
         </Typography>
       </div>
       <List>
@@ -73,18 +76,40 @@ export default function ClassroomNavbar() {
             />
           }
         >
+          <div>
+          <Link to={RouteObjects.StudyRoomHome}>
+
           <ListItem className={!openSidebar && "w-10"}>
             <ListItemPrefix>
               <HomeIcon className="h-5 w-5" />
             </ListItemPrefix>
             <ListItemPrefix
               className={openSidebar ? "showComponent" : "hideComponent"}
-            >
+              >
               <Typography color="blue-gray" className="mr-auto font-normal">
                 Home
               </Typography>
             </ListItemPrefix>
           </ListItem>
+              </Link>
+                </div>
+                <div>
+          <Link to={RouteObjects.StudyRoomHome2}>
+
+          <ListItem className={!openSidebar && "w-10"}>
+            <ListItemPrefix>
+              <HomeIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            <ListItemPrefix
+              className={openSidebar ? "showComponent" : "hideComponent"}
+              >
+              <Typography color="blue-gray" className="mr-auto font-normal">
+                Home2
+              </Typography>
+            </ListItemPrefix>
+          </ListItem>
+              </Link>
+                </div>
           <hr className="my-2 border-blue-gray-50" />
           {!openSidebar ? (
             <ListItem

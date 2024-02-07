@@ -25,7 +25,7 @@ import StudentsList from "../Pages/Staff/Dashboard/StudentsList";
 import AddForms from "../Pages/Staff/Dashboard/AddForms";
 import StudentProfile from "../Pages/Staff/Dashboard/StudentProfile";
 import EditStudent from "../Pages/Staff/Dashboard/EditStudent";
-
+import StaffClassRoom from '../Pages/StudyRoom/Staff/DashPage'
 const AppRoutes = () => {
   const isLoading = useSelector((state) => state.loading.isLoading);  
   return (
@@ -67,7 +67,7 @@ const AppRoutes = () => {
 
         <Route path={RouteObjects.RequireForms} element={<AddForms/>} />
                   {/* CLASS ROOM ROUTS */}
-        <Route path={RouteObjects.StudentsList} element={<StudentsList/>} />
+        <Route path={RouteObjects.StudyRoom} element={<StaffClassRoom/>} />
 
 
         <Route
