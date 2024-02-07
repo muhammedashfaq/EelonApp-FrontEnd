@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import Editor from "./Editor";
 import AddPeople from "./AddPeople/AddPeople";
 import ClassWorks from "./ClassWorks/ClassWorks";
+import Strems from "./Strems";
 
 export default function StaffClassroomPage() {
   const [tabValue, settabValue] = useState("Stream");
@@ -61,11 +62,7 @@ export default function StaffClassroomPage() {
               >
                 {tabValue === "Stream" ? (
                   <>
-                    <ClassroomBanner />
-                    <div className="flex justify-evenly">
-                      <ClassroomAnnoucementCard />
-                      <ClassroomUpcomingEventsCard />
-                    </div>
+                    <Strems/>
                   </>
                 ) : tabValue === "Classwork" ? (
                   <>
