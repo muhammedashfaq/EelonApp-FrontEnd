@@ -21,6 +21,7 @@ import AddPeople from "./AddPeople/AddPeople";
 import ClassWorks from "./ClassWorks/ClassWorks";
 import { useParams } from "react-router-dom";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
+import Strems from "./Strems";
 
 export default function StaffClassroomPage() {
   const [tabValue, settabValue] = useState("Stream");
@@ -90,6 +91,7 @@ export default function StaffClassroomPage() {
                       <ClassroomAnnoucementCard />
                       <ClassroomUpcomingEventsCard />
                     </div>
+                    <Strems/>
                   </>
                 ) : tabValue === "Classwork" ? (
                   <>
