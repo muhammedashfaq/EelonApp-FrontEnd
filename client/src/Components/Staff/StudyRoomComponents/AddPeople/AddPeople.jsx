@@ -13,8 +13,44 @@ import AddTeachersModal from "./AddTeachersModal";
 import AddStudentsModal from "./AddStudentsModal";
 import PeopleList from "./PeopleList";
 import StudentList from "./StudentList";
+import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const AddPeople = () => {
+  const { classroomId } = useParams();
+  const [teachersData, setteachersData] = useState();
+  const [studentsData, setStudentsData] = useState();
+
+  const axiosPrivate = useAxiosPrivate();
+
+  const getTeachers = async () => {
+    try {
+      const response = await axiosPrivate.get(
+        `classroom/getclassroomsteachers/${classroomId}`
+      );
+      setteachersData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getStudents = async () => {
+    try {
+      const response = await axiosPrivate.get(
+        `classroom/getclassroomsstudents/${classroomId}`
+      );
+      setStudentsData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getTeachers();
+    getStudents();
+  }, []);
+
   return (
     <>
       <div className="w-full  grid grid-cols-2 gap-4 ">
@@ -25,13 +61,13 @@ const AddPeople = () => {
               className="flex justify-between items-center  font-light"
             >
               Teacher
-              <AddTeachersModal />
+              <AddTeachersModal getTeachers={getTeachers} />
             </Typography>
           </div>
 
           <hr />
           <div className="mt-9">
-            <PeopleList />
+            <PeopleList teachersData={teachersData} getTeachers={getTeachers} />
           </div>
         </div>
         <div className="m-10">
@@ -41,12 +77,15 @@ const AddPeople = () => {
               className="flex justify-between items-center  font-light"
             >
               Student
-              <AddStudentsModal />
+              <AddStudentsModal getStudents={getStudents} />
             </Typography>
           </div>
           <hr />
           <div className="mt-9">
-            <StudentList />
+            <StudentList
+              studentsData={studentsData}
+              getStudents={getStudents}
+            />
           </div>
         </div>
       </div>
