@@ -20,7 +20,7 @@ const AddannounceModal = () => {
   const [topic, settopic] = useState("");
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
-  const [FrntError, setFrntError] = useState(null);
+  const [FrntError, setFrntError] = useState({topic:""});
     const axiosPrivate = useAxiosPrivate();
   const {classroomId}=useParams()
   const handleFormSubmit = async (e) => {
@@ -32,12 +32,14 @@ const AddannounceModal = () => {
   ]
       
 
-    if (!topic) {
-      setFrntError({
-        topic: !topic ? "Topic is required" : "",
-      });
-      return;
-    }
+  if (!topic) {
+    setFrntError((prevErrors) => ({
+      ...prevErrors,
+      topic: "Topic is required",
+    }));
+    return;
+  }
+
     try {
       const response = await axiosPrivate.put(`/classroom/announcement/${classroomId}`, formData);
       handleOpen();

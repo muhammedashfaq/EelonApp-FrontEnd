@@ -9,7 +9,7 @@ import {
 } from "@material-tailwind/react";
 import { loginValidate } from "../Helper/Validations/validations";
 // import { logintouserhome } from "../Helper/api/api";
-import Spinner from "./spinner/Spinner.jsx";
+import Spinner from "./spinner/SpinningLoader.jsx";
 import { toast } from "react-hot-toast";
 import logoImage from "../assets/EelonLogo.png";
 import axios from "../api/axios.jsx";

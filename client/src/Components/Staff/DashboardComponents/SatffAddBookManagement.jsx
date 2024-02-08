@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux";
 import Banner from "../../Banner/Banner";
 import LIbraryBookDetailsModal from "./LIbraryBookDetailsModal";
 import LibraryEditBooksModal from "./LibraryEditBooksModal";
-import Spinner from "../../spinner/Spinner";
+import Spinner from "../../spinner/SpinningLoader";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 
 const SatffAddBookManagement = () => {
