@@ -15,7 +15,7 @@ import axios from "../../../api/axios";
 import LibraryBooksAddModal from "./LibraryBooksAddModal";
 import LibraryIssueStudentModal from "./LibraryIssueStudentModal";
 import Banner from "../../Banner/Banner";
-import Spinner from "../../spinner/Spinner";
+import Spinner from "../../spinner/SpinningLoader";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 
 const StaffIssueBookManagement = () => {

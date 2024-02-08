@@ -4,6 +4,7 @@ import {
   CardFooter,
   Typography,
   Button,
+  
 } from "@material-tailwind/react";
 import {
   Tabs,
@@ -23,10 +24,13 @@ import { useParams } from "react-router-dom";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import Strems from "./Strems";
 import Grades from "./Grades";
+import { faL } from "@fortawesome/free-solid-svg-icons";
+import SpinningLoader from "../../spinner/SpinningLoader";
 
 export default function StaffClassroomPage() {
   const [tabValue, settabValue] = useState("Stream");
   const [classRoomData, setclassRoomData] = useState();
+  const [isLoading,setIsLoading] =useState(false)
 
   const { classroomId } = useParams();
   const axiosPrivate = useAxiosPrivate();
@@ -37,22 +41,32 @@ export default function StaffClassroomPage() {
   const getClassRoom = async (req, res) => {
     try {
       if (!classroomId) return;
+      setIsLoading(true)
       const response = await axiosPrivate.get(`classroom/${classroomId}`);
+      setIsLoading(false)
+
       setclassRoomData(response.data);
     } catch (error) {
+      setIsLoading(false)
+
       console.log(error);
     }
   };
 
   useEffect(() => {
     getClassRoom();
-  }, []);
+  }, [classroomId]);
 
   return (
     <>
+    {
+      isLoading&&(
+        <SpinningLoader/>
+      )
+    }
       <div className="w-full">
-        <div className="w-full p-5">
-          <div className="m-5">
+        <div className="w-full ">
+          <div className="">
             <Tabs value={tabValue}>
               <TabsHeader>
                 <Tab value="Stream" onClick={() => settabValue("Stream")}>
