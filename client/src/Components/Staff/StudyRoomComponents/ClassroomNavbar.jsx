@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   Typography,
@@ -33,8 +33,36 @@ import {
 import { SidebarOpen } from "lucide-react";
 import { RouteObjects } from "../../../Routes/RoutObjects";
 import { Link } from "react-router-dom";
+import useAuth from "../../../Hooks/useAuth";
+import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
+import ClassRoomCard from "./ClassRoomCard";
 
 export default function ClassroomNavbar() {
+  const [classRooms, setClassrooms] = useState([]);
+  const axiosPrivate = useAxiosPrivate();
+  const [userId, setUserId] = useState();
+  const { auth } = useAuth();
+
+  useEffect(() => {
+    setUserId(auth?.userId);
+  }, [auth?.userId]);
+
+  const getClassRooms = async () => {
+    try {
+      const response = await axiosPrivate.get(
+        `classroom/getstaffclassrooms/${userId}`
+      );
+      setClassrooms(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getClassRooms();
+  }, []);
+  useEffect(() => {
+    getClassRooms();
+  }, [userId]);
   const [open, setOpen] = React.useState(0);
   const [openSidebar, setopenSidebar] = React.useState(true);
 
@@ -130,6 +158,7 @@ export default function ClassroomNavbar() {
             </ListItem>
           ) : (
             <>
+
               <ListItem selected={open === 1}>
                 <AccordionHeader
                   onClick={() => handleOpen(1)}
@@ -143,28 +172,27 @@ export default function ClassroomNavbar() {
                   </Typography>
                 </AccordionHeader>
               </ListItem>
-              <AccordionBody className="py-1">
+
+            {
+              classRooms.map((classroom,i)=>(
+                
+                
+                <AccordionBody className="py-1" key={i}>
                 <List className="p-0">
                   <ListItem>
                     <ListItemPrefix>
                       <AcademicCapIcon strokeWidth={3} className="h-4 w-4" />
                     </ListItemPrefix>
-                    Class 10-A
+                    <Link to={`${RouteObjects.StudyRoomHome2}/${classroom._id}`}>
+              {/* <ClassRoomCard  /> */}
+                    {classroom.roomName}
+            </Link>
                   </ListItem>
-                  <ListItem>
-                    <ListItemPrefix>
-                      <AcademicCapIcon strokeWidth={3} className="h-4 w-4" />
-                    </ListItemPrefix>
-                    Class 10-B
-                  </ListItem>
-                  <ListItem>
-                    <ListItemPrefix>
-                      <AcademicCapIcon strokeWidth={3} className="h-4 w-4" />
-                    </ListItemPrefix>
-                    Class 10-C
-                  </ListItem>
+                  
                 </List>
               </AccordionBody>
+                ))
+              }
             </>
           )}
         </Accordion>
