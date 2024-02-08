@@ -14,7 +14,7 @@ import { PlusCircle } from "lucide-react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useParams } from "react-router-dom";
 
-const AddStudentsModal = () => {
+const AddStudentsModal = ({ getStudents }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [email, setemail] = React.useState();
@@ -44,6 +44,7 @@ const AddStudentsModal = () => {
         `classroom/editstudent/${classroomId}`,
         data
       );
+      getStudents();
       handleOpen();
     } catch (error) {
       console.log(error);

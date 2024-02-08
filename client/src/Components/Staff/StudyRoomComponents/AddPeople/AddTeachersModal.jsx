@@ -14,7 +14,7 @@ import { PlusCircle } from "lucide-react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useParams } from "react-router-dom";
 
-const AddTeachersModal = () => {
+const AddTeachersModal = ({ getTeachers }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [email, setemail] = React.useState();
@@ -44,6 +44,7 @@ const AddTeachersModal = () => {
         `classroom/editteacher/${classroomId}`,
         data
       );
+      getTeachers();
       handleOpen();
     } catch (error) {
       console.log(error);
@@ -68,7 +69,7 @@ const AddTeachersModal = () => {
         <Card className="mx-auto w-full max-w-[24rem] p-5">
           <CardBody className="flex flex-col gap-4">
             <Typography className="-mb-2" variant="h6">
-              Enter student email
+              Enter teacher's email
             </Typography>
             <Input
               label="Email"

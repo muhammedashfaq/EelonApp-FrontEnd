@@ -9,31 +9,10 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { TrashIcon } from "lucide-react";
-import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { UserCircle } from "lucide-react";
+import DeleteTeacherModal from "./DeleteTeacherModal";
 
-const PeopleList = () => {
-  const { classroomId } = useParams();
-  const [teachersData, setteachersData] = useState();
-
-  const axiosPrivate = useAxiosPrivate();
-
-  const getTeachers = async () => {
-    try {
-      const response = await axiosPrivate.get(
-        `classroom/getclassroomsteachers/${classroomId}`
-      );
-      setteachersData(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getTeachers();
-  }, []);
-
+const PeopleList = ({ teachersData, getTeachers }) => {
   return (
     <Card className="w-full">
       <List>
@@ -41,11 +20,7 @@ const PeopleList = () => {
           teachersData.map((data) => (
             <ListItem>
               <ListItemPrefix>
-                <Avatar
-                  variant="circular"
-                  alt="emma"
-                  src="https://docs.material-tailwind.com/img/face-3.jpg"
-                />
+                <UserCircle />
               </ListItemPrefix>
               <div>
                 <Typography variant="h6" color="blue-gray">
@@ -61,9 +36,11 @@ const PeopleList = () => {
               </div>
 
               <ListItemSuffix>
-                <IconButton variant="text" color="blue-gray">
-                  <TrashIcon />
-                </IconButton>
+                <DeleteTeacherModal
+                  userId={data?._id}
+                  userName={data?.email}
+                  getTeachers={getTeachers}
+                />
               </ListItemSuffix>
             </ListItem>
           ))}

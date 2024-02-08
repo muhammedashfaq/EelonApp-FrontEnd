@@ -12,47 +12,21 @@ import { TrashIcon } from "lucide-react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { UserCircle } from "lucide-react";
+import DeleteStudentModal from "./DeleteStudentModal";
 
-const StudentList = () => {
-  const { classroomId } = useParams();
-  const [teachersData, setteachersData] = useState();
-
-  const axiosPrivate = useAxiosPrivate();
-
-  const getTeachers = async () => {
-    try {
-      const response = await axiosPrivate.get(
-        `classroom/getclassroomsstudents/${classroomId}`
-      );
-      setteachersData(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getTeachers();
-  }, []);
-  useEffect(() => {
-    console.log(teachersData);
-  }, [teachersData]);
-
+const StudentList = ({ studentsData, getStudents }) => {
   return (
     <Card className="w-full">
       <List>
-        {teachersData &&
-          teachersData.map((data) => (
+        {studentsData &&
+          studentsData.map((data) => (
             <ListItem>
               <ListItemPrefix>
-                <Avatar
-                  variant="circular"
-                  alt="emma"
-                  src="https://docs.material-tailwind.com/img/face-3.jpg"
-                />
+                <UserCircle />
               </ListItemPrefix>
               <div>
-                <Typography variant="h6" color="blue-gray">
+                <Typography variant="h6" color="blue-grayfirst">
                   {data?.email}
                 </Typography>
                 {/* <Typography
@@ -65,9 +39,15 @@ const StudentList = () => {
               </div>
 
               <ListItemSuffix>
-                <IconButton variant="text" color="blue-gray">
+                {/* <IconButton variant="text" color="blue-gray">
                   <TrashIcon />
-                </IconButton>
+                </IconButton> */}
+
+                <DeleteStudentModal
+                  userId={data?._id}
+                  userName={data?.email}
+                  getStudents={getStudents}
+                />
               </ListItemSuffix>
             </ListItem>
           ))}
