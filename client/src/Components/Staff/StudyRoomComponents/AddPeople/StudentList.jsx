@@ -13,7 +13,7 @@ import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-const PeopleList = () => {
+const StudentList = () => {
   const { classroomId } = useParams();
   const [teachersData, setteachersData] = useState();
 
@@ -22,9 +22,10 @@ const PeopleList = () => {
   const getTeachers = async () => {
     try {
       const response = await axiosPrivate.get(
-        `classroom/getclassroomsteachers/${classroomId}`
+        `classroom/getclassroomsstudents/${classroomId}`
       );
       setteachersData(response.data);
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -33,6 +34,9 @@ const PeopleList = () => {
   useEffect(() => {
     getTeachers();
   }, []);
+  useEffect(() => {
+    console.log(teachersData);
+  }, [teachersData]);
 
   return (
     <Card className="w-full">
@@ -52,12 +56,12 @@ const PeopleList = () => {
                   {data?.email}
                 </Typography>
                 {/* <Typography
-                  variant="small"
-                  color="gray"
-                  className="font-normal"
-                >
-                  UI/UX Designer @ Material Tailwind
-                </Typography> */}
+                    variant="small"
+                    color="gray"
+                    className="font-normal"
+                  >
+                    UI/UX Designer @ Material Tailwind
+                  </Typography> */}
               </div>
 
               <ListItemSuffix>
@@ -71,4 +75,4 @@ const PeopleList = () => {
     </Card>
   );
 };
-export default PeopleList;
+export default StudentList;

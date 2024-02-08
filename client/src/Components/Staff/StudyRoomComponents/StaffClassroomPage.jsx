@@ -38,7 +38,6 @@ export default function StaffClassroomPage() {
     try {
       if (!classroomId) return;
       const response = await axiosPrivate.get(`classroom/${classroomId}`);
-      console.log(response.data);
       setclassRoomData(response.data);
     } catch (error) {
       console.log(error);
@@ -86,8 +85,7 @@ export default function StaffClassroomPage() {
                 }}
               >
                 {tabValue === "Stream" ? (
-                  <>
-                    
+                  <>             
                     <Strems classRoomData={classRoomData}/>
                   </>
                 ) : tabValue === "Classwork" ? (
