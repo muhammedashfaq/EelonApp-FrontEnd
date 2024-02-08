@@ -282,6 +282,15 @@ const StaffIssueBookManagement = () => {
                       Issue book
                     </Typography>
                   </th>
+                  <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal leading-none opacity-70"
+                    >
+                      Re-Issue book
+                    </Typography>
+                  </th>
                   {/* <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
                       <Typography
                         variant="small"
@@ -410,6 +419,23 @@ const StaffIssueBookManagement = () => {
                               />
                             </Typography>
                           </td>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              <LibraryIssueStudentModal
+                                unissueAlert={setAlertunissue}
+                                setAlert={setAlertissue}
+                                bookId={data?._id}
+                                getBooks={searchBook}
+                                currentlyIssued={
+                                  data?.students?.currentlyIssued
+                                }
+                              />
+                            </Typography>
+                          </td>
                         </tr>
                       );
                     })
@@ -519,6 +545,25 @@ const StaffIssueBookManagement = () => {
                               className="font-normal"
                             >
                               <LibraryIssueStudentModal
+                                unissueAlert={setAlertunissue}
+                                setAlert={setAlertissue}
+                                bookId={data?._id}
+                                getBooks={searchBook}
+                                currentlyIssued={
+                                  data?.students?.currentlyIssued
+                                }
+                              />
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                            
+                              <LibraryIssueStudentModal
+                            
                                 unissueAlert={setAlertunissue}
                                 setAlert={setAlertissue}
                                 bookId={data?._id}

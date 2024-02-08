@@ -22,6 +22,7 @@ import ClassWorks from "./ClassWorks/ClassWorks";
 import { useParams } from "react-router-dom";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import Strems from "./Strems";
+import Grades from "./Grades";
 
 export default function StaffClassroomPage() {
   const [tabValue, settabValue] = useState("Stream");
@@ -86,12 +87,8 @@ export default function StaffClassroomPage() {
               >
                 {tabValue === "Stream" ? (
                   <>
-                    <ClassroomBanner classRoomData={classRoomData} />
-                    <div className="flex justify-evenly">
-                      <ClassroomAnnoucementCard />
-                      <ClassroomUpcomingEventsCard />
-                    </div>
-                    <Strems/>
+                    
+                    <Strems classRoomData={classRoomData}/>
                   </>
                 ) : tabValue === "Classwork" ? (
                   <>
@@ -102,7 +99,10 @@ export default function StaffClassroomPage() {
                     <AddPeople />
                   </>
                 ) : tabValue === "Grades" ? (
-                  <></>
+                  <>
+                  
+                  <Grades/>
+                  </>
                 ) : (
                   ""
                 )}

@@ -11,83 +11,86 @@ import {
   CardHeader,
   Select,
   Option,
+  Textarea,
 } from "@material-tailwind/react";
+import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
+import { useParams } from "react-router-dom";
 const AddannounceModal = () => {
+  const [content, setcontent] = useState("");
+  const [topic, settopic] = useState("");
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
+  const [FrntError, setFrntError] = useState(null);
+    const axiosPrivate = useAxiosPrivate();
+  const {classroomId}=useParams()
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    const formData =[{
+      topic,
+      content,
+    }
+  ]
+      
+
+    if (!topic) {
+      setFrntError({
+        topic: !topic ? "Topic is required" : "",
+      });
+      return;
+    }
+    try {
+      const response = await axiosPrivate.put(`/classroom/announcement/${classroomId}`, formData);
+      handleOpen();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
-         
-
-      <Button onClick={handleOpen}variant="outlined" color="blue" className="flex items-center " >Create Announcement</Button>
+      <Button
+        onClick={handleOpen}
+        variant="outlined"
+        color="blue"
+        className="flex items-center "
+      >
+        Create Announcement
+      </Button>
       <Dialog
         size="xs"
         open={open}
         handler={handleOpen}
-        className="bg-transparent shadow-none"
+        className="bg-transparent shadow-none "
       >
-        <Card className="w-96">
+        <Card className="w-96 p-2">
           <form>
             <div className="pl-4 m-2 flex items-baseline font-semibold">
-              <h1>Create Class</h1>
+              <h1>Create Announcement</h1>
             </div>
             <CardBody className="flex flex-col gap-4">
               <Input
-                name="roomName"
+                name="topic"
                 variant="standard"
-                label="anu"
+                label="Topic"
+              
                 color="blue"
+                onChange={(e) => settopic(e.target.value)}
+                error={FrntError && FrntError.topic}
               />
 
-              <Select
-                name="std"
-                color="blue"
+              <Textarea
+                name="content"
                 variant="standard"
-                label="Class"
-                //   value={formData.std}
-                //   onChange={(e) => setStd(e)}
-              >
-                <Option value="Story">Story</Option>
-                <Option value="Poem">Poem</Option>
-                <Option value="Biography">Biography</Option>
-                <Option value="Mystery">Mystery</Option>
-                <Option value="Fiction">Fiction</Option>
-                <Option value="Non-fiction">Non-fiction</Option>
-              </Select>
-
-              <Select
-                name="section"
+                label="Content"
+              
                 color="blue"
-                variant="standard"
-                label="section"
-                //   onChange={(e) => setSection(e)}
-              >
-                <Option value="Story">Story</Option>
-                <Option value="Poem">Poem</Option>
-                <Option value="Biography">Biography</Option>
-                <Option value="Mystery">Mystery</Option>
-                <Option value="Fiction">Fiction</Option>
-                <Option value="Non-fiction">Non-fiction</Option>
-              </Select>
-              <Select
-                name="subject"
-                color="blue"
-                variant="standard"
-                label="Subject"
-                //   onChange={(e) => setSubject(e)}
-              >
-                <Option value="Story">Story</Option>
-                <Option value="Poem">Poem</Option>
-                <Option value="Biography">Biography</Option>
-                <Option value="Mystery">Mystery</Option>
-                <Option value="Fiction">Fiction</Option>
-                <Option value="Non-fiction">Non-fiction</Option>
-              </Select>
-
+                onChange={(e) => setcontent(e.target.value)}
+              />
               <Input
-                name="description"
+                type="file"
+                name="topic"
                 variant="standard"
-                label="Description"
+                label="Topic"
                 size="lg"
                 color="blue"
                 //   onChange={(e) => setDescription(e.target.value)}
@@ -103,12 +106,12 @@ const AddannounceModal = () => {
                 </span>
 
                 <Button
-                  // onClick={handleFormSubmit}
+                  onClick={handleFormSubmit}
                   type="submit"
                   className="hover:bg-blue-gray-100 rounded-md p-2 cursor-pointer "
                   // disabled={desableButton ? true : false}
                 >
-                  Create
+                  upload
                 </Button>
               </Typography>
             </CardFooter>
