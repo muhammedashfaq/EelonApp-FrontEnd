@@ -4,69 +4,81 @@ import {
     CardFooter,
     Typography,
     Button,
+    CardHeader,
   } from "@material-tailwind/react";
   // import bookimage from './images/librarybooks.png'
 import { Link } from "react-router-dom";
 import { RouteObjects } from "../../../Routes/RoutObjects";
 import Banner from "../../Banner/Banner";
+import student from "../../../assets/student.svg";
+import settings from "../../../assets/settings.png";
+import idCard from "../../../assets/idCards.png"
+import Book from "../../../assets/book.png"
+
+
    
 const StaffLibraryManagement = () => {
   return (
-    <div>
+    <div className="w-full h-full bg-red-300 ">
       <Banner/>
-     <div className="flex" >
+     <div className="flex justify-center items-center m-20" >
       
-    
-    <Card className="mt-6 m-20 h-72 hover:scale-110 transition-all duration-200  "  >
-        <Link to={RouteObjects.Bookmanagment}>
-      <CardBody >
-        <Typography variant="h5" color="blue-gray" className="mb-2 flex  font-extrabold text-2xl">
-        Books
-        </Typography>
-        <Typography>
-        Explore our extensive collection of books. Click on any book to view detailed information and expand your literary horizons.
-        </Typography>
-      </CardBody>
-      <CardFooter className="pt-0">
-
-        <Button>Book Management</Button>
-      </CardFooter>
+     <div className="flex flex-wrap justify-center gap-8 mt-6 mx-4">
+      <Link to={RouteObjects.Bookmanagment}>
+          <Card className="flex flex-col border-cyan-200 rounded-md hover:cursor-pointer border-2 h-60 w-40 hover:scale-110 transition-all duration-200">
+            <CardHeader>
+              <div className="bg-hero-pattern rounded-t-md">
+                <img src={student} alt="Student" className="w-full h-full object-cover" />
+              </div>
+            </CardHeader>
+            <CardBody className="text-center bg-white rounded-b-md p-2">
+              <p className="text-lg font-semibold">Books</p>
+            </CardBody>
+          </Card>
         </Link>
-    </Card>
-    <Card className="mt-6 h-72 m-20 hover:scale-110 transition-all duration-200">
+
         <Link to={RouteObjects.Issuebooks}>
-      <CardBody>
-        <Typography variant="h5" color="blue-gray" className="mb-2 font-extrabold text-2xl">
-        Issue Books
-        </Typography>
-        <Typography>
-        As part of our commitment to education and learning, we offer a dedicated service to issue books to students.
-        </Typography>
-      </CardBody>
-      <CardFooter className="pt-0">
-
-        <Button>View Books Issued</Button>
-      </CardFooter>
+          <Card className="flex flex-col border-cyan-200 rounded-md hover:cursor-pointer border-2 h-60 w-40 hover:scale-110 transition-all duration-200">
+            <CardHeader>
+              <div className="bg-hero-pattern rounded-t-md">
+                <img src={Book} alt="Student" className="w-full h-full object-cover" />
+              </div>
+            </CardHeader>
+            <CardBody className="text-center bg-white rounded-b-md p-2">
+              <p className="text-lg font-semibold">Issue Books</p>
+            </CardBody>
+          </Card>
         </Link>
-    </Card>
 
-    <Card className="mt-6 m-20 h-72 hover:scale-110 transition-all duration-300">
         <Link to={RouteObjects.Issuecards}>
-      <CardBody>
-        <Typography variant="h5" color="blue-gray" className="mb-2 font-extrabold text-2xl">
-          Library Cards
-        </Typography>
-        <Typography>
-         With a library card, you gain access to our extensive collection of books, resources, and services. Follow the simple steps below to get started:
-        </Typography>
-      </CardBody>
-      <CardFooter className="pt-0">
-
-        <Button>View Issued Cards</Button>
-      </CardFooter>
+          <Card className="flex flex-col border-cyan-200 rounded-md hover:cursor-pointer border-2 h-60 w-40 hover:scale-110 transition-all duration-200">
+            <CardHeader>
+              <div className="bg-hero-pattern rounded-t-md">
+                <img src={idCard} alt="Student" className="w-full h-full object-cover" />
+              </div>
+            </CardHeader>
+            <CardBody className="text-center bg-white rounded-b-md p-2">
+              <p className="text-lg font-semibold">Issue Cards</p>
+            </CardBody>
+          </Card>
         </Link>
-    </Card> 
-    
+        <Link to={RouteObjects.Issuecards}>
+          <Card className="flex flex-col border-cyan-200 rounded-md hover:cursor-pointer border-2 h-60 w-40 hover:scale-110 transition-all duration-200">
+            <CardHeader>
+              <div className="bg-hero-pattern rounded-t-md">
+                <img src={settings} alt="Student" className="w-full h-full object-cover" />
+              </div>
+            </CardHeader>
+            <CardBody className="text-center bg-white rounded-b-md p-2">
+              <p className="text-lg font-semibold">Settings</p>
+            </CardBody>
+          </Card>
+        </Link>
+
+        {/* Repeat the Link and Card components for other items as needed */}
+      </div>
+
+   
      </div>
     </div>
   )
