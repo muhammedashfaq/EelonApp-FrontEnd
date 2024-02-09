@@ -14,6 +14,7 @@ export const RouteObjects = {
   Bookmanagment: "/bookdetails",
   Issuebooks: "/issuedbookdetails",
   Issuecards: "/issuedcarddetails",
+  LibrarySettings: "/librarysettings",
   StudentsList: "/studentlist",
   StudentProfile: "/studentprofile",
   AddStudent: "/addstudent",
@@ -24,12 +25,11 @@ export const RouteObjects = {
   StudyRoomHome: "/staff/studyroom/home",
   StudyRoomHome2: "/staff/studyroom/rooms",
 
-  StudentStudyRoom:"/student/studyroom",
+  StudentStudyRoom: "/student/studyroom*",
+  StudentStudyRoomHome: "/student/studyroom/home",
 
   AdminStudentPage: "/admin/student",
   AllstudentsPage: "/admin/student/allstudents",
 
-
-
-  AdminHome:"/adminhome"
+  AdminHome: "/adminhome",
 };
