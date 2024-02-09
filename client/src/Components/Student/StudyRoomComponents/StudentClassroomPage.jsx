@@ -13,9 +13,9 @@ import {
   Tab,
   TabPanel,
 } from "@material-tailwind/react";
-import ClassroomAnnoucementCard from "../DashboardComponents/ClassroomAnnoucementCard";
-import ClassroomUpcomingEventsCard from "../DashboardComponents/ClassroomUpEvntCard";
-import ClassroomBanner from "./ClassroomBanner";
+// import ClassroomAnnoucementCard from "../DashboardComponents/ClassroomAnnoucementCard";
+// import ClassroomUpcomingEventsCard from "../DashboardComponents/ClassroomUpEvntCard";
+// import ClassroomBanner from "./ClassroomBanner";
 import { useEffect, useState } from "react";
 import Editor from "./Editor";
 import AddPeople from "./AddPeople/AddPeople";
@@ -24,11 +24,11 @@ import { useParams } from "react-router-dom";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import Strems from "./Strems";
 import Grades from "./Grades";
-import { faBullhorn, faL, faUserPen, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faBullhorn,  faUserPen, faUsers } from "@fortawesome/free-solid-svg-icons";
 import SpinningLoader from "../../spinner/SpinningLoader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function StaffClassroomPage() {
+export default function StudentClassroomPage() {
   const [tabValue, settabValue] = useState("Stream");
   const [classRoomData, setclassRoomData] = useState();
   const [isLoading,setIsLoading] =useState(false)

@@ -10,7 +10,6 @@ import {
 } from "@material-tailwind/react";
 import { TrashIcon } from "lucide-react";
 import { UserCircle } from "lucide-react";
-import DeleteTeacherModal from "./DeleteTeacherModal";
 
 const PeopleList = ({ teachersData, getTeachers }) => {
   return (
@@ -36,11 +35,7 @@ const PeopleList = ({ teachersData, getTeachers }) => {
               </div>
 
               <ListItemSuffix>
-                <DeleteTeacherModal
-                  userId={data?._id}
-                  userName={data?.email}
-                  getTeachers={getTeachers}
-                />
+               
               </ListItemSuffix>
             </ListItem>
           ))}

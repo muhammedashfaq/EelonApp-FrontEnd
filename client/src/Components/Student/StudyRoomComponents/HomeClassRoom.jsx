@@ -20,7 +20,7 @@ const HomeClassRoom = () => {
   const getClassRooms = async () => {
     try {
       const response = await axiosPrivate.get(
-        `classroom/getstaffclassrooms/${userId}`
+        `classroom/getstudentclassrooms/${userId}`
       );
       setClassrooms(response.data);
     } catch (error) {
@@ -39,30 +39,10 @@ const HomeClassRoom = () => {
     <div>
       <div className=" grid grid-cols-4 gap-4 p-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       
-        <Card
-          color="green"
-          variant="gradient"
-          className="w-full max-w-[20rem] p-8"
-        >
-          <CardHeader
-            variant="gradient"
-            color="gray"
-            className="mb-4 grid h-28 place-items-center"
-          >
-            <Button
-              size="lg"
-              color="white"
-              className="hover:scale-[1.02] focus:scale-[1.02] active:scale-100"
-              ripple={false}
-              fullWidth={true}
-            >
-              <AddClassRoomModal userId={userId} />
-            </Button>
-          </CardHeader>
-        </Card>
+     
         {classRooms.map((classroom) => (
           <div key={classroom._id} className="col-span-1">
-            <Link to={`${RouteObjects.StudyRoomHome2}/${classroom._id}`}>
+            <Link to={`${RouteObjects.StudyRoom}/${classroom._id}`}>
               <ClassRoomCard classroom={classroom} />
             </Link>
           </div>

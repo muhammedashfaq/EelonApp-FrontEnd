@@ -20,20 +20,7 @@ const Strems = ({ classRoomData }) => {
   const axiosPrivate = useAxiosPrivate();
   const { classroomId } = useParams();
 
-  const deletAnnouncement = async (id) => {
-    try {
-      const response = await axiosPrivate.delete(
-        `/classroom/announcement/${classroomId}`,
-        { data: { deleteId: id } }
-      );
-      getAnnouncements();
-      response.data.success
-        ? toast.success(response.data.message)
-        : toast.error(response.data.message);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   const getAnnouncements = async () => {
     try {
       const response = await axiosPrivate.get(
@@ -54,8 +41,7 @@ const Strems = ({ classRoomData }) => {
       </div>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-2  mt-4">
         <div className="  p-10 ">
-          <AddannounceModal />
-
+        announcement
           <div className=" h-96 overflow-y-scroll ">
             <div className="   grid grid-cols-2 gap-3 p-4  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-1">
               {announcement &&
@@ -63,10 +49,7 @@ const Strems = ({ classRoomData }) => {
                   <Popover key={i}>
                     <PopoverHandler>
                       <Card className=" bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl ">
-                        <X
-                          className="cursor-pointer hover:bg-blue-gray-100 rounded-md bg-red-300"
-                          onClick={() => deletAnnouncement(item._id)}
-                        />
+                      
                         <CardBody className="">
                           <div className="justify-between items-center bg-gray-200">
                             <div className="flex justify-center items-center">
@@ -89,21 +72,12 @@ const Strems = ({ classRoomData }) => {
         </div>
 
         <div className="  p-10 ">
-          <Button
-            variant="outlined"
-            color="blue"
-            className="flex items-center "
-          >
-            {/* <Plus size={32} strokeWidth={2} absoluteStrokeWidth mr-2/> */}
-            Create Announcement
-          </Button>
-
+        Events
           <div className="h-96 overflow-y-scroll">
             <div className="   grid grid-cols-2 gap-3 p-4  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 ">
               <Popover>
                 <PopoverHandler>
                   <Card className=" bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl ">
-                    <X className="cursor-pointer hover:bg-blue-gray-100 rounded-md ml-1 mt-2 bg-red-300" />
                     <CardBody className="">
                       <div className="flex justify-between items-center bg-gray-200 p-6">
                         <Typography className="text-gray-700 overflow-hidden h-11">

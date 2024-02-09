@@ -13,7 +13,6 @@ import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { UserCircle } from "lucide-react";
-import DeleteStudentModal from "./DeleteStudentModal";
 
 const StudentList = ({ studentsData, getStudents }) => {
   return (
@@ -43,11 +42,7 @@ const StudentList = ({ studentsData, getStudents }) => {
                   <TrashIcon />
                 </IconButton> */}
 
-                <DeleteStudentModal
-                  userId={data?._id}
-                  userName={data?.email}
-                  getStudents={getStudents}
-                />
+               
               </ListItemSuffix>
             </ListItem>
           ))}

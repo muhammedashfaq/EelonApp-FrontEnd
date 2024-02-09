@@ -116,28 +116,7 @@ const ClassWorks = () => {
   };
   return (
     <div className="m-10 h-max">
-      <Menu>
-        <MenuHandler>
-          <Button variant="outlined" color="blue" className="">
-            <Plus size={15} strokeWidth={2} absoluteStrokeWidth />
-          </Button>
-        </MenuHandler>
 
-        <MenuList>
-          <MenuItem
-            onClick={() => {
-              setIsAssignmentModalOpen(true);
-            }}
-          >
-            Assignments <FontAwesomeIcon icon={faBook}/>
-          </MenuItem>
-
-          <hr className="my-3" />
-          <MenuItem onClick={() => setIsmaterialsModalOpen(true)}>
-            Materials <FontAwesomeIcon icon={faGear}/>
-          </MenuItem>
-        </MenuList>
-      </Menu>
 
       <AddClassAssignmentsModal
         open={isAssignmentModalOpen}
@@ -191,10 +170,7 @@ const ClassWorks = () => {
                                   view
                                 </Button>
 
-                                <X
-                                  className="cursor-pointer hover:bg-blue-gray-100 rounded-md"
-                                  onClick={() => deletAssignment(as._id)}
-                                />
+                              
                               </div>
                             </div>
 
@@ -230,10 +206,7 @@ const ClassWorks = () => {
                                   view
                                 </Button>
 
-                                <X
-                                  className="cursor-pointer hover:bg-blue-gray-100 rounded-md"
-                                  onClick={() => deletMaterials(as._id)}
-                                />
+                               
                               </div>
                             </div>
                             <MaterialViewModal
