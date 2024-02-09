@@ -17,6 +17,9 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faYoutube } from "@fortawesome/free-brands-svg-icons";
+import { faFile } from "@fortawesome/free-solid-svg-icons";
 
 const AddMaterialsModal = ({ open, onClose }) => {
   const [linktypes, setLinkTypes] = useState("");
@@ -63,6 +66,7 @@ const AddMaterialsModal = ({ open, onClose }) => {
   return (
     <div>
       <Dialog size="xl" open={open} handler={onClose} closeButton>
+
         <div className="flex justify-between">
           <DialogHeader>Create Supporting Materials</DialogHeader>
           <Button className="m-3" variant="gradient" onClick={onClose}>
@@ -105,7 +109,6 @@ const AddMaterialsModal = ({ open, onClose }) => {
                 </span>
               </CardBody>
             </Card>
-
             <Card>
               <CardBody className="flex flex-col gap-4">
                 <Typography className="-mb-2" variant="h6">

@@ -24,8 +24,9 @@ import { useParams } from "react-router-dom";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import Strems from "./Strems";
 import Grades from "./Grades";
-import { faL } from "@fortawesome/free-solid-svg-icons";
+import { faBullhorn, faL, faUserPen, faUsers } from "@fortawesome/free-solid-svg-icons";
 import SpinningLoader from "../../spinner/SpinningLoader";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function StaffClassroomPage() {
   const [tabValue, settabValue] = useState("Stream");
@@ -70,13 +71,13 @@ export default function StaffClassroomPage() {
             <Tabs value={tabValue}>
               <TabsHeader>
                 <Tab value="Stream" onClick={() => settabValue("Stream")}>
-                  Stream
+                <FontAwesomeIcon icon={faBullhorn}/>Stream
                 </Tab>
                 <Tab value="Classwork" onClick={() => settabValue("Classwork")}>
-                  Classwork
+                 <FontAwesomeIcon icon={faUserPen}/> Classwork
                 </Tab>
                 <Tab value="People" onClick={() => settabValue("People")}>
-                  People
+                <FontAwesomeIcon icon={faUsers}/> People
                 </Tab>
                 <Tab value="Grades" onClick={() => settabValue("Grades")}>
                   Grades

@@ -27,6 +27,10 @@ export default withMT({
         // "blue-grey": "#607d8b",
         // "orange": "#ff9800",
       },
+      backgroundImage: {
+        'student': "url('./src/assets/student.svg')",
+        'teacher': "url('./src/assets/teacher-selected.svg')",
+      }
     },
   },
   plugins: [],

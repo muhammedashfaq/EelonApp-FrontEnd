@@ -15,6 +15,9 @@ import {
 } from "@material-tailwind/react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import { useParams } from "react-router-dom";
+import { FaceFrownIcon } from "@heroicons/react/24/outline";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBullhorn } from "@fortawesome/free-solid-svg-icons";
 const AddannounceModal = () => {
   const [content, setcontent] = useState("");
   const [topic, settopic] = useState("");
@@ -54,9 +57,9 @@ const AddannounceModal = () => {
         onClick={handleOpen}
         variant="outlined"
         color="blue"
-        className="flex items-center "
+        className="flex items-center gap-2 "
       >
-        Create Announcement
+       <FontAwesomeIcon icon={faBullhorn}/> Create Announcement
       </Button>
       <Dialog
         size="xs"

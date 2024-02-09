@@ -19,6 +19,10 @@ import {
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faYoutube, } from "@fortawesome/free-brands-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faFile } from "@fortawesome/free-regular-svg-icons";
 
 const AddClassAssignmentsModal = ({ open, onClose }) => {
   const [linktypes, setLinkTypes] = useState("");
@@ -95,10 +99,16 @@ const AddClassAssignmentsModal = ({ open, onClose }) => {
                         className="flex items-center gap-2"
                         value="Youtube"
                       >
+                        <FontAwesomeIcon icon={faYoutube} color="red"/>
                         YouTube Embed Link
-                      </Option>
-                      <Option>Google Drive</Option>
-                      <Option>Web Documents</Option>
+                      </Option >
+                      <Option  className="flex items-center gap-2">
+                      
+                      <FontAwesomeIcon icon={faFile}/> 
+                      Google Drive</Option>
+
+
+                      <Option className="flex items-center gap-2"><FontAwesomeIcon icon={faFile}/>Web Documents</Option>
                     </Select>
                   </Typography>
                 </div>
