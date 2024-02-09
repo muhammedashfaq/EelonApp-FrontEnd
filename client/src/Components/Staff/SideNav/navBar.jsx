@@ -158,6 +158,7 @@
 
 
 import  { useState } from "react";
+import logo from "../../../assets/EelonLogo.png"
 import {
   Drawer,
   Button,
@@ -166,6 +167,8 @@ import {
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { RouteObjects } from "../../../Routes/RoutObjects";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faBars, faBook, faChalkboard,faHome,faRightFromBracket,faUserPlus} from '@fortawesome/free-solid-svg-icons'
  
 const NavBar = () => {
    // const [open, setOpen] = useState(true);
@@ -175,23 +178,21 @@ const NavBar = () => {
    const menu = [
      {
        title: "Home",
-       icon: <span className="material-symbols-outlined">grid_view</span>,      href: RouteObjects.root,
+       icon: faHome,      href: RouteObjects.root,
  
      },{
        title: "Dashboard",
-       icon: <span className="material-symbols-outlined">grid_view</span>,
+       icon: faBars,
      },
      {
        title: "Library",
-       icon: <span className="material-symbols-outlined">library_books</span>,
+       icon: faBook,
        href: RouteObjects.Stafflibrary,
      },
  
      {
        title: "Students",
-       icon: <span className="material-symbols-outlined">
-       person
-       </span>,
+       icon: faUserPlus,
        submenu: true,
  
        submenuItems: [
@@ -205,19 +206,12 @@ const NavBar = () => {
      },
      {
        title: "Classroom", href:RouteObjects.StudyRoomHome,
-       icon: <span className="material-symbols-outlined">library_books</span>,
+       icon: faChalkboard,
      },
-     {
-       title: "Dashboard",
-       icon: <span className="material-symbols-outlined">library_books</span>,
-     },
-     {
-       title: "Dashboard",
-       icon: <span className="material-symbols-outlined">library_books</span>,
-     },
+     
      {
        title: "Logout",
-       icon: <span className="material-symbols-outlined">library_books</span>,
+       icon: faRightFromBracket,
      },
    ];
   
@@ -225,7 +219,7 @@ const NavBar = () => {
    const closeDrawer = () => setOpen(false);
    return (
      <div>
-       <Button className="bg-teal" onClick={openDrawer}>Staff Dash</Button>
+       <Button className="hover:bg-dark-purple hover:text-white" variant="outlined" onClick={openDrawer}>DashBoard</Button>
        <Drawer open={open} onClose={closeDrawer} className="p-4 bg-dark-purple">
          
          
@@ -269,7 +263,8 @@ const NavBar = () => {
              >
              <Link to={item.href}>
                <div className="flex items-center gap-x-4">
-                 {item.icon}
+                 {/* {item.icon} */}
+                 <FontAwesomeIcon icon={item.icon}/>
  
                    <span
                      className={`duration-200 flex-1 ${
@@ -307,13 +302,18 @@ const NavBar = () => {
                    </Link>
                        </>
                    ))}
+        
+
                  </ul>
                )}
              </li>
            ))}
          </ul>
-     
- 
+         <li className={` text-sm flex items-stretch gap-x-8 cursor-pointer  fixed bottom-0 w-max m-3 p-6 bg-blue-500 rounded-lg text-white mt-4`}>
+      <img src={logo} alt="Logo" className="w-8 h-8" />
+      <span className="ml-2 text-base font-medium">Eelon.com </span>
+    </li>
+                      
        </Drawer>
      </div>
   )

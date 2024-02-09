@@ -28,6 +28,8 @@ import AddClassAssignmentsModal from "./AddClassAssignmentsModal";
 import toast from "react-hot-toast";
 import AddMaterialsModal from "./AddMaterialsModal";
 import AssignmenViewModal from "./AssignmenViewModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBook, faGear } from "@fortawesome/free-solid-svg-icons";
 
 const ClassWorks = () => {
 
@@ -35,11 +37,13 @@ const ClassWorks = () => {
     {
       label: "Assignments",
       value: "1",
+      icon:faBook
       
     },
     {
       label: "Materials",
       value: "2",
+      icon:faGear
       
     },
     
@@ -111,10 +115,11 @@ const getClassWorks=async()=>{
           </MenuHandler>
 
           <MenuList>
-            <MenuItem onClick={()=>{setIsAssignmentModalOpen(true)}}>Assignments</MenuItem>
+            <MenuItem onClick={()=>{setIsAssignmentModalOpen(true)}}>Assignments                         <FontAwesomeIcon icon={faBook}/>
+</MenuItem>
        
             <hr className="my-3" />
-            <MenuItem onClick={()=>setIsmaterialsModalOpen(true)}>Materials</MenuItem>
+            <MenuItem onClick={()=>setIsmaterialsModalOpen(true)}>Materials  <FontAwesomeIcon icon={faGear}/></MenuItem>
           </MenuList>
         </Menu>
 
@@ -130,14 +135,14 @@ const getClassWorks=async()=>{
             "bg-transparent border-b-2 border-gray-900 shadow-none rounded-none",
         }}
       >
-        {data.map(({ label, value }) => (
+        {data.map(({ label, value ,icon }) => (
           <Tab
             key={value}
             value={value}
             onClick={() => setActiveTab(value)}
             className={activeTab === value ? "text-gray-900" : ""}
           >
-            {label}
+            {label} <FontAwesomeIcon icon={icon}/>
           </Tab>
         ))}
       </TabsHeader>

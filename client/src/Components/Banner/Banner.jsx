@@ -1,4 +1,5 @@
 
+
 const Banner = ({name}) => {
   return (
     <div>
@@ -11,7 +12,10 @@ const Banner = ({name}) => {
             />
 
             <h1 className="text-4xl font-bold leading-none sm:text-5xl">
-              College Name 
+              College Name knk
+
+
+
             </h1>
         </div>
             <div className="flex flex-wrap justify-center items-center mt-8">
