@@ -21,7 +21,7 @@ const StudentList = ({ studentsData, getStudents }) => {
       <List>
         {studentsData &&
           studentsData.map((data) => (
-            <ListItem>
+            <ListItem key={data?._id}>
               <ListItemPrefix>
                 <UserCircle />
               </ListItemPrefix>

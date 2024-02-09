@@ -28,84 +28,127 @@ import AddClassAssignmentsModal from "./AddClassAssignmentsModal";
 import toast from "react-hot-toast";
 import AddMaterialsModal from "./AddMaterialsModal";
 import AssignmenViewModal from "./AssignmenViewModal";
+
+import MaterialViewModal from "./MaterialViewModal";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook, faGear } from "@fortawesome/free-solid-svg-icons";
 
 const ClassWorks = () => {
-
   const data = [
     {
       label: "Assignments",
       value: "1",
       icon:faBook
-      
     },
     {
       label: "Materials",
       value: "2",
       icon:faGear
-      
     },
-    
   ];
   const [activeTab, setActiveTab] = useState("1");
   const axiosPrivate = useAxiosPrivate();
-  const {classroomId}=useParams()
-  const [assignment,setAssignment]=useState([])
-  const [material,setMaterial]=useState([])
+  const { classroomId } = useParams();
+  const [assignment, setAssignment] = useState([]);
+  const [material, setMaterial] = useState([]);
 
-  const deletAssignment=async(id)=>{
+  const deletAssignment = async (id) => {
     try {
-      const response =await axiosPrivate.delete(`classroom/assignment/${classroomId}`,{data:{deleteId:id}})
-      getClassWorks()
-      response.data.success ? toast.success(response.data.message) : toast.error(response.data.message)
+      const response = await axiosPrivate.delete(
+        `classroom/assignment/${classroomId}`,
+        { data: { deleteId: id } }
+      );
+      getClassWorks();
+      response.data.success
+        ? toast.success(response.data.message)
+        : toast.error(response.data.message);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-  
-  const deletMaterials=async(id)=>{
+  };
+
+  const deletMaterials = async (id) => {
     try {
-      const response =await axiosPrivate.delete(`classroom/material/${classroomId}`,{data:{deleteId:id}})
-      getClassWorks()
-      response.data.success ? toast.success(response.data.message) : toast.error(response.data.message)
+      const response = await axiosPrivate.delete(
+        `classroom/material/${classroomId}`,
+        { data: { deleteId: id } }
+      );
+      getClassWorks();
+      response.data.success
+        ? toast.success(response.data.message)
+        : toast.error(response.data.message);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
-  
-const getClassWorks=async()=>{
-  try {
-    
-    const response =await axiosPrivate.get(`classroom/assignment/${classroomId}`)
-    const response2 =await axiosPrivate.get(`classroom/material/${classroomId}`)
-    setAssignment(response.data);
-    setMaterial(response2.data)
+  const getClassWorks = async () => {
+    try {
+      const response = await axiosPrivate.get(
+        `classroom/assignment/${classroomId}`
+      );
+      const response2 = await axiosPrivate.get(
+        `classroom/material/${classroomId}`
+      );
+      setAssignment(response.data);
+      setMaterial(response2.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-
-  useEffect(()=>{
-    getClassWorks()
-  },[classroomId,assignment,material])
+  useEffect(() => {
+    getClassWorks();
+  }, [classroomId, assignment, material]);
   const [isAssignmentModalOpen, setIsAssignmentModalOpen] = useState(false);
-  const[ismaterialModalOpen,setIsmaterialsModalOpen]=useState(false)
-  const[isAssignmentView,setIsAssignmentView]=useState(false)
-
-
-
+  const [ismaterialModalOpen, setIsmaterialsModalOpen] = useState(false);
+  const [isAssignmentView, setIsAssignmentView] = useState(false);
+  const [isMaterialView, setIsMaterialView] = useState(false);
 
   const handleCloseModal = () => {
     setIsAssignmentModalOpen(false);
-    setIsmaterialsModalOpen(false)
-    setIsAssignmentView(false)
+    setIsmaterialsModalOpen(false);
+    setIsAssignmentView(false);
+  };
+  const handleCloseMaterialModal = () => {
+    setIsMaterialView(false);
   };
   return (
     <div className="m-10 h-max">
+////////////////////////////////////////////////
+      <Menu>
+        <MenuHandler>
+          <Button variant="outlined" color="blue" className="">
+            <Plus size={15} strokeWidth={2} absoluteStrokeWidth />
+          </Button>
+        </MenuHandler>
+
+        <MenuList>
+          <MenuItem
+            onClick={() => {
+              setIsAssignmentModalOpen(true);
+            }}
+          >
+            Assignments
+          </MenuItem>
+
+          <hr className="my-3" />
+          <MenuItem onClick={() => setIsmaterialsModalOpen(true)}>
+            Materials
+          </MenuItem>
+        </MenuList>
+      </Menu>
+
+      <AddClassAssignmentsModal
+        open={isAssignmentModalOpen}
+        onClose={handleCloseModal}
+      />
+      <AddMaterialsModal
+        open={ismaterialModalOpen}
+        onClose={handleCloseModal}
+      />
+////////////////////////////////////////////////
     
         <Menu>
           <MenuHandler>
@@ -159,52 +202,112 @@ const getClassWorks=async()=>{
           <CardBody className="">
             <div className="flex justify-between items-center bg-gray-200 p-6">
               <p className="text-gray-700">A Assignment Added {as.topic}</p>
+/////////////////////////////////////////
 
-              <h1 onClick={()=>setIsAssignmentView(true)}>
-  dfgdd
-              </h1> 
+      <Tabs value={activeTab}>
+        <TabsHeader
+          className="rounded-none border-b border-blue-gray-50 bg-transparent p-0"
+          indicatorProps={{
+            className:
+              "bg-transparent border-b-2 border-gray-900 shadow-none rounded-none",
+          }}
+        >
+          {data.map(({ label, value }) => (
+            <Tab
+              key={value}
+              value={value}
+              onClick={() => setActiveTab(value)}
+              className={activeTab === value ? "text-gray-900" : ""}
+            >
+              {label}
+            </Tab>
+          ))}
+        </TabsHeader>
+        <TabsBody>
+          {data.map(({ value }) => (
+            <TabPanel key={value} value={value}>
+              {value === "1" && (
+                <>
+                  <div className="mt-20 space-y-3 ">
+                    {assignment &&
+                      assignment?.map((as, i) => (
+                        <Card
+                          key={i}
+                          className=" bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl"
+                        >
+                          <CardBody className="">
+                            <div className="flex justify-between items-center bg-gray-200 p-6">
+                              <p className="text-gray-700">{as.topic}</p>
+                              <div className="flex justify-between items-center gap-5">
+                                <Button
+                                  variant="outlined"
+                                  style={{ textTransform: "none" }}
+                                  onClick={() => setIsAssignmentView(true)}
+                                >
+                                  view
+                                </Button>
 
-              <X  className="cursor-pointer hover:bg-blue-gray-100 rounded-md" onClick={()=>deletAssignment(as._id)}/>
-            </div>
+                                <X
+                                  className="cursor-pointer hover:bg-blue-gray-100 rounded-md"
+                                  onClick={() => deletAssignment(as._id)}
+                                />
+                              </div>
+                            </div>
 
-                <AssignmenViewModal open={isAssignmentView} onClose={handleCloseModal}/>
-        
-          </CardBody>
-        </Card>
-          ))
-        }
-      </div>
-        </>
-      )}
-      {value === "2" && (
-        <>
-            <div className="  mt-20 space-y-3 "  >
-        {
-          material&&material?.map((as,i)=>(
+                            <AssignmenViewModal
+                              open={isAssignmentView}
+                              onClose={handleCloseModal}
+                              assignmentData={as}
+                            />
+                          </CardBody>
+                        </Card>
+                      ))}
+                  </div>
+                </>
+              )}
+              {value === "2" && (
+                <>
+                  <div className="  mt-20 space-y-3 ">
+                    {material &&
+                      material?.map((as, i) => (
+                        <Card
+                          key={i}
+                          className=" bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl"
+                        >
+                          <CardBody className="">
+                            <div className="flex justify-between items-center bg-gray-200 p-6">
+                              <p className="text-gray-700">{as.topic}</p>
+                              <div className="flex justify-between items-center gap-5">
+                                <Button
+                                  variant="outlined"
+                                  style={{ textTransform: "none" }}
+                                  onClick={() => setIsMaterialView(true)}
+                                >
+                                  view
+                                </Button>
 
-            <Card key={i} className=" bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl">
-          <CardBody className="">
-            <div className="flex justify-between items-center bg-gray-200 p-6">
-              <p className="text-gray-700">A Assignment Added {as.topic}</p>
-              <X  className="cursor-pointer hover:bg-blue-gray-100 rounded-md" onClick={()=>deletMaterials(as._id)}/>
-            </div>
-
-        
-          </CardBody>
-        </Card>
-          ))
-        }
-      </div>
-        </>
-      )}
-    </TabPanel>
-  ))}
-</TabsBody>
-    </Tabs>
-        
-      </div>
-
-  
+                                <X
+                                  className="cursor-pointer hover:bg-blue-gray-100 rounded-md"
+                                  onClick={() => deletMaterials(as._id)}
+                                />
+                              </div>
+                            </div>
+                            <MaterialViewModal
+                              open={isMaterialView}
+                              onClose={handleCloseMaterialModal}
+                              materialData={as}
+                            />
+                          </CardBody>
+                        </Card>
+                      ))}
+                  </div>
+                </>
+              )}
+            </TabPanel>
+          ))}
+        </TabsBody>
+      </Tabs>
+    </div>
   );
 };
 
