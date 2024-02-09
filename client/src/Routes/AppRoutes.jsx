@@ -26,6 +26,8 @@ import AddForms from "../Pages/Staff/Dashboard/AddForms";
 import StudentProfile from "../Pages/Staff/Dashboard/StudentProfile";
 import EditStudent from "../Pages/Staff/Dashboard/EditStudent";
 import StaffClassRoom from '../Pages/StudyRoom/Staff/DashPage'
+import StudentClassRoom from '../Pages/StudyRoom/Student/DashPage'
+import AdminHome from "../Pages/Admin/Home/AdminHome";
 const AppRoutes = () => {
   const isLoading = useSelector((state) => state.loading.isLoading);  
   return (
@@ -40,6 +42,11 @@ const AppRoutes = () => {
       <Toaster position="bottom-center" reverseOrder={false} />
 
       <Routes>
+          {/* Admin ROUTS */}
+          <Route path={RouteObjects.AdminHome} element={<AdminHome />} />
+
+
+
         {/* STUDENTS ROUTS */}
         <Route path={RouteObjects.root} element={<LandingPage />} />
         <Route path={RouteObjects.Login} element={<Login />} />
@@ -66,8 +73,13 @@ const AppRoutes = () => {
         <Route path={`${RouteObjects.EditStudent}/:id`} element={<EditStudent/>} />
 
         <Route path={RouteObjects.RequireForms} element={<AddForms/>} />
-                  {/* CLASS ROOM ROUTS */}
-        <Route path={RouteObjects.StudyRoom} element={<StaffClassRoom/>} />
+                  {/* Staff CLASS ROOM ROUTS */}
+        <Route path={RouteObjects.StaffStudyRoom} element={<StaffClassRoom/>} />
+
+                          {/* Student CLASS ROOM ROUTS */}
+
+        <Route path={RouteObjects.StudentStudyRoom} element={<StudentClassRoom/>} />
+
 
 
         <Route

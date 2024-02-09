@@ -75,12 +75,13 @@ export default function LibraryIssueStudentModal({
 
   return (
     <>
-      <Button
+      <Button size="sm"
+      color="blue"
         variant="outlined"
         style={{ textTransform: "none" }}
         onClick={handleOpen}
       >
-        Issue book
+        Issue 
       </Button>
 
       <Dialog
