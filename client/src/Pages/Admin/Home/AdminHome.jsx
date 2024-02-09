@@ -1,14 +1,14 @@
-import React from 'react'
-import StaffHeader from '../../../Components/Staff/Header/landingPageHeader'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
-
+import AdminSideNavBar from '../../../Components/Admin/DashoardComponents/AdminSideNavBar'
 const AdminHome = () => {
   return (
-    <div className='bg-blue-gray-900 h-screen'>
+    <div className=' h-screen w-max m-2 '>
+      <div className='bg-blue-gray-900 rounded-lg'>
+test
 
-        <StaffHeader/>
+   {/* <Test/> */}
 
+    <AdminSideNavBar/>
+      </div> 
 
  
   
