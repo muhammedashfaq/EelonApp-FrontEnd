@@ -15,6 +15,7 @@ const MaterialViewModal = ({ open, onClose, materialData }) => {
   const [allStudentsData, setallStudentsData] = useState();
   const [turnedInlist, setturnedInlist] = useState();
   const [turnedInData, setturnedInData] = useState();
+  const [embedHtml, setEmbedHtml] = useState("");
 
   const getStudents = async () => {
     try {
@@ -44,7 +45,18 @@ const MaterialViewModal = ({ open, onClose, materialData }) => {
   useEffect(() => {
     getStudents();
     getStudentsByArray();
-  }, []);
+    console.log(materialData);
+  }, [materialData]);
+
+  useEffect(() => {
+    const fetchEmbedHtmlFromDatabase = async () => {
+      // Simulating fetch request
+      const data = await Promise.resolve(materialData?.link?.content);
+      setEmbedHtml(data);
+    };
+
+    fetchEmbedHtmlFromDatabase();
+  }, [materialData?.link?.content]);
 
   return (
     <div>
@@ -66,7 +78,7 @@ const MaterialViewModal = ({ open, onClose, materialData }) => {
               </Typography>
             </div>
           </div>
-          {materialData?.link?.type === "youtube" && (
+          {/* {materialData?.link?.type === "youtube" && (
             <div className="p-5 shadow-2xl flex justify-center">
               <iframe
                 width="700"
@@ -78,7 +90,10 @@ const MaterialViewModal = ({ open, onClose, materialData }) => {
                 allowfullscreen
               ></iframe>
             </div>
-          )}
+          )} */}
+          <div className="p-5 shadow-2xl flex justify-center">
+            <div dangerouslySetInnerHTML={{ __html: embedHtml }} />
+          </div>
         </div>
       </Dialog>
     </div>
