@@ -116,7 +116,6 @@ const ClassWorks = () => {
   };
   return (
     <div className="m-10 h-max">
-////////////////////////////////////////////////
       <Menu>
         <MenuHandler>
           <Button variant="outlined" color="blue" className="">
@@ -130,12 +129,12 @@ const ClassWorks = () => {
               setIsAssignmentModalOpen(true);
             }}
           >
-            Assignments
+            Assignments <FontAwesomeIcon icon={faBook}/>
           </MenuItem>
 
           <hr className="my-3" />
           <MenuItem onClick={() => setIsmaterialsModalOpen(true)}>
-            Materials
+            Materials <FontAwesomeIcon icon={faGear}/>
           </MenuItem>
         </MenuList>
       </Menu>
@@ -148,62 +147,6 @@ const ClassWorks = () => {
         open={ismaterialModalOpen}
         onClose={handleCloseModal}
       />
-////////////////////////////////////////////////
-    
-        <Menu>
-          <MenuHandler>
-            <Button variant="outlined" color="blue" className="">
-              <Plus size={15} strokeWidth={2} absoluteStrokeWidth />
-            </Button>
-          </MenuHandler>
-
-          <MenuList>
-            <MenuItem onClick={()=>{setIsAssignmentModalOpen(true)}}>Assignments                         <FontAwesomeIcon icon={faBook}/>
-</MenuItem>
-       
-            <hr className="my-3" />
-            <MenuItem onClick={()=>setIsmaterialsModalOpen(true)}>Materials  <FontAwesomeIcon icon={faGear}/></MenuItem>
-          </MenuList>
-        </Menu>
-
-        <AddClassAssignmentsModal open={isAssignmentModalOpen} onClose={handleCloseModal} />
-        <AddMaterialsModal open={ismaterialModalOpen} onClose={handleCloseModal}/>
-    
-
-      <Tabs value={activeTab}>
-      <TabsHeader
-        className="rounded-none border-b border-blue-gray-50 bg-transparent p-0"
-        indicatorProps={{
-          className:
-            "bg-transparent border-b-2 border-gray-900 shadow-none rounded-none",
-        }}
-      >
-        {data.map(({ label, value ,icon }) => (
-          <Tab
-            key={value}
-            value={value}
-            onClick={() => setActiveTab(value)}
-            className={activeTab === value ? "text-gray-900" : ""}
-          >
-            {label} <FontAwesomeIcon icon={icon}/>
-          </Tab>
-        ))}
-      </TabsHeader>
-      <TabsBody>
-  {data.map(({ value,  }) => (
-    <TabPanel key={value} value={value}>
-      {value === "1" && (
-        <>
-          <div className="mt-20 space-y-3 "  >
-        {
-          assignment&&assignment?.map((as,i)=>(
-
-            <Card key={i} className=" bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl">
-          <CardBody className="">
-            <div className="flex justify-between items-center bg-gray-200 p-6">
-              <p className="text-gray-700">A Assignment Added {as.topic}</p>
-/////////////////////////////////////////
-
       <Tabs value={activeTab}>
         <TabsHeader
           className="rounded-none border-b border-blue-gray-50 bg-transparent p-0"
@@ -212,13 +155,14 @@ const ClassWorks = () => {
               "bg-transparent border-b-2 border-gray-900 shadow-none rounded-none",
           }}
         >
-          {data.map(({ label, value }) => (
+          {data.map(({ label, value,icon }) => (
             <Tab
               key={value}
               value={value}
               onClick={() => setActiveTab(value)}
               className={activeTab === value ? "text-gray-900" : ""}
             >
+              <FontAwesomeIcon icon={icon} className="mr-2"/>
               {label}
             </Tab>
           ))}
