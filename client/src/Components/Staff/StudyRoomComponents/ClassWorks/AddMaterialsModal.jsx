@@ -17,6 +17,9 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faYoutube } from "@fortawesome/free-brands-svg-icons";
+import { faFile } from "@fortawesome/free-solid-svg-icons";
 
 const AddMaterialsModal = ({ open, onClose }) => {
   const [linktypes, setLinkTypes] = useState("");
@@ -74,6 +77,30 @@ const AddMaterialsModal = ({ open, onClose }) => {
           <Card>
             <CardBody className="flex flex-col gap-4">
               <div className="flex">
+
+              <div className="w-1/2 pl-2">
+                  <Typography className="-mb-2 " variant="h6">
+                    <span className="text-xs">
+                      * Study materials can be added as links.
+                    </span>
+                    <Select label="Select " onChange={(e) => setLinkTypes(e)}>
+                      <Option
+                        className="flex items-center gap-2"
+                        value="Youtube"
+                      >
+                        <FontAwesomeIcon icon={faYoutube} color="red"/>
+                        YouTube Embed Link
+                      </Option >
+                      <Option  className="flex items-center gap-2">
+                      
+                      <FontAwesomeIcon icon={faFile}/> 
+                      Google Drive</Option>
+
+
+                      <Option className="flex items-center gap-2"><FontAwesomeIcon icon={faFile}/>Web Documents</Option>
+                    </Select>
+                  </Typography>
+                </div>
                 <div className="w-1/2 pr-2">
                   <Typography className="-mb-2 " variant="h6">
                     <span className="text-xs">
@@ -88,23 +115,7 @@ const AddMaterialsModal = ({ open, onClose }) => {
                   </Typography>
                 </div>
 
-                <div className="w-1/2 pl-2">
-                  <Typography className="-mb-2 " variant="h6">
-                    <span className="text-xs">
-                      * Study materials can be added as links.
-                    </span>
-                    <Select label="Select " onChange={(e) => setLinkTypes(e)}>
-                      <Option
-                        className="flex items-center gap-2"
-                        value="Youtube"
-                      >
-                        YouTube Embed Link
-                      </Option>
-                      <Option>Google Drive</Option>
-                      <Option>Web Documents</Option>
-                    </Select>
-                  </Typography>
-                </div>
+                
               </div>
             </CardBody>
           </Card>
