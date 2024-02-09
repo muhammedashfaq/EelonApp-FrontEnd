@@ -39,12 +39,12 @@ const ClassWorks = () => {
     {
       label: "Assignments",
       value: "1",
-      icon:faBook
+      icon: faBook,
     },
     {
       label: "Materials",
       value: "2",
-      icon:faGear
+      icon: faGear,
     },
   ];
   const [activeTab, setActiveTab] = useState("1");
@@ -93,6 +93,7 @@ const ClassWorks = () => {
       );
       setAssignment(response.data);
       setMaterial(response2.data);
+      console.log(response2.data);
     } catch (error) {
       console.log(error);
     }
@@ -100,11 +101,14 @@ const ClassWorks = () => {
 
   useEffect(() => {
     getClassWorks();
-  }, [classroomId, assignment, material]);
+  }, []);
+
   const [isAssignmentModalOpen, setIsAssignmentModalOpen] = useState(false);
   const [ismaterialModalOpen, setIsmaterialsModalOpen] = useState(false);
   const [isAssignmentView, setIsAssignmentView] = useState(false);
   const [isMaterialView, setIsMaterialView] = useState(false);
+  const [materialModalData, setMaterialModalData] = useState();
+  const [assignmentModalData, setAssignmentModalData] = useState();
 
   const handleCloseModal = () => {
     setIsAssignmentModalOpen(false);
@@ -129,12 +133,12 @@ const ClassWorks = () => {
               setIsAssignmentModalOpen(true);
             }}
           >
-            Assignments <FontAwesomeIcon icon={faBook}/>
+            Assignments <FontAwesomeIcon icon={faBook} />
           </MenuItem>
 
           <hr className="my-3" />
           <MenuItem onClick={() => setIsmaterialsModalOpen(true)}>
-            Materials <FontAwesomeIcon icon={faGear}/>
+            Materials <FontAwesomeIcon icon={faGear} />
           </MenuItem>
         </MenuList>
       </Menu>
@@ -155,14 +159,14 @@ const ClassWorks = () => {
               "bg-transparent border-b-2 border-gray-900 shadow-none rounded-none",
           }}
         >
-          {data.map(({ label, value,icon }) => (
+          {data.map(({ label, value, icon }) => (
             <Tab
               key={value}
               value={value}
               onClick={() => setActiveTab(value)}
               className={activeTab === value ? "text-gray-900" : ""}
             >
-              <FontAwesomeIcon icon={icon} className="mr-2"/>
+              <FontAwesomeIcon icon={icon} className="mr-2" />
               {label}
             </Tab>
           ))}
@@ -186,7 +190,10 @@ const ClassWorks = () => {
                                 <Button
                                   variant="outlined"
                                   style={{ textTransform: "none" }}
-                                  onClick={() => setIsAssignmentView(true)}
+                                  onClick={() => {
+                                    setIsAssignmentView(true);
+                                    setAssignmentModalData(as);
+                                  }}
                                 >
                                   view
                                 </Button>
@@ -197,15 +204,14 @@ const ClassWorks = () => {
                                 />
                               </div>
                             </div>
-
-                            <AssignmenViewModal
-                              open={isAssignmentView}
-                              onClose={handleCloseModal}
-                              assignmentData={as}
-                            />
                           </CardBody>
                         </Card>
                       ))}
+                    <AssignmenViewModal
+                      open={isAssignmentView}
+                      onClose={handleCloseModal}
+                      assignmentData={assignmentModalData}
+                    />
                   </div>
                 </>
               )}
@@ -225,7 +231,10 @@ const ClassWorks = () => {
                                 <Button
                                   variant="outlined"
                                   style={{ textTransform: "none" }}
-                                  onClick={() => setIsMaterialView(true)}
+                                  onClick={() => {
+                                    setIsMaterialView(true);
+                                    setMaterialModalData(as);
+                                  }}
                                 >
                                   view
                                 </Button>
@@ -236,14 +245,14 @@ const ClassWorks = () => {
                                 />
                               </div>
                             </div>
-                            <MaterialViewModal
-                              open={isMaterialView}
-                              onClose={handleCloseMaterialModal}
-                              materialData={as}
-                            />
                           </CardBody>
                         </Card>
                       ))}
+                    <MaterialViewModal
+                      open={isMaterialView}
+                      onClose={handleCloseMaterialModal}
+                      materialData={materialModalData}
+                    />
                   </div>
                 </>
               )}
