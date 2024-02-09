@@ -27,7 +27,7 @@ const SideNavbar = () => {
     { title: "Home Work" ,href:RouteObjects.HomeWorks},
     { title: "Payment History" ,href:RouteObjects.Payment},
     { title: "Study Materials" ,href:RouteObjects.StudyMaterials},
-    { title: "Study Room" ,href:RouteObjects.StudentStudyRoom},
+    { title: "Study Room" ,href:RouteObjects.StudentStudyRoomHome},
     { title: "Events" ,href:""},
     { title: "Class TimeTable" ,href:""},
     { title: "Live Classes" ,href:""},

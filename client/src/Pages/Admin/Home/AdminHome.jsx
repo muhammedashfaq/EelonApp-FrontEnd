@@ -5,7 +5,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 const AdminHome = () => {
   return (
-    <div className='bg-blue-gray-900'>
+    <div className='bg-blue-gray-900 h-screen'>
 
         <StaffHeader/>
 
