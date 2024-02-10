@@ -12,7 +12,6 @@ import SideNavbar from '../../Student/SideNav/SideNavbar'
 const StaffHeader = () => {
   const { auth } = useAuth();
   const logOut = useLogout();
-  const { userRoles } = useUserContext();
 
 
   console.log(auth);
@@ -45,7 +44,7 @@ const StaffHeader = () => {
             </li>
             <li>
               <a className="hover:text-blue-400" href="#">
-                Contact  {userRoles}
+                Contact 
               </a>
             </li>
             <li>
@@ -58,7 +57,7 @@ const StaffHeader = () => {
             </li>
 
             {
-              userRoles&&(
+              auth.roles &&(
 
                 <button onClick={logOut}>logout</button>
               )
@@ -77,17 +76,23 @@ const StaffHeader = () => {
               </a>
             </li>
             <li className="">
-              {userRoles ==5151 ?(
-            <NavBar />
+              {auth.roles ==5151 ?(
+                <Link to={RouteObjects.StaffDashboard} >
+              {/* <NavBar /> */}
+            <Button className="hover:bg-dark-purple hover:text-white" variant="outlined">DashBoard</Button>
+        
+                          {/* <SideNavbar/> */}
+        
+                          </Link>
 
-                ):userRoles ==999 ?(
+                ):auth.roles ==999 ?(
                   <Link to={RouteObjects.StudentDashboard} >
     <Button className="hover:bg-dark-purple hover:text-white" variant="outlined">DashBoard</Button>
 
                   {/* <SideNavbar/> */}
 
                   </Link>
-              ):userRoles == 2000 ?(
+              ):auth.roles == 2000 ?(
                 <AdminSideNavBar/>
 
 

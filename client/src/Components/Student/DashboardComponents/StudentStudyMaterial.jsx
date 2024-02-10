@@ -34,7 +34,7 @@ export default function StudentStudyMaterial() {
 
   return (
     <>
-      <div className="w-full m-20"
+      <div className=" m-20"
         style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
       >
         <div className="container xl">

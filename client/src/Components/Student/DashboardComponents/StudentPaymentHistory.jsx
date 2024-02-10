@@ -55,7 +55,7 @@ export default function StudentPaymentHistory() {
       <br />
       <br />
 
-      <div className="w-full m-20"
+      <div className=" m-20"
         style={{
           display: "flex",
           justifyContent: "center",

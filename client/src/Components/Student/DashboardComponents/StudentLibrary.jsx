@@ -69,7 +69,7 @@ const StudentLibrary = () => {
   }, []);
 
   return (
-    <div className="w-screen m-10 ">
+    <div className=" m-10 ">
       {IsLoading && <Spinner />}
 
       {libraryCard ? (
