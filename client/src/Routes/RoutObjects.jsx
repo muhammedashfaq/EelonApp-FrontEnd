@@ -25,8 +25,8 @@ export const RouteObjects = {
   StudyRoomHome2: "/staff/studyroom/rooms",
 
   StudentStudyRoom:"/student/studyroom*",
-StudentStudyRoomHome: "/student/studyroom/home",
- StudyRoom: "/student/studyroom/rooms",
+  StudentStudyRoomHome: "/student/studyroom/home",
+  StudyRoom: "/student/studyroom/rooms",
 
 
 

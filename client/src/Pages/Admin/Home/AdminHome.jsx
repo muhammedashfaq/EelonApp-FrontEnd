@@ -1,19 +1,21 @@
-import AdminSideNavBar from '../../../Components/Admin/DashoardComponents/AdminSideNavBar'
-const AdminHome = () => {
-  return (
-    <div className=' h-screen w-max m-2 '>
-      <div className='bg-blue-gray-900 rounded-lg'>
-test
+// import React from 'react'
+// import AdminSideNavBar from '../../../Components/Admin/DashoardComponents/AdminSideNavBar'
+// import SideNavbar from '../../../Components/Student/SideNav/SideNavbar'
+// import NavBar from '../../../Components/Staff/SideNav/navBar'
+// import AdminHeader from '../../../Components/Admin/DashoardComponents/AdminHeader'
 
-   {/* <Test/> */}
+// const AdminHome = () => {
+//   return (
+//     <div>
+// <div className='bg-red-200'>
 
-    <AdminSideNavBar/>
-      </div> 
+//       <AdminSideNavBar/>
+//       <AdminHeader/>
+// </div>
 
- 
-  
-    </div>
-  )
-}
+    
+//     </div>
+//   )
+// }
 
-export default AdminHome
+// export default AdminHome
