@@ -1,14 +1,13 @@
-import React from 'react'
-import SideNavbar from '../../../Components/Student/SideNav/SideNavbar'
+import Banner from "../../../Components/Banner/Banner";
 import LandingPagHead from "../../../Components/Staff/Header/landingPageHeader";
 import StudentPaymentHistory from '../../../Components/Student/DashboardComponents/StudentPaymentHistory'
 const PaymentHistory = () => {
   return (
     <div>
         <LandingPagHead />
-      <div className="flex">
+     <Banner/>
+      <div >
 
-      <SideNavbar />
       <StudentPaymentHistory />
       </div>
     </div>

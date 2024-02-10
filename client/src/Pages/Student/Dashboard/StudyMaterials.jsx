@@ -1,14 +1,15 @@
-import SideNavbar from "../../../Components/Student/SideNav/SideNavbar";
 import LandingPagHead from "../../../Components/Staff/Header/landingPageHeader";
 import StudentStudyMaterial from "../../../Components/Student/DashboardComponents/StudentStudyMaterial";
+import Banner from "../../../Components/Banner/Banner";
+
 const StudyMaterials = () => {
   return (
     <div>
         
         <LandingPagHead />
-    <div className="flex">
+    <Banner/>
+    <div >
 
-    <SideNavbar />
     <StudentStudyMaterial />
     </div>
     

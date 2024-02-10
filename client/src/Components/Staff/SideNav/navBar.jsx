@@ -218,43 +218,14 @@ const NavBar = () => {
    const openDrawer = () => setOpen(true);
    const closeDrawer = () => setOpen(false);
    return (
-     <div>
-       <Button className="hover:bg-dark-purple hover:text-white" variant="outlined" onClick={openDrawer}>DashBoard</Button>
+     <div>  
+      <FontAwesomeIcon icon={faBars} onClick={openDrawer} className="cursor-pointer"/>
+
        <Drawer open={open} onClose={closeDrawer} className="p-4 bg-dark-purple">
          
          
  
-         {/*         
-         <div className="inline-flex ">
-           <div className="flex items-center">
-             <img
-               src={logo}
-               className={`w-20 h-20 ${open && "rotate-[360deg]"}`}
-             />
-             <h1
-               className={`text-white origin-left font-medium m-1 text-3xl  ${
-                 !open && "scale-0"
-               }`}
-             >
-               Eelon App
-             </h1>
-           </div>
-         </div>
-         <div
-           className={`flex items-center rounded-lg bg-blue-gray-500  mt-6 ${
-             open ? "px-2.5" : "px-4"
-           } py-2`}
-         >
-           <span className="material-symbols-outlined">search</span>{" "}
-           <input
-             type={"search"}
-             placeholder="search"
-             className={`text-base bg-transparent w-full text-white focus:outline-none ${
-               !open && "hidden"
-             }`}
-           />
-         </div> */}
- 
+        
          <ul className="pt-2">
            {menu.map((item, index) => (
              <li
@@ -309,7 +280,7 @@ const NavBar = () => {
              </li>
            ))}
          </ul>
-         <li className={` text-sm flex items-stretch gap-x-8 cursor-pointer  fixed bottom-0 w-max m-3 p-6 bg-blue-500 rounded-lg text-white mt-4`}>
+         <li className={` text-sm flex items-stretch gap-x-8 cursor-pointer  fixed w-max m-3 p-6 bg-blue-500 rounded-lg text-white mt-4`}>
       <img src={logo} alt="Logo" className="w-8 h-8" />
       <span className="ml-2 text-base font-medium">Eelon.com </span>
     </li>

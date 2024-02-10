@@ -1,4 +1,3 @@
-import SideNavbar from "../../../Components/Student/SideNav/SideNavbar";
 import LandingPagHead from "../../../Components/Staff/Header/landingPageHeader";
 import useAuth from "../../../Hooks/useAuth";
 import Banner from "../../../Components/Banner/Banner";
@@ -36,7 +35,7 @@ const userId = localStorage.getItem("userId")
       <LandingPagHead />
       <Banner/>
 
-      <SideNavbar />
+   
       {isLoading&&(
         <Spinner/>
 

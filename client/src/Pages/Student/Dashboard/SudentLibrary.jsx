@@ -1,4 +1,4 @@
-import SideNavbar from "../../../Components/Student/SideNav/SideNavbar";
+import Banner from "../../../Components/Banner/Banner";
 import LandingPagHead from "../../../Components/Staff/Header/landingPageHeader";
 import StudentLibrary from "../../../Components/Student/DashboardComponents/StudentLibrary";
 const SudentLibrary = () => {
@@ -6,9 +6,9 @@ const SudentLibrary = () => {
     <div>
         
         <LandingPagHead />
-    <div className="flex">
+   <Banner/>
+    <div >
 
-    <SideNavbar />
     <StudentLibrary />
     </div>
     
