@@ -114,6 +114,7 @@ const ClassWorks = () => {
     setIsAssignmentModalOpen(false);
     setIsmaterialsModalOpen(false);
     setIsAssignmentView(false);
+    getClassWorks();
   };
   const handleCloseMaterialModal = () => {
     setIsMaterialView(false);

@@ -13,9 +13,16 @@
 //       <AdminHeader/>
 // </div>
 
-    
 //     </div>
 //   )
 // }
 
 // export default AdminHome
+
+import React from "react";
+
+const AdminHome = () => {
+  return <div>AdminHome</div>;
+};
+
+export default AdminHome;
