@@ -1,3 +1,4 @@
+// Import necessary libraries and components
 import { useState } from "react";
 import loginimage from "../assets/login-resized.jpg";
 import {
@@ -8,19 +9,19 @@ import {
   Alert,
 } from "@material-tailwind/react";
 import { loginValidate } from "../Helper/Validations/validations";
-// import { logintouserhome } from "../Helper/api/api";
-import Spinner from "./spinner/Spinner.jsx";
+import Spinner from "./spinner/SpinningLoader.jsx";
 import { toast } from "react-hot-toast";
 import logoImage from "../assets/EelonLogo.png";
 import axios from "../api/axios.jsx";
-// import { LoginUserTab } from "./LoginUserSelectTab.jsx";
 import LoginUserSelectButton from "./LoginUserSelectButton.jsx";
 import useAuth from "../Hooks/useAuth.jsx";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../Context/userContext.jsx";
 import { RouteObjects } from "../Routes/RoutObjects.jsx";
 
+// Define the Login component
 const Login = () => {
+  // Retrieve necessary context and states
   const { setUserRoles } = useUserContext();
   const [isLoading, setIsLoading] = useState(false);
   const [userType, setuserType] = useState();
@@ -37,6 +38,8 @@ const Login = () => {
     email: "",
     password: "",
   });
+
+  // Handle input change
   const handleInputChange = (e) => {
     seterrorMsg("");
     const { name, value } = e.target;
@@ -52,6 +55,7 @@ const Login = () => {
     }));
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -72,25 +76,19 @@ const Login = () => {
         const email = response?.data?.email;
         const userId = response?.data?.userId;
         setUserRoles(roles);
-        // setAuth({ accessToken, roles });
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("roles", roles);
         localStorage.setItem("email", email);
         localStorage.setItem("userId", userId);
 
-        if (userType === "Student") {
+        if (userType === "Student" || userType === "Staff" || userType === "Admin") {
           navigate(RouteObjects.root);
-        } else if (userType === "Staff") {
-          navigate(RouteObjects.root);
-        } else if (userType === "Admin") {
-          navigate(RouteObjects.root);
+          location.reload();
         }
-        location.reload();
       }
     } catch (error) {
       setIsLoading(false);
 
-      console.log(error);
       if (!error?.response) {
         toast.error("No server response");
       } else if (error.response.status === 404) {
@@ -103,112 +101,72 @@ const Login = () => {
     }
   };
 
+  // Render the component
   return (
-    <div>
+    <div className="h-full">
       {isLoading && <Spinner />}
 
-      <div className="shadow-md p-0 flex justify-center ">
+      <div className="shadow-md p-0 flex justify-center">
         <img src={logoImage} className="w-25 h-20 p-2 cursor-pointer" />
       </div>
-      <div className="h-full mt-20">
+      <div className="h-full mt-10">
         <LoginUserSelectButton setuserType={setuserType} />
         {userType && (
           <div className="flex justify-center items-center">
-            <div className="flex h-auto xl:w-2/3  ">
-              <div className="">
-                <img
-                  className="hidden lg:block rounded-l-lg"
-                  src={loginimage}
-                />
-              </div>
-              <div className=" p-8 rounded-r-lg">
-                <div></div>
-                <Card color="transparent" shadow={false} className="">
-                  <div className=" flex justify-center ">
-                    <Typography variant="h2" color="blue-gray" className="">
-                      {userType && `${userType} `}Sign In
-                    </Typography>
+            <div className="p-8 rounded-r-lg shadow-xl inset-shadow border-2">
+              <Card color="transparent" shadow={false} className="">
+                <div className="flex justify-center ">
+                  <Typography variant="h2" color="blue-gray">
+                    {userType && `${userType} `}Sign In
+                  </Typography>
+                </div>
+
+                <form
+                  onSubmit={handleSubmit}
+                  className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
+                >
+                  <div className="mb-1 flex flex-col gap-7">
+                    <Input
+                      size="lg"
+                      name="email"
+                      variant="standard"
+                      label={
+                        FrntError && FrntError.email
+                          ? FrntError.email
+                          : "Enter Email"
+                      }
+                      placeholder="Enter Your Mail"
+                      onChange={handleInputChange}
+                      error={FrntError && FrntError.email}
+                      className="border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md bg-cyan-200"
+                    />
+
+                    <Input
+                      type="password"
+                      size="lg"
+                      name="password"
+                      variant="standard"
+                      label={
+                        FrntError && FrntError.password
+                          ? FrntError.password
+                          : "Enter Password"
+                      }
+                      placeholder="Enter Password"
+                      onChange={handleInputChange}
+                      error={FrntError && FrntError.password}
+                      className="!border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md bg-cyan-200"
+                    />
                   </div>
 
-                  <form
-                    onSubmit={handleSubmit}
-                    className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
+                  <Button
+                    className="mt-6 w-full bg-gradient-to-r from-blue-400 to-blue-500 hover:bg-blue-600 p-2 font-semibold text-white rounded-md"
+                    fullWidth
+                    type="submit"
                   >
-                    <div className="mb-1 flex flex-col gap-7">
-                      {/* <div className="relative inline-block"> */}
-                      {/* <select
-                      onChange={(e) => setUser(e.target.value)}
-                      className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    >
-                      <option value="">Select User</option>
-                      <option value="Students">Students</option>
-                      <option value="Staff">Staff</option>
-                      <option value="Master">Master</option>
-                    </select> */}
-                      {/* <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                          <svg
-                            className="w-4 h-4"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
-                        </div>
-                      </div> */}
-
-                      <Input
-                        size="lg"
-                        name="email"
-                        variant="standard"
-                        label={
-                          FrntError && FrntError.email
-                            ? FrntError.email
-                            : "Enter Email"
-                        }
-                        placeholder="Enter Your Mail"
-                        onChange={handleInputChange}
-                        error={FrntError && FrntError.email}
-                        className=" border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md bg-cyan-200"
-                        labelProps={{
-                          className: "before:content-none after:content-none",
-                        }}
-                      />
-
-                      <Input
-                        type="password"
-                        size="lg"
-                        name="password"
-                        variant="standard"
-                        label={
-                          FrntError && FrntError.password
-                            ? FrntError.password
-                            : "Enter Password"
-                        }
-                        placeholder="Enter Password"
-                        onChange={handleInputChange}
-                        error={FrntError && FrntError.password}
-                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 p-3 rounded-md  bg-cyan-200"
-                        labelProps={{
-                          className: "before:content-none after:content-none",
-                        }}
-                      />
-                    </div>
-
-                    <Button
-                      className="mt-6 w-full bg-red-400 hover:bg-red-500  p-2 font-semibold text-white rounded-md"
-                      fullWidth
-                      type="submit"
-                    >
-                      sign up
-                    </Button>
-                  </form>
-                </Card>
-              </div>
+                    Sign In
+                  </Button>
+                </form>
+              </Card>
             </div>
           </div>
         )}

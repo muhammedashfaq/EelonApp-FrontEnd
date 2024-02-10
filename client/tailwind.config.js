@@ -7,6 +7,7 @@ export default withMT({
       colors: {
         "dark-purple": "#081A51",
         "light-white": "rgba(255,255,255,0.18)",
+      
         // "primary-blue": "#3498db",
         // "success-green": "#2ecc71",
         // "warning-yellow": "#f39c12",
@@ -26,6 +27,10 @@ export default withMT({
         // "blue-grey": "#607d8b",
         // "orange": "#ff9800",
       },
+      backgroundImage: {
+        'student': "url('./src/assets/student.svg')",
+        'teacher': "url('./src/assets/teacher-selected.svg')",
+      }
     },
   },
   plugins: [],

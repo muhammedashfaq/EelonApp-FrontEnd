@@ -1,3 +1,4 @@
+import Banner from "../../../Components/Banner/Banner";
 import StaffHeader from "../../../Components/Staff/Header/landingPageHeader";
 import ClassroomNavbar from "../../../Components/Staff/StudyRoomComponents/ClassroomNavbar";
 import HomeClassRoom from "../../../Components/Staff/StudyRoomComponents/HomeClassRoom";
@@ -9,11 +10,13 @@ const DashPage = () => {
   return (
     <>
       <StaffHeader />
+      <Banner/>
       <div className="flex">
         <ClassroomNavbar />
 
         <div className="w-full m-6">
           <Routes>
+            
             <Route path="/home" element={<HomeClassRoom />} />
             <Route
               path="/rooms/:classroomId"

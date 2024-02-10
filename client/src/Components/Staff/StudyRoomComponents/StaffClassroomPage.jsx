@@ -4,6 +4,7 @@ import {
   CardFooter,
   Typography,
   Button,
+  
 } from "@material-tailwind/react";
 import {
   Tabs,
@@ -23,10 +24,14 @@ import { useParams } from "react-router-dom";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import Strems from "./Strems";
 import Grades from "./Grades";
+import { faBullhorn, faL, faUserPen, faUsers } from "@fortawesome/free-solid-svg-icons";
+import SpinningLoader from "../../spinner/SpinningLoader";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function StaffClassroomPage() {
   const [tabValue, settabValue] = useState("Stream");
   const [classRoomData, setclassRoomData] = useState();
+  const [isLoading,setIsLoading] =useState(false)
 
   const { classroomId } = useParams();
   const axiosPrivate = useAxiosPrivate();
@@ -37,32 +42,42 @@ export default function StaffClassroomPage() {
   const getClassRoom = async (req, res) => {
     try {
       if (!classroomId) return;
+      setIsLoading(true)
       const response = await axiosPrivate.get(`classroom/${classroomId}`);
+      setIsLoading(false)
+
       setclassRoomData(response.data);
     } catch (error) {
+      setIsLoading(false)
+
       console.log(error);
     }
   };
 
   useEffect(() => {
     getClassRoom();
-  }, []);
+  }, [classroomId]);
 
   return (
     <>
+    {
+      isLoading&&(
+        <SpinningLoader/>
+      )
+    }
       <div className="w-full">
-        <div className="w-full p-5">
-          <div className="m-5">
+        <div className="w-full ">
+          <div className="">
             <Tabs value={tabValue}>
               <TabsHeader>
                 <Tab value="Stream" onClick={() => settabValue("Stream")}>
-                  Stream
+                <FontAwesomeIcon icon={faBullhorn}/>Stream
                 </Tab>
                 <Tab value="Classwork" onClick={() => settabValue("Classwork")}>
-                  Classwork
+                 <FontAwesomeIcon icon={faUserPen}/> Classwork
                 </Tab>
                 <Tab value="People" onClick={() => settabValue("People")}>
-                  People
+                <FontAwesomeIcon icon={faUsers}/> People
                 </Tab>
                 <Tab value="Grades" onClick={() => settabValue("Grades")}>
                   Grades

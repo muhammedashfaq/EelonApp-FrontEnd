@@ -15,8 +15,9 @@ import axios from "../../../api/axios";
 import LibraryBooksAddModal from "./LibraryBooksAddModal";
 import LibraryIssueStudentModal from "./LibraryIssueStudentModal";
 import Banner from "../../Banner/Banner";
-import Spinner from "../../spinner/Spinner";
+import Spinner from "../../spinner/SpinningLoader";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
+import LibraryUnIssueStudentModal from "./LibraryUnIssueStudentModal";
 
 const StaffIssueBookManagement = () => {
   const [alertunissue, setAlertunissue] = useState(false);
@@ -279,18 +280,10 @@ const StaffIssueBookManagement = () => {
                       color="blue-gray"
                       className="font-normal leading-none opacity-70"
                     >
-                      Issue book
+                      Action
                     </Typography>
                   </th>
-                  <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal leading-none opacity-70"
-                    >
-                      Re-Issue book
-                    </Typography>
-                  </th>
+                  
                   {/* <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
                       <Typography
                         variant="small"
@@ -418,14 +411,13 @@ const StaffIssueBookManagement = () => {
                                 }
                               />
                             </Typography>
-                          </td>
-                          <td className={classes}>
+                       
                             <Typography
                               variant="small"
                               color="blue-gray"
                               className="font-normal"
                             >
-                              <LibraryIssueStudentModal
+                              <LibraryUnIssueStudentModal
                                 unissueAlert={setAlertunissue}
                                 setAlert={setAlertissue}
                                 bookId={data?._id}
@@ -539,6 +531,8 @@ const StaffIssueBookManagement = () => {
                             </Typography>
                           </td>
                           <td className={classes}>
+                            <div className="flex space-x-2">
+
                             <Typography
                               variant="small"
                               color="blue-gray"
@@ -554,15 +548,14 @@ const StaffIssueBookManagement = () => {
                                 }
                               />
                             </Typography>
-                          </td>
-                          <td className={classes}>
+                        
                             <Typography
                               variant="small"
                               color="blue-gray"
                               className="font-normal"
                             >
                             
-                              <LibraryIssueStudentModal
+                              <LibraryUnIssueStudentModal
                             
                                 unissueAlert={setAlertunissue}
                                 setAlert={setAlertissue}
@@ -571,8 +564,9 @@ const StaffIssueBookManagement = () => {
                                 currentlyIssued={
                                   data?.students?.currentlyIssued
                                 }
-                              />
+                                />
                             </Typography>
+                                </div>
                           </td>
                         </tr>
                       );
@@ -583,7 +577,7 @@ const StaffIssueBookManagement = () => {
         </div>
       </div>
     </div>
-  );
+    );
 };
 
 export default StaffIssueBookManagement;

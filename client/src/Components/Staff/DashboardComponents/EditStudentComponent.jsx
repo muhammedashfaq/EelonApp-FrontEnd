@@ -9,7 +9,7 @@ import {
 import axios from "../../../api/axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Spinner from "../../spinner/Spinner";
+import Spinner from "../../spinner/SpinningLoader";
 import { RouteObjects } from "../../../Routes/RoutObjects";
 
 const useDropdownState = (initialValue, fetchedValue) => {

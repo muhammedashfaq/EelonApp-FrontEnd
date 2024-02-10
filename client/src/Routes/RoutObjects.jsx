@@ -20,10 +20,20 @@ export const RouteObjects = {
   EditStudent: "/editstudent",
   RequireForms: "/forms",
 
-  StudyRoom: "/studyroom*",
-  StudyRoomHome: "/studyroom/home",
-  StudyRoomHome2: "/studyroom/rooms",
+  StaffStudyRoom: "/staff/studyroom*",
+  StudyRoomHome: "/staff/studyroom/home",
+  StudyRoomHome2: "/staff/studyroom/rooms",
+
+  StudentStudyRoom:"/student/studyroom*",
+  StudentStudyRoomHome: "/student/studyroom/home",
+  StudyRoom: "/student/studyroom/rooms",
+
+
 
   AdminStudentPage: "/admin/student",
   AllstudentsPage: "/admin/student/allstudents",
+
+
+
+  AdminHome:"/adminhome"
 };

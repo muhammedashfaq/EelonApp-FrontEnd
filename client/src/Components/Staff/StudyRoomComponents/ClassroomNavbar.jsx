@@ -179,15 +179,16 @@ export default function ClassroomNavbar() {
                 
                 <AccordionBody className="py-1" key={i}>
                 <List className="p-0">
+                    <Link to={`${RouteObjects.StudyRoomHome2}/${classroom._id}`}>
                   <ListItem>
                     <ListItemPrefix>
                       <AcademicCapIcon strokeWidth={3} className="h-4 w-4" />
                     </ListItemPrefix>
-                    <Link to={`${RouteObjects.StudyRoomHome2}/${classroom._id}`}>
               {/* <ClassRoomCard  /> */}
+
                     {classroom.roomName}
-            </Link>
                   </ListItem>
+            </Link>
                   
                 </List>
               </AccordionBody>

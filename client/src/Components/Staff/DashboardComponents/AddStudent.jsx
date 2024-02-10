@@ -9,7 +9,7 @@ import {
 import axios from "../../../api/axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Spinner from "../../spinner/Spinner";
+import Spinner from "../../spinner/SpinningLoader";
 import { RouteObjects } from "../../../Routes/RoutObjects";
 
 const AddStudent = () => {

@@ -84,8 +84,8 @@ const StaffHeader = () => {
                   <UserAvatar dash={RouteObjects.StudentDashboard} />
 
 
-              ):userRoles == 200 ?(
-                <UserAvatar dash ={""}/>
+              ):userRoles == 2000 ?(
+                <UserAvatar  dash={RouteObjects.AdminHome}/>
 
 
               ):""

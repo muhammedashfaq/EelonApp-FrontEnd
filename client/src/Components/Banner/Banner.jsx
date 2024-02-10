@@ -1,8 +1,11 @@
 
+
 const Banner = ({name}) => {
   return (
-    <div>
-        <section className="bg-dark-purple text-gray-100 flex items-center justify-evenly">
+    <div className="">
+        
+        <section className= " bg-dark-purple text-gray-100 flex items-center justify-between">
+         
           <div className=" flex justify-center">
             <img
               src="./images/librarybooks.png"
@@ -11,7 +14,10 @@ const Banner = ({name}) => {
             />
 
             <h1 className="text-4xl font-bold leading-none sm:text-5xl">
-              College Name 
+              College Name knk
+
+
+
             </h1>
         </div>
             <div className="flex flex-wrap justify-center items-center mt-8">
