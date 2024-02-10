@@ -81,7 +81,11 @@ const Login = () => {
         localStorage.setItem("email", email);
         localStorage.setItem("userId", userId);
 
-        if (userType === "Student" || userType === "Staff" || userType === "Admin") {
+        if (
+          userType === "Student" ||
+          userType === "Staff" ||
+          userType === "Admin"
+        ) {
           navigate(RouteObjects.root);
           location.reload();
         }

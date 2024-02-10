@@ -18,9 +18,6 @@ import {
   Typography,
   CardFooter,
 } from "@material-tailwind/react";
-import { Plus, X } from "lucide-react";
-import AddClassWorks from "./AddClassAssignmentsModal";
-import AddClassWorksModal from "./AddClassAssignmentsModal";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useParams } from "react-router-dom";
 import AddNotes from "./AddMaterialsModal";
@@ -39,12 +36,12 @@ const ClassWorks = () => {
     {
       label: "Assignments",
       value: "1",
-      icon:faBook
+      icon: faBook,
     },
     {
       label: "Materials",
       value: "2",
-      icon:faGear
+      icon: faGear,
     },
   ];
   const [activeTab, setActiveTab] = useState("1");
@@ -52,36 +49,6 @@ const ClassWorks = () => {
   const { classroomId } = useParams();
   const [assignment, setAssignment] = useState([]);
   const [material, setMaterial] = useState([]);
-
-  const deletAssignment = async (id) => {
-    try {
-      const response = await axiosPrivate.delete(
-        `classroom/assignment/${classroomId}`,
-        { data: { deleteId: id } }
-      );
-      getClassWorks();
-      response.data.success
-        ? toast.success(response.data.message)
-        : toast.error(response.data.message);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const deletMaterials = async (id) => {
-    try {
-      const response = await axiosPrivate.delete(
-        `classroom/material/${classroomId}`,
-        { data: { deleteId: id } }
-      );
-      getClassWorks();
-      response.data.success
-        ? toast.success(response.data.message)
-        : toast.error(response.data.message);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const getClassWorks = async () => {
     try {
@@ -105,6 +72,7 @@ const ClassWorks = () => {
   const [ismaterialModalOpen, setIsmaterialsModalOpen] = useState(false);
   const [isAssignmentView, setIsAssignmentView] = useState(false);
   const [isMaterialView, setIsMaterialView] = useState(false);
+  const [AssignmentModalData, setAssignmentModalData] = useState();
 
   const handleCloseModal = () => {
     setIsAssignmentModalOpen(false);
@@ -116,8 +84,6 @@ const ClassWorks = () => {
   };
   return (
     <div className="m-10 h-max">
-
-
       <AddClassAssignmentsModal
         open={isAssignmentModalOpen}
         onClose={handleCloseModal}
@@ -134,14 +100,14 @@ const ClassWorks = () => {
               "bg-transparent border-b-2 border-gray-900 shadow-none rounded-none",
           }}
         >
-          {data.map(({ label, value,icon }) => (
+          {data.map(({ label, value, icon }) => (
             <Tab
               key={value}
               value={value}
               onClick={() => setActiveTab(value)}
               className={activeTab === value ? "text-gray-900" : ""}
             >
-              <FontAwesomeIcon icon={icon} className="mr-2"/>
+              <FontAwesomeIcon icon={icon} className="mr-2" />
               {label}
             </Tab>
           ))}
@@ -165,24 +131,24 @@ const ClassWorks = () => {
                                 <Button
                                   variant="outlined"
                                   style={{ textTransform: "none" }}
-                                  onClick={() => setIsAssignmentView(true)}
+                                  onClick={() => {
+                                    setIsAssignmentView(true);
+                                    setAssignmentModalData(as);
+                                  }}
                                 >
                                   view
                                 </Button>
-
-                              
                               </div>
                             </div>
-
-                            <AssignmenViewModal
-                              open={isAssignmentView}
-                              onClose={handleCloseModal}
-                              assignmentData={as}
-                            />
                           </CardBody>
                         </Card>
                       ))}
                   </div>
+                  <AssignmenViewModal
+                    open={isAssignmentView}
+                    onClose={handleCloseModal}
+                    assignmentData={AssignmentModalData}
+                  />
                 </>
               )}
               {value === "2" && (
@@ -205,8 +171,6 @@ const ClassWorks = () => {
                                 >
                                   view
                                 </Button>
-
-                               
                               </div>
                             </div>
                             <MaterialViewModal

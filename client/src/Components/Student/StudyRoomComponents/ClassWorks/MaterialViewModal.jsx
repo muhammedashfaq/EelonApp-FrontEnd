@@ -15,6 +15,7 @@ const MaterialViewModal = ({ open, onClose, materialData }) => {
   const [allStudentsData, setallStudentsData] = useState();
   const [turnedInlist, setturnedInlist] = useState();
   const [turnedInData, setturnedInData] = useState();
+  const [embedHtml, setEmbedHtml] = useState("");
 
   const getStudents = async () => {
     try {
@@ -46,6 +47,15 @@ const MaterialViewModal = ({ open, onClose, materialData }) => {
     getStudentsByArray();
   }, []);
 
+  useEffect(() => {
+    const fetchEmbedHtmlFromDatabase = async () => {
+      const data = await Promise.resolve(materialData?.link?.content);
+      setEmbedHtml(data);
+    };
+
+    fetchEmbedHtmlFromDatabase();
+  }, [materialData?.link?.content]);
+
   return (
     <div>
       <Dialog size="xxl" open={open} closeButton>
@@ -66,19 +76,9 @@ const MaterialViewModal = ({ open, onClose, materialData }) => {
               </Typography>
             </div>
           </div>
-          {materialData?.link?.type === "youtube" && (
-            <div className="p-5 shadow-2xl flex justify-center">
-              <iframe
-                width="700"
-                height="400"
-                src={materialData?.link?.content}
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen
-              ></iframe>
-            </div>
-          )}
+          <div className="p-5 shadow-2xl flex justify-center">
+            <div dangerouslySetInnerHTML={{ __html: embedHtml }} />
+          </div>
         </div>
       </Dialog>
     </div>

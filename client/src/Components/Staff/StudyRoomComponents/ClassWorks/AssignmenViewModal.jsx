@@ -45,10 +45,10 @@ const AssignmenViewModal = ({ open, onClose, assignmentData }) => {
     getStudents();
     getStudentsByArray();
     console.log(assignmentData);
+    setturnedInlist(assignmentData?.studentsTurnedIn);
   }, []);
 
   useEffect(() => {
-    setturnedInlist(assignmentData?.studentsTurnedIn);
     getStudentsByArray();
   }, [assignmentData]);
 
