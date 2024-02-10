@@ -1,19 +1,28 @@
-import React from 'react'
-import StaffHeader from '../../../Components/Staff/Header/landingPageHeader'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+// import React from 'react'
+// import AdminSideNavBar from '../../../Components/Admin/DashoardComponents/AdminSideNavBar'
+// import SideNavbar from '../../../Components/Student/SideNav/SideNavbar'
+// import NavBar from '../../../Components/Staff/SideNav/navBar'
+// import AdminHeader from '../../../Components/Admin/DashoardComponents/AdminHeader'
+
+// const AdminHome = () => {
+//   return (
+//     <div>
+// <div className='bg-red-200'>
+
+//       <AdminSideNavBar/>
+//       <AdminHeader/>
+// </div>
+
+//     </div>
+//   )
+// }
+
+// export default AdminHome
+
+import React from "react";
 
 const AdminHome = () => {
-  return (
-    <div className='bg-blue-gray-900'>
+  return <div>AdminHome</div>;
+};
 
-        <StaffHeader/>
-
-
- 
-  
-    </div>
-  )
-}
-
-export default AdminHome
+export default AdminHome;

@@ -2,8 +2,10 @@
 
 const Banner = ({name}) => {
   return (
-    <div>
-        <section className="bg-dark-purple text-gray-100 flex items-center justify-evenly">
+    <div className="">
+        
+        <section className= " bg-dark-purple text-gray-100 flex items-center justify-between">
+         
           <div className=" flex justify-center">
             <img
               src="./images/librarybooks.png"

@@ -9,8 +9,6 @@ import {
   MenuItem,
   Input,
 } from "@material-tailwind/react";
-import AddTeachersModal from "./AddTeachersModal";
-import AddStudentsModal from "./AddStudentsModal";
 import PeopleList from "./PeopleList";
 import StudentList from "./StudentList";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
@@ -61,7 +59,6 @@ const AddPeople = () => {
               className="flex justify-between items-center  font-light"
             >
               Teacher
-              <AddTeachersModal getTeachers={getTeachers} />
             </Typography>
           </div>
 
@@ -77,7 +74,6 @@ const AddPeople = () => {
               className="flex justify-between items-center  font-light"
             >
               Student
-              <AddStudentsModal getStudents={getStudents} />
             </Typography>
           </div>
           <hr />

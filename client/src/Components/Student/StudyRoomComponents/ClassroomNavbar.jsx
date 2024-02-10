@@ -35,6 +35,7 @@ import { RouteObjects } from "../../../Routes/RoutObjects";
 import { Link } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
+import{toast} from "react-hot-toast"
 import ClassRoomCard from "./ClassRoomCard";
 
 export default function ClassroomNavbar() {
@@ -49,11 +50,13 @@ export default function ClassroomNavbar() {
 
   const getClassRooms = async () => {
     try {
+      console.log(userId,"idffffff");
       const response = await axiosPrivate.get(
-        `classroom/getstaffclassrooms/${userId}`
+        `classroom/getstudentclassrooms/${userId}`
       );
       setClassrooms(response.data);
     } catch (error) {
+      toast.error("something went wrong")
       console.log(error);
     }
   };
@@ -106,7 +109,7 @@ export default function ClassroomNavbar() {
           }
         >
           <div>
-          <Link to={RouteObjects.StudyRoomHome}>
+          <Link to={RouteObjects.StudentStudyRoomHome}>
 
           <ListItem className={!openSidebar && "w-10"}>
             <ListItemPrefix>
@@ -122,23 +125,7 @@ export default function ClassroomNavbar() {
           </ListItem>
               </Link>
                 </div>
-                <div>
-          <Link to={RouteObjects.StudyRoomHome2}>
-
-          <ListItem className={!openSidebar && "w-10"}>
-            <ListItemPrefix>
-              <HomeIcon className="h-5 w-5" />
-            </ListItemPrefix>
-            <ListItemPrefix
-              className={openSidebar ? "showComponent" : "hideComponent"}
-              >
-              <Typography color="blue-gray" className="mr-auto font-normal">
-                Home2
-              </Typography>
-            </ListItemPrefix>
-          </ListItem>
-              </Link>
-                </div>
+               
           <hr className="my-2 border-blue-gray-50" />
           {!openSidebar ? (
             <ListItem
@@ -179,7 +166,7 @@ export default function ClassroomNavbar() {
                 
                 <AccordionBody className="py-1" key={i}>
                 <List className="p-0">
-                    <Link to={`${RouteObjects.StudyRoomHome2}/${classroom._id}`}>
+                    <Link to={`${RouteObjects.StudyRoom}/${classroom._id}`}>
                   <ListItem>
                     <ListItemPrefix>
                       <AcademicCapIcon strokeWidth={3} className="h-4 w-4" />

@@ -27,6 +27,7 @@ export const RouteObjects = {
 
   StudentStudyRoom: "/student/studyroom*",
   StudentStudyRoomHome: "/student/studyroom/home",
+  StudyRoom: "/student/studyroom/rooms",
 
   AdminStudentPage: "/admin/student",
   AllstudentsPage: "/admin/student/allstudents",
