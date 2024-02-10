@@ -13,23 +13,8 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { IoIosAddCircleOutline } from "react-icons/io";
-import {
-  PresentationChartBarIcon,
-  ShoppingBagIcon,
-  UserCircleIcon,
-  Cog6ToothIcon,
-  InboxIcon,
-  PowerIcon,
-  HomeIcon,
-  AcademicCapIcon,
-  
-} from "@heroicons/react/24/solid";
-import {
-  ChevronRightIcon,
-  ChevronDownIcon,
-  UserGroupIcon,
-  Bars3Icon,
-} from "@heroicons/react/24/outline";
+
+
 import { SidebarOpen } from "lucide-react";
 import { RouteObjects } from "../../../Routes/RoutObjects";
 import { Link } from "react-router-dom";
@@ -37,6 +22,8 @@ import useAuth from "../../../Hooks/useAuth";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import{toast} from "react-hot-toast"
 import ClassRoomCard from "./ClassRoomCard";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faChevronCircleDown, faHome, faUserGroup } from "@fortawesome/free-solid-svg-icons";
 
 export default function ClassroomNavbar() {
   const [classRooms, setClassrooms] = useState([]);
@@ -85,7 +72,7 @@ export default function ClassroomNavbar() {
           variant="text"
           onClick={() => setopenSidebar((prev) => !prev)}
         >
-          <Bars3Icon className="w-6 h-6" />
+          <FontAwesomeIcon icon={faBars} className="w-6 h-6" />
         </IconButton>
       </div>
       <div className="mb-2 p-4">
@@ -100,7 +87,7 @@ export default function ClassroomNavbar() {
         <Accordion
           open={open === 1}
           icon={
-            <ChevronDownIcon
+            <FontAwesomeIcon icon={faChevronCircleDown}
               strokeWidth={2.5}
               className={`mx-auto h-4 w-4 transition-transform ${
                 open === 1 ? "rotate-180" : ""
@@ -113,7 +100,7 @@ export default function ClassroomNavbar() {
 
           <ListItem className={!openSidebar && "w-10"}>
             <ListItemPrefix>
-              <HomeIcon className="h-5 w-5" />
+              <FontAwesomeIcon icon={faHome}  className="h-5 w-5" />
             </ListItemPrefix>
             <ListItemPrefix
               className={openSidebar ? "showComponent" : "hideComponent"}
@@ -133,7 +120,7 @@ export default function ClassroomNavbar() {
               onClick={() => setopenSidebar(true)}
             >
               <ListItemPrefix>
-                <UserGroupIcon className="h-5 w-5" />
+                <FontAwesomeIcon icon={faUserGroup} className="h-5 w-5" />
               </ListItemPrefix>
               <ListItemPrefix
                 className={openSidebar ? "showComponent" : "hideComponent"}
@@ -152,7 +139,7 @@ export default function ClassroomNavbar() {
                   className="border-b-0 p-3"
                 >
                   <ListItemPrefix>
-                    <UserGroupIcon className="h-5 w-5" />
+                    <FontAwesomeIcon icon={faUserGroup} className="h-5 w-5" />
                   </ListItemPrefix>
                   <Typography color="blue-gray" className="mr-auto font-normal">
                     Class rooms
@@ -169,7 +156,7 @@ export default function ClassroomNavbar() {
                     <Link to={`${RouteObjects.StudyRoom}/${classroom._id}`}>
                   <ListItem>
                     <ListItemPrefix>
-                      <AcademicCapIcon strokeWidth={3} className="h-4 w-4" />
+                      <FontAwesomeIcon icon={faHome} strokeWidth={3} className="h-4 w-4" />
                     </ListItemPrefix>
               {/* <ClassRoomCard  /> */}
 

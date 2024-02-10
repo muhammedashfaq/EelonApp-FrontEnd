@@ -15,7 +15,6 @@ import {
 } from "@material-tailwind/react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import { useParams } from "react-router-dom";
-import { FaceFrownIcon } from "@heroicons/react/24/outline";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBullhorn } from "@fortawesome/free-solid-svg-icons";
 const AddannounceModal = () => {

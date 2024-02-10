@@ -8,10 +8,7 @@ import {
   ListItemSuffix,
   IconButton,
 } from "@material-tailwind/react";
-import { TrashIcon } from "lucide-react";
-import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+
 import { UserCircle } from "lucide-react";
 
 const StudentList = ({ studentsData, getStudents }) => {
