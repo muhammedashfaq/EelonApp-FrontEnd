@@ -4,7 +4,6 @@ import {
   CardFooter,
   Typography,
   Button,
-  
 } from "@material-tailwind/react";
 import {
   Tabs,
@@ -24,14 +23,18 @@ import { useParams } from "react-router-dom";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import Strems from "./Strems";
 import Grades from "./Grades";
-import { faBullhorn,  faUserPen, faUsers } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBullhorn,
+  faUserPen,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
 import SpinningLoader from "../../spinner/SpinningLoader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function StudentClassroomPage() {
   const [tabValue, settabValue] = useState("Stream");
   const [classRoomData, setclassRoomData] = useState();
-  const [isLoading,setIsLoading] =useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const { classroomId } = useParams();
   const axiosPrivate = useAxiosPrivate();
@@ -42,13 +45,13 @@ export default function StudentClassroomPage() {
   const getClassRoom = async (req, res) => {
     try {
       if (!classroomId) return;
-      setIsLoading(true)
+      setIsLoading(true);
       const response = await axiosPrivate.get(`classroom/${classroomId}`);
-      setIsLoading(false)
+      setIsLoading(false);
 
       setclassRoomData(response.data);
     } catch (error) {
-      setIsLoading(false)
+      setIsLoading(false);
 
       console.log(error);
     }
@@ -60,27 +63,21 @@ export default function StudentClassroomPage() {
 
   return (
     <>
-    {
-      isLoading&&(
-        <SpinningLoader/>
-      )
-    }
+      {isLoading && <SpinningLoader />}
       <div className="w-full">
         <div className="w-full ">
           <div className="">
             <Tabs value={tabValue}>
               <TabsHeader>
                 <Tab value="Stream" onClick={() => settabValue("Stream")}>
-                <FontAwesomeIcon icon={faBullhorn}/>Stream
+                  <FontAwesomeIcon icon={faBullhorn} />
+                  Stream
                 </Tab>
                 <Tab value="Classwork" onClick={() => settabValue("Classwork")}>
-                 <FontAwesomeIcon icon={faUserPen}/> Classwork
+                  <FontAwesomeIcon icon={faUserPen} /> Classwork
                 </Tab>
                 <Tab value="People" onClick={() => settabValue("People")}>
-                <FontAwesomeIcon icon={faUsers}/> People
-                </Tab>
-                <Tab value="Grades" onClick={() => settabValue("Grades")}>
-                  Grades
+                  <FontAwesomeIcon icon={faUsers} /> People
                 </Tab>
                 {/* <Tab value="People">People</Tab>
                 <Tab value="Grades">Grades</Tab> */}
@@ -100,8 +97,8 @@ export default function StudentClassroomPage() {
                 }}
               >
                 {tabValue === "Stream" ? (
-                  <>             
-                    <Strems classRoomData={classRoomData}/>
+                  <>
+                    <Strems classRoomData={classRoomData} />
                   </>
                 ) : tabValue === "Classwork" ? (
                   <>
@@ -110,11 +107,6 @@ export default function StudentClassroomPage() {
                 ) : tabValue === "People" ? (
                   <>
                     <AddPeople />
-                  </>
-                ) : tabValue === "Grades" ? (
-                  <>
-                  
-                  <Grades/>
                   </>
                 ) : (
                   ""

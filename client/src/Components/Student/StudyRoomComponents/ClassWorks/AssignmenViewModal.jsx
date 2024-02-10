@@ -7,25 +7,17 @@ import {
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
+import useAuth from "../../../../Hooks/useAuth";
 
 const AssignmenViewModal = ({ open, onClose, assignmentData }) => {
   const { classroomId } = useParams();
   const axiosPrivate = useAxiosPrivate();
+  const { auth } = useAuth();
 
   const [allStudentsData, setallStudentsData] = useState();
   const [turnedInlist, setturnedInlist] = useState();
   const [turnedInData, setturnedInData] = useState();
-
-  const getStudents = async () => {
-    try {
-      const response = await axiosPrivate.get(
-        `classroom/getclassroomsstudents/${classroomId}`
-      );
-      setallStudentsData(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [userId, setuserId] = useState();
 
   const getStudentsByArray = async () => {
     try {
@@ -42,7 +34,6 @@ const AssignmenViewModal = ({ open, onClose, assignmentData }) => {
     }
   };
   useEffect(() => {
-    getStudents();
     getStudentsByArray();
     console.log(assignmentData);
   }, []);
@@ -50,7 +41,30 @@ const AssignmenViewModal = ({ open, onClose, assignmentData }) => {
   useEffect(() => {
     setturnedInlist(assignmentData?.studentsTurnedIn);
     getStudentsByArray();
+    console.log(assignmentData);
   }, [assignmentData]);
+
+  useEffect(() => {
+    setuserId(auth.userId);
+  }, [auth.userId]);
+
+  const addToTurnInList = async () => {
+    try {
+      if (!userId) return;
+      const assignmentId = assignmentData?._id;
+      const reqData = {
+        studentId: [userId],
+      };
+      console.log(reqData);
+      const response = await axiosPrivate.put(
+        `classroom/assignments/turnin/${assignmentId}`,
+        reqData
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
@@ -63,50 +77,16 @@ const AssignmenViewModal = ({ open, onClose, assignmentData }) => {
             </Button>
           </div>
           <div className="container xl" style={{ textAlign: "center" }}>
-            <div className="flex justify-evenly">
-              <div className="p-10 shadow-2xl rounded-lg">
-                <h2
-                  className="m-5"
-                  style={{ fontSize: "1.3rem", fontWeight: "1000" }}
-                >
-                  All students
-                </h2>
-                {allStudentsData &&
-                  allStudentsData.map((data) => (
-                    <Typography
-                      variant="h6"
-                      color="blue-grayfirst"
-                      className="p-2 pl-5 pr-5 rounded-lg hover:bg-blue-gray-50"
-                      key={data?._id}
-                    >
-                      {data?.email}
-                    </Typography>
-                  ))}
-              </div>
-              <div className="p-10 shadow-2xl rounded-lg">
-                <h2
-                  className="m-5"
-                  style={{ fontSize: "1.3rem", fontWeight: "1000" }}
-                >
-                  Students turned in
-                </h2>
-                {turnedInData &&
-                  turnedInData.map((data) => (
-                    <Typography
-                      variant="h6"
-                      color="blue-grayfirst"
-                      className="p-2 pl-5 pr-5 rounded-lg hover:bg-blue-gray-50"
-                      key={data?._id}
-                    >
-                      {data?.email}
-                    </Typography>
-                  ))}
-              </div>
+            <div>
+              <Typography>{assignmentData?.content}</Typography>
             </div>
             <br />
             <br />
 
             <div style={{ borderTop: "2px dashed gray" }}></div>
+            <div>
+              <Button onClick={addToTurnInList}>Turn in assignment</Button>
+            </div>
           </div>
         </div>
       </Dialog>

@@ -29,6 +29,7 @@ const LibraryDropdownSettings = () => {
         genre: NewGenre,
       };
       const response = await axiosPrivate.post(`librarysettings`, reqData);
+      setNewGenre("");
       getSettings();
     } catch (error) {
       console.log(error);
@@ -74,6 +75,7 @@ const LibraryDropdownSettings = () => {
                     containerProps={{
                       className: "min-w-0",
                     }}
+                    value={NewGenre}
                     onChange={(e) => setNewGenre(e.target.value)}
                   />
                   <Button

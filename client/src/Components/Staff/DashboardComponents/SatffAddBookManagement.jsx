@@ -31,6 +31,7 @@ const SatffAddBookManagement = () => {
   const [searchData, setsearchData] = useState();
   const [isLoading, setisLoading] = useState(false);
   const axiosPrivate = useAxiosPrivate();
+  const [GenreList, setGenreList] = useState();
 
   const getBooks = async () => {
     try {
@@ -45,10 +46,6 @@ const SatffAddBookManagement = () => {
       setisLoading(false);
     }
   };
-  useEffect(() => {
-    getBooks();
-  }, []);
-
   const getBookByName = async (e) => {
     e.preventDefault();
     try {
@@ -80,7 +77,21 @@ const SatffAddBookManagement = () => {
     }
   };
 
-  
+  const getSettings = async () => {
+    try {
+      const response = await axiosPrivate.get(`librarysettings`);
+      setGenreList(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getBooks();
+    getSettings();
+  }, []);
+
   return (
     <div className="w-full">
       {isLoading && <Spinner />}
@@ -96,12 +107,12 @@ const SatffAddBookManagement = () => {
               }}
               value={genre}
             >
-              <Option value="Story">Story</Option>
-              <Option value="Poem">Poem</Option>
-              <Option value="Biography">Biography</Option>
-              <Option value="Mystery">Mystery</Option>
-              <Option value="Fiction">Fiction</Option>
-              <Option value="Non-fiction">Non-fiction</Option>
+              <>
+                {GenreList &&
+                  GenreList.map((list) => (
+                    <Option value={list.genre}>{list.genre}</Option>
+                  ))}
+              </>
             </Select>
             {/* <Button
               variant="text"
