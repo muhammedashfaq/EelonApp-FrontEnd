@@ -1,5 +1,4 @@
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+
 import {
   Card,
   CardHeader,
@@ -20,6 +19,8 @@ import axios from "../../../api/axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { RouteObjects } from "../../../Routes/RoutObjects";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 const TABS = [
   {
@@ -106,7 +107,7 @@ const StudentsList = () => {
               <form onSubmit={searchStudent} className="flex gap-1">
                 <Input
                   label="Search"
-                  icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+                  icon={<FontAwesomeIcon icon={faMagnifyingGlass} className="h-5 w-5" />}
                   value={searchQuery}
                   onChange={(e) => setsearchQuery(e.target.value)}
                 />
@@ -150,7 +151,7 @@ const StudentsList = () => {
               <Link to={RouteObjects.AddStudent}>
 
               <Button className="flex items-center gap-3" size="sm">
-                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
+                <FontAwesomeIcon icon={faUserPlus} strokeWidth={2} className="h-4 w-4" /> Add member
               </Button>
               </Link>
             </div>

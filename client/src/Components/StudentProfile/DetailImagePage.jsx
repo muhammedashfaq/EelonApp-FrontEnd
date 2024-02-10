@@ -6,29 +6,27 @@ import {
   Tab,
   TabPanel,
 } from "@material-tailwind/react";
-import {
-  Square3Stack3DIcon,
-  UserCircleIcon,
-  Cog6ToothIcon,
-} from "@heroicons/react/24/solid";
 import { createElement } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBook } from "@fortawesome/free-solid-svg-icons";
 
 const DetailImagePage = () => {
+  
   const data = [
     {
       label: "Parents Details",
       value: "1",
-      icon: Square3Stack3DIcon,
+      icon: faBook,
     },
     {
       label: "Academic Details",
       value: "2",
-      icon: UserCircleIcon,
+      icon: faBook,
     },
     {
       label: "Achivements",
       value: "3",
-      icon: Cog6ToothIcon,
+      icon: faBook,
     },
   ];
 
@@ -40,13 +38,14 @@ const DetailImagePage = () => {
 
   return (
     <div>
+      
       <div className="w-full max-w-[100rem] flex-row border-2">
         <Tabs value={selectedTab} onChange={handleTabChange}>
           <TabsHeader>
             {data.map(({ label, value, icon }) => (
               <Tab key={value} value={value}>
                 <div className="flex items-center gap-2">
-                  {createElement(icon, { className: "w-5 h-5" })}
+                <FontAwesomeIcon icon={icon} className="w-5 h-5" />
                   {label}
                 </div>
               </Tab>

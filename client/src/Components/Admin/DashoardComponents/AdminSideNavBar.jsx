@@ -11,22 +11,10 @@ import {
   Drawer,
   Card,
 } from "@material-tailwind/react";
-import {
-  PresentationChartBarIcon,
-  ShoppingBagIcon,
-  UserCircleIcon,
-  Cog6ToothIcon,
-  InboxIcon,
-  PowerIcon,
-} from "@heroicons/react/24/solid";
-import {
-  ChevronDownIcon,
-  ChevronRightIcon,
-  Bars3Icon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBook, faGear } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faBook, faChevronCircleDown, faChevronCircleRight, faClose, faGear } from "@fortawesome/free-solid-svg-icons";
 
 const AdminSideNavBar = () => {
   const [open, setOpen] = useState(0);
@@ -41,10 +29,10 @@ const AdminSideNavBar = () => {
 
   // Your dynamic menu data
   const menuItems = [
-    { label: "Dashboard", icon: <PresentationChartBarIcon />, id: 1 },
+    { label: "Dashboard", icon: "", id: 1 },
     {
       label: "E-Commerce",
-      icon: <ShoppingBagIcon />,
+      icon:"",
       id: 2,
       subItems: [
         { label: "Orders", id: 21 },
@@ -61,9 +49,9 @@ const AdminSideNavBar = () => {
     <>
       <IconButton variant="text" size="lg" onClick={openDrawer}>
         {isDrawerOpen ? (
-          <XMarkIcon className="h-8 w-8 stroke-2" />
+          <FontAwesomeIcon icon={faClose} className="h-8 w-8 stroke-2" />
         ) : (
-          <Bars3Icon className="h-8 w-8 stroke-2" />
+          <FontAwesomeIcon icon={faBars} className="h-8 w-8 stroke-2" />
         )}
       </IconButton>
       <Drawer open={isDrawerOpen} onClose={closeDrawer}>
@@ -79,7 +67,7 @@ const AdminSideNavBar = () => {
                   <Accordion
                     open={open === item.id}
                     icon={
-                      <ChevronDownIcon
+                      <FontAwesomeIcon icon={faChevronCircleDown}
                         strokeWidth={2.5}
                         className={`mx-auto h-4 w-4 transition-transform ${
                           open === item.id ? "rotate-180" : ""
@@ -106,7 +94,7 @@ const AdminSideNavBar = () => {
                         {item.subItems.map((subItem) => (
                           <ListItem key={subItem.id}>
                             <ListItemPrefix>
-                              <ChevronRightIcon
+                              <FontAwesomeIcon icon={faChevronCircleRight}
                                 strokeWidth={3}
                                 className="h-3 w-5"
                               />

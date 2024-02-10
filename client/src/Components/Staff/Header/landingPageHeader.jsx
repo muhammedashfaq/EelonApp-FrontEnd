@@ -1,13 +1,13 @@
 import { RouteObjects } from "../../../Routes/RoutObjects";
 import logoimage from "../../../assets/EelonLogo.png";
-import { Avatar, Button } from "@material-tailwind/react";
+import { Button } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
 import useLogout from "../../../Hooks/useLogout";
 import NavBar from "../SideNav/navBar";
 import { useUserContext } from "../../../Context/userContext";
-// import Test from "../../Test";
-import UserAvatar from "./UserAvatar";
+import AdminSideNavBar from "../../Admin/DashoardComponents/AdminSideNavBar";
+import SideNavbar from '../../Student/SideNav/SideNavbar'
 
 const StaffHeader = () => {
   const { auth } = useAuth();
@@ -56,10 +56,11 @@ const StaffHeader = () => {
                 </Link>
               )}
             </li>
-            {
-              userRoles == 5151 &&(
 
-                <NavBar />
+            {
+              userRoles&&(
+
+                <button onClick={logOut}>logout</button>
               )
             }
 
@@ -77,15 +78,17 @@ const StaffHeader = () => {
             </li>
             <li className="">
               {userRoles ==5151 ?(
-            <UserAvatar dash ={""} />
+            <NavBar />
 
                 ):userRoles ==999 ?(
-                  
-                  <UserAvatar dash={RouteObjects.StudentDashboard} />
+                  <Link to={RouteObjects.StudentDashboard} >
+    <Button className="hover:bg-dark-purple hover:text-white" variant="outlined">DashBoard</Button>
 
+                  {/* <SideNavbar/> */}
 
+                  </Link>
               ):userRoles == 2000 ?(
-                <UserAvatar  dash={RouteObjects.AdminHome}/>
+                <AdminSideNavBar/>
 
 
               ):""
