@@ -33,7 +33,7 @@
 //         </span> },
 //         { title: "Add Student" , href: RouteObjects.AddStudent, },
 //         { title: "Add Form Requirments", href: RouteObjects.RequireForms, },
-       
+
 //       ],
 //     },
 //     {
@@ -68,7 +68,7 @@
 //         >
 //           arrow_back
 //         </span>
-//         {/*         
+//         {/*
 //         <div className="inline-flex ">
 //           <div className="flex items-center">
 //             <img
@@ -131,7 +131,7 @@
 //               {item.submenuItems && submenuOpen && open && (
 //                 <ul className=" ">
 //                   {item.submenuItems.map((subitems, i) => (
-                    
+
 //                     <li
 //                     className={` text-sm flex items-center gap-x-8 cursor-pointer p-3 hover:bg-blue-500 rounded-lg text-white`}
 //                     key={i}
@@ -156,9 +156,8 @@
 
 // export default Navbar;
 
-
-import  { useState } from "react";
-import logo from "../../../assets/EelonLogo.png"
+import { useState } from "react";
+import logo from "../../../assets/EelonLogo.png";
 import {
   Drawer,
   Button,
@@ -168,126 +167,133 @@ import {
 import { Link } from "react-router-dom";
 import { RouteObjects } from "../../../Routes/RoutObjects";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faBars, faBook, faChalkboard,faHome,faRightFromBracket,faUserPlus} from '@fortawesome/free-solid-svg-icons'
- 
+import {
+  faBars,
+  faBook,
+  faChalkboard,
+  faHome,
+  faRightFromBracket,
+  faUserPlus,
+} from "@fortawesome/free-solid-svg-icons";
+
 const NavBar = () => {
-   // const [open, setOpen] = useState(true);
+  // const [open, setOpen] = useState(true);
 
-   const [open, setOpen] = useState(false);
-   const [submenuOpen, setOpenSubmenu] = useState(false);
-   const menu = [
-     {
-       title: "Home",
-       icon: faHome,      href: RouteObjects.root,
- 
-     },{
-       title: "Dashboard",
-       icon: faBars,
-     },
-     {
-       title: "Library",
-       icon: faBook,
-       href: RouteObjects.Stafflibrary,
-     },
- 
-     {
-       title: "Students",
-       icon: faUserPlus,
-       submenu: true,
- 
-       submenuItems: [
-         { title: "Students List ", href: RouteObjects.StudentsList,icon:<span className="material-symbols-outlined">
-         person_add
-         </span> },
-         { title: "Add Student" , href: RouteObjects.AddStudent, },
-         { title: "Add Form Requirments", href: RouteObjects.RequireForms, },
-        
-       ],
-     },
-     {
-       title: "Classroom", href:RouteObjects.StudyRoomHome,
-       icon: faChalkboard,
-     },
-     
-     {
-       title: "Logout",
-       icon: faRightFromBracket,
-     },
-   ];
-  
-   const openDrawer = () => setOpen(true);
-   const closeDrawer = () => setOpen(false);
-   return (
-     <div>  
-      <FontAwesomeIcon icon={faBars} onClick={openDrawer} size="xl" className="cursor-pointer bg-blue-gray-400 px-6 py-3 rounded-lg text-white"/>
+  const [open, setOpen] = useState(false);
+  const [submenuOpen, setOpenSubmenu] = useState(false);
+  const menu = [
+    {
+      title: "Home",
+      icon: faHome,
+      href: RouteObjects.root,
+    },
+    {
+      title: "Dashboard",
+      icon: faBars,
+    },
+    {
+      title: "Library",
+      icon: faBook,
+      href: RouteObjects.Stafflibrary,
+    },
 
-       <Drawer open={open} onClose={closeDrawer} className="p-4 bg-dark-purple">
-         
-         
- 
-        
-         <ul className="pt-2">
-           {menu.map((item, index) => (
-             <li
-               className={`text-gray-200 text-sm flex flex-col cursor-pointer p-2 hover:bg-deep-orange-500 rounded-md mt-2 relative`}
-               key={index}
-             >
-             <Link to={item.href}>
-               <div className="flex items-center gap-x-4">
-                 {/* {item.icon} */}
-                 <FontAwesomeIcon icon={item.icon}/>
- 
-                   <span
-                     className={`duration-200 flex-1 ${
-                       !open && "hidden "
-                     } text-base font-medium`}
-                   >
-                     {item.title}
-                   </span>
- 
-                 {item.submenuItems && (
-                   <span
-                   className="material-symbols-outlined"
-                   onClick={() => setOpenSubmenu(!submenuOpen)}
-                   >
-                     {submenuOpen && open ? "expand_less" : "expand_more"}
-                   </span>
-                 )}
-               </div>
-                 </Link>
- 
-               {item.submenuItems && submenuOpen && open && (
-                 <ul className=" ">
-                   {item.submenuItems.map((subitems, i) => (
+    {
+      title: "Students",
+      icon: faUserPlus,
+      submenu: true,
+
+      submenuItems: [
+        {
+          title: "Students List ",
+          href: RouteObjects.StudentsList,
+          icon: <span className="material-symbols-outlined">person_add</span>,
+        },
+        { title: "Add Student", href: RouteObjects.AddStudent },
+        { title: "Add Form Requirments", href: RouteObjects.RequireForms },
+      ],
+    },
+    {
+      title: "Study room",
+      href: RouteObjects.StudyRoomHome,
+      icon: faChalkboard,
+    },
+
+    {
+      title: "Logout",
+      icon: faRightFromBracket,
+    },
+  ];
+
+  const openDrawer = () => setOpen(true);
+  const closeDrawer = () => setOpen(false);
+  return (
+    <div>
+      <FontAwesomeIcon
+        icon={faBars}
+        onClick={openDrawer}
+        size="xl"
+        className="cursor-pointer bg-blue-gray-400 px-6 py-3 rounded-lg text-white"
+      />
+
+      <Drawer open={open} onClose={closeDrawer} className="p-4 bg-dark-purple">
+        <ul className="pt-2">
+          {menu.map((item, index) => (
+            <li
+              className={`text-gray-200 text-sm flex flex-col cursor-pointer p-2 hover:bg-deep-orange-500 rounded-md mt-2 relative`}
+              key={index}
+            >
+              <Link to={item.href}>
+                <div className="flex items-center gap-x-4">
+                  {/* {item.icon} */}
+                  <FontAwesomeIcon icon={item.icon} />
+
+                  <span
+                    className={`duration-200 flex-1 ${
+                      !open && "hidden "
+                    } text-base font-medium`}
+                  >
+                    {item.title}
+                  </span>
+
+                  {item.submenuItems && (
+                    <span
+                      className="material-symbols-outlined"
+                      onClick={() => setOpenSubmenu(!submenuOpen)}
+                    >
+                      {submenuOpen && open ? "expand_less" : "expand_more"}
+                    </span>
+                  )}
+                </div>
+              </Link>
+
+              {item.submenuItems && submenuOpen && open && (
+                <ul className=" ">
+                  {item.submenuItems.map((subitems, i) => (
                     <>
-                   <Link to={subitems.href}  >
-                     
-                     <li key={i}
-                     className={` text-sm flex items-center gap-x-8 cursor-pointer p-3 hover:bg-blue-500 rounded-lg text-white`}
-                     >
-                       <span>
- 
-                       {subitems.title}
-                       </span>
-                     </li>
-                   </Link>
-                       </>
-                   ))}
-        
+                      <Link to={subitems.href}>
+                        <li
+                          key={i}
+                          className={` text-sm flex items-center gap-x-8 cursor-pointer p-3 hover:bg-blue-500 rounded-lg text-white`}
+                        >
+                          <span>{subitems.title}</span>
+                        </li>
+                      </Link>
+                    </>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+        <li
+          className={` text-sm flex items-stretch gap-x-8 cursor-pointer  fixed w-max m-3 p-6 bg-blue-500 rounded-lg text-white mt-4`}
+        >
+          <img src={logo} alt="Logo" className="w-8 h-8" />
+          <span className="ml-2 text-base font-medium">Eelon.com </span>
+        </li>
+      </Drawer>
+    </div>
+  );
+};
 
-                 </ul>
-               )}
-             </li>
-           ))}
-         </ul>
-         <li className={` text-sm flex items-stretch gap-x-8 cursor-pointer  fixed w-max m-3 p-6 bg-blue-500 rounded-lg text-white mt-4`}>
-      <img src={logo} alt="Logo" className="w-8 h-8" />
-      <span className="ml-2 text-base font-medium">Eelon.com </span>
-    </li>
-                      
-       </Drawer>
-     </div>
-  )
-}
-
-export default NavBar
+export default NavBar;
