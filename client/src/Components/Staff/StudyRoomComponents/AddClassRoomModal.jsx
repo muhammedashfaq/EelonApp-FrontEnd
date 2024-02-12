@@ -15,6 +15,8 @@ import {
 } from "@material-tailwind/react";
 import axios from "../../../api/axios";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAdd } from "@fortawesome/free-solid-svg-icons";
 
 const AddClassRoomModal = ({ userId }) => {
   const [open, setOpen] = React.useState(false);
@@ -69,9 +71,11 @@ const AddClassRoomModal = ({ userId }) => {
   return (
     <>
       {/* <Button onClick={handleOpen}>Add classroom</Button> */}
-      <p onClick={handleOpen} className="bg-transparent">
-        Add classroom
-      </p>
+      <p onClick={handleOpen} className=" w-full max-w-[20rem] cursor-pointer bg-indigo-500 text-white px-4 py-2 rounded-xl flex items-center justify-center space-x-2 text-2xl hover:bg-indigo-600 transition duration-300">
+  <FontAwesomeIcon icon={faAdd} className="text-lg" />
+  Add Classroom
+</p>
+
       <Dialog
         size="xs"
         open={open}

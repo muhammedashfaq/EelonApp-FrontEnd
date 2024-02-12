@@ -1,4 +1,3 @@
-
 import {
   Card,
   CardHeader,
@@ -14,13 +13,24 @@ import {
   Avatar,
   IconButton,
   Tooltip,
+  Popover,
+  PopoverContent,
 } from "@material-tailwind/react";
+import Swal from "sweetalert2";
+
 import axios from "../../../api/axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { RouteObjects } from "../../../Routes/RoutObjects";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEdit,
+  faEye,
+  faMagnifyingGlass,
+  faTrash,
+  faUserPlus,
+} from "@fortawesome/free-solid-svg-icons";
+import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 
 const TABS = [
   {
@@ -65,20 +75,52 @@ const StudentsList = () => {
   const [studentData, setStudentData] = useState();
   const [searchQuery, setsearchQuery] = useState();
   const [searchData, setsearchData] = useState();
+  const axiosPrivate = useAxiosPrivate();
 
   const getUsers = async () => {
     try {
-      const response = await axios.get("/users/student");
+      const response = await axiosPrivate.get("/users/student");
       setStudentData(response.data);
     } catch (error) {
       console.log(error);
     }
   };
+  const deleteStudent = async (id, name) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this Student Data!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
 
+      if (result.isConfirmed) {
+        await axiosPrivate.delete(`/users/student/${id}`);
+
+        Swal.fire({
+          title: "Deleted!",
+          text: `${name}  has been deleted`,
+          icon: "success",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      })
+    }
+  };
   const searchStudent = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.get(`/users/student/search/${searchQuery}`);
+      const response = await axiosPrivate.get(
+        `/users/student/search/${searchQuery}`
+      );
       console.log(response.data);
       setsearchData(response.data);
     } catch (error) {
@@ -88,7 +130,7 @@ const StudentsList = () => {
 
   useEffect(() => {
     getUsers();
-  }, []);
+  }, [studentData]);
   return (
     <div>
       <Card className="  m-8">
@@ -107,7 +149,12 @@ const StudentsList = () => {
               <form onSubmit={searchStudent} className="flex gap-1">
                 <Input
                   label="Search"
-                  icon={<FontAwesomeIcon icon={faMagnifyingGlass} className="h-5 w-5" />}
+                  icon={
+                    <FontAwesomeIcon
+                      icon={faMagnifyingGlass}
+                      className="h-5 w-5"
+                    />
+                  }
                   value={searchQuery}
                   onChange={(e) => setsearchQuery(e.target.value)}
                 />
@@ -149,10 +196,14 @@ const StudentsList = () => {
                 view all
               </Button>
               <Link to={RouteObjects.AddStudent}>
-
-              <Button className="flex items-center gap-3" size="sm">
-                <FontAwesomeIcon icon={faUserPlus} strokeWidth={2} className="h-4 w-4" /> Add member
-              </Button>
+                <Button className="flex items-center gap-3" size="sm">
+                  <FontAwesomeIcon
+                    icon={faUserPlus}
+                    strokeWidth={2}
+                    className="h-4 w-4"
+                  />{" "}
+                  Add member
+                </Button>
               </Link>
             </div>
           </div>
@@ -248,7 +299,7 @@ const StudentsList = () => {
                     color="blue-gray"
                     className="font-normal leading-none opacity-70"
                   >
-                    Edit
+                    Action
                   </Typography>
                 </th>
               </tr>
@@ -344,20 +395,18 @@ const StudentsList = () => {
 
                         <td className={classes}>
                           <Link to={RouteObjects.StudentProfile}>
-
-                          <Button className="rounded-r-lg " color="green">
-                            View
-                          </Button>
+                            <Button className="rounded-r-lg " color="green">
+                              View
+                            </Button>
                           </Link>
                         </td>
                         <td className={classes}>
-
-                        <Link to={`${RouteObjects.StudentProfile}/${data}` }>
-
-<Button className="rounded-r-lg " color="green">
-  Edit
-</Button>
-</Link>                        </td>
+                          <Link to={`${RouteObjects.StudentProfile}/${data}`}>
+                            <Button className="rounded-r-lg " color="green">
+                              Edit
+                            </Button>
+                          </Link>{" "}
+                        </td>
                       </tr>
                     );
                   })
@@ -450,20 +499,52 @@ const StudentsList = () => {
                         </td>
 
                         <td className={classes}>
-                          <Link to={`${RouteObjects.StudentProfile}/${data._id}`}>
-
-                          <Button className="rounded-r-lg " color="green">
-                            View
-                          </Button>
+                          <Link
+                            to={`${RouteObjects.StudentProfile}/${data._id}`}
+                          >
+                            <Button className="rounded-r-lg " color="green">
+                              View
+                            </Button>
                           </Link>
                         </td>
                         <td className={classes}>
-                        <Link to={`${RouteObjects.EditStudent}/${data._id}`}>
+                          <Link to={`${RouteObjects.EditStudent}/${data._id}`}>
+                          <Tooltip
+                            content="Edit Student Data"
+                            animate={{
+                              mount: { scale: 1, y: 0 },
+                              unmount: { scale: 0, y: 25 },
+                            }}
+                          >
+                            <FontAwesomeIcon
+                              icon={faEdit}
+                              color="green"
+                              size="xl"
+                              className="cursor-pointer hover:bg-blue-gray-100 rounded-md p-2"
+                              
+                              
+                            />
+                          </Tooltip>
+                          </Link>
 
-<Button className="rounded-r-lg " color="green">
-  Edit
-</Button>
-</Link>
+                          <Tooltip
+                            content="Delete Student"
+                            
+                            animate={{
+                              mount: { scale: 1, y: 0 },
+                              unmount: { scale: 0, y: 25 },
+                            }}
+                          >
+                            <FontAwesomeIcon
+                            color="red"
+                              icon={faTrash}
+                              size="xl"
+                              className="cursor-pointer hover:bg-blue-gray-100 rounded-md p-2"
+                              onClick={() =>
+                                deleteStudent(data._id, data.studentName)
+                              }
+                            />
+                          </Tooltip>
                         </td>
                       </tr>
                     );
@@ -485,7 +566,6 @@ const StudentsList = () => {
           </div>
         </CardFooter>
       </Card>
-      
     </div>
   );
 };

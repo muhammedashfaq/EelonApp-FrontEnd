@@ -2,7 +2,8 @@ import Login from "../../Components/login";
 
 const loginPage = () => {
   return (
-    <div>
+    <div className="h-full">
+      
       <Login />
     </div>
   );

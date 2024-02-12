@@ -9,8 +9,11 @@ import {
   CardHeader,
   CardBody,
   Typography,
+  Tooltip,
 } from "@material-tailwind/react";
 import useAuth from "../../../Hooks/useAuth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 export default function StaffStudentLibrarycardModal({ studentData }) {
   const [open, setOpen] = React.useState(false);
@@ -19,9 +22,15 @@ export default function StaffStudentLibrarycardModal({ studentData }) {
 
   return (
     <>
-      <Button variant="text" onClick={handleOpen}>
-        View card
-      </Button>
+    
+<Tooltip content="View Card" className="bg-blue-gray-400"
+      animate={{
+        mount: { scale: 1, y: 0 },
+        unmount: { scale: 0, y: 25 },
+      }} >
+   
+      <FontAwesomeIcon icon={faEye} size="xl" color="green" onClick={handleOpen} className="cursor-pointer hover:bg-gray-100 p-2 rounded-lg hover:text-black" />
+</Tooltip>
 
       <Dialog open={open} handler={handleOpen} size="lg">
         <DialogHeader className="ml-10 mt-4">Library card</DialogHeader>

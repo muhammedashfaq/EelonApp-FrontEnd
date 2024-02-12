@@ -219,7 +219,7 @@ const NavBar = () => {
    const closeDrawer = () => setOpen(false);
    return (
      <div>  
-      <FontAwesomeIcon icon={faBars} onClick={openDrawer} className="cursor-pointer"/>
+      <FontAwesomeIcon icon={faBars} onClick={openDrawer} size="xl" className="cursor-pointer bg-blue-gray-400 px-6 py-3 rounded-lg text-white"/>
 
        <Drawer open={open} onClose={closeDrawer} className="p-4 bg-dark-purple">
          

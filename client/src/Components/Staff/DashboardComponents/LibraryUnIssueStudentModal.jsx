@@ -10,10 +10,13 @@ import {
   Input,
   Checkbox,
   Alert,
+  Tooltip,
 } from "@material-tailwind/react";
 import axios from "../../../api/axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
 const LibraryUnIssueStudentModal = ({
     unissueAlert,
@@ -31,6 +34,7 @@ const LibraryUnIssueStudentModal = ({
     const [studentId, setstudentId] = useState();
     const [searchData, setsearchData] = useState();
     const [checked, setchecked] = useState();
+    const[idError,setIdError]=useState("")
   
     const issuebook = async () => {
       if (!checked) return;
@@ -62,28 +66,43 @@ const LibraryUnIssueStudentModal = ({
   
     const searchStudent = async () => {
       try {
+        if (!studentId) {
+          setIdError("ID is required");
+          return;
+        }
+        console.log(studentId);
         const response = await axios.get(
           `users/student/issuelibrarycard/${studentId}`
         );
-        console.log(response);
-        setsearchData(response.data);
-        setstudentId(response.data.email);
+
+        console.log(response)
+          console.log(response);
+          setsearchData(response.data);
+          setstudentId(response.data.email);
+          
+  
       } catch (error) {
         console.log(error);
+        if(error.response.status===404){
+          setIdError(error.response.data.message)
+
+        }
       }
     };
   
     return (
       <>
-        <Button
-        size="sm"
-        color="red"
-          variant="outlined"
-          style={{ textTransform: "none" }}
-          onClick={handleOpen}
-        >
-          UnIssue 
-        </Button>
+      <Tooltip content="Un Issue Book"
+      animate={{
+        mount: { scale: 1, y: 0 },
+        unmount: { scale: 0, y: 25 },
+      }}
+    >
+
+      <FontAwesomeIcon icon={faCartShopping} size="xl"   color="red"      onClick={handleOpen} className="hover:cursor-pointer"/>
+
+      </Tooltip>
+
   
         <Dialog
           size="xs"
@@ -94,22 +113,23 @@ const LibraryUnIssueStudentModal = ({
           <Card className="mx-auto w-full max-w-[24rem]">
             <CardBody className="flex flex-col gap-4">
               <Typography variant="h4" color="blue-gray">
-                Issue book
+                Manage Issue 
               </Typography>
               <Typography
                 className="mb-3 font-normal"
                 variant="paragraph"
-                color="gray"
-              >
-                Enter student id
+                color={idError?"red":"gray"}
+                >
+                {idError? idError:"Enter student id"}
               </Typography>
               <Typography className="-mb-2" variant="h6">
                 Student id
               </Typography>
               <Input
-                label="Student id"
+                label={idError?idError:"Enter Id"}
                 size="lg"
                 onChange={(e) => setstudentId(e.target.value)}
+                error={idError}
               />
               <Button variant="outlined" onClick={searchStudent} fullWidth>
                 Search student

@@ -45,7 +45,7 @@ const AddMaterialsModal = ({ open, onClose }) => {
         ...prevErrors,
         topic: "Topic is required",
       }));
-      return;
+      return; 
     }
 
     try {
