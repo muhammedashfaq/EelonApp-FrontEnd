@@ -33,6 +33,7 @@ const AddClassModal = () => {
         classTeacher,
       };
       const response = await axiosPrivate.post("/classsection", data);
+      handleOpen();
     } catch (error) {
       console.error(error);
     }

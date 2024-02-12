@@ -1,20 +1,27 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Tooltip, Typography } from "@material-tailwind/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AttandanceRadio from "./AttandanceRadio";
 import { faSquareCheck } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 
-const StudentRow = ({ name, index,checkedValue, setCheckedValue }) => {
+const StudentRow = ({ name, index, checkedValue, createAttendanceArray }) => {
+  const [isPresent, setisPresent] = useState("Pr");
   const [reason, setReason] = useState("");
 
-  const addAttandance = async () => {
-    try {
-      console.log(reason, checkedValue);
-    } catch (error) {
-      console.log(error);
-    }
+  const handleChange = () => {
+    const data = {
+      index,
+      isPresent,
+      reason,
+    };
+    createAttendanceArray(data);
   };
+
+  useEffect(() => {
+    handleChange();
+  }, [isPresent, reason]);
+
   const addremarks = async () => {
     const { value: text } = await Swal.fire({
       input: "textarea",
@@ -45,8 +52,10 @@ const StudentRow = ({ name, index,checkedValue, setCheckedValue }) => {
         </td>
         <td className="px-4 py-1  border-b border-blue-gray-50 bg-blue-gray-50/50 ">
           <AttandanceRadio
-            setCheckedValue={setCheckedValue}
-            checkedValue={checkedValue}
+            isPresent={isPresent}
+            setisPresent={setisPresent}
+            index={index}
+            handleChange={handleChange}
           />
         </td>
         <td className="px-4 py-1  border-b border-blue-gray-50">
@@ -64,7 +73,6 @@ const StudentRow = ({ name, index,checkedValue, setCheckedValue }) => {
               icon={faSquareCheck}
               style={{ color: "#74C0FC" }}
               size="2xl"
-              onClick={() => addAttandance()}
             />
           </Tooltip>
         </td>
