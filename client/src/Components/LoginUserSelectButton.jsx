@@ -7,7 +7,7 @@ import Admin from "../assets/admin.svg";
 const LoginUserSelectButton = ({ setuserType }) => {
   return (
     <>
-      <div className="flex flex-col md:flex-row justify-center gap-4 m-10 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 p-4 rounded-md shadow-lg">
+      <div className="flex flex-wrap md:flex-row justify-center gap-4 m-10 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 p-4 rounded-md shadow-lg">
         <div className="flex flex-col p-4 rounded-md text-center text-white">
           <span className="text-4xl font-semibold">
             Continue as a...

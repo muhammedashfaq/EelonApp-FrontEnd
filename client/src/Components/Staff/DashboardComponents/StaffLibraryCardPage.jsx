@@ -9,12 +9,13 @@ const StaffLibraryCardPage = () => {
   const [searchQuery, setsearchQuery] = useState();
   const [searchData, setsearchData] = useState();
   const [studentData, setstudentData] = useState();
-
+  
   const getStudents = async (e) => {
     e.preventDefault();
     try {
       if (!searchQuery) return;
       const response = await axios.get(`users/student/search/${searchQuery}`);
+      console.log(response)
       setsearchData(response.data);
     } catch (error) {
       console.log(error);
@@ -23,7 +24,6 @@ const StaffLibraryCardPage = () => {
   const getAllStudents = async () => {
     try {
       const response = await axios.get(`users/student`);
-      console.log(response.data);
       setstudentData(response.data);
     } catch (error) {
       console.log(error);
@@ -32,12 +32,12 @@ const StaffLibraryCardPage = () => {
 
   useEffect(() => {
     getAllStudents();
-  }, []);
+  }, [studentData,searchData]);
 
   return (
     <>
       <Banner name="Library Section" />
-      <div className=" w-screen mt-10">
+      <div className="  m-10 ">
         <div>
           <div className="relative flex flex-col w-full h-full text-gray-700 bg-white shadow-md rounded-xl bg-clip-border">
             <div className="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white rounded-none bg-clip-border">
@@ -102,56 +102,72 @@ const StaffLibraryCardPage = () => {
               <table className="w-full text-left table-auto min-w-max">
                 <thead>
                   <tr>
-                    <th className="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                  <th className="p-2 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                      <p className="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                        #NO
+                      </p>
+                    </th>
+                    <th className="p-2 border-y border-blue-gray-100 bg-blue-gray-50/50">
                       <p className="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
                         Student id
                       </p>
                     </th>
-                    <th className="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                    <th className="p-2 border-y border-blue-gray-100 bg-blue-gray-50/50">
                       <p className="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
                         Student name
                       </p>
                     </th>
-                    <th className="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                    <th className="p-2 border-y border-blue-gray-100 bg-blue-gray-50/50">
                       <p className="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
                         Card status
                       </p>
                     </th>
-                    <th className="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                    <th className="p-2 border-y border-blue-gray-100 bg-blue-gray-50/50">
                       <p className="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
                         Card No.
                       </p>
                     </th>
-                    <th className="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                    <th className="p-2 border-y border-blue-gray-100 bg-blue-gray-50/50">
                       <p className="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
                         className
                       </p>
                     </th>
-                    <th className="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                    <th className="p-2 border-y border-blue-gray-100 bg-blue-gray-50/50">
                       <p className="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
                         Section
                       </p>
                     </th>
-                    <th className="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                    <th className="p-2 border-y border-blue-gray-100 bg-blue-gray-50/50">
                       <p className="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
                         Libary card
                       </p>
                     </th>
-                    <th className="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                    <th className="p-2 border-y border-blue-gray-100 bg-blue-gray-50/50">
                       <p className="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                        Edit
+                        Actions
                       </p>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
+                    
+                  
                   {searchData
-                    ? searchData.map((data) => (
+                    ? searchData.map((data,i) => (
                         <>
                           <tr>
+                          <td className="p-4 border-b border-blue-gray-50">
+                              <Typography
+                                
+                                color="blue-gray"
+                                classNameName=" text-blue-900 border-l  "
+                              >
+                                {i+1}
+                              </Typography>
+                            </td>
                             <td className="p-4 border-b border-blue-gray-50">
                               <Typography
-                                variant="h6"
+                                variant="h8"
                                 color="blue-gray"
                                 classNameName=" text-blue-900 border-l  "
                               >
@@ -160,7 +176,7 @@ const StaffLibraryCardPage = () => {
                             </td>
                             <td className="p-4 border-b border-blue-gray-50">
                               <Typography
-                                variant="h6"
+                                variant="h8"
                                 color="blue-gray"
                                 classNameName=" text-blue-900 border-l  "
                               >
@@ -169,7 +185,7 @@ const StaffLibraryCardPage = () => {
                             </td>
                             <td className="p-4 border-b border-blue-gray-50">
                               <Typography
-                                variant="h6"
+                                variant="h8"
                                 color="blue-gray"
                                 classNameName=" text-blue-900 border-l  "
                               >
@@ -180,7 +196,7 @@ const StaffLibraryCardPage = () => {
                             </td>
                             <td className="p-4 border-b border-blue-gray-50">
                               <Typography
-                                variant="h6"
+                                variant="h8"
                                 color="blue-gray"
                                 classNameName=" text-blue-900 border-l  "
                               >
@@ -189,7 +205,7 @@ const StaffLibraryCardPage = () => {
                             </td>
                             <td className="p-4 border-b border-blue-gray-50">
                               <Typography
-                                variant="h6"
+                                variant="h8"
                                 color="blue-gray"
                                 classNameName=" text-blue-900 border-l  "
                               >
@@ -198,7 +214,7 @@ const StaffLibraryCardPage = () => {
                             </td>
                             <td className="p-4 border-b border-blue-gray-50">
                               <Typography
-                                variant="h6"
+                                variant="h8"
                                 color="blue-gray"
                                 classNameName=" text-blue-900 border-l  "
                               >
@@ -207,7 +223,7 @@ const StaffLibraryCardPage = () => {
                             </td>
                             <td className="p-4 border-b border-blue-gray-50">
                               <Typography
-                                variant="h6"
+                                variant="h8"
                                 color="blue-gray"
                                 classNameName=" text-blue-900 border-l  "
                               >
@@ -222,7 +238,7 @@ const StaffLibraryCardPage = () => {
                             </td>
                             <td className="p-4 border-b border-blue-gray-50">
                               <Typography
-                                variant="h6"
+                                variant="h8"
                                 color="blue-gray"
                                 classNameName=" text-blue-900 border-l  "
                               >
@@ -238,30 +254,39 @@ const StaffLibraryCardPage = () => {
                         </>
                       ))
                     : studentData &&
-                      studentData.map((data) => (
+                      studentData.map((data,i) => (
                         <>
                           <tr>
-                            <td className="p-4 border-b border-blue-gray-50">
+                          <td className="p-2 border-b border-blue-gray-50">
                               <Typography
-                                variant="h6"
+                                
+                                color="blue-gray"
+                                classNameName=" text-blue-900 border-l  "
+                              >
+                                {i+1}
+                              </Typography>
+                            </td>
+                            <td className="p-1 border-b border-blue-gray-50">
+                              <Typography
+                                
                                 color="blue-gray"
                                 classNameName=" text-blue-900 border-l  "
                               >
                                 {data?.email}
                               </Typography>
                             </td>
-                            <td className="p-4 border-b border-blue-gray-50">
+                            <td className="p-1 border-b border-blue-gray-50">
                               <Typography
-                                variant="h6"
+                                variant="h8"
                                 color="blue-gray"
-                                classNameName=" text-blue-900 border-l  "
+                                classNameName="  text-blue-900 border-l  "
                               >
                                 {data?.name}
                               </Typography>
                             </td>
-                            <td className="p-4 border-b border-blue-gray-50">
+                            <td className="p-1 border-b border-blue-gray-50">
                               <Typography
-                                variant="h6"
+                                variant="h8"
                                 color="blue-gray"
                                 classNameName=" text-blue-900 border-l  "
                               >
@@ -270,36 +295,36 @@ const StaffLibraryCardPage = () => {
                                   : "Not issued"}
                               </Typography>
                             </td>
-                            <td className="p-4 border-b border-blue-gray-50">
+                            <td className="p-1 border-b border-blue-gray-50">
                               <Typography
-                                variant="h6"
+                                variant="h8"
                                 color="blue-gray"
                                 classNameName=" text-blue-900 border-l  "
                               >
                                 {data?.libCardNo}
                               </Typography>
                             </td>
-                            <td className="p-4 border-b border-blue-gray-50">
+                            <td className="p-1 border-b border-blue-gray-50">
                               <Typography
-                                variant="h6"
+                                variant="h8"
                                 color="blue-gray"
                                 classNameName=" text-blue-900 border-l  "
                               >
                                 {data?.className}
                               </Typography>
                             </td>
-                            <td className="p-4 border-b border-blue-gray-50">
+                            <td className="p-1 border-b border-blue-gray-50">
                               <Typography
-                                variant="h6"
+                                variant="h8"
                                 color="blue-gray"
                                 classNameName=" text-blue-900 border-l  "
                               >
                                 {data?.section}
                               </Typography>
                             </td>
-                            <td className="p-4 border-b border-blue-gray-50">
+                            <td className="p-1 border-b border-blue-gray-50">
                               <Typography
-                                variant="h6"
+                                variant="h8"
                                 color="blue-gray"
                                 classNameName=" text-blue-900 border-l  "
                               >
@@ -312,9 +337,9 @@ const StaffLibraryCardPage = () => {
                                 )}
                               </Typography>
                             </td>
-                            <td className="p-4 border-b border-blue-gray-50">
+                            <td className="p-1 border-b border-blue-gray-50">
                               <Typography
-                                variant="h6"
+                                variant="h8"
                                 color="blue-gray"
                                 classNameName=" text-blue-900 border-l  "
                               >

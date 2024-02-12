@@ -28,7 +28,7 @@ import EditStudent from "../Pages/Staff/Dashboard/EditStudent";
 import StaffClassRoom from "../Pages/StudyRoom/Staff/DashPage";
 import StudentClassRoom from "../Pages/StudyRoom/Student/DashPage";
 import AdminHome from "../Pages/Admin/Home/AdminHome";
-import LibraryDropdownSettings from "../Pages/Staff/Dashboard/LibraryDropdownSettings";
+import LibrarySettings from "../Pages/Staff/Dashboard/LibrarySettingsPage";
 const AppRoutes = () => {
   const isLoading = useSelector((state) => state.loading.isLoading);
   return (
@@ -84,7 +84,7 @@ const AppRoutes = () => {
         <Route path={RouteObjects.Issuecards} element={<Issuecards />} />
         <Route
           path={RouteObjects.LibrarySettings}
-          element={<LibraryDropdownSettings />}
+          element={<LibrarySettings />}
         />
         <Route path={RouteObjects.StudentsList} element={<StudentsList />} />
         <Route

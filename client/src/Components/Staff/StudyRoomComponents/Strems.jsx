@@ -52,12 +52,12 @@ const Strems = ({ classRoomData }) => {
       <div>
         <ClassroomBanner classRoomData={classRoomData} />
       </div>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-2  mt-4">
+      <div className="grid grid-cols-2 gap-3 Laptop:grid-cols-2 ipad:grid-cols-1 mobile:grid-cols-1 Tablet:grid-cols-1  mt-4">
         <div className="  p-10 ">
           <AddannounceModal />
 
           <div className=" h-96 overflow-y-scroll ">
-            <div className="   grid grid-cols-2 gap-3 p-4  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-1">
+            <div className="   grid grid-cols-2 gap-3 p-4 Tablet:grid-cols-3 ipad:grid-cols-2 mobile:grid-cols-1 Laptop:grid-cols-2">
               {announcement &&
                 announcement?.map((item, i) => (
                   <Popover key={i}>

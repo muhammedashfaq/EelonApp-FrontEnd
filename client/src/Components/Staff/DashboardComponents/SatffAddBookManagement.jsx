@@ -20,6 +20,10 @@ import LIbraryBookDetailsModal from "./LIbraryBookDetailsModal";
 import LibraryEditBooksModal from "./LibraryEditBooksModal";
 import Spinner from "../../spinner/SpinningLoader";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const SatffAddBookManagement = () => {
   const dispatch = useDispatch();
@@ -33,6 +37,35 @@ const SatffAddBookManagement = () => {
   const axiosPrivate = useAxiosPrivate();
   const [GenreList, setGenreList] = useState();
 
+
+
+  const deleteBook = async (id,name) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this Book Data!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      });
+  
+      if (result.isConfirmed) {
+        // User confirmed, proceed with deletion
+        await axiosPrivate.delete(`/library/books/${id}`);
+        Swal.fire({
+          title: "Deleted!",
+          text: `${name} Book has been deleted`,
+          icon: "success"
+        });
+        getBooks()
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+      console.error(error);
+    }
+  };
   const getBooks = async () => {
     try {
       setisLoading(true);
@@ -109,8 +142,8 @@ const SatffAddBookManagement = () => {
             >
               <>
                 {GenreList &&
-                  GenreList.map((list) => (
-                    <Option value={list.genre}>{list.genre}</Option>
+                  GenreList.map((list,i) => (
+                    <Option key={i} value={list?.genre}>{list?.genre}</Option>
                   ))}
               </>
             </Select>
@@ -126,6 +159,7 @@ const SatffAddBookManagement = () => {
               onClick={() => {
                 setsearchData();
                 setgenre();
+                setsearchQuery("")
               }}
               style={{ textTransform: "none" }}
             >
@@ -166,7 +200,7 @@ const SatffAddBookManagement = () => {
             </Button>
           </div>
           <div>
-            <LibraryBooksAddModal getBooks={getBooks} />
+            <LibraryBooksAddModal GenreList={GenreList} getBooks={getBooks} />
           </div>
         </div>
 
@@ -271,7 +305,7 @@ const SatffAddBookManagement = () => {
                       color="blue-gray"
                       className="font-normal leading-none opacity-70"
                     >
-                      Edit
+                      Action
                     </Typography>
                   </th>
                   {/* <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
@@ -385,6 +419,28 @@ const SatffAddBookManagement = () => {
                               data={data}
                               getBooks={getBooks}
                             />
+
+                            {data?.students?.currentlyIssued ? (
+                              <Tooltip
+                                content="Book Alredy Issued"
+                                animate={{
+                                  mount: { scale: 1, y: 0 },
+                                  unmount: { scale: 0, y: 25 },
+                                }}
+                              >
+                                <FontAwesomeIcon icon={faTrash} color="grey" />
+                              </Tooltip>
+                            ) : (
+                              <Tooltip
+                                content="Delete Book"
+                                animate={{
+                                  mount: { scale: 1, y: 0 },
+                                  unmount: { scale: 0, y: 25 },
+                                }}
+                              >
+                                <FontAwesomeIcon className="cursor-pointer" icon={faTrash} color="red" onClick={()=>deleteBook(data._id,data.bookName)} />
+                              </Tooltip>
+                            )}
                           </td>
                         </tr>
                       );
@@ -488,6 +544,28 @@ const SatffAddBookManagement = () => {
                               data={data}
                               getBooks={getBooks}
                             />
+
+                            {data?.students?.currentlyIssued ? (
+                              <Tooltip
+                                content="Book Alredy Issued"
+                                animate={{
+                                  mount: { scale: 1, y: 0 },
+                                  unmount: { scale: 0, y: 25 },
+                                }}
+                              >
+                                <FontAwesomeIcon icon={faTrash} color="grey" />
+                              </Tooltip>
+                            ) : (
+                              <Tooltip
+                                content="Delete Book"
+                                animate={{
+                                  mount: { scale: 1, y: 0 },
+                                  unmount: { scale: 0, y: 25 },
+                                }}
+                              >
+                                <FontAwesomeIcon className="cursor-pointer" icon={faTrash} color="red" onClick={()=>deleteBook(data._id ,data.bookName)} />
+                              </Tooltip>
+                            )}
                           </td>
                         </tr>
                       );

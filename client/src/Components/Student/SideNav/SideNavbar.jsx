@@ -8,7 +8,7 @@ import {
 import { Link } from "react-router-dom";
 import { RouteObjects } from "../../../Routes/RoutObjects";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faBars, faBook, faChalkboard,faHome,faRightFromBracket,faUserPlus} from '@fortawesome/free-solid-svg-icons'
+import {faBars, faBook, faChalkboard,faGrip,faHome,faRightFromBracket,faUserPlus} from '@fortawesome/free-solid-svg-icons'
 
 const SideNavbar = () => {
   // const [open, setOpen] = useState(true);
@@ -49,9 +49,9 @@ const SideNavbar = () => {
   const closeDrawer = () => setOpen(false);
   return (
     <div>  
-     <FontAwesomeIcon icon={faBars} onClick={openDrawer} className="cursor-pointer"/>
+     <FontAwesomeIcon icon={faBars} onClick={openDrawer} size="xl" className="cursor-pointer bg-blue-gray-400 px-6 py-3 rounded-lg text-white " />
 
-      <Drawer open={open} onClose={closeDrawer} className="p-4 bg-dark-purple overflow-y-scroll">
+      <Drawer open={open} onClose={closeDrawer} className="p-4 bg-dark-purple overflow-y-auto">
         
         
 

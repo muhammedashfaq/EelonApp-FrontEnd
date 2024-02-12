@@ -9,6 +9,7 @@ import {
   Select,
   Option,
   Alert,
+  Tooltip,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import axios from "../../../api/axios";
@@ -18,6 +19,8 @@ import Banner from "../../Banner/Banner";
 import Spinner from "../../spinner/SpinningLoader";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import LibraryUnIssueStudentModal from "./LibraryUnIssueStudentModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const StaffIssueBookManagement = () => {
   const [alertunissue, setAlertunissue] = useState(false);
@@ -28,6 +31,7 @@ const StaffIssueBookManagement = () => {
   const [searchData, setsearchData] = useState();
   const [genre, setgenre] = useState();
   const [isLoading, setisLoading] = useState(false);
+  const [genreList,setGenreList] =useState()
 
   const axiosPrivate = useAxiosPrivate();
 
@@ -57,10 +61,19 @@ const StaffIssueBookManagement = () => {
       setisLoading(false);
     }
   };
-
+  const getSettings = async () => {
+    try {
+      const response = await axiosPrivate.get(`librarysettings`);
+      setGenreList(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     getBooks();
-  }, []);
+    getSettings()
+  }, [  ]);
 
   const [open, setOpen] = useState(true);
 
@@ -68,6 +81,10 @@ const StaffIssueBookManagement = () => {
     e.preventDefault();
     setisLoading(true);
     try {
+      if(!searchBookName){
+        setisLoading(false);
+        return;
+      }
       const response = await axios.get(
         `library/books/issuelist/search/${searchBookName}`
       );
@@ -121,12 +138,12 @@ const StaffIssueBookManagement = () => {
                 }}
                 value={genre}
               >
-                <Option value="Story">Story</Option>
-                <Option value="Poem">Poem</Option>
-                <Option value="Biography">Biography</Option>
-                <Option value="Mystery">Mystery</Option>
-                <Option value="Fiction">Fiction</Option>
-                <Option value="Non-fiction">Non-fiction</Option>
+                <>
+                {genreList &&
+                  genreList.map((list,i) => (
+                    <Option key={i} value={list?.genre}>{list?.genre}</Option>
+                  ))}
+              </>
               </Select>
               {/* <Button
               variant="text"
@@ -149,8 +166,10 @@ const StaffIssueBookManagement = () => {
             <div className="w-full md:w-auto flex">
               <form onSubmit={searchBook} className="flex gap-1">
                 <Input
+                name="searching"
                   label="Search"
                   onChange={(e) => setSearchBookName(e.target.value)}
+
                   // icon={<MagnifyingGlassIco className="h-5 w-5" />}
                 />
                 <IconButton variant="outlined" onClick={searchBook}>
@@ -396,37 +415,48 @@ const StaffIssueBookManagement = () => {
                             </Typography>
                           </td>
                           <td className={classes}>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              <LibraryIssueStudentModal
-                                unissueAlert={setAlertunissue}
-                                setAlert={setAlertissue}
-                                bookId={data?._id}
-                                getBooks={searchBook}
-                                currentlyIssued={
-                                  data?.students?.currentlyIssued
-                                }
-                              />
+                            <div className="flex space-x-2">
+                            {
+                            data?.students?.currentlyIssued ?(
+
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="font-normal"
+                              >
+                              
+                                <LibraryUnIssueStudentModal
+                              
+                                  unissueAlert={setAlertunissue}
+                                  setAlert={setAlertissue}
+                                  bookId={data?._id}
+                                  getBooks={searchBook}
+                                  currentlyIssued={
+                                    data?.students?.currentlyIssued
+                                  }
+                                  />
+                              </Typography>
+                            ):(
+
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="font-normal"
+                              >
+                                <LibraryIssueStudentModal
+                                  unissueAlert={setAlertunissue}
+                                  setAlert={setAlertissue}
+                                  bookId={data?._id}
+                                  getBooks={searchBook}
+                                  currentlyIssued={
+                                    data?.students?.currentlyIssued
+                                  }
+                                />
                             </Typography>
-                       
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              <LibraryUnIssueStudentModal
-                                unissueAlert={setAlertunissue}
-                                setAlert={setAlertissue}
-                                bookId={data?._id}
-                                getBooks={searchBook}
-                                currentlyIssued={
-                                  data?.students?.currentlyIssued
-                                }
-                              />
-                            </Typography>
+
+                            )
+                          }
+                            </div>
                           </td>
                         </tr>
                       );
@@ -518,7 +548,7 @@ const StaffIssueBookManagement = () => {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {data?.language}
+                          
                             </Typography>
                           </td>
                           <td className={classes}>
@@ -532,41 +562,52 @@ const StaffIssueBookManagement = () => {
                           </td>
                           <td className={classes}>
                             <div className="flex space-x-2">
+                          {
+                            data?.students?.currentlyIssued ?(
 
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              <LibraryIssueStudentModal
-                                unissueAlert={setAlertunissue}
-                                setAlert={setAlertissue}
-                                bookId={data?._id}
-                                getBooks={searchBook}
-                                currentlyIssued={
-                                  data?.students?.currentlyIssued
-                                }
-                              />
-                            </Typography>
-                        
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                            
-                              <LibraryUnIssueStudentModal
-                            
-                                unissueAlert={setAlertunissue}
-                                setAlert={setAlertissue}
-                                bookId={data?._id}
-                                getBooks={searchBook}
-                                currentlyIssued={
-                                  data?.students?.currentlyIssued
-                                }
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="font-normal"
+                              >
+                              
+                                <LibraryUnIssueStudentModal
+                              
+                                  unissueAlert={setAlertunissue}
+                                  setAlert={setAlertissue}
+                                  bookId={data?._id}
+                                  getBooks={searchBook}
+                                  currentlyIssued={
+                                    data?.students?.currentlyIssued
+                                  }
+                                  />
+                              </Typography>
+                            ):(
+                                <>
+
+                                
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="font-normal"
+                              >
+                                <LibraryIssueStudentModal
+                                  unissueAlert={setAlertunissue}
+                                  setAlert={setAlertissue}
+                                  bookId={data?._id}
+                                  getBooks={searchBook}
+                                  currentlyIssued={
+                                    data?.students?.currentlyIssued
+                                  }
                                 />
                             </Typography>
-                                </div>
+
+  </>
+
+                            )
+                          }
+                             
+                          </div>
                           </td>
                         </tr>
                       );

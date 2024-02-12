@@ -1,4 +1,4 @@
-import { Card, CardHeader, Typography, Button } from "@material-tailwind/react";
+import { Card, CardHeader, Typography, Button, CardBody } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { RouteObjects } from "../../../Routes/RoutObjects";
 import AddClassRoomModal from "./AddClassRoomModal";
@@ -37,29 +37,11 @@ const HomeClassRoom = () => {
   return (
     <>
     <div>
-      <div className=" grid grid-cols-4 gap-4 p-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className=" grid grid-cols-4 gap-4  mobile:grid-cols-1 Tablet:grid-cols-3 Laptop:grid-cols-4 ipad:grid-cols-3">
       
-        <Card
-          color="green"
-          variant="gradient"
-          className="w-full max-w-[20rem] p-8"
-        >
-          <CardHeader
-            variant="gradient"
-            color="gray"
-            className="mb-4 grid h-28 place-items-center"
-          >
-            <Button
-              size="lg"
-              color="white"
-              className="hover:scale-[1.02] focus:scale-[1.02] active:scale-100"
-              ripple={false}
-              fullWidth={true}
-            >
+        
               <AddClassRoomModal userId={userId} />
-            </Button>
-          </CardHeader>
-        </Card>
+            
         {classRooms.map((classroom) => (
           <div key={classroom._id} className="col-span-1">
             <Link to={`${RouteObjects.StudyRoomHome2}/${classroom._id}`}>

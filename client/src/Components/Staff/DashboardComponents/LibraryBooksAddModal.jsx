@@ -15,7 +15,7 @@ import { bookAddValidation } from "../../../Helper/Validations/validations";
 import { useNavigate } from "react-router-dom";
 import { RouteObjects } from "../../../Routes/RoutObjects";
 
-export default function LibraryBooksAddModal({ getBooks }) {
+export default function LibraryBooksAddModal({GenreList , getBooks }) {
   const[isLoading,setIsLoading]=useState(false)
   const [open, setOpen] = React.useState(false);
   const navigate=useNavigate()
@@ -162,12 +162,13 @@ export default function LibraryBooksAddModal({ getBooks }) {
                 onChange={handleGenreChange}
                 error={FrntError && FrntError.genre}
               >
-                <Option value="Story">Story</Option>
-                <Option value="Poem">Poem</Option>
-                <Option value="Biography">Biography</Option>
-                <Option value="Mystery">Mystery</Option>
-                <Option value="Fiction">Fiction</Option>
-                <Option value="Non-fiction">Non-fiction</Option>
+                {GenreList?.map((genre, i)=>(
+
+                  < Option key={i} value={genre.genre}>{genre.genre}</Option>
+                  
+                  ))
+                }
+                
               </Select>
 
               <Input

@@ -19,6 +19,8 @@ import { useDispatch } from "react-redux";
 import { bookAddValidation } from "../../../Helper/Validations/validations";
 import { useNavigate } from "react-router-dom";
 import { RouteObjects } from "../../../Routes/RoutObjects";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faPencil } from "@fortawesome/free-solid-svg-icons";
 const useDropdownState = (initialValue, fetchedValue) => {
   const [value, setValue] = useState(initialValue);
 
@@ -116,7 +118,7 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
         }}
       >
         <IconButton variant="text" onClick={handleOpen}>
-          <PencilIcon className="h-6 w-5" />
+          <FontAwesomeIcon icon={faEdit}  className="h-6 w-5" />
         </IconButton>
       </Tooltip>
       <Dialog open={open} handler={handleOpen} size="xl">

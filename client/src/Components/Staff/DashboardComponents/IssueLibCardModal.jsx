@@ -9,9 +9,26 @@ import {
   Typography,
   Input,
   Checkbox,
+  Tooltip,
 } from "@material-tailwind/react";
 import { useState } from "react";
 import axios from "../../../api/axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faAd,
+  faAdd,
+  faEye,
+  faHome,
+  faMinimize,
+  faMinus,
+  faMinusCircle,
+  faMinusSquare,
+  faPlus,
+  faPlusCircle,
+  faStream,
+  faStreetView,
+  faUserMinus,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function IssueLibCardModal({
   libCardNo,
@@ -22,24 +39,42 @@ export default function IssueLibCardModal({
   const [open, setOpen] = React.useState(false);
   const [checkBx, setcheckBx] = useState(libCardStatus);
   const [libCdNo, setlibCdNo] = useState();
+  const [validationError, setValidationError] = useState("");
   const handleOpen = () => setOpen((cur) => !cur);
   const handleClose = () => {
+    setlibCdNo(""); 
+    setValidationError("");
     setOpen(false);
   };
-
+  
   useEffect(() => {
     setcheckBx(libCardStatus);
     if (libCardNo) setlibCdNo(libCardNo);
   }, [libCardStatus, libCardNo]);
 
+  const handleCheckboxChange = () => {
+    if (!libCardStatus) {
+      setcheckBx(!checkBx);
+      setValidationError(checkBx ? "Card Not Issued..." : "");
+    } else {
+      setcheckBx(!checkBx);
+      setValidationError("");
+    }
+  };
+  
   const issueCard = async () => {
     try {
       if (!studentId) return;
+
+      if (!libCardStatus && !checkBx) {
+        setValidationError("Card Not Issued...");
+        return;
+      }
       const response = await axios.put(
         `users/student/issuelibrarycard/${studentId}`,
         { libCardNo: libCdNo, libCardStatus: checkBx }
       );
-      console.log(response);
+      console.log(response,"reres");
       getStudents();
       handleClose();
     } catch (error) {
@@ -48,9 +83,41 @@ export default function IssueLibCardModal({
   };
   return (
     <>
-      <Button variant="text" onClick={handleOpen}>
-        Edit
-      </Button>
+      {libCardStatus ? (
+        <Tooltip
+          content="Re-call Library Card"
+          animate={{
+            mount: { scale: 1, y: 0 },
+            unmount: { scale: 0, y: 25 },
+          }}
+        >
+          <FontAwesomeIcon
+            className="cursor-pointer"
+            icon={faMinusSquare}
+            size="xl"
+            color="red"
+            onClick={handleOpen}
+          />
+        </Tooltip>
+      ) : (
+        <Tooltip
+          content="Issue Library Card"
+          className="bg-blue-gray-300"
+          animate={{
+            mount: { scale: 1, y: 0 },
+            unmount: { scale: 0, y: 25 },
+          }}
+        >
+          <FontAwesomeIcon
+            className="cursor-pointer"
+            icon={faPlusCircle}
+            size="xl"
+            color="Green"
+            onClick={handleOpen}
+          />
+        </Tooltip>
+      )}
+
       <Dialog
         size="xs"
         open={open}
@@ -62,8 +129,12 @@ export default function IssueLibCardModal({
             <Typography variant="h4" color="blue-gray">
               Issue library card
             </Typography>
-            <Typography className="-mb-2" variant="h6">
-              Card no.
+            <Typography
+              className="-mb-2"
+              variant="h6"
+              color={validationError ? "red" : ""}
+            >
+              {validationError ? validationError : "Card no."}
             </Typography>
             <Input
               type="number"
@@ -73,10 +144,10 @@ export default function IssueLibCardModal({
               onChange={(e) => setlibCdNo(e.target.value)}
             />
             <div>
-              <div class="inline-flex items-center">
+              <div className="inline-flex items-center">
                 <Checkbox
                   defaultChecked={checkBx}
-                  onChange={(e) => setcheckBx(e.target.checked)}
+                  onChange={handleCheckboxChange}
                   label={
                     <div>
                       <Typography color="blue-gray" className="font-medium">
@@ -105,7 +176,7 @@ export default function IssueLibCardModal({
               onClick={issueCard}
               fullWidth
             >
-              Issue library card
+              {libCardStatus?"Re-Call Library Card":"Issue Library Card"}
             </Button>
           </CardFooter>
         </Card>

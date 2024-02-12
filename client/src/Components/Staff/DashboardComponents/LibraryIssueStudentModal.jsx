@@ -10,10 +10,13 @@ import {
   Input,
   Checkbox,
   Alert,
+  Tooltip,
 } from "@material-tailwind/react";
 import axios from "../../../api/axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCartPlus, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
 export default function LibraryIssueStudentModal({
   unissueAlert,
@@ -31,6 +34,7 @@ export default function LibraryIssueStudentModal({
   const [studentId, setstudentId] = useState();
   const [searchData, setsearchData] = useState();
   const [checked, setchecked] = useState();
+  const[idError,setIdError]=useState("")
 
   const issuebook = async () => {
     if (!checked) return;
@@ -62,6 +66,10 @@ export default function LibraryIssueStudentModal({
 
   const searchStudent = async () => {
     try {
+      if (!studentId) {
+        setIdError("ID is required");
+        return;
+      }
       const response = await axios.get(
         `users/student/issuelibrarycard/${studentId}`
       );
@@ -70,19 +78,27 @@ export default function LibraryIssueStudentModal({
       setstudentId(response.data.email);
     } catch (error) {
       console.log(error);
+      if(error.response.status===404){
+        setIdError(error.response.data.message)
+
+      }
     }
   };
 
   return (
     <>
-      <Button size="sm"
-      color="blue"
-        variant="outlined"
-        style={{ textTransform: "none" }}
-        onClick={handleOpen}
-      >
-        Issue 
-      </Button>
+
+<Tooltip content=" Issue Book"
+      animate={{
+        mount: { scale: 1, y: 0 },
+        unmount: { scale: 0, y: 25 },
+      }}
+    >
+
+    <FontAwesomeIcon icon={faCartShopping} size="xl"   color="Green"   className="hover:cursor-pointer"   onClick={handleOpen}
+/>
+    </Tooltip>
+   
 
       <Dialog
         size="xs"
@@ -98,16 +114,18 @@ export default function LibraryIssueStudentModal({
             <Typography
               className="mb-3 font-normal"
               variant="paragraph"
-              color="gray"
+            color={idError?"red":"gray"}
             >
-              Enter student id
+              {idError? idError:"Enter student id"}
             </Typography>
             <Typography className="-mb-2" variant="h6">
               Student id
             </Typography>
             <Input
-              label="Student id"
-              size="lg"
+                label={idError?idError:"Enter Id"}
+                size="lg"
+                error={idError}
+
               onChange={(e) => setstudentId(e.target.value)}
             />
             <Button variant="outlined" onClick={searchStudent} fullWidth>
