@@ -1,186 +1,24 @@
-// import { useState } from "react";
-// import logo from "../../../assets/EelonLogo.png";
-// import { RouteObjects } from "../../../Routes/RoutObjects";
-// import { Link } from "react-router-dom";
-// const Navbar = () => {
-//   const [open, setOpen] = useState(true);
-//   const [submenuOpen, setOpenSubmenu] = useState(false);
-//   const menu = [
-//     {
-//       title: "Home",
-//       icon: <span className="material-symbols-outlined">grid_view</span>,      href: RouteObjects.root,
-
-//     },{
-//       title: "Dashboard",
-//       icon: <span className="material-symbols-outlined">grid_view</span>,
-//     },
-//     {
-//       title: "Library",
-//       icon: <span className="material-symbols-outlined">library_books</span>,
-//       href: RouteObjects.Stafflibrary,
-//     },
-
-//     {
-//       title: "Students",
-//       icon: <span className="material-symbols-outlined">
-//       person
-//       </span>,
-//       submenu: true,
-
-//       submenuItems: [
-//         { title: "Students List ", href: RouteObjects.StudentsList,icon:<span className="material-symbols-outlined">
-//         person_add
-//         </span> },
-//         { title: "Add Student" , href: RouteObjects.AddStudent, },
-//         { title: "Add Form Requirments", href: RouteObjects.RequireForms, },
-
-//       ],
-//     },
-//     {
-//       title: "Dashboard",
-//       icon: <span className="material-symbols-outlined">library_books</span>,
-//     },
-//     {
-//       title: "Dashboard",
-//       icon: <span className="material-symbols-outlined">library_books</span>,
-//     },
-//     {
-//       title: "Dashboard",
-//       icon: <span className="material-symbols-outlined">library_books</span>,
-//     },
-//     {
-//       title: "Logout",
-//       icon: <span className="material-symbols-outlined">library_books</span>,
-//     },
-//   ];
-//   return (
-//     <div className="flex">
-//       <div
-//         className={` bg-dark-purple h-screen shadow-xl p-5 pt-8 ${
-//           open ? "w-48" : "w-28"
-//         } duration-300 relative`}
-//       >
-//         <span
-//           onClick={() => setOpen(!open)}
-//           className={`material-symbols-outlined bg-white text-dark-purple text-1xl rounded-full absolute -right-3 broder border  cursor-pointer ${
-//             !open && "rotate-180"
-//           }`}
-//         >
-//           arrow_back
-//         </span>
-//         {/*
-//         <div className="inline-flex ">
-//           <div className="flex items-center">
-//             <img
-//               src={logo}
-//               className={`w-20 h-20 ${open && "rotate-[360deg]"}`}
-//             />
-//             <h1
-//               className={`text-white origin-left font-medium m-1 text-3xl  ${
-//                 !open && "scale-0"
-//               }`}
-//             >
-//               Eelon App
-//             </h1>
-//           </div>
-//         </div>
-//         <div
-//           className={`flex items-center rounded-lg bg-blue-gray-500  mt-6 ${
-//             open ? "px-2.5" : "px-4"
-//           } py-2`}
-//         >
-//           <span className="material-symbols-outlined">search</span>{" "}
-//           <input
-//             type={"search"}
-//             placeholder="search"
-//             className={`text-base bg-transparent w-full text-white focus:outline-none ${
-//               !open && "hidden"
-//             }`}
-//           />
-//         </div> */}
-
-//         <ul className="pt-2">
-//           {menu.map((item, index) => (
-//             <li
-//               className={`text-gray-300 text-sm flex flex-col cursor-pointer p-2 hover:bg-blue-gray-500 rounded-md mt-2 relative`}
-//               key={index}
-//             >
-//               <div className="flex items-center gap-x-4">
-//                 {item.icon}
-
-//                 <Link to={item.href}>
-//                   <span
-//                     className={`duration-200 flex-1 ${
-//                       !open && "hidden "
-//                     } text-base font-medium`}
-//                   >
-//                     {item.title}
-//                   </span>
-//                 </Link>
-
-//                 {item.submenuItems && (
-//                   <span
-//                     className="material-symbols-outlined"
-//                     onClick={() => setOpenSubmenu(!submenuOpen)}
-//                   >
-//                     {submenuOpen && open ? "expand_less" : "expand_more"}
-//                   </span>
-//                 )}
-//               </div>
-
-//               {item.submenuItems && submenuOpen && open && (
-//                 <ul className=" ">
-//                   {item.submenuItems.map((subitems, i) => (
-
-//                     <li
-//                     className={` text-sm flex items-center gap-x-8 cursor-pointer p-3 hover:bg-blue-500 rounded-lg text-white`}
-//                     key={i}
-//                     >
-//                     <Link to={subitems.href}>
-//                       <span>
-
-//                       {subitems.title}
-//                       </span>
-//                       </Link>
-//                     </li>
-//                   ))}
-//                 </ul>
-//               )}
-//             </li>
-//           ))}
-//         </ul>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Navbar;
-
 import { useState } from "react";
 import logo from "../../../assets/EelonLogo.png";
-import {
-  Drawer,
-  Button,
-  Typography,
-  IconButton,
-} from "@material-tailwind/react";
+import { Drawer, Typography, IconButton } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { RouteObjects } from "../../../Routes/RoutObjects";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
   faBook,
+  faCaretRight,
   faChalkboard,
   faHome,
   faRightFromBracket,
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
+import StaffAttandancePage from "../../../Pages/Staff/Dashboard/Attandance/StaffAttandancePage";
 
 const NavBar = () => {
-  // const [open, setOpen] = useState(true);
-
   const [open, setOpen] = useState(false);
-  const [submenuOpen, setOpenSubmenu] = useState(false);
+  const [submenuOpen, setSubmenuOpen] = useState({});
+
   const menu = [
     {
       title: "Home",
@@ -196,28 +34,61 @@ const NavBar = () => {
       icon: faBook,
       href: RouteObjects.Stafflibrary,
     },
-
     {
-      title: "Students",
+      title: "Academics",
       icon: faUserPlus,
       submenu: true,
-
       submenuItems: [
         {
           title: "Students List ",
           href: RouteObjects.StudentsList,
-          icon: <span className="material-symbols-outlined">person_add</span>,
+          icon: faCaretRight,
         },
-        { title: "Add Student", href: RouteObjects.AddStudent },
-        { title: "Add Form Requirments", href: RouteObjects.RequireForms },
+        {
+          title: "Add Student",
+          href: RouteObjects.AddStudent,
+          icon: faCaretRight,
+        },
+        {
+          title: "Add Form Requirments",
+          href: RouteObjects.RequireForms,
+          icon: faCaretRight,
+        },
+        {
+          title: "Manage Classes",
+          href: RouteObjects.StaffManageClass,
+          icon: faCaretRight,
+        },
+        {
+          title: "Settings",
+          href: RouteObjects.RequireForms,
+          icon: faCaretRight,
+        },
       ],
     },
     {
-      title: "Study room",
+      title: "Attendance",
+      icon: faUserPlus,
+      submenu: true,
+      submenuItems: [
+        {
+          title: "Students",
+          icon: faCaretRight,
+          href: RouteObjects.StudentsAttendance,
+        },
+        {
+          title: "Staff",
+          icon: faCaretRight,
+          href: RouteObjects.StaffAttandance,
+        },
+        { title: "Attandance Report", icon: faCaretRight },
+      ],
+    },
+    {
+      title: "Study Room",
       href: RouteObjects.StudyRoomHome,
       icon: faChalkboard,
     },
-
     {
       title: "Logout",
       icon: faRightFromBracket,
@@ -226,6 +97,12 @@ const NavBar = () => {
 
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
+  const toggleSubmenu = (index) =>
+    setSubmenuOpen((prevState) => ({
+      ...prevState,
+      [index]: !prevState[index],
+    }));
+
   return (
     <div>
       <FontAwesomeIcon
@@ -244,7 +121,6 @@ const NavBar = () => {
             >
               <Link to={item.href}>
                 <div className="flex items-center gap-x-4">
-                  {/* {item.icon} */}
                   <FontAwesomeIcon icon={item.icon} />
 
                   <span
@@ -258,27 +134,24 @@ const NavBar = () => {
                   {item.submenuItems && (
                     <span
                       className="material-symbols-outlined"
-                      onClick={() => setOpenSubmenu(!submenuOpen)}
+                      onClick={() => toggleSubmenu(index)}
                     >
-                      {submenuOpen && open ? "expand_less" : "expand_more"}
+                      {submenuOpen[index] ? "expand_less" : "expand_more"}
                     </span>
                   )}
                 </div>
               </Link>
-
-              {item.submenuItems && submenuOpen && open && (
-                <ul className=" ">
+              {item.submenuItems && submenuOpen[index] && (
+                <ul className=" bg-deep-orange-500 rounded-xl">
                   {item.submenuItems.map((subitems, i) => (
-                    <>
-                      <Link to={subitems.href}>
-                        <li
-                          key={i}
-                          className={` text-sm flex items-center gap-x-8 cursor-pointer p-3 hover:bg-blue-500 rounded-lg text-white`}
-                        >
-                          <span>{subitems.title}</span>
-                        </li>
-                      </Link>
-                    </>
+                    <Link to={subitems.href} key={i}>
+                      <li
+                        className={` text-sm flex items-center gap-x-8 cursor-pointer px-2 py-1.5 hover:bg-blue-500 rounded-lg text-white `}
+                      >
+                        <FontAwesomeIcon icon={subitems.icon} />
+                        <span>{subitems.title}</span>
+                      </li>
+                    </Link>
                   ))}
                 </ul>
               )}
