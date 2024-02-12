@@ -23,7 +23,6 @@ import ClassWorks from "./ClassWorks/ClassWorks";
 import { useParams } from "react-router-dom";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import Strems from "./Strems";
-import Grades from "./Grades";
 import { faBullhorn, faL, faUserPen, faUsers } from "@fortawesome/free-solid-svg-icons";
 import SpinningLoader from "../../spinner/SpinningLoader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -79,9 +78,7 @@ export default function StaffClassroomPage() {
                 <Tab value="People" onClick={() => settabValue("People")}>
                 <FontAwesomeIcon icon={faUsers}/> People
                 </Tab>
-                <Tab value="Grades" onClick={() => settabValue("Grades")}>
-                  Grades
-                </Tab>
+                
                 {/* <Tab value="People">People</Tab>
                 <Tab value="Grades">Grades</Tab> */}
               </TabsHeader>
@@ -110,11 +107,6 @@ export default function StaffClassroomPage() {
                 ) : tabValue === "People" ? (
                   <>
                     <AddPeople />
-                  </>
-                ) : tabValue === "Grades" ? (
-                  <>
-                  
-                  <Grades/>
                   </>
                 ) : (
                   ""

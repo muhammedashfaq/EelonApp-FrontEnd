@@ -12,13 +12,14 @@ import {faBars, faBook, faChalkboard,faGrip,faHome,faRightFromBracket,faUserPlus
 
 const SideNavbar = () => {
   // const [open, setOpen] = useState(true);
-
+  
   const [open, setOpen] = useState(false);
   const [submenuOpen, setOpenSubmenu] = useState(false);
   const menu = [
-   { title: "Student Info" 
- ,href:RouteObjects.StudentDashboard},
- { title: "Library" ,href:RouteObjects.StudentLibrary},
+    { title: "Student Info" 
+    ,href:RouteObjects.StudentDashboard},
+    { title: "Study Room" ,href:RouteObjects.StudentStudyRoomHome},
+    { title: "Library" ,href:RouteObjects.StudentLibrary},
    { title: "Fee Invoices",href:RouteObjects.FeeInvoice },
 
    // {
@@ -37,7 +38,6 @@ const SideNavbar = () => {
    { title: "Home Work" ,href:RouteObjects.HomeWorks},
    { title: "Payment History" ,href:RouteObjects.Payment},
    { title: "Study Materials" ,href:RouteObjects.StudyMaterials},
-   { title: "Study Room" ,href:RouteObjects.StudentStudyRoomHome},
    { title: "Events" ,href:""},
 
 
