@@ -49,7 +49,7 @@ const AssignmenViewModal = ({ open, onClose, assignmentData }) => {
   }, []);
 
   useEffect(() => {
-    getStudentsByArray();
+    console.log(assignmentData);
   }, [assignmentData]);
 
   return (
