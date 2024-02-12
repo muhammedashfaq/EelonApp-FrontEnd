@@ -31,6 +31,7 @@ import AdminHome from "../Pages/Admin/Home/AdminHome";
 import LibrarySettings from "../Pages/Staff/Dashboard/LibrarySettingsPage";
 import StudentsAttandancePage from "../Pages/Staff/Dashboard/Attandance/StudentsAttandancePage";
 import StaffAttandancePage from "../Pages/Staff/Dashboard/Attandance/StaffAttandancePage";
+import ManageClass from "../Pages/Staff/Dashboard/Academics/ManageClass";
 const AppRoutes = () => {
   const isLoading = useSelector((state) => state.loading.isLoading);
   return (
@@ -101,11 +102,15 @@ const AppRoutes = () => {
         />
 
         <Route path={RouteObjects.RequireForms} element={<AddForms />} />
-        <Route path={RouteObjects.StudentsAttendance} element={<StudentsAttandancePage />} />
-        <Route path={RouteObjects.StaffAttandance} element={<StaffAttandancePage/>} />
-
-
-
+        <Route
+          path={RouteObjects.StudentsAttendance}
+          element={<StudentsAttandancePage />}
+        />
+        <Route
+          path={RouteObjects.StaffAttandance}
+          element={<StaffAttandancePage />}
+        />
+        <Route path={RouteObjects.StaffManageClass} element={<ManageClass />} />
 
         {/* Staff CLASS ROOM ROUTS */}
         <Route
