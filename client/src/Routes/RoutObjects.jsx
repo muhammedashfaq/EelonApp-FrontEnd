@@ -20,6 +20,8 @@ export const RouteObjects = {
   AddStudent: "/addstudent",
   EditStudent: "/editstudent",
   RequireForms: "/forms",
+  StudentsAttendance:"/student/attandance",
+  StaffAttandance:"/staff/attancance",
 
   StaffStudyRoom: "/staff/studyroom*",
   StudyRoomHome: "/staff/studyroom/home",
