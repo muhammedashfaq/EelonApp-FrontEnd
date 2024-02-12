@@ -93,7 +93,6 @@ const ClassWorks = () => {
       );
       setAssignment(response.data);
       setMaterial(response2.data);
-      console.log(response2.data);
     } catch (error) {
       console.log(error);
     }
@@ -115,6 +114,7 @@ const ClassWorks = () => {
     setIsmaterialsModalOpen(false);
     setIsAssignmentView(false);
     getClassWorks();
+    setAssignmentModalData();
   };
   const handleCloseMaterialModal = () => {
     setIsMaterialView(false);
@@ -208,14 +208,14 @@ const ClassWorks = () => {
                           </CardBody>
                         </Card>
                       ))}
-                    <AssignmenViewModal
-                      open={isAssignmentView}
-                      onClose={handleCloseModal}
-                      assignmentData={assignmentModalData}
-                    />
                   </div>
                 </>
               )}
+              <AssignmenViewModal
+                open={isAssignmentView}
+                onClose={handleCloseModal}
+                assignmentData={assignmentModalData}
+              />
               {value === "2" && (
                 <>
                   <div className="  mt-20 space-y-3 ">

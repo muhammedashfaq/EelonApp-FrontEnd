@@ -66,6 +66,10 @@ const AssignmenViewModal = ({ open, onClose, assignmentData }) => {
     }
   };
 
+  useEffect(() => {
+    console.log(turnedInlist, "turnin");
+  }, [turnedInlist]);
+
   return (
     <div>
       <Dialog size="xxl" open={open} closeButton>
