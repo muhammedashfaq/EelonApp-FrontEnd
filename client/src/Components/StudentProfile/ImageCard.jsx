@@ -1,53 +1,123 @@
 import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
-    Typography,
-    Button,
-    DialogBody,
-    Dialog,
-    DialogHeader,
-    Avatar,
-    IconButton,
-    DialogFooter,
-    Tooltip,
-  } from "@material-tailwind/react";
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Typography,
+  Button,
+  DialogBody,
+  Dialog,
+  DialogHeader,
+  Avatar,
+  IconButton,
+  DialogFooter,
+  Tooltip,
+  Input,
+} from "@material-tailwind/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEdit,
+  faEnvelope,
+  faEye,
+  faLock,
+  faLockOpen,
+  faUpload,
+} from "@fortawesome/free-solid-svg-icons";
+import Swal from 'sweetalert2'
 import { useState } from "react";
-const ImageCard = ({userData}) => {
-  console.log(userData,"image cardf")
-    const[showModal,setShowModal]=useState(false)
-    const [open, setOpen] = useState(false);
-    const [isFavorite, setIsFavorite] = useState(false);
+import useAuth from "../../Hooks/useAuth";
+const ImageCard = ({ userData }) => {
+  console.log(userData, "image cardf");
+  const [showModal, setShowModal] = useState(false);
+  const [Image, setImage] = useState(
+    "https://img.freepik.com/premium-photo/man-is-smiling-holding-laptop-with-smile-his-face_973047-1028.jpg"
+  );
+  const [errorImage,setErrorImage]=useState("")
+  const[profileImage,setProfileImage]=useState("")
+  const [open, setOpen] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const handleOpen = () => setOpen((cur) => !cur);
+  const handleIsFavorite = () => setIsFavorite((cur) => !cur);
+  const { auth } = useAuth();
+  const ImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setImage(imageUrl);
+      setProfileImage(imageUrl)
+    }
+  };
+
+  const submitimage = async(e) => {
+    try {
+      e.preventDefault()
+      if(!profileImage){
    
-    const handleOpen = () => setOpen((cur) => !cur);
-    const handleIsFavorite = () => setIsFavorite((cur) => !cur);
-   
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong! Choose Any Image 📷",
+        });
+        return
+      }
+      console.log('image');
+        const response = null;
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
-         <Card className="w-96 h-full max-h-[30rem] cursor-pointer " onClick={handleOpen}>
-      <CardHeader shadow={false} floated={false} className="h-96">
-        <img
-        src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
-          alt="card-image"
-          className="h-full w-full object-cover"
-        />
-      </CardHeader>
-      <CardBody className="text-center">
-        <Typography variant="h4" color="blue-gray" className="mb-2">
-        {userData?.studentName}
-        </Typography>
-        <Typography color="blue-gray" className="font-medium" textGradient>
-      {userData?.email}
-        </Typography>
-      {userData?.ContactNo}
+      <Card className="w-96 h-full max-h-[30rem] cursor-pointer ">
+        <CardHeader
+          shadow={false}
+          floated={false}
+          className="h-96"
+          onClick={handleOpen}
+        >
+          <img
+            src={Image}
+            alt="card-image"
+            className="h-full w-full object-cover"
+          />
+        </CardHeader>
+        {(auth.roles == 5151 || auth.roles == 2000) && (
+          <div className="space-x-2 flex justify-center my-1 items-center">
+            <Button color="teal">
+              <label
+                htmlFor="imageUpload"
+                className=" cursor-pointer text-white"
+              >
+                <FontAwesomeIcon icon={faEdit} size="2xl" />
+              </label>
+              <input
+                type="file"
+                id="imageUpload"
+                name="profileimage"
+                className="hidden"
+                onChange={ImageChange}
+              />
+            </Button>
 
-      </CardBody>
-      
-    </Card>
+            <Button color="lime" className="" onClick={submitimage}>
+              <FontAwesomeIcon icon={faUpload} size="2xl" />
+            </Button>
+          </div>
+        )}
 
+        <CardBody className="text-center">
+          <Typography variant="h4" color="blue-gray" className="mb-2">
+            {userData?.studentName}
+          </Typography>
+          <Typography color="blue-gray" className="font-medium" textGradient>
+            {userData?.email}
+          </Typography>
+          {userData?.ContactNo}
+        </CardBody>
+      </Card>
 
-    <Dialog size="lg" open={open} handler={handleOpen}>
+      <Dialog size="lg" open={open} handler={handleOpen}>
         <DialogHeader className="justify-between">
           <div className="flex items-center gap-3">
             <Avatar
@@ -130,14 +200,8 @@ const ImageCard = ({userData}) => {
           </Button>
         </DialogFooter>
       </Dialog>
-            
-
     </div>
+  );
+};
 
-
-
-    
-  )
-}
-
-export default ImageCard
+export default ImageCard;

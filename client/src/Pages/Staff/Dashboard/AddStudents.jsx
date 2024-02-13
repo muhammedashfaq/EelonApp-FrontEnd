@@ -1,5 +1,5 @@
 import React from 'react'
-import AddStudent from '../../../Components/Staff/DashboardComponents/AddStudent'
+import AddStudent from '../../../Components/Staff/DashboardComponents/StudentAdmintion/AddStudent'
 import StaffHeader from "../../../Components/Staff/Header/landingPageHeader"
 import Banner from '../../../Components/Banner/Banner'
 

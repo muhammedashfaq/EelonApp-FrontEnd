@@ -52,7 +52,6 @@ const CreateSatffAttandanceModal = () => {
 
       const response = await axiosPrivate.post("/attendance", formData);
       console.log(response);
-      setCreated(true)
       setBoard("");
       setAcademicYear("");
       setStaffType("");

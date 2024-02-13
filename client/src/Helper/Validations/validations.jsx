@@ -26,3 +26,8 @@ export const loginValidate = (email, password) => {
     return errors;
   };
   
+  export const admiTionValidation =(formData)=>{
+    const errors = {};
+
+    errors.bookName = !formData.studentName ? "Book name is required" : "";
+  }

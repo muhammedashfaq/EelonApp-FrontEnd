@@ -18,10 +18,10 @@ import {
 } from "@material-tailwind/react";
 import Swal from "sweetalert2";
 
-import axios from "../../../api/axios";
+import axios from "../../../../api/axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { RouteObjects } from "../../../Routes/RoutObjects";
+import { RouteObjects } from "../../../../Routes/RoutObjects";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEdit,
@@ -30,7 +30,7 @@ import {
   faTrash,
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
+import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 
 const TABS = [
   {
