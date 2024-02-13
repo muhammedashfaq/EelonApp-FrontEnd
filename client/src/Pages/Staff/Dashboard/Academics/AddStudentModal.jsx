@@ -9,15 +9,19 @@ import {
   Typography,
   Input,
   Checkbox,
+  IconButton,
 } from "@material-tailwind/react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
-export default function AddStudentModal() {
+export default function AddStudentModal({ classObjId }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [searchQuery, setsearchQuery] = useState();
   const [searchData, setsearchData] = useState();
+  const [selectedUsers, setSelectedUsers] = useState([]);
 
   const axiosPrivate = useAxiosPrivate();
 
@@ -30,6 +34,33 @@ export default function AddStudentModal() {
       );
       console.log(response.data);
       setsearchData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleCheckboxChange = (userId) => {
+    setSelectedUsers((prevSelectedUsers) => {
+      if (prevSelectedUsers.includes(userId)) {
+        return prevSelectedUsers.filter((id) => id !== userId);
+      } else {
+        return [...prevSelectedUsers, userId];
+      }
+    });
+  };
+
+  const handleAddButtonClick = async () => {
+    try {
+      if (!selectedUsers) return;
+      const reqData = {
+        students: selectedUsers,
+      };
+      const response = await axiosPrivate.put(
+        `classsection/addstudent/${classObjId}`,
+        reqData
+      );
+      console.log(response.data);
+      // console.log("Selected Users:", selectedUsers);
     } catch (error) {
       console.error(error);
     }
@@ -66,14 +97,36 @@ export default function AddStudentModal() {
               <Typography className="-mb-2" variant="h6">
                 Student Email
               </Typography>
-              <Input
+              {/* <Input
                 label="Enter student email"
                 size="lg"
                 onChange={(e) => setsearchQuery(e.target.value)}
               />
               <Button variant="outlined" onClick={getAllStudents} fullWidth>
                 Search students
-              </Button>
+              </Button> */}
+              <div className="relative flex w-full max-w-[24rem]">
+                <Input
+                  type="text"
+                  label="Email Address"
+                  value={searchQuery}
+                  onChange={(e) => setsearchQuery(e.target.value)}
+                  className="pr-20"
+                  containerProps={{
+                    className: "min-w-0",
+                  }}
+                />
+                <IconButton
+                  size="sm"
+                  color={searchQuery ? "gray" : "blue-gray"}
+                  // disabled={!searchQuery}
+                  className="!absolute right-1 top-1 rounded"
+                  onClick={getAllStudents}
+                  variant="text"
+                >
+                  <FontAwesomeIcon icon={faSearch} size="xl" />
+                </IconButton>
+              </div>
             </form>
           </CardBody>
           <CardFooter className="pt-0">
@@ -81,11 +134,18 @@ export default function AddStudentModal() {
               searchData.map((data) => (
                 <div
                   style={{ border: "2px solid gray", borderRadius: "5px" }}
-                  className="p-2 m-2"
+                  className="p-2 m-2 flex justify-between"
                 >
-                  <Typography>{data?.email}</Typography>
+                  <Typography className="mt-2.5">{data?.email}</Typography>
+                  <Checkbox
+                    checked={selectedUsers.includes(data._id)}
+                    onChange={() => handleCheckboxChange(data._id)}
+                  />
                 </div>
               ))}
+            <Button variant="gradient" onClick={handleAddButtonClick} fullWidth>
+              Add users
+            </Button>
           </CardFooter>
         </Card>
       </Dialog>

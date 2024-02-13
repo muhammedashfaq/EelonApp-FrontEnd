@@ -30,6 +30,8 @@ const CreateAttendanceModal = ({ setCreated }) => {
   const [date, setDate] = useState("");
   const [error, setError] = useState("");
   const [classSection, setClassSection] = useState("");
+  const [clss, setClss] = useState([]);
+
   const axiosPrivate = useAxiosPrivate();
 
   const handleOpen = () => {
@@ -44,6 +46,7 @@ const CreateAttendanceModal = ({ setCreated }) => {
 
   const handleSubmit = async () => {
     try {
+      setError("");
       const formData = {
         board,
         academicYear,
@@ -54,14 +57,7 @@ const CreateAttendanceModal = ({ setCreated }) => {
       };
 
       console.log(formData);
-      if (
-        !board ||
-        !academicYear ||
-        !std ||
-        !section ||
-        !date ||
-        !classSection
-      ) {
+      if (!board || !academicYear || !date || !classSection) {
         setError("All fields are required");
         return;
       }
@@ -90,13 +86,10 @@ const CreateAttendanceModal = ({ setCreated }) => {
     // handleOpen();
   };
 
-  const [clss, setClss] = useState([]);
   const getClsSection = async () => {
     try {
-      const response = await axiosPrivate.get("/classsection");
-      const sortedData = response.data.sort(
-        (a, b) => parseInt(a.classId) - parseInt(b.classId)
-      );
+      const response = await axiosPrivate.get("/classsection/dropdowns");
+      const sortedData = response.data.sort((a, b) => a.localeCompare(b));
 
       setClss(sortedData);
     } catch (error) {
@@ -147,7 +140,7 @@ const CreateAttendanceModal = ({ setCreated }) => {
               <Option value="2022-2023">2022-2023</Option>
               <Option value="2023-2024">2023-2024</Option>
             </Select>
-            <Select
+            {/* <Select
               label="Class"
               value={std}
               onChange={(e) => setSelectedClass(e)}
@@ -168,16 +161,15 @@ const CreateAttendanceModal = ({ setCreated }) => {
               <Option value="two">B</Option>
               <Option value="three">C</Option>
               <Option value="four">D</Option>
-            </Select>
+            </Select> */}
             <Select
               label="Select Class&Section"
               className="bg-gray-100"
               onChange={(e) => setClassSection(e)}
             >
               {clss.map((item, i) => (
-                <Option key={i} value={item.classId}>
-                  {" "}
-                  Class&Section: {item.classId}
+                <Option key={i} value={item}>
+                  {item}
                 </Option>
               ))}
             </Select>

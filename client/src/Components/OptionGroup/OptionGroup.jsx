@@ -13,8 +13,8 @@ const OptionGroup = ({ clss, Name, setselectClass }) => {
           onChange={(e) => setselectClass(e)}
         >
           {clss.map((value, i) => (
-            <Option key={i} value={value.classId}>
-              Class&Section :{value.classId}
+            <Option key={i} value={value}>
+              {value}
             </Option>
           ))}
         </Select>
