@@ -6,11 +6,11 @@ import {
   Textarea,
   Typography,
 } from "@material-tailwind/react";
-import axios from "../../../api/axios";
+import axios from "../../../../api/axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Spinner from "../../spinner/SpinningLoader";
-import { RouteObjects } from "../../../Routes/RoutObjects";
+import Spinner from "../../../spinner/SpinningLoader";
+import { RouteObjects } from "../../../../Routes/RoutObjects";
 
 const useDropdownState = (initialValue, fetchedValue) => {
   const [value, setValue] = useState(initialValue);
@@ -197,6 +197,10 @@ const EditStudentComponent = () => {
                 variant="outlined"
                 label="DOB"
                 placeholder="DOB"
+                onChange={handleInputChange}
+                defaultValue={fetData?.DOB}
+
+
               />
               <Input
                 name="AadharNo"
@@ -346,12 +350,7 @@ const EditStudentComponent = () => {
                 onChange={handleInputChange}
               />
 
-              <Input
-                type="file"
-                variant="outlined"
-                label="Student Image"
-                placeholder="outlined"
-              />
+             
 
               <Textarea
                 variant="outlined"
