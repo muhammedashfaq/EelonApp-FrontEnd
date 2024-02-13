@@ -12,7 +12,13 @@ import {
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 
-const AttandanceRadio = ({ isPresent, setisPresent, index, handleChange }) => {
+const AttandanceRadio = ({
+  isPresent,
+  setisPresent,
+  index,
+  handleChange,
+  studentId,
+}) => {
   const AttandanceType = ["PR", "AP", "OD", "LE"];
   useEffect(() => {
     handleChange();
@@ -38,7 +44,6 @@ const AttandanceRadio = ({ isPresent, setisPresent, index, handleChange }) => {
                   name={`horizontal-list-${index}`}
                   id={`horizontal-list-react-1-${index}`}
                   ripple={false}
-                  defaultChecked={true}
                   className="hover:before:opacity-0"
                   containerProps={{
                     className: "p-0",
