@@ -6,6 +6,8 @@ import { faSquareCheck } from "@fortawesome/free-solid-svg-icons";
 import StudentRow from "./StudentRow";
 import useAxiosPrivate from "../../../../../Hooks/useAxiosPrivate";
 import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const TABLE_HEAD = ["#NO", "Name", "Attendance", "Remarks", "Aprove", ""];
 const TABLE_ROWS = [
@@ -37,17 +39,19 @@ const TABLE_ROWS = [
 ];
 
 const StudentsAttendanceTable = () => {
-
   const [attendance, setAttendance] = useState([]);
   const [attendanceArray, setAttendanceArray] = useState([]);
   // const [AllPresent, setAllPresent] = useState(false);
   const [studentData, setstudentData] = useState();
+  const [classwiseAttendance, setclasswiseAttendance] = useState();
+  const [attendanceDbId, setattendanceDbId] = useState();
 
   const axiosPrivate = useAxiosPrivate();
 
-  const createAttendanceArray = (value) => {
+  const { classId } = useParams();
+  const { date } = useParams();
 
-   
+  const createAttendanceArray = (value) => {
     const index = value.index;
     const existingIndex = attendanceArray.findIndex(
       (item) => item.index === index
@@ -71,12 +75,47 @@ const StudentsAttendanceTable = () => {
     }
   };
 
+  const getClasswiseAttendance = async () => {
+    try {
+      const reqData = {
+        date: date,
+      };
+
+      const response = await axiosPrivate.put(
+        `attendance/class/datewiseattendance/${classId}`,
+        reqData
+      );
+      setclasswiseAttendance(response.data);
+      setattendanceDbId(response.data[0]?._id);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const addAttendanceToCollection = async () => {
+    try {
+      const response = await axiosPrivate.post(
+        `attendance/class/addattendance/${attendanceDbId}`,
+        attendanceArray
+      );
+      Swal.fire({
+        title: "Attendance added!",
+        text: `Attendance for ${classId} on ${date} is added`,
+        icon: "success",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     console.log(attendanceArray);
   }, [attendanceArray]);
 
   useEffect(() => {
     getClasswiseStudents();
+    getClasswiseAttendance();
   }, []);
 
   return (
@@ -115,16 +154,17 @@ const StudentsAttendanceTable = () => {
                 <StudentRow
                   key={data._id}
                   name={data.studentName}
-                  index={data._id}
+                  index={index}
+                  studentId={data._id}
                   createAttendanceArray={createAttendanceArray}
                 />
               ))}
           </tbody>
         </table>
       </Card>
-      <Button onClick={() => console.log("attendanceArray", attendanceArray)}>
-        Save
-      </Button>
+      <div style={{ textAlign: "center" }} className="p-5">
+        <Button onClick={addAttendanceToCollection}>Save</Button>
+      </div>
     </>
   );
 };

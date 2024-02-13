@@ -19,6 +19,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 import useAxiosPrivate from "../../../../../Hooks/useAxiosPrivate";
 import { RouteObjects } from "../../../../../Routes/RoutObjects";
+import Swal from "sweetalert2";
 const CreateAttendanceModal = ({ setCreated }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -28,7 +29,7 @@ const CreateAttendanceModal = ({ setCreated }) => {
   const [section, setSection] = useState("");
   const [date, setDate] = useState("");
   const [error, setError] = useState("");
-  const [classSection,setClassSection]=useState("")
+  const [classSection, setClassSection] = useState("");
   const axiosPrivate = useAxiosPrivate();
 
   const handleOpen = () => {
@@ -49,18 +50,26 @@ const CreateAttendanceModal = ({ setCreated }) => {
         std,
         section,
         date,
-        classId:classSection
+        classId: classSection,
       };
 
       console.log(formData);
-      if (!board || !academicYear || !std || !section || !date || !classSection) {
+      if (
+        !board ||
+        !academicYear ||
+        !std ||
+        !section ||
+        !date ||
+        !classSection
+      ) {
         setError("All fields are required");
         return;
       }
-
       const response = await axiosPrivate.post("/attendance", formData);
 
-      navigate(`${RouteObjects.StudentsAttendanceTable}/${classSection}/${date}`);
+      navigate(
+        `${RouteObjects.StudentsAttendanceTable}/${classSection}/${date}`
+      );
 
       console.log(response);
       setCreated(true);
@@ -74,14 +83,17 @@ const CreateAttendanceModal = ({ setCreated }) => {
       setOpen(false);
     } catch (error) {
       console.log(error);
+      if (error.response.status === 409) {
+        alert(`Attendance for ${classSection} on ${date} already exists`);
+      }
     }
+    // handleOpen();
   };
 
   const [clss, setClss] = useState([]);
   const getClsSection = async () => {
     try {
       const response = await axiosPrivate.get("/classsection");
-      console.log(response, "new class");
       const sortedData = response.data.sort(
         (a, b) => parseInt(a.classId) - parseInt(b.classId)
       );
@@ -125,26 +137,27 @@ const CreateAttendanceModal = ({ setCreated }) => {
             </Typography>
             {error && <Alert color="red">{error}</Alert>}
             <Select label="Board" value={board} onChange={(e) => setBoard(e)}>
-              <Option value="one">Material Tailwind </Option>
-              <Option value="two">Material Tailwind React</Option>
-              <Option value="three">Material Tailwind Vue</Option>
-              <Option value="four">Material Tailwind Angular</Option>
+              <Option value="four">CBSE</Option>
+              <Option value="four">ICSE</Option>
+              <Option value="four">State</Option>
             </Select>
             <Select label="Academic Year" onChange={(e) => setAcademicYear(e)}>
-              <Option value="one">Material Tailwind HTML</Option>
-              <Option value="two">Material Tailwind React</Option>
-              <Option value="three">Material Tailwind Vue</Option>
-              <Option value="four">Material Tailwind Angular</Option>
+              <Option value="2020-2021">2020-2021</Option>
+              <Option value="2021-2022">2021-2022</Option>
+              <Option value="2022-2023">2022-2023</Option>
+              <Option value="2023-2024">2023-2024</Option>
             </Select>
             <Select
               label="Class"
               value={std}
               onChange={(e) => setSelectedClass(e)}
             >
-              <Option value="four">7</Option>
-              <Option value="three">8</Option>
-              <Option value="one">9</Option>
-              <Option value="two">10</Option>
+              <Option value="7">7</Option>
+              <Option value="8">8</Option>
+              <Option value="9">9</Option>
+              <Option value="10">10</Option>
+              <Option value="11">11</Option>
+              <Option value="12">12</Option>
             </Select>
             <Select
               label="Section"
@@ -156,10 +169,16 @@ const CreateAttendanceModal = ({ setCreated }) => {
               <Option value="three">C</Option>
               <Option value="four">D</Option>
             </Select>
-            <Select label="Select Class&Section" className="bg-gray-100"               onChange={(e) => setClassSection(e)}
->
+            <Select
+              label="Select Class&Section"
+              className="bg-gray-100"
+              onChange={(e) => setClassSection(e)}
+            >
               {clss.map((item, i) => (
-                <Option key={i} value={item.classId}> Class&Section :{item.classId}</Option>
+                <Option key={i} value={item.classId}>
+                  {" "}
+                  Class&Section: {item.classId}
+                </Option>
               ))}
             </Select>
 
