@@ -1,5 +1,5 @@
-import {useNavigate} from 'react-router-dom'
-import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -18,9 +18,9 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 import useAxiosPrivate from "../../../../../Hooks/useAxiosPrivate";
-import { RouteObjects } from '../../../../../Routes/RoutObjects';
-const CreateAttendanceModal = ({setCreated}) => {
-  const navigate=useNavigate()
+import { RouteObjects } from "../../../../../Routes/RoutObjects";
+const CreateAttendanceModal = ({ setCreated }) => {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [board, setBoard] = useState("");
   const [academicYear, setAcademicYear] = useState("");
@@ -28,6 +28,7 @@ const CreateAttendanceModal = ({setCreated}) => {
   const [section, setSection] = useState("");
   const [date, setDate] = useState("");
   const [error, setError] = useState("");
+  const [classSection,setClassSection]=useState("")
   const axiosPrivate = useAxiosPrivate();
 
   const handleOpen = () => {
@@ -48,23 +49,21 @@ const CreateAttendanceModal = ({setCreated}) => {
         std,
         section,
         date,
+        classId:classSection
       };
 
       console.log(formData);
-      if (!board || !academicYear || !std || !section || !date) {
+      if (!board || !academicYear || !std || !section || !date || !classSection) {
         setError("All fields are required");
         return;
       }
 
       const response = await axiosPrivate.post("/attendance", formData);
-      console.log(response,"resssssssss");
 
-   navigate(RouteObjects.StudentsAttendanceTable)      
+      navigate(`${RouteObjects.StudentsAttendanceTable}/${classSection}/${date}`);
 
-
-      
       console.log(response);
-      setCreated(true)
+      setCreated(true);
       setBoard("");
       setAcademicYear("");
       setSelectedClass("");
@@ -77,6 +76,25 @@ const CreateAttendanceModal = ({setCreated}) => {
       console.log(error);
     }
   };
+
+  const [clss, setClss] = useState([]);
+  const getClsSection = async () => {
+    try {
+      const response = await axiosPrivate.get("/classsection");
+      console.log(response, "new class");
+      const sortedData = response.data.sort(
+        (a, b) => parseInt(a.classId) - parseInt(b.classId)
+      );
+
+      setClss(sortedData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getClsSection();
+  }, []);
   return (
     <>
       <Tooltip
@@ -103,7 +121,7 @@ const CreateAttendanceModal = ({setCreated}) => {
         <Card className="mx-auto w-full max-w-[24rem]">
           <CardBody className="flex flex-col gap-4 space-y-4">
             <Typography variant="h4" color="blue-gray">
-             Students Attendance
+              Students Attendance
             </Typography>
             {error && <Alert color="red">{error}</Alert>}
             <Select label="Board" value={board} onChange={(e) => setBoard(e)}>
@@ -137,6 +155,12 @@ const CreateAttendanceModal = ({setCreated}) => {
               <Option value="two">B</Option>
               <Option value="three">C</Option>
               <Option value="four">D</Option>
+            </Select>
+            <Select label="Select Class&Section" className="bg-gray-100"               onChange={(e) => setClassSection(e)}
+>
+              {clss.map((item, i) => (
+                <Option key={i} value={item.classId}> Class&Section :{item.classId}</Option>
+              ))}
             </Select>
 
             <Input

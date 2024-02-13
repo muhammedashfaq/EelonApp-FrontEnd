@@ -109,7 +109,7 @@ const AppRoutes = () => {
           element={<StudentsAttandancePage />}
         />
             <Route
-          path={RouteObjects.StudentsAttendanceTable}
+          path={`${RouteObjects.StudentsAttendanceTable}/:classId/:date`}
           element={<TableStudents />}
         />
         <Route
