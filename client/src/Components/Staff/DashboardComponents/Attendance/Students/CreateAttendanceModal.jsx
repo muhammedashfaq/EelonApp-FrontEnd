@@ -1,3 +1,4 @@
+import {useNavigate} from 'react-router-dom'
 import React, { useState } from "react";
 import {
   Button,
@@ -17,7 +18,9 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 import useAxiosPrivate from "../../../../../Hooks/useAxiosPrivate";
+import { RouteObjects } from '../../../../../Routes/RoutObjects';
 const CreateAttendanceModal = ({setCreated}) => {
+  const navigate=useNavigate()
   const [open, setOpen] = useState(false);
   const [board, setBoard] = useState("");
   const [academicYear, setAcademicYear] = useState("");
@@ -54,6 +57,12 @@ const CreateAttendanceModal = ({setCreated}) => {
       }
 
       const response = await axiosPrivate.post("/attendance", formData);
+      console.log(response,"resssssssss");
+
+   navigate(RouteObjects.StudentsAttendanceTable)      
+
+
+      
       console.log(response);
       setCreated(true)
       setBoard("");
@@ -98,7 +107,7 @@ const CreateAttendanceModal = ({setCreated}) => {
             </Typography>
             {error && <Alert color="red">{error}</Alert>}
             <Select label="Board" value={board} onChange={(e) => setBoard(e)}>
-              <Option value="one">Material Tailwind HTML</Option>
+              <Option value="one">Material Tailwind </Option>
               <Option value="two">Material Tailwind React</Option>
               <Option value="three">Material Tailwind Vue</Option>
               <Option value="four">Material Tailwind Angular</Option>
@@ -114,20 +123,20 @@ const CreateAttendanceModal = ({setCreated}) => {
               value={std}
               onChange={(e) => setSelectedClass(e)}
             >
-              <Option value="one">Material Tailwind HTML</Option>
-              <Option value="two">Material Tailwind React</Option>
-              <Option value="three">Material Tailwind Vue</Option>
-              <Option value="four">Material Tailwind Angular</Option>
+              <Option value="four">7</Option>
+              <Option value="three">8</Option>
+              <Option value="one">9</Option>
+              <Option value="two">10</Option>
             </Select>
             <Select
               label="Section"
               value={section}
               onChange={(e) => setSection(e)}
             >
-              <Option value="one">Material Tailwind HTML</Option>
-              <Option value="two">Material Tailwind React</Option>
-              <Option value="three">Material Tailwind Vue</Option>
-              <Option value="four">Material Tailwind Angular</Option>
+              <Option value="one">A</Option>
+              <Option value="two">B</Option>
+              <Option value="three">C</Option>
+              <Option value="four">D</Option>
             </Select>
 
             <Input
