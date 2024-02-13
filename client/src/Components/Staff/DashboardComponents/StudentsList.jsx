@@ -112,7 +112,7 @@ const StudentsList = () => {
         icon: "error",
         title: "Oops...",
         text: "Something went wrong!",
-      })
+      });
     }
   };
   const searchStudent = async (e) => {
@@ -130,7 +130,7 @@ const StudentsList = () => {
 
   useEffect(() => {
     getUsers();
-  }, [studentData]);
+  }, []);
   return (
     <div>
       <Card className="  m-8">
@@ -509,34 +509,31 @@ const StudentsList = () => {
                         </td>
                         <td className={classes}>
                           <Link to={`${RouteObjects.EditStudent}/${data._id}`}>
-                          <Tooltip
-                            content="Edit Student Data"
-                            animate={{
-                              mount: { scale: 1, y: 0 },
-                              unmount: { scale: 0, y: 25 },
-                            }}
-                          >
-                            <FontAwesomeIcon
-                              icon={faEdit}
-                              color="green"
-                              size="xl"
-                              className="cursor-pointer hover:bg-blue-gray-100 rounded-md p-2"
-                              
-                              
-                            />
-                          </Tooltip>
+                            <Tooltip
+                              content="Edit Student Data"
+                              animate={{
+                                mount: { scale: 1, y: 0 },
+                                unmount: { scale: 0, y: 25 },
+                              }}
+                            >
+                              <FontAwesomeIcon
+                                icon={faEdit}
+                                color="green"
+                                size="xl"
+                                className="cursor-pointer hover:bg-blue-gray-100 rounded-md p-2"
+                              />
+                            </Tooltip>
                           </Link>
 
                           <Tooltip
                             content="Delete Student"
-                            
                             animate={{
                               mount: { scale: 1, y: 0 },
                               unmount: { scale: 0, y: 25 },
                             }}
                           >
                             <FontAwesomeIcon
-                            color="red"
+                              color="red"
                               icon={faTrash}
                               size="xl"
                               className="cursor-pointer hover:bg-blue-gray-100 rounded-md p-2"

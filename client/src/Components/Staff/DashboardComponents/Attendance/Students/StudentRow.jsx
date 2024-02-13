@@ -20,7 +20,7 @@ const StudentRow = ({ name, index, checkedValue, createAttendanceArray }) => {
 
   useEffect(() => {
     handleChange();
-  }, [isPresent, reason]);
+  }, [isPresent, reason, index]);
 
   const addremarks = async () => {
     const { value: text } = await Swal.fire({

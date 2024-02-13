@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareCheck } from "@fortawesome/free-solid-svg-icons";
 import StudentRow from "./StudentRow";
+import useAxiosPrivate from "../../../../../Hooks/useAxiosPrivate";
 
 const TABLE_HEAD = ["#NO", "Name", "Attendance", "Remarks", "Aprove", ""];
 const TABLE_ROWS = [
@@ -37,6 +38,10 @@ const TABLE_ROWS = [
 const StudentsAttendanceTable = () => {
   const [attendance, setAttendance] = useState([]);
   const [attendanceArray, setAttendanceArray] = useState([]);
+  // const [AllPresent, setAllPresent] = useState(false);
+  const [studentData, setstudentData] = useState();
+
+  const axiosPrivate = useAxiosPrivate();
 
   const createAttendanceArray = (value) => {
     const index = value.index;
@@ -53,15 +58,36 @@ const StudentsAttendanceTable = () => {
     }
   };
 
+  const getClasswiseStudents = async () => {
+    try {
+      const response = await axiosPrivate.get("users/student");
+      setstudentData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     console.log(attendanceArray);
   }, [attendanceArray]);
+
+  useEffect(() => {
+    getClasswiseStudents();
+  }, []);
 
   return (
     <>
       <Card className="h-full w-full overflow-scroll">
         <table className="w-full min-w-max table-auto text-left">
           <thead>
+            <div className="mx-10 my-4">
+              <Button
+                variant="outlined"
+                onClick={() => setAllPresent((prev) => !prev)}
+              >
+                Mark all Present
+              </Button>
+            </div>
             <tr>
               {TABLE_HEAD.map((head) => (
                 <th
@@ -80,14 +106,15 @@ const StudentsAttendanceTable = () => {
             </tr>
           </thead>
           <tbody className="">
-            {TABLE_ROWS.map(({ name }, index) => (
-              <StudentRow
-                key={index}
-                name={name}
-                index={index}
-                createAttendanceArray={createAttendanceArray}
-              />
-            ))}
+            {studentData &&
+              studentData.map((data, index) => (
+                <StudentRow
+                  key={data._id}
+                  name={data.studentName}
+                  index={data._id}
+                  createAttendanceArray={createAttendanceArray}
+                />
+              ))}
           </tbody>
         </table>
       </Card>

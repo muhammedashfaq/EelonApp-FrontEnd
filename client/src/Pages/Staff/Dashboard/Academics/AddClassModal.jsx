@@ -11,6 +11,7 @@ import { Card, Input, Checkbox, Typography } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
+import Swal from "sweetalert2";
 
 const AddClassModal = () => {
   const [open, setOpen] = React.useState(false);
@@ -36,6 +37,14 @@ const AddClassModal = () => {
       handleOpen();
     } catch (error) {
       console.error(error);
+      handleOpen();
+      if (error.response.status === 409) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Class already exists",
+        });
+      }
     }
   };
 
