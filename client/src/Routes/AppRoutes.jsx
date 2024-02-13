@@ -33,6 +33,7 @@ import StudentsAttandancePage from "../Pages/Staff/Dashboard/Attandance/Students
 import StaffAttandancePage from "../Pages/Staff/Dashboard/Attandance/StaffAttandancePage";
 import ManageClass from "../Pages/Staff/Dashboard/Academics/ManageClass";
 import AttendanceReportPage from "../Pages/Staff/Dashboard/Attandance/AttendanceReportPage";
+import TableStudents from "../Pages/Staff/Dashboard/Attandance/TableStudents";
 const AppRoutes = () => {
   const isLoading = useSelector((state) => state.loading.isLoading);
   return (
@@ -106,6 +107,10 @@ const AppRoutes = () => {
         <Route
           path={RouteObjects.StudentsAttendance}
           element={<StudentsAttandancePage />}
+        />
+            <Route
+          path={RouteObjects.StudentsAttendanceTable}
+          element={<TableStudents />}
         />
         <Route
           path={RouteObjects.StaffAttandance}

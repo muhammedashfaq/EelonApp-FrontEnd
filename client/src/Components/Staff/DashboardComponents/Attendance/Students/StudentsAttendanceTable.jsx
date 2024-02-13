@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareCheck } from "@fortawesome/free-solid-svg-icons";
 import StudentRow from "./StudentRow";
 import useAxiosPrivate from "../../../../../Hooks/useAxiosPrivate";
+import { useLocation } from "react-router-dom";
 
 const TABLE_HEAD = ["#NO", "Name", "Attendance", "Remarks", "Aprove", ""];
 const TABLE_ROWS = [
@@ -36,6 +37,7 @@ const TABLE_ROWS = [
 ];
 
 const StudentsAttendanceTable = () => {
+
   const [attendance, setAttendance] = useState([]);
   const [attendanceArray, setAttendanceArray] = useState([]);
   // const [AllPresent, setAllPresent] = useState(false);
@@ -44,6 +46,8 @@ const StudentsAttendanceTable = () => {
   const axiosPrivate = useAxiosPrivate();
 
   const createAttendanceArray = (value) => {
+
+   
     const index = value.index;
     const existingIndex = attendanceArray.findIndex(
       (item) => item.index === index

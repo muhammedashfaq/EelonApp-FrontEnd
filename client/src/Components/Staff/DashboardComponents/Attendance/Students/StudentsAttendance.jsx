@@ -31,12 +31,7 @@ const StudentsAttendance = () => {
       </div>
 
       {/* filtering by class section date acadamic year bord     */}
-{created&&(
 
-<StudentsAttendanceTable />
-)
-
-}
     </div>
   );
 };
