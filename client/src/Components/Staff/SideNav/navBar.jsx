@@ -81,7 +81,7 @@ const NavBar = () => {
           icon: faCaretRight,
           href: RouteObjects.StaffAttandance,
         },
-        { title: "Attandance Report", icon: faCaretRight },
+        { title: "Attandance Report", icon: faCaretRight ,href:RouteObjects.AttandanceReport },
       ],
     },
     {
