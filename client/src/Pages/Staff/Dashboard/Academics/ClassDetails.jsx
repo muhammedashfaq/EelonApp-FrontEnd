@@ -21,6 +21,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import AddClassModal from "./AddClassModal";
+import AddStudentModal from "./AddStudentModal";
 
 const ClassDetails = () => {
   const dispatch = useDispatch();
@@ -54,14 +55,14 @@ const ClassDetails = () => {
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!",
       });
-      // if (result.isConfirmed) {
-      //   Swal.fire({
-      //     title: "Deleted!",
-      //     text: "Your file has been deleted.",
-      //     icon: "success",
-      //   });
-      // }
-      const response = await axiosPrivate.delete(`/classsection/${id}`);
+      if (result.isConfirmed) {
+        const response = await axiosPrivate.delete(`/classsection/${id}`);
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+      }
       getAllClass();
     } catch (error) {
       console.error(error);
@@ -150,6 +151,15 @@ const ClassDetails = () => {
                       color="blue-gray"
                       className="font-normal leading-none opacity-70"
                     >
+                      Add students
+                    </Typography>
+                  </th>
+                  <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal leading-none opacity-70"
+                    >
                       Action
                     </Typography>
                   </th>
@@ -199,6 +209,26 @@ const ClassDetails = () => {
                             className="font-normal"
                           >
                             {data?.section}
+                          </Typography>
+                        </td>
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {/* <div>
+                              <IconButton
+                                variant="text"
+                              >
+                                <FontAwesomeIcon
+                                  icon={faTrash}
+                                  size="xl"
+                                  className="cursor-pointer"
+                                />
+                              </IconButton>
+                            </div> */}
+                            <AddStudentModal />
                           </Typography>
                         </td>
                         <td className={classes}>

@@ -1,9 +1,10 @@
 import { Button, Card, Tooltip, Typography } from "@material-tailwind/react";
 import AttandanceRadio from "./AttandanceRadio";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareCheck } from "@fortawesome/free-solid-svg-icons";
 import StudentRow from "./StudentRow";
+import useAxiosPrivate from "../../../../../Hooks/useAxiosPrivate";
 
 const TABLE_HEAD = ["#NO", "Name", "Attendance", "Remarks", "Aprove", ""];
 const TABLE_ROWS = [
@@ -35,52 +36,92 @@ const TABLE_ROWS = [
 ];
 
 const StudentsAttendanceTable = () => {
-  const [attendance, setAttendance] = useState([
-    { studentName: "", studentId: "", rollNo: "", isPresent: "", reason: "" },
-  ]);
-  const [checkedValue, setCheckedValue] = useState("PR");
-// const 
+  const [attendance, setAttendance] = useState([]);
+  const [attendanceArray, setAttendanceArray] = useState([]);
+  // const [AllPresent, setAllPresent] = useState(false);
+  const [studentData, setstudentData] = useState();
+
+  const axiosPrivate = useAxiosPrivate();
+
+  const createAttendanceArray = (value) => {
+    const index = value.index;
+    const existingIndex = attendanceArray.findIndex(
+      (item) => item.index === index
+    );
+
+    if (existingIndex !== -1) {
+      const newArray = [...attendanceArray];
+      newArray[existingIndex] = value;
+      setAttendanceArray(newArray);
+    } else {
+      setAttendanceArray([...attendanceArray, value]);
+    }
+  };
+
+  const getClasswiseStudents = async () => {
+    try {
+      const response = await axiosPrivate.get("users/student");
+      setstudentData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    console.log(attendanceArray);
+  }, [attendanceArray]);
+
+  useEffect(() => {
+    getClasswiseStudents();
+  }, []);
+
   return (
-    <Card className="h-full w-full overflow-scroll">
-      <table className="w-full min-w-max table-auto text-left">
-        <thead>
-          <tr>
-            {TABLE_HEAD.map((head) => (
-              <th
-                key={head}
-                className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
+    <>
+      <Card className="h-full w-full overflow-scroll">
+        <table className="w-full min-w-max table-auto text-left">
+          <thead>
+            <div className="mx-10 my-4">
+              <Button
+                variant="outlined"
+                onClick={() => setAllPresent((prev) => !prev)}
               >
-                <Typography
-                  variant="small"
-                  color="blue-gray"
-                  className="font-normal leading-none opacity-70"
+                Mark all Present
+              </Button>
+            </div>
+            <tr>
+              {TABLE_HEAD.map((head) => (
+                <th
+                  key={head}
+                  className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
                 >
-                  {head}
-                </Typography>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className="">
-          {TABLE_ROWS.map(({ name }, index) => (
-            <StudentRow
-              key={index}
-              name={name}
-              index={index}
-              checkedValue={checkedValue}
-              setCheckedValue={(value) => {
-                // Update the state for the specific row
-                setCheckedValue((prevValues) => {
-                  const newValues = [...prevValues];
-                  newValues[index] = value;
-                  return newValues;
-                });
-              }}
-            />
-          ))}
-        </tbody>
-      </table>
-    </Card>
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal leading-none opacity-70"
+                  >
+                    {head}
+                  </Typography>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="">
+            {studentData &&
+              studentData.map((data, index) => (
+                <StudentRow
+                  key={data._id}
+                  name={data.studentName}
+                  index={data._id}
+                  createAttendanceArray={createAttendanceArray}
+                />
+              ))}
+          </tbody>
+        </table>
+      </Card>
+      <Button onClick={() => console.log("attendanceArray", attendanceArray)}>
+        Save
+      </Button>
+    </>
   );
 };
 
