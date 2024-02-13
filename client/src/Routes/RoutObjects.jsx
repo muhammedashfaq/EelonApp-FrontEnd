@@ -22,6 +22,7 @@ export const RouteObjects = {
   RequireForms: "/forms",
   StudentsAttendance: "/student/attandance",
   StaffAttandance: "/staff/attancance",
+  AttandanceReport:"/attendance/reports",
 
   StaffManageClass: "/staff/manageclass",
 
