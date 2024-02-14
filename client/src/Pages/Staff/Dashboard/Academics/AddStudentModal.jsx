@@ -16,14 +16,18 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
-export default function AddStudentModal({ classObjId }) {
+export default function AddStudentModal({ classObjId, studentList }) {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen((cur) => !cur);
   const [searchQuery, setsearchQuery] = useState();
   const [searchData, setsearchData] = useState();
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   const axiosPrivate = useAxiosPrivate();
+  const handleOpen = () => {
+    setOpen((cur) => !cur);
+    setsearchData("");
+    setsearchQuery("");
+  };
 
   const getAllStudents = async (e) => {
     e.preventDefault();
@@ -138,7 +142,11 @@ export default function AddStudentModal({ classObjId }) {
                 >
                   <Typography className="mt-2.5">{data?.email}</Typography>
                   <Checkbox
-                    checked={selectedUsers.includes(data._id)}
+                    checked={
+                      studentList.includes(data?._id) ||
+                      selectedUsers.includes(data._id)
+                    }
+                    disabled={studentList.includes(data?._id)}
                     onChange={() => handleCheckboxChange(data._id)}
                   />
                 </div>

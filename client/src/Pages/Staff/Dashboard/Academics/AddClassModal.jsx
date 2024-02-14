@@ -6,6 +6,8 @@ import {
   DialogBody,
   DialogFooter,
   IconButton,
+  Select,
+  Option,
 } from "@material-tailwind/react";
 import { Card, Input, Checkbox, Typography } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,11 +15,12 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import Swal from "sweetalert2";
 
-const AddClassModal = () => {
+const AddClassModal = ({ AcademicYrs }) => {
   const [open, setOpen] = React.useState(false);
   const [std, setStd] = React.useState();
   const [section, setSection] = React.useState();
   const [classTeacher, setClassTeacher] = React.useState();
+  const [selectAcademicYr, setselectAcademicYr] = React.useState();
 
   const axiosPrivate = useAxiosPrivate();
 
@@ -32,6 +35,7 @@ const AddClassModal = () => {
         section,
         classId,
         classTeacher,
+        academicYear: selectAcademicYr,
       };
       const response = await axiosPrivate.post("/classsection", data);
       handleOpen();
@@ -52,7 +56,7 @@ const AddClassModal = () => {
     <>
       <Button
         onClick={handleOpen}
-        variant="gradient"
+        variant="outlined"
         style={{ textTransform: "none" }}
       >
         Add class
@@ -79,6 +83,25 @@ const AddClassModal = () => {
               </Typography>
               <form className="mt-8 mb-2 w-96 max-w-screen-lg sm:w-full">
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2">
+                  <div className="flex flex-col gap-5">
+                    <Typography
+                      variant="h6"
+                      color="blue-gray"
+                      className="-mb-3"
+                    >
+                      Academic year
+                    </Typography>
+
+                    <Select
+                      label="Select year"
+                      onChange={(e) => setselectAcademicYr(e)}
+                    >
+                      {AcademicYrs &&
+                        AcademicYrs.map((data) => (
+                          <Option value={data}>{data}</Option>
+                        ))}
+                    </Select>
+                  </div>
                   <div
                     className="flex flex-col gap-5"
                     // style={{ border: "1px solid black" }}
