@@ -26,6 +26,9 @@ export const RouteObjects = {
   AttandanceReport:"/attendance/reports",
   StaffList:"/staffdetails",
   AddStaffList:"/Addstaff",
+  EditStaffList:"/editstaff",
+  StaffProfile:"/staffprofile",
+
   
 
   StaffManageClass: "/staff/manageclass",
