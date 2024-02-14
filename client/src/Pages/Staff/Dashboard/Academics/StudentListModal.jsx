@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -8,8 +8,9 @@ import {
 } from "@material-tailwind/react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 
-export default function StudentListModal({ studentList }) {
+export default function StudentListModal({ studentList, classId }) {
   const [open, setOpen] = React.useState(false);
+  const [studentData, setstudentData] = useState();
 
   const axiosPrivate = useAxiosPrivate();
 
@@ -20,11 +21,11 @@ export default function StudentListModal({ studentList }) {
       const reqData = {
         studentArray: studentList,
       };
-      const response = await axiosPrivate.get(
+      const response = await axiosPrivate.post(
         `classroom/getstudentdata`,
         reqData
       );
-      console.log(response);
+      setstudentData(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -43,13 +44,23 @@ export default function StudentListModal({ studentList }) {
       >
         List students
       </Button>
-      <Dialog open={open} handler={handleOpen}>
-        <DialogHeader>Its a simple dialog.</DialogHeader>
-        <DialogBody>
-          The key to more success is to have a lot of pillows. Put it this way,
-          it took me twenty five years to get these plants, twenty five years of
-          blood sweat and tears, and I&apos;m never giving up, I&apos;m just
-          getting started. I&apos;m up to something. Fan luv.
+      <Dialog open={open} handler={handleOpen} className="p-3">
+        <DialogHeader>Students in {classId}</DialogHeader>
+        <DialogBody className="flex justify-center">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-1 md:grid-cols-2">
+            {studentData &&
+              studentData.map((data) => (
+                <div
+                  style={{
+                    width: "250px",
+                    borderRadius: "5px",
+                  }}
+                  className="p-2 text-center shadow-2xl bg-gray-300 text-black"
+                >
+                  {data?.email}
+                </div>
+              ))}
+          </div>
         </DialogBody>
         <DialogFooter>
           <Button
@@ -58,10 +69,7 @@ export default function StudentListModal({ studentList }) {
             onClick={handleOpen}
             className="mr-1"
           >
-            <span>Cancel</span>
-          </Button>
-          <Button variant="gradient" color="green" onClick={handleOpen}>
-            <span>Confirm</span>
+            <span>Close</span>
           </Button>
         </DialogFooter>
       </Dialog>

@@ -227,7 +227,10 @@ const ClassDetails = () => {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            <StudentListModal studentList={data?.students} />
+                            <StudentListModal
+                              studentList={data?.students}
+                              classId={data?.classId}
+                            />
                           </Typography>
                         </td>
                         <td className={classes}>
@@ -247,7 +250,10 @@ const ClassDetails = () => {
                                 />
                               </IconButton>
                             </div> */}
-                            <AddStudentModal classObjId={data._id} />
+                            <AddStudentModal
+                              classObjId={data._id}
+                              studentList={data?.students}
+                            />
                           </Typography>
                         </td>
                         <td className={classes}>
