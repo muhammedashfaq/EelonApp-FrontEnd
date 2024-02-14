@@ -33,6 +33,8 @@ const ClassDetails = () => {
   const [isLoading, setisLoading] = useState(false);
   const axiosPrivate = useAxiosPrivate();
   const [ClassData, setClassData] = useState();
+  const [AcademicYrs, setAcademicYrs] = useState();
+  const [selectedAcademicYr, setselectedAcademicYr] = useState();
 
   const getAllClass = async () => {
     try {
@@ -70,8 +72,23 @@ const ClassDetails = () => {
     }
   };
 
+  const getAcademicYrdropdown = async () => {
+    try {
+      const response = await axiosPrivate.get(
+        "classsection/academicyear/academicyear"
+      );
+      const sortedData = response.data?.academicYear.sort((a, b) =>
+        a.localeCompare(b)
+      );
+      setAcademicYrs(sortedData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getAllClass();
+    getAcademicYrdropdown();
   }, []);
 
   return (
@@ -109,8 +126,48 @@ const ClassDetails = () => {
               Reset
             </Button>
           </div>
+          <div
+            style={{
+              display: "inline-block",
+              position: "relative",
+              fontFamily: "Arial, sans-serif",
+            }}
+          >
+            <select
+              label="Select"
+              value={selectedAcademicYr}
+              onChange={(e) => setselectedAcademicYr(e.target.value)}
+              style={{
+                padding: "10px",
+                fontSize: "16px",
+                border: "1px solid #ccc",
+                borderRadius: "8px",
+                backgroundColor: "#fff",
+                color: "#333",
+                appearance: "none" /* hides default arrow */,
+                width: "200px",
+                cursor: "pointer",
+              }}
+            >
+              {AcademicYrs &&
+                AcademicYrs.map((data) => (
+                  <option
+                    key={data}
+                    value={data}
+                    style={{
+                      backgroundColor: "#fff",
+                      color: "#333",
+                      padding: "10px",
+                    }}
+                  >
+                    {data}
+                  </option>
+                ))}
+            </select>
+          </div>
+
           <div>
-            <AddClassModal />
+            <AddClassModal AcademicYrs={AcademicYrs} />
           </div>
         </div>
 

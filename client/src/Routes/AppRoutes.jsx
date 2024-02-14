@@ -34,6 +34,7 @@ import StaffAttandancePage from "../Pages/Staff/Dashboard/Attandance/StaffAttand
 import ManageClass from "../Pages/Staff/Dashboard/Academics/ManageClass";
 import AttendanceReportPage from "../Pages/Staff/Dashboard/Attandance/AttendanceReportPage";
 import TableStudents from "../Pages/Staff/Dashboard/Attandance/TableStudents";
+import AcademicsSettings from "../Pages/Staff/Dashboard/Academics/AcademicsSettings";
 const AppRoutes = () => {
   const isLoading = useSelector((state) => state.loading.isLoading);
   return (
@@ -108,7 +109,7 @@ const AppRoutes = () => {
           path={RouteObjects.StudentsAttendance}
           element={<StudentsAttandancePage />}
         />
-            <Route
+        <Route
           path={`${RouteObjects.StudentsAttendanceTable}/:classId/:date`}
           element={<TableStudents />}
         />
@@ -120,8 +121,12 @@ const AppRoutes = () => {
           path={RouteObjects.AttandanceReport}
           element={<AttendanceReportPage />}
         />
-        
+
         <Route path={RouteObjects.StaffManageClass} element={<ManageClass />} />
+        <Route
+          path={RouteObjects.StaffAcademicsSettings}
+          element={<AcademicsSettings />}
+        />
 
         {/* Staff CLASS ROOM ROUTS */}
         <Route
