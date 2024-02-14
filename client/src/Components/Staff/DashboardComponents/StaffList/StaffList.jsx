@@ -183,14 +183,20 @@ const StaffList = () => {
                             <div>
 
                           <Tooltip content="View Details">
+                            <Link to={`${RouteObjects.StaffProfile}/1`}>
                             <IconButton variant="text">
                               <FontAwesomeIcon icon={faEye} className="h-4 w-4" />
                             </IconButton>
+                            </Link>
                           </Tooltip>
                           <Tooltip content="Edit Details">
+                          <Link to={`${RouteObjects.EditStaffList}/1`}>
+
+
                             <IconButton variant="text">
                               <FontAwesomeIcon icon={faEdit} className="h-4 w-4" />
                             </IconButton>
+                          </Link>
                           </Tooltip>
                           <Tooltip content="Delete Details">
                             <IconButton variant="text">

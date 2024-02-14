@@ -23,9 +23,13 @@ export const RouteObjects = {
   StudentsAttendance: "/students/attandance",
   StudentsAttendanceTable: "/students/attendancetable",
   StaffAttandance: "/staff/attancance",
-  AttandanceReport: "/attendance/reports",
-  StaffList: "/staffdetails",
-  AddStaffList: "/Addstaff",
+  AttandanceReport:"/attendance/reports",
+  StaffList:"/staffdetails",
+  AddStaffList:"/Addstaff",
+  EditStaffList:"/editstaff",
+  StaffProfile:"/staffprofile",
+
+  
 
   StaffManageClass: "/staff/manageclass",
   StaffAcademicsSettings: "/staff/academics/settings",
