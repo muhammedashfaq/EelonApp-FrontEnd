@@ -22,6 +22,7 @@ import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import AddClassModal from "./AddClassModal";
 import AddStudentModal from "./AddStudentModal";
+import StudentListModal from "./StudentListModal";
 
 const ClassDetails = () => {
   const dispatch = useDispatch();
@@ -151,6 +152,15 @@ const ClassDetails = () => {
                       color="blue-gray"
                       className="font-normal leading-none opacity-70"
                     >
+                      Student list
+                    </Typography>
+                  </th>
+                  <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal leading-none opacity-70"
+                    >
                       Add students
                     </Typography>
                   </th>
@@ -209,6 +219,15 @@ const ClassDetails = () => {
                             className="font-normal"
                           >
                             {data?.section}
+                          </Typography>
+                        </td>
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            <StudentListModal studentList={data?.students} />
                           </Typography>
                         </td>
                         <td className={classes}>
