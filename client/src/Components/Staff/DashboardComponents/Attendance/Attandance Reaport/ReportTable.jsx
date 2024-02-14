@@ -62,7 +62,7 @@ const ReportTable = () => {
                     </td>
                     <td className={`${classes} bg-blue-gray-50/50`}>
                       <Typography variant="small" color="blue-gray" className="font-normal">
-                        {name}dd
+                        {name}
                       </Typography>
                     </td>
                 

@@ -8,7 +8,7 @@ import {
 } from "@material-tailwind/react";
 import { createElement } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBook } from "@fortawesome/free-solid-svg-icons";
+import { faBook, faDatabase, faFile, faGraduationCap, faMedal } from "@fortawesome/free-solid-svg-icons";
 
 const DetailImagePage = () => {
   
@@ -21,12 +21,17 @@ const DetailImagePage = () => {
     {
       label: "Academic Details",
       value: "2",
-      icon: faBook,
+      icon: faGraduationCap,
     },
     {
       label: "Achivements",
       value: "3",
-      icon: faBook,
+      icon: faMedal,
+    },
+    {
+      label: "Documents",
+      value: "4",
+      icon: faFile,
     },
   ];
 

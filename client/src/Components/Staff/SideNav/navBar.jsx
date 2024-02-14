@@ -85,6 +85,23 @@ const NavBar = () => {
       ],
     },
     {
+      title: "Manage Staff",
+      icon: faUserPlus,
+      submenu: true,
+      submenuItems: [
+        {
+          title: "Staff List",
+          icon: faCaretRight,
+          href: RouteObjects.StaffList,
+        },
+        {
+          title: "Staff Category",
+          icon: faCaretRight,
+          href: RouteObjects.StaffAttandance,
+        },
+      ],
+    },
+    {
       title: "Study Room",
       href: RouteObjects.StudyRoomHome,
       icon: faChalkboard,
@@ -113,6 +130,8 @@ const NavBar = () => {
       />
 
       <Drawer open={open} onClose={closeDrawer} className="p-4 bg-dark-purple">
+        <div className="h-screen">
+
         <ul className="pt-2">
           {menu.map((item, index) => (
             <li
@@ -164,6 +183,7 @@ const NavBar = () => {
           <img src={logo} alt="Logo" className="w-8 h-8" />
           <span className="ml-2 text-base font-medium">Eelon.com </span>
         </li>
+          </div>
       </Drawer>
     </div>
   );

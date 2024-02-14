@@ -5,15 +5,29 @@ import { Link } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
 import useLogout from "../../../Hooks/useLogout";
 import AdminSideNavBar from "../../Admin/DashoardComponents/AdminSideNavBar";
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faClose } from "@fortawesome/free-solid-svg-icons";
+import MobileNavBar from "./MobileNavBar";
 
 const StaffHeader = () => {
   const { auth } = useAuth();
   const logOut = useLogout();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+const menu=[
+ { title:"Menu",href:"",icon:""},
+ { title:"About",href:"",icon:""},
+ { title:"Acadamics",href:"",icon:""},
+ { title:"Contact Us",href:"",icon:""}
+]
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   console.log(auth);
   return (
     <div>
-      <div className=" w-full p-4 shadow-md">
+      <div className=" w-full p-4 shadow-md ">
         <ul className="mobile:block Laptop:hidden ipad:hidden Tablet:hidden">
           <div className="">
             <li className="mr-auto mobile:flex mobile:justify-center mobile:items-center">
@@ -24,12 +38,23 @@ const StaffHeader = () => {
                   alt="Logo"
                 />
               </Link>
+            <MobileNavBar/>
             </li>
 
             <li className="Tablet:hidden Laptop:hidden ipad:hidden mobile:block">
-              <span className="material-symbols-outlined ">menu</span>
+
+              {/* <a onClick={toggleMenu}>
+                {isMenuOpen ? (
+                  <FontAwesomeIcon icon={faClose} size="2x" />
+                ) : (
+                  <FontAwesomeIcon icon={faBars} size="2x" />
+                )}
+              </a> */}
             </li>
           </div>
+          
+
+
         </ul>
         <ul className="flex justify-between items-start space-x-6 pr-8 ">
           <div className="mobile:hidden Laptop:block ipad:block Tablet:block">
@@ -103,10 +128,11 @@ const StaffHeader = () => {
               {auth.roles && <button onClick={logOut}>logout</button>}
             </li>
           </div>
-
-          {/* <MobileNavBar/> */}
+          
         </ul>
       </div>
+      
+    
     </div>
   );
 };

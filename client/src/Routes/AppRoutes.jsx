@@ -34,6 +34,8 @@ import StaffAttandancePage from "../Pages/Staff/Dashboard/Attandance/StaffAttand
 import ManageClass from "../Pages/Staff/Dashboard/Academics/ManageClass";
 import AttendanceReportPage from "../Pages/Staff/Dashboard/Attandance/AttendanceReportPage";
 import TableStudents from "../Pages/Staff/Dashboard/Attandance/TableStudents";
+import StaffListPage from "../Pages/Staff/Dashboard/StaffDetails/StaffListPage";
+import StaffAddPage from "../Pages/Staff/Dashboard/StaffDetails/StaffAddPage";
 const AppRoutes = () => {
   const isLoading = useSelector((state) => state.loading.isLoading);
   return (
@@ -122,6 +124,10 @@ const AppRoutes = () => {
         />
         
         <Route path={RouteObjects.StaffManageClass} element={<ManageClass />} />
+        <Route path={RouteObjects.StaffList} element={<StaffListPage />} />
+        <Route path={RouteObjects.AddStaffList} element={<StaffAddPage />} />
+
+
 
         {/* Staff CLASS ROOM ROUTS */}
         <Route
