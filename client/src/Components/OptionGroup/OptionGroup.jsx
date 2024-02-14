@@ -20,7 +20,7 @@ const OptionGroup = ({ clss, Name, setselectClass }) => {
         </Select>
       </div>
       <Typography className="text-2xl text-white font-body font-semibold ">
-        Classwise Attendance Details <FontAwesomeIcon icon={faCalendarDays} />
+        Monthly {Name} Attendance Details <FontAwesomeIcon icon={faCalendarDays} />
       </Typography>
     </div>
   );

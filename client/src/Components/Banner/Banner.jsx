@@ -5,8 +5,8 @@ import SideNavbar from "../Student/SideNav/SideNavbar";
 const Banner = ({ name }) => {
   const { auth } = useAuth();
   return (
-    <div className="bg-dark-purple text-gray-100">
-      <section className="container mx-auto flex items-center justify-between py-4">
+    <div className="bg-dark-purple text-gray-100 w-screen">
+      <section className="container mx-auto flex flex-wrap items-center justify-between py-4">
         {auth.roles == 5151 ? (
           <NavBar />
         ) : auth.roles == 999 ? (
