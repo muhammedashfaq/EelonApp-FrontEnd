@@ -61,7 +61,7 @@ const NavBar = () => {
         },
         {
           title: "Settings",
-          href: RouteObjects.RequireForms,
+          href: RouteObjects.StaffAcademicsSettings,
           icon: faCaretRight,
         },
       ],
@@ -81,7 +81,11 @@ const NavBar = () => {
           icon: faCaretRight,
           href: RouteObjects.StaffAttandance,
         },
-        { title: "Attandance Report", icon: faCaretRight ,href:RouteObjects.AttandanceReport },
+        {
+          title: "Attandance Report",
+          icon: faCaretRight,
+          href: RouteObjects.AttandanceReport,
+        },
       ],
     },
     {

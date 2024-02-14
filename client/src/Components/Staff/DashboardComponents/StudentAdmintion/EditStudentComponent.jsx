@@ -32,8 +32,14 @@ const EditStudentComponent = () => {
   const religionState = useDropdownState("", fetData?.religion);
   const communityState = useDropdownState("", fetData?.community);
   const classOfJoinState = useDropdownState("", fetData?.classOfJoin);
-  const mediumOfInstructionState = useDropdownState("", fetData?.mediumOfInstruction);
-  const concessionStudentState = useDropdownState("", fetData?.concessionStudent);
+  const mediumOfInstructionState = useDropdownState(
+    "",
+    fetData?.mediumOfInstruction
+  );
+  const concessionStudentState = useDropdownState(
+    "",
+    fetData?.concessionStudent
+  );
   const academicYearState = useDropdownState("", fetData?.academicYear);
   const studentCategoryState = useDropdownState("", fetData?.studentCategory);
   const studentGpState = useDropdownState("", fetData?.studentGp);
@@ -114,12 +120,13 @@ const EditStudentComponent = () => {
       academicYear: academicYearState[0],
       studentCategory: studentCategoryState[0],
       studentGp: studentGpState[0],
+      classId: `${stdState[0]}-${sectionState[0]}`,
     };
     try {
-      console.log(reqData,"dfgkhfs")
+      console.log(reqData, "dfgkhfs");
       setIsLoading(true);
       const response = await axios.put(`/users/student/${id}`, reqData);
-      console.log(response,"respo");
+      console.log(response, "respo");
       setIsLoading(false);
       navigate(RouteObjects.StudentsList);
     } catch (error) {

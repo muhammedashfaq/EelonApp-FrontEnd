@@ -22,6 +22,7 @@ import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import AddClassModal from "./AddClassModal";
 import AddStudentModal from "./AddStudentModal";
+import StudentListModal from "./StudentListModal";
 
 const ClassDetails = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,8 @@ const ClassDetails = () => {
   const [isLoading, setisLoading] = useState(false);
   const axiosPrivate = useAxiosPrivate();
   const [ClassData, setClassData] = useState();
+  const [AcademicYrs, setAcademicYrs] = useState();
+  const [selectedAcademicYr, setselectedAcademicYr] = useState();
 
   const getAllClass = async () => {
     try {
@@ -69,8 +72,23 @@ const ClassDetails = () => {
     }
   };
 
+  const getAcademicYrdropdown = async () => {
+    try {
+      const response = await axiosPrivate.get(
+        "classsection/academicyear/academicyear"
+      );
+      const sortedData = response.data?.academicYear.sort((a, b) =>
+        a.localeCompare(b)
+      );
+      setAcademicYrs(sortedData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getAllClass();
+    getAcademicYrdropdown();
   }, []);
 
   return (
@@ -108,8 +126,48 @@ const ClassDetails = () => {
               Reset
             </Button>
           </div>
+          <div
+            style={{
+              display: "inline-block",
+              position: "relative",
+              fontFamily: "Arial, sans-serif",
+            }}
+          >
+            <select
+              label="Select"
+              value={selectedAcademicYr}
+              onChange={(e) => setselectedAcademicYr(e.target.value)}
+              style={{
+                padding: "10px",
+                fontSize: "16px",
+                border: "1px solid #ccc",
+                borderRadius: "8px",
+                backgroundColor: "#fff",
+                color: "#333",
+                appearance: "none" /* hides default arrow */,
+                width: "200px",
+                cursor: "pointer",
+              }}
+            >
+              {AcademicYrs &&
+                AcademicYrs.map((data) => (
+                  <option
+                    key={data}
+                    value={data}
+                    style={{
+                      backgroundColor: "#fff",
+                      color: "#333",
+                      padding: "10px",
+                    }}
+                  >
+                    {data}
+                  </option>
+                ))}
+            </select>
+          </div>
+
           <div>
-            <AddClassModal />
+            <AddClassModal AcademicYrs={AcademicYrs} />
           </div>
         </div>
 
@@ -143,6 +201,15 @@ const ClassDetails = () => {
                       className="font-normal leading-none opacity-70"
                     >
                       Section
+                    </Typography>
+                  </th>
+                  <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal leading-none opacity-70"
+                    >
+                      Student list
                     </Typography>
                   </th>
                   <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
@@ -217,6 +284,18 @@ const ClassDetails = () => {
                             color="blue-gray"
                             className="font-normal"
                           >
+                            <StudentListModal
+                              studentList={data?.students}
+                              classId={data?.classId}
+                            />
+                          </Typography>
+                        </td>
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
                             {/* <div>
                               <IconButton
                                 variant="text"
@@ -228,7 +307,10 @@ const ClassDetails = () => {
                                 />
                               </IconButton>
                             </div> */}
-                            <AddStudentModal classObjId={data._id} />
+                            <AddStudentModal
+                              classObjId={data._id}
+                              studentList={data?.students}
+                            />
                           </Typography>
                         </td>
                         <td className={classes}>
