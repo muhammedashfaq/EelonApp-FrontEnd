@@ -76,6 +76,9 @@ const ClassWiseReport = ({ classwiseAttendance }) => {
                 </tr>
               );
             })}
+          {!classwiseAttendance && (
+            <tr style={{ textAlign: "center" }}>No data</tr>
+          )}
         </tbody>
       </table>
     </Card>

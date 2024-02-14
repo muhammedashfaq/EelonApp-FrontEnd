@@ -228,7 +228,7 @@ const ClassDetails = () => {
                                 />
                               </IconButton>
                             </div> */}
-                            <AddStudentModal />
+                            <AddStudentModal classObjId={data._id} />
                           </Typography>
                         </td>
                         <td className={classes}>

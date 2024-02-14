@@ -15,10 +15,8 @@ const Report = () => {
 
   const getClsSection = async () => {
     try {
-      const response = await axiosPrivate.get("/classsection");
-      const sortedData = response.data.sort(
-        (a, b) => parseInt(a.classId) - parseInt(b.classId)
-      );
+      const response = await axiosPrivate.get("/classsection/dropdowns");
+      const sortedData = response.data.sort((a, b) => a.localeCompare(b));
 
       setClss(sortedData);
     } catch (error) {
