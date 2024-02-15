@@ -6,27 +6,24 @@ import axios from "../../../api/axios";
 import { useEffect, useState } from "react";
 
 const StudentProfile = () => {
-
-  const[userData,setuserdata]=useState()
-  const {id}=useParams()
-const getData=async()=>{
-  try {
-    const response = await axios.get(`/users/student/${id}`)
-    setuserdata(response.data)
-  } catch (error) {
-    console.log(error)
-    
-  }
-}
-useEffect(()=>{
-  getData()
-},[])
+  const [userData, setuserdata] = useState();
+  const { id } = useParams();
+  const getData = async () => {
+    try {
+      const response = await axios.get(`/users/student/${id}`);
+      setuserdata(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, []);
   return (
-
     <div>
       <StaffHeader />
       <Banner />
-      <Profile userData={userData}/>
+      <Profile userData={userData} getData={getData} />
     </div>
   );
 };
