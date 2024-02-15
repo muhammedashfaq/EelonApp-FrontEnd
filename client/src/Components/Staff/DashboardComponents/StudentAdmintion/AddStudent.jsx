@@ -14,13 +14,11 @@ import { RouteObjects } from "../../../../Routes/RoutObjects";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-const AddStudent = () => {
-  const axiosPrivate =useAxiosPrivate()
-  const navigate =useNavigate()
-  const [classes, setClasses] = useState("");
+const AddStudent = ({ classDetails, AcademicYrs }) => {
+  const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
   const [gender, setgender] = useState();
-  const [std, setstd] = useState();
-  const [section, setsection] = useState();
+  const [classSection, setClassSection] = useState();
   const [bloodGp, setbloodGp] = useState();
   const [motherTongue, setmotherTongue] = useState();
   const [religion, setreligion] = useState();
@@ -31,8 +29,9 @@ const AddStudent = () => {
   const [academicYear, setacademicYear] = useState();
   const [studentCategory, setstudentCategory] = useState();
   const [studentGp, setstudentGp] = useState();
+  const[board,setBoard]=useState("")
   const [isLoading, setIsLoading] = useState(false);
-  const [frntentErors,setFrntentErors]=useState("")
+  const [frntentErors, setFrntentErors] = useState("");
 
   const [formData, setFormdata] = useState({
     admnNo: "",
@@ -70,10 +69,10 @@ const AddStudent = () => {
     guardianNameTamil: "",
     guardiansJob: "",
     annualIncome: "",
-    
+
   });
   const handleInputChange = (event) => {
-    console.log(event,'data')
+    console.log(event, "data");
     const { name, value, type, checked } = event.target;
 
     const inputValue =
@@ -87,8 +86,6 @@ const AddStudent = () => {
       ...prev,
       [name]: inputValue,
     }));
-
-  
   };
 
   const handleSubmitForm = async (event) => {
@@ -96,8 +93,7 @@ const AddStudent = () => {
     const reqData = {
       ...formData,
       gender,
-      std,
-      section,
+      classSection,
       bloodGp,
       motherTongue,
       religion,
@@ -108,28 +104,28 @@ const AddStudent = () => {
       academicYear,
       studentCategory,
       studentGp,
+      board
     };
-    if(!reqData.studentName){
-      setFrntentErors("Please fill required Fields")
+    if (!reqData.studentName) {
+      setFrntentErors("Please fill required Fields");
       return;
     }
-    console.log(formData.DOB,"dob");
+    console.log(formData.DOB, "dob");
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const response = await axiosPrivate.post("/users/student", reqData);
-      setIsLoading(false)
-      navigate(RouteObjects.StudentsList)
-
-
+      setIsLoading(false);
+      navigate(RouteObjects.StudentsList);
     } catch (error) {
-      setIsLoading(false)
+      setIsLoading(false);
 
       console.log(error);
     }
   };
+
   return (
     <div className=" w-screen">
-                  {isLoading && <Spinner />}
+      {isLoading && <Spinner />}
 
       <div className="flex justify-center">
         <div className=" border-2 rounded-lg shadow-lg  mt-2 ">
@@ -137,21 +133,20 @@ const AddStudent = () => {
             <h1 className="text-2xl">Add student </h1>
           </div>
           <form onSubmit={handleSubmitForm}>
-            
             <div className="px-6 pt-6 bg-green-100 mx-2 flex justify-between items-center">
-              
-              <Typography variant="lead" className="font-semibold text-2xl">Personal Details</Typography>
-              <div className="w-96 m-2">
-
-              </div>
+              <Typography variant="lead" className="font-semibold text-2xl">
+                Personal Details
+              </Typography>
+              <div className="w-96 m-2"></div>
               <hr />
             </div>
             <div className=" mt-6">
-
-<span className="ml-10  opacity-70 " ><FontAwesomeIcon icon={faInfoCircle} className="opacity-30" /> Please complete all required fields.</span>
+              <span className="ml-10  opacity-70 ">
+                <FontAwesomeIcon icon={faInfoCircle} className="opacity-30" />{" "}
+                Please complete all required fields.
+              </span>
             </div>
             <div className=" gap-4 p-8 Laptop:grid Laptop:grid-cols-4 Tablet:grid Tablet:grid-cols-3 ipad:grid ipad:grid-cols-3 mobile:grid mobile:grid-cols-2">
-              
               <Input
                 required
                 name="studentName"
@@ -159,14 +154,13 @@ const AddStudent = () => {
                 variant="outlined"
                 label={
                   frntentErors && frntentErors ? frntentErors : "Student Name"
-                }        
+                }
                 placeholder=" Name*"
                 onChange={handleInputChange}
                 error={frntentErors}
               />
               <Input
-              
-                 name="nameTamil"
+                name="nameTamil"
                 type="text"
                 variant="outlined"
                 label="Name In Tamil"
@@ -174,12 +168,11 @@ const AddStudent = () => {
                 onChange={handleInputChange}
               />
               <Select
-
                 variant="outlined"
                 value={gender}
                 onChange={(e) => setgender(e)}
                 label="Gender**"
-                 error={frntentErors?.frntentErors}
+                error={frntentErors?.frntentErors}
               >
                 <Option value="Male">Male</Option>
                 <Option value="Female">Female</Option>
@@ -187,16 +180,15 @@ const AddStudent = () => {
               </Select>
 
               <Input
-               name="DOB"
+                name="DOB"
                 type="date"
                 variant="outlined"
                 label="DOB"
                 placeholder="DOB"
                 onChange={handleInputChange}
-
               />
               <Input
-              required
+                required
                 name="AadharNo"
                 type="number"
                 variant="outlined"
@@ -221,7 +213,7 @@ const AddStudent = () => {
                 <Option value="Unknown">Unknown</Option>
               </Select>
               <Input
-              required
+                required
                 name="ContactNo"
                 type="tel"
                 variant="outlined"
@@ -239,7 +231,7 @@ const AddStudent = () => {
                 onChange={handleInputChange}
               />
               <Input
-              required
+                required
                 variant="outlined"
                 name="city"
                 label="City"
@@ -247,7 +239,7 @@ const AddStudent = () => {
                 onChange={handleInputChange}
               />
               <Input
-              required
+                required
                 variant="outlined"
                 name="state"
                 label="State"
@@ -256,7 +248,7 @@ const AddStudent = () => {
               />
 
               <Input
-              required
+                required
                 name="nationality"
                 type="text"
                 variant="outlined"
@@ -265,7 +257,7 @@ const AddStudent = () => {
                 onChange={handleInputChange}
               />
               <Input
-              required
+                required
                 variant="outlined"
                 name="pincode"
                 label="Pin"
@@ -282,6 +274,7 @@ const AddStudent = () => {
                 <Option value="Tamil">Tamil</Option>
                 <Option value="Hindi">Hindi</Option>
                 <Option value="Malayalam">Malayalam</Option>
+                
               </Select>
 
               <Select
@@ -293,6 +286,8 @@ const AddStudent = () => {
                 <Option value="Hindu">Hindu</Option>
                 <Option value="Muslim">Muslim</Option>
                 <Option value="Christian">Christian</Option>
+                <Option value="Other">Other</Option>
+
               </Select>
               <Input
                 name="caste"
@@ -320,6 +315,7 @@ const AddStudent = () => {
                 <Option value="OBC">OBC</Option>
                 <Option value="SC">SC</Option>
                 <Option value="ST">ST</Option>
+                <Option value="Other">Other</Option>
               </Select>
 
               <Input
@@ -339,7 +335,6 @@ const AddStudent = () => {
                 onChange={handleInputChange}
               />
 
-          
               <Textarea
                 variant="outlined"
                 name="address"
@@ -348,12 +343,14 @@ const AddStudent = () => {
               />
             </div>
             <div className="px-6 pt-6 bg-green-100 mx-2">
-              <Typography variant="lead" className="font-semibold text-2xl" >Guardian Details</Typography>
+              <Typography variant="lead" className="font-semibold text-2xl">
+                Guardian Details
+              </Typography>
               <hr />
             </div>
             <div className=" gap-4 p-8 Laptop:grid Laptop:grid-cols-4 Tablet:grid Tablet:grid-cols-3 ipad:grid ipad:grid-cols-3 mobile:grid mobile:grid-cols-2">
               <Input
-              required
+                required
                 name="FathersName"
                 type="text"
                 variant="outlined"
@@ -362,7 +359,7 @@ const AddStudent = () => {
                 onChange={handleInputChange}
               />
               <Input
-              required
+                required
                 name="FathersNameTamil"
                 type="text"
                 variant="outlined"
@@ -372,8 +369,7 @@ const AddStudent = () => {
               />
 
               <Input
-              required
-
+                required
                 name="FathersJob"
                 type="text"
                 variant="outlined"
@@ -442,14 +438,15 @@ const AddStudent = () => {
             </div>
 
             <div className="px-6 pt-6 bg-green-100 mx-2">
-              <Typography variant="lead" className="font-semibold text-2xl">Admission Details</Typography>
+              <Typography variant="lead" className="font-semibold text-2xl">
+                Admission Details
+              </Typography>
               <hr />
             </div>
 
             <div className=" gap-4 p-8 Laptop:grid Laptop:grid-cols-4 Tablet:grid Tablet:grid-cols-3 ipad:grid ipad:grid-cols-3 mobile:grid mobile:grid-cols-2">
               <Input
-              required
-
+                required
                 name="admnNo"
                 type="number"
                 variant="outlined"
@@ -457,25 +454,26 @@ const AddStudent = () => {
                 placeholder="Admission Number*"
                 onChange={handleInputChange}
               />
+                 <Select label="Board" value={board} onChange={(e) => setBoard(e)}>
+              <Option value="CBSE">CBSE</Option>
+              <Option value="ICSE">ICSE</Option>
+              <Option value="State">State</Option>
+            </Select>
               <Select
                 variant="outlined"
-                value={academicYear}
                 onChange={(e) => setacademicYear(e)}
                 label="Academic Year"
               >
-                <Option value="2016-2017">2016-2017</Option>
-                <Option value="2017-2018">2017-2018</Option>
-                <Option value="2018-2019">2018-2019</Option>
-                <Option value="2019-2020">2019-2020</Option>
-                <Option value="2020-2021">2020-2021</Option>
-                <Option value="2021-2022">2021-2022</Option>
-                <Option value="2022-2023">2022-2023</Option>
-                <Option value="2023-2024">2023-2024</Option>
+                {AcademicYrs &&
+                  AcademicYrs.map((data, i) => (
+                    <Option key={i} value={data}>
+                      {data}
+                    </Option>
+                  ))}
               </Select>
 
               <Input
-              required
-
+                required
                 name="email"
                 type="email"
                 variant="outlined"
@@ -484,8 +482,8 @@ const AddStudent = () => {
                 onChange={handleInputChange}
               />
               <Input
-              required
-
+                required
+                
                 name="password"
                 type="password"
                 variant="outlined"
@@ -514,7 +512,6 @@ const AddStudent = () => {
               </Select>
 
               <Input
-              
                 name="EMSno"
                 type="number"
                 variant="outlined"
@@ -522,34 +519,18 @@ const AddStudent = () => {
                 placeholder="EMIS Number"
                 onChange={handleInputChange}
               />
+ 
               <Select
                 variant="outlined"
-                value={std}
-                onChange={(e) => setstd(e)}
-                label="Class"
+                onChange={(e) => setClassSection(e)}
+                label="Class&Section"
               >
-                <Option value="01">First std</Option>
-                <Option value="02">Second std</Option>
-                <Option value="03">Third std</Option>
-                <Option value="04">Fourth std</Option>
-                <Option value="05">Fifth std</Option>
-                <Option value="06">Sixth std</Option>
-                <Option value="07">Seventh std</Option>
-                <Option value="08">Eighth std</Option>
-                <Option value="09">Nineth std</Option>
-                <Option value="10">Tenth std</Option>
-                <Option value="11">Plus one</Option>
-                <Option value="12">Plus two</Option>
-              </Select>
-              <Select
-                variant="outlined"
-                value={section}
-                onChange={(e) => setsection(e)}
-                label="Section"
-              >
-                <Option value="A">A</Option>
-                <Option value="B">B</Option>
-                <Option value="C">C</Option>
+                {classDetails &&
+                  classDetails.map((data, i) => (
+                    <Option key={i} value={data}>
+                      {data}
+                    </Option>
+                  ))}
               </Select>
 
               <Select

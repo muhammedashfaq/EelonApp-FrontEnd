@@ -508,7 +508,7 @@ const StudentsList = () => {
                           </Link>
                         </td>
                         <td className={classes}>
-                          <Link to={`${RouteObjects.EditStudent}/${data._id}`}>
+                          <Link to={`${RouteObjects.EditStudent}/${data._id}/${data.studentName}`}>
                             <Tooltip
                               content="Edit Student Data"
                               animate={{

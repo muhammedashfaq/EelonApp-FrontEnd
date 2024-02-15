@@ -32,8 +32,8 @@ const ImageCard = ({ userData }) => {
   const [Image, setImage] = useState(
     "https://img.freepik.com/premium-photo/man-is-smiling-holding-laptop-with-smile-his-face_973047-1028.jpg"
   );
-  const [errorImage,setErrorImage]=useState("")
   const[profileImage,setProfileImage]=useState("")
+  const [errorImage,setErrorImage]=useState("")
   const [open, setOpen] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
