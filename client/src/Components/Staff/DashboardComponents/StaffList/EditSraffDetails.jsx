@@ -71,7 +71,7 @@ const EditSraffDetails = () => {
     esi: "",
     esiip: "",
     otherAllowance: "",
-    loginemail:"",
+    loginemail: "",
     loginpassword: "",
   });
 
@@ -103,7 +103,7 @@ const EditSraffDetails = () => {
     };
 
     try {
-      const response = await axiosPrivate;
+      // const response = await axiosPrivate;
     } catch (error) {
       console.log(error);
     }
@@ -111,7 +111,7 @@ const EditSraffDetails = () => {
 
   const getData = async () => {
     try {
-      const response = await axiosPrivate;
+      // const response = await axiosPrivate;
       setFetchData(response.data);
     } catch (error) {
       console.log(error);
@@ -174,7 +174,6 @@ const EditSraffDetails = () => {
                 label="DOB"
                 required
                 defaultValue={fetchData?.DOB}
-
               />
               <Input
                 name="mob"
@@ -361,7 +360,11 @@ const EditSraffDetails = () => {
                   BANK Details :-
                 </Typography>
               </div>
-              <Select label="Account Type " value={acTypeState[0]} onChange={(e) => acTypeState[0](e)}>
+              <Select
+                label="Account Type "
+                value={acTypeState[0]}
+                onChange={(e) => acTypeState[0](e)}
+              >
                 <Option>Self</Option>
                 <Option>Joint</Option>
                 <Option>Other</Option>
@@ -493,7 +496,11 @@ const EditSraffDetails = () => {
             </div>
 
             <div className="Laptop:grid Laptop:grid-cols-4 ipad:grid ipad:grid-cols-3 Tablet:grid Tablet:grid-cols-3 mobile:grid mobile:grid-cols-1 gap-4 p-8  ">
-              <Select label="User Type " value={userTypeState[0]} onChange={(e) => userTypeState[1](e)}>
+              <Select
+                label="User Type "
+                value={userTypeState[0]}
+                onChange={(e) => userTypeState[1](e)}
+              >
                 <Option>Self</Option>
                 <Option>Joint</Option>
                 <Option>Other</Option>
