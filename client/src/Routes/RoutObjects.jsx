@@ -11,11 +11,11 @@ export const RouteObjects = {
 
   StaffDashboard: "/staffdash",
   Stafflibrary: "/stafflibrary",
-  Bookmanagment: "/bookdetails",
+  Bookmanagment: "/bookdetails/page",
   Issuebooks: "/issuedbookdetails",
   Issuecards: "/issuedcarddetails",
   LibrarySettings: "/librarysettings",
-  StudentsList: "/studentlist",
+  StudentsList: "/studentlist/page",
   StudentProfile: "/studentprofile",
   AddStudent: "/addstudent",
   EditStudent: "/editstudent",
@@ -23,13 +23,11 @@ export const RouteObjects = {
   StudentsAttendance: "/students/attandance",
   StudentsAttendanceTable: "/students/attendancetable",
   StaffAttandance: "/staff/attancance",
-  AttandanceReport:"/attendance/reports",
-  StaffList:"/staffdetails",
-  AddStaffList:"/Addstaff",
-  EditStaffList:"/editstaff",
-  StaffProfile:"/staffprofile",
-
-  
+  AttandanceReport: "/attendance/reports",
+  StaffList: "/staffdetails",
+  AddStaffList: "/Addstaff",
+  EditStaffList: "/editstaff",
+  StaffProfile: "/staffprofile",
 
   StaffManageClass: "/staff/manageclass",
   StaffAcademicsSettings: "/staff/academics/settings",

@@ -41,7 +41,7 @@ const NavBar = () => {
       submenuItems: [
         {
           title: "Students List ",
-          href: RouteObjects.StudentsList,
+          href: `${RouteObjects.StudentsList}/1`,
           icon: faCaretRight,
         },
         {
@@ -135,59 +135,58 @@ const NavBar = () => {
 
       <Drawer open={open} onClose={closeDrawer} className="p-4 bg-dark-purple">
         <div className="h-screen">
+          <ul className="pt-2">
+            {menu.map((item, index) => (
+              <li
+                className={`text-gray-200 text-sm flex flex-col cursor-pointer p-2 hover:bg-deep-orange-500 rounded-md mt-2 relative`}
+                key={index}
+              >
+                <Link to={item.href}>
+                  <div className="flex items-center gap-x-4">
+                    <FontAwesomeIcon icon={item.icon} />
 
-        <ul className="pt-2">
-          {menu.map((item, index) => (
-            <li
-              className={`text-gray-200 text-sm flex flex-col cursor-pointer p-2 hover:bg-deep-orange-500 rounded-md mt-2 relative`}
-              key={index}
-            >
-              <Link to={item.href}>
-                <div className="flex items-center gap-x-4">
-                  <FontAwesomeIcon icon={item.icon} />
-
-                  <span
-                    className={`duration-200 flex-1 ${
-                      !open && "hidden "
-                    } text-base font-medium`}
-                  >
-                    {item.title}
-                  </span>
-
-                  {item.submenuItems && (
                     <span
-                      className="material-symbols-outlined"
-                      onClick={() => toggleSubmenu(index)}
+                      className={`duration-200 flex-1 ${
+                        !open && "hidden "
+                      } text-base font-medium`}
                     >
-                      {submenuOpen[index] ? "expand_less" : "expand_more"}
+                      {item.title}
                     </span>
-                  )}
-                </div>
-              </Link>
-              {item.submenuItems && submenuOpen[index] && (
-                <ul className=" bg-deep-orange-500 rounded-xl">
-                  {item.submenuItems.map((subitems, i) => (
-                    <Link to={subitems.href} key={i}>
-                      <li
-                        className={` text-sm flex items-center gap-x-8 cursor-pointer px-2 py-1.5 hover:bg-blue-500 rounded-lg text-white `}
+
+                    {item.submenuItems && (
+                      <span
+                        className="material-symbols-outlined"
+                        onClick={() => toggleSubmenu(index)}
                       >
-                        <FontAwesomeIcon icon={subitems.icon} />
-                        <span>{subitems.title}</span>
-                      </li>
-                    </Link>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
-        </ul>
-        <li
-          className={` text-sm flex items-stretch gap-x-8 cursor-pointer  fixed w-max m-3 p-6 bg-blue-500 rounded-lg text-white mt-4`}
-        >
-          <img src={logo} alt="Logo" className="w-8 h-8" />
-          <span className="ml-2 text-base font-medium">Eelon.com </span>
-        </li>
-          </div>
+                        {submenuOpen[index] ? "expand_less" : "expand_more"}
+                      </span>
+                    )}
+                  </div>
+                </Link>
+                {item.submenuItems && submenuOpen[index] && (
+                  <ul className=" bg-deep-orange-500 rounded-xl">
+                    {item.submenuItems.map((subitems, i) => (
+                      <Link to={subitems.href} key={i}>
+                        <li
+                          className={` text-sm flex items-center gap-x-8 cursor-pointer px-2 py-1.5 hover:bg-blue-500 rounded-lg text-white `}
+                        >
+                          <FontAwesomeIcon icon={subitems.icon} />
+                          <span>{subitems.title}</span>
+                        </li>
+                      </Link>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ul>
+          <li
+            className={` text-sm flex items-stretch gap-x-8 cursor-pointer  fixed w-max m-3 p-6 bg-blue-500 rounded-lg text-white mt-4`}
+          >
+            <img src={logo} alt="Logo" className="w-8 h-8" />
+            <span className="ml-2 text-base font-medium">Eelon.com </span>
+          </li>
+        </div>
       </Drawer>
     </div>
   );

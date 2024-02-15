@@ -21,7 +21,7 @@ const StaffLibraryManagement = () => {
       <Banner />
       <div className="flex justify-center items-center m-20">
         <div className="flex flex-wrap justify-center gap-8 mt-6 mx-4">
-          <Link to={RouteObjects.Bookmanagment}>
+          <Link to={`${RouteObjects.Bookmanagment}/1`}>
             <Card className="flex flex-col border-cyan-200 rounded-md hover:cursor-pointer border-2 h-60 w-40 hover:scale-110 transition-all duration-200">
               <CardHeader>
                 <div className="bg-hero-pattern rounded-t-md">
