@@ -120,10 +120,10 @@ const LibrarysettingsCard = () => {
               </span>
               <div>
                 <span className="text-2xl font-semibold flex flex-col">
-                  Toatal Cards Issued
+                  Total Cards Issued
                 </span>
                 <div className="flex justify-end p-1 bg-yellow-50">
-                  <span className="font-extrabold text-xl">100 nos</span>
+                  <span className="font-extrabold text-xl">5 nos</span>
                 </div>
               </div>
             </div>
