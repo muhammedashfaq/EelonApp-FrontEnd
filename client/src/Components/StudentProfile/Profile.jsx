@@ -8,7 +8,7 @@ const Profile = ({userData}) => {
   return (
     <div  >
       <div className=" flex justify-center  p-2  items-center mt-8">
-        <div className="grid grid-flow-col gap-3">
+        <div className="flex flex-wrap gap-3 ">
           <ImageCard userData={userData} />
           <DetailsPage userData={userData}/>
         </div>
