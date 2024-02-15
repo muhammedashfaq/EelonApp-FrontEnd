@@ -14,6 +14,7 @@ const LibraryPieReportChart = () => {
     try {
       const response = await axiosPrivate.get("library/reports/genrecount");
       setgenreCount(response.data);
+      console.log(response.data);
       setgenreNameArray(Object.keys(response.data));
       setgenreCountArray(Object.values(response.data));
     } catch (error) {

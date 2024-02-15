@@ -33,10 +33,9 @@ const useDropdownState = (initialValue, fetchedValue) => {
   return [value, setValue];
 };
 
-export default function LibraryEditBooksModal({ getBooks, data }) {
-  
+export default function LibraryEditBooksModal({ getBooks, data, GenreList }) {
   const [open, setOpen] = React.useState(false);
-  
+
   const [formData, setFormData] = useState({
     bookName: "",
     author: "",
@@ -76,7 +75,7 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
       [name]: "",
     }));
   };
-  
+
   const navigate = useNavigate();
 
   const handleOpen = () => setOpen(true);
@@ -85,13 +84,12 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
     getBooks();
   };
   const dbId = data._id;
-  const alldara ={
+  const alldara = {
     ...formData,
-    genre:genreState[0]
-  }
+    genre: genreState[0],
+  };
 
   const updateBook = async () => {
-
     try {
       const error = bookAddValidation(formData);
       if (!Object.values(error).every((value) => value === "")) {
@@ -99,7 +97,7 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
         return;
       } else {
         const response = await axios.put(`/library/books/${dbId}`, alldara);
-        handleClose()
+        handleClose();
       }
     } catch (error) {
       console.log(error);
@@ -118,7 +116,7 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
         }}
       >
         <IconButton variant="text" onClick={handleOpen}>
-          <FontAwesomeIcon icon={faEdit}  className="h-6 w-5" />
+          <FontAwesomeIcon icon={faEdit} className="h-6 w-5" />
         </IconButton>
       </Tooltip>
       <Dialog open={open} handler={handleOpen} size="xl">
@@ -168,14 +166,13 @@ export default function LibraryEditBooksModal({ getBooks, data }) {
                 label="Select genre"
                 value={genreState[0]}
                 onChange={(e) => genreState[1](e)}
-
               >
-                <Option value="Story">Story</Option>
-                <Option value="Poem">Poem</Option>
-                <Option value="Biography">Biography</Option>
-                <Option value="Mystery">Mystery</Option>
-                <Option value="Fiction">Fiction</Option>
-                <Option value="Non-fiction">Non-fiction</Option>
+                <>
+                  {GenreList &&
+                    GenreList.map((data) => (
+                      <Option value={data?.genre}>{data?.genre}</Option>
+                    ))}
+                </>
               </Select>
 
               <Input

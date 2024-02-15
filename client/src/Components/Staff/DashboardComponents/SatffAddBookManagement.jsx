@@ -10,6 +10,7 @@ import {
   Option,
   Tooltip,
   IconButton,
+  CardFooter,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import axios from "../../../api/axios";
@@ -24,12 +25,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { RouteObjects } from "../../../Routes/RoutObjects";
 
 const SatffAddBookManagement = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [bookData, setbookData] = useState();
+  const [paginationData, setpaginationData] = useState();
   const [genre, setgenre] = useState();
   const [searchQuery, setsearchQuery] = useState();
   const [searchData, setsearchData] = useState();
@@ -37,9 +42,12 @@ const SatffAddBookManagement = () => {
   const axiosPrivate = useAxiosPrivate();
   const [GenreList, setGenreList] = useState();
 
+  const { page } = useParams();
+  const navigate = useNavigate();
+  const [pageInt, setpageInt] = useState(Number(page));
 
-
-  const deleteBook = async (id,name) => {
+  // console.log(Number(page) + 2);
+  const deleteBook = async (id, name) => {
     try {
       const result = await Swal.fire({
         title: "Are you sure?",
@@ -48,31 +56,35 @@ const SatffAddBookManagement = () => {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
+        confirmButtonText: "Yes, delete it!",
       });
-  
+
       if (result.isConfirmed) {
         // User confirmed, proceed with deletion
         await axiosPrivate.delete(`/library/books/${id}`);
         Swal.fire({
           title: "Deleted!",
           text: `${name} Book has been deleted`,
-          icon: "success"
+          icon: "success",
         });
-        getBooks()
+        getBooks();
       }
     } catch (error) {
       toast.error("Something went wrong");
       console.error(error);
     }
   };
-  const getBooks = async () => {
+  const getBooks = async (pageNo) => {
     try {
       setisLoading(true);
-      const response = await axiosPrivate.get("/library/books");
+      const response = await axiosPrivate.get(
+        `/library/books/pagination?page=${pageNo}&limit=2`
+      );
       // dispatch(hideloading());
+      console.log(response.data.pagination);
 
-      setbookData(response.data);
+      setbookData(response.data.books);
+      setpaginationData(response.data.pagination);
       setisLoading(false);
     } catch (error) {
       console.log(error);
@@ -114,16 +126,19 @@ const SatffAddBookManagement = () => {
     try {
       const response = await axiosPrivate.get(`librarysettings`);
       setGenreList(response.data);
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    getBooks();
+    getBooks(page);
     getSettings();
   }, []);
+
+  useEffect(() => {
+    setpageInt(Number(page));
+  }, [page]);
 
   return (
     <div className="w-full">
@@ -142,8 +157,10 @@ const SatffAddBookManagement = () => {
             >
               <>
                 {GenreList &&
-                  GenreList.map((list,i) => (
-                    <Option key={i} value={list?.genre}>{list?.genre}</Option>
+                  GenreList.map((list, i) => (
+                    <Option key={i} value={list?.genre}>
+                      {list?.genre}
+                    </Option>
                   ))}
               </>
             </Select>
@@ -159,7 +176,7 @@ const SatffAddBookManagement = () => {
               onClick={() => {
                 setsearchData();
                 setgenre();
-                setsearchQuery("")
+                setsearchQuery("");
               }}
               style={{ textTransform: "none" }}
             >
@@ -239,6 +256,12 @@ const SatffAddBookManagement = () => {
                   <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
                     <Typography
                       variant="small"
+                      onClick={() => {
+                        navigate(
+                          `${RouteObjects.Bookmanagment}/${paginationData.prev.page}`
+                        );
+                        getBooks(paginationData.prev.page);
+                      }}
                       color="blue-gray"
                       className="font-normal leading-none opacity-70"
                     >
@@ -418,6 +441,7 @@ const SatffAddBookManagement = () => {
                             <LibraryEditBooksModal
                               data={data}
                               getBooks={getBooks}
+                              GenreList={GenreList}
                             />
 
                             {data?.students?.currentlyIssued ? (
@@ -438,7 +462,14 @@ const SatffAddBookManagement = () => {
                                   unmount: { scale: 0, y: 25 },
                                 }}
                               >
-                                <FontAwesomeIcon className="cursor-pointer" icon={faTrash} color="red" onClick={()=>deleteBook(data._id,data.bookName)} />
+                                <FontAwesomeIcon
+                                  className="cursor-pointer"
+                                  icon={faTrash}
+                                  color="red"
+                                  onClick={() =>
+                                    deleteBook(data._id, data.bookName)
+                                  }
+                                />
                               </Tooltip>
                             )}
                           </td>
@@ -543,6 +574,7 @@ const SatffAddBookManagement = () => {
                             <LibraryEditBooksModal
                               data={data}
                               getBooks={getBooks}
+                              GenreList={GenreList}
                             />
 
                             {data?.students?.currentlyIssued ? (
@@ -563,7 +595,14 @@ const SatffAddBookManagement = () => {
                                   unmount: { scale: 0, y: 25 },
                                 }}
                               >
-                                <FontAwesomeIcon className="cursor-pointer" icon={faTrash} color="red" onClick={()=>deleteBook(data._id ,data.bookName)} />
+                                <FontAwesomeIcon
+                                  className="cursor-pointer"
+                                  icon={faTrash}
+                                  color="red"
+                                  onClick={() =>
+                                    deleteBook(data._id, data.bookName)
+                                  }
+                                />
                               </Tooltip>
                             )}
                           </td>
@@ -573,6 +612,39 @@ const SatffAddBookManagement = () => {
               </tbody>
             </table>
           </Card>
+          <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+            <Typography
+              variant="small"
+              color="blue-gray"
+              className="font-normal"
+            >
+              Page {page} of {paginationData?.totalPages}
+            </Typography>
+            <div className="flex gap-2">
+              <Button
+                variant="outlined"
+                size="sm"
+                disabled={page == 1 ? true : false}
+                onClick={() => {
+                  navigate(`${RouteObjects.Bookmanagment}/${pageInt - 1}`);
+                  getBooks(pageInt - 1);
+                }}
+              >
+                Previous
+              </Button>
+              <Button
+                variant="outlined"
+                size="sm"
+                disabled={page == paginationData?.totalPages ? true : false}
+                onClick={() => {
+                  navigate(`${RouteObjects.Bookmanagment}/${pageInt + 1}`);
+                  getBooks(pageInt + 1);
+                }}
+              >
+                Next
+              </Button>
+            </div>
+          </CardFooter>{" "}
         </div>
       </div>
     </div>
