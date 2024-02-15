@@ -15,7 +15,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import Swal from "sweetalert2";
 
-const AddClassModal = ({ AcademicYrs }) => {
+const AddClassModal = ({ AcademicYrs, getAllClass }) => {
   const [open, setOpen] = React.useState(false);
   const [std, setStd] = React.useState();
   const [section, setSection] = React.useState();
@@ -38,6 +38,7 @@ const AddClassModal = ({ AcademicYrs }) => {
         academicYear: selectAcademicYr,
       };
       const response = await axiosPrivate.post("/classsection", data);
+      getAllClass();
       handleOpen();
     } catch (error) {
       console.error(error);

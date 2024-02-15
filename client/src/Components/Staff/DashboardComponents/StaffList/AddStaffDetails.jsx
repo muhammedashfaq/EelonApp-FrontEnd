@@ -20,43 +20,44 @@ import React, { useState } from "react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 
 const AddStaffDetails = () => {
-    const axiosPrivate =useAxiosPrivate()
-    const[gender,setgender]=useState("")
-    const[maritalstatuse,setMaritalStatus]=useState()
-    const [religion,setReligion]=useState("")
-    const[jobType,setJobType]=useState("")
-    const[jobRole,setJobRole]=useState("")
-    const[acType,setAcType]=useState("")
-    const[userType,setUserType]=useState("")
+  const axiosPrivate = useAxiosPrivate();
+  const [gender, setgender] = useState("");
+  const [maritalStatus, setMaritalStatus] = useState();
+  const [religion, setReligion] = useState("");
+  const [jobType, setJobType] = useState("");
+  const [jobRole, setJobRole] = useState("");
+  const [accType, setAccType] = useState("");
+  const [userType, setUserType] = useState("");
   const [formData, setFormData] = useState({
-    staffId:"",
-    staffName:"",
-    DOB:"",
-    mob:"",
-    mob2:"",
-    wamob:"",
-    email:"",
-    DOJ:"",
-    adharno:"",
-    pan:"",
-    nationality:"",
-    state:"",
-    city:"",
-    pib:"",
-    address:"",
-    bankAccountNumber:"",
-    bankAccountName:"",
-    bankName:"",
-    bankBranchName:"",
-    bankIFSECode:"",
-    bankMoredetails:"",
-    basicSalary:"",
-    pf:"",
-    epfno:"",
-    esi:"",
-    esiip:"",
-    otherAllowance:"",
-    loginpassword:""
+    staffId: "",
+    staffName: "",
+    DOB: "",
+    mob: "",
+    mob2: "",
+    wamob: "",
+    contactEmail: "",
+    DOJ: "",
+    aadharNo: "",
+    pan: "",
+    nationality: "",
+    state: "",
+    city: "",
+    pib: "",
+    address: "",
+    bankAccountNumber: "",
+    bankAccountName: "",
+    bankName: "",
+    bankBranchName: "",
+    bankIFSECode: "",
+    otherBankdetails: "",
+    basicSalary: "",
+    pf: "",
+    epfno: "",
+    esi: null,
+    esiip: null,
+    otherAllowance: "",
+    password: "",
+    email: "",
   });
 
   const handleInputChange = (event) => {
@@ -74,20 +75,22 @@ const AddStaffDetails = () => {
       [name]: inputValue,
     }));
   };
-  const handleSubmitForm = async () => {
-    const allData={
-        ...formData,
-        gender,
-        maritalstatuse,
-        religion,
-        jobType,
-        jobRole,
-        acType,
-        userType
-}
+  const handleSubmitForm = async (e) => {
+    e.preventDefault();
+    const allData = {
+      ...formData,
+      gender,
+      maritalStatus,
+      religion,
+      jobType,
+      jobRole,
+      accType,
+      userType,
+    };
 
     try {
-        const response= await axiosPrivate
+      const response = await axiosPrivate.post("users/staff", allData);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -100,10 +103,9 @@ const AddStaffDetails = () => {
             <Typography variant="lead" className="font-semibold text-2xl">
               Personal Details <FontAwesomeIcon icon={faUser} />
             </Typography>
-           
           </div>
           <div className=" mt-6">
-            <span className="ml-10  opacity-70 ">
+            <span className="ml-10  opacity-70">
               <FontAwesomeIcon icon={faInfoCircle} className="opacity-30" />{" "}
               Please complete all required fields.
             </span>
@@ -119,7 +121,7 @@ const AddStaffDetails = () => {
                 onChange={handleInputChange}
               />
               <Input
-              name="staffName"
+                name="staffName"
                 className="bg-gray-50"
                 variant="outlined"
                 label="Name"
@@ -127,7 +129,11 @@ const AddStaffDetails = () => {
                 required
                 onChange={handleInputChange}
               />
-              <Select className="bg-gray-50" label="Gender*"   onChange={(e)=>setgender(e)} >
+              <Select
+                className="bg-gray-50"
+                label="Gender*"
+                onChange={(e) => setgender(e)}
+              >
                 <Option>Material Tailwind HTML</Option>
                 <Option>Material Tailwind React</Option>
                 <Option>Material Tailwind Vue</Option>
@@ -135,7 +141,7 @@ const AddStaffDetails = () => {
                 <Option>Material Tailwind Svelte</Option>
               </Select>
               <Input
-              name="DOB"
+                name="DOB"
                 className="bg-gray-50"
                 type="date"
                 variant="outlined"
@@ -143,7 +149,7 @@ const AddStaffDetails = () => {
                 required
               />
               <Input
-              name="mob"
+                name="mob"
                 className="bg-gray-50"
                 variant="outlined"
                 label="Contact Number"
@@ -152,7 +158,7 @@ const AddStaffDetails = () => {
                 onChange={handleInputChange}
               />
               <Input
-              name="mob2"
+                name="mob2"
                 className="bg-gray-50"
                 variant="outlined"
                 label="Contact Number"
@@ -160,7 +166,7 @@ const AddStaffDetails = () => {
                 onChange={handleInputChange}
               />
               <Input
-              name="wamob"
+                name="wamob"
                 className="bg-gray-50"
                 variant="outlined"
                 label="Whatsapp Number"
@@ -169,7 +175,7 @@ const AddStaffDetails = () => {
                 onChange={handleInputChange}
               />
               <Input
-                name="email"
+                name="contactEmail"
                 className="bg-gray-50"
                 variant="outlined"
                 label="Email ID"
@@ -177,7 +183,7 @@ const AddStaffDetails = () => {
                 onChange={handleInputChange}
               />
               <Input
-              name="DOJ"
+                name="DOJ"
                 className="bg-gray-50"
                 type="date"
                 variant="outlined"
@@ -185,7 +191,7 @@ const AddStaffDetails = () => {
                 required
               />
               <Input
-              name="adharno"
+                name="adharno"
                 className="bg-gray-50"
                 variant="outlined"
                 label="Adhar Number"
@@ -194,14 +200,18 @@ const AddStaffDetails = () => {
                 onChange={handleInputChange}
               />
               <Input
-              name="pan"
+                name="pan"
                 className="bg-gray-50"
                 variant="outlined"
                 label="PAN Number"
                 placeholder="PAN Number"
                 onChange={handleInputChange}
               />
-              <Select className="bg-gray-50" label="Marital Status" onChange={(e)=>setMaritalStatus(e)}>
+              <Select
+                className="bg-gray-50"
+                label="Marital Status"
+                onChange={(e) => setMaritalStatus(e)}
+              >
                 <Option>Material Tailwind HTML</Option>
                 <Option>Material Tailwind React</Option>
                 <Option>Material Tailwind Vue</Option>
@@ -209,7 +219,7 @@ const AddStaffDetails = () => {
                 <Option>Material Tailwind Svelte</Option>
               </Select>
               <Input
-              name="nationality"
+                name="nationality"
                 className="bg-gray-50"
                 variant="outlined"
                 label="Nationality"
@@ -218,7 +228,7 @@ const AddStaffDetails = () => {
                 onChange={handleInputChange}
               />
               <Input
-              name="state"
+                name="state"
                 className="bg-gray-50"
                 variant="outlined"
                 label="State"
@@ -228,7 +238,7 @@ const AddStaffDetails = () => {
               />
 
               <Input
-              name="city"
+                name="city"
                 className="bg-gray-50"
                 variant="outlined"
                 label="City"
@@ -238,7 +248,7 @@ const AddStaffDetails = () => {
               />
 
               <Input
-              name="pin"
+                name="pin"
                 className="bg-gray-50"
                 variant="outlined"
                 label="PIN"
@@ -247,18 +257,30 @@ const AddStaffDetails = () => {
                 onChange={handleInputChange}
               />
 
-              <Select className="bg-gray-50" label="Religion" onChange={(e)=>setReligion(e)}>
+              <Select
+                className="bg-gray-50"
+                label="Religion"
+                onChange={(e) => setReligion(e)}
+              >
                 <Option>Material Tailwind HTML</Option>
                 <Option>Material Tailwind React</Option>
                 <Option>Material Tailwind Vue</Option>
                 <Option>Material Tailwind Angular</Option>
                 <Option>Material Tailwind Svelte</Option>
               </Select>
-              <Select className="bg-gray-50" label="Job Type* " onChange={(e)=>setJobType(e)}>
+              <Select
+                className="bg-gray-50"
+                label="Job Type* "
+                onChange={(e) => setJobType(e)}
+              >
                 <Option>Teaching</Option>
                 <Option>Non-Teaching</Option>
               </Select>
-              <Select className="bg-gray-50" label="Job Role" onChange={(e)=>setJobRole(e)}>
+              <Select
+                className="bg-gray-50"
+                label="Job Role"
+                onChange={(e) => setJobRole(e)}
+              >
                 <Option>Material Tailwind HTML</Option>
                 <Option>Material Tailwind React</Option>
                 <Option>Material Tailwind Vue</Option>
@@ -267,7 +289,7 @@ const AddStaffDetails = () => {
               </Select>
 
               <Textarea
-              name="address"
+                name="address"
                 className="bg-gray-50"
                 variant="outlined"
                 placeholder="Enter Address"
@@ -295,14 +317,14 @@ const AddStaffDetails = () => {
                   BANK Details :-
                 </Typography>
               </div>
-              <Select label="Account Type " onChange={(e)=>setAcType(e)}>
+              <Select label="Account Type " onChange={(e) => setAccType(e)}>
                 <Option>Self</Option>
                 <Option>Joint</Option>
                 <Option>Other</Option>
               </Select>
 
               <Input
-              name="bankAccountNumber"
+                name="bankAccountNumber"
                 variant="outlined"
                 label="Account Number"
                 placeholder="Enter Number"
@@ -318,7 +340,7 @@ const AddStaffDetails = () => {
                 onChange={handleInputChange}
               />
               <Input
-              name="bankName"
+                name="bankName"
                 variant="outlined"
                 label="Bank Name"
                 placeholder="Enter Name"
@@ -326,7 +348,7 @@ const AddStaffDetails = () => {
                 onChange={handleInputChange}
               />
               <Input
-              name="bankBranchName"
+                name="bankBranchName"
                 variant="outlined"
                 label="Branch"
                 placeholder="Enter Branch Name"
@@ -334,7 +356,7 @@ const AddStaffDetails = () => {
                 onChange={handleInputChange}
               />
               <Input
-              name="bankIFSECode"
+                name="bankIFSECode"
                 variant="outlined"
                 label="IFSE Code"
                 placeholder="Enter IFSE Code"
@@ -356,7 +378,7 @@ const AddStaffDetails = () => {
               </div>
 
               <Input
-              name="basicSalary"
+                name="basicSalary"
                 variant="outlined"
                 label="Basic Salary"
                 placeholder="Enter Here"
@@ -364,35 +386,35 @@ const AddStaffDetails = () => {
                 onChange={handleInputChange}
               />
               <Input
-              name="pf"
+                name="pf"
                 variant="outlined"
                 label="PF"
                 placeholder="Enter Here"
                 onChange={handleInputChange}
               />
               <Input
-              name="epfno"
+                name="epfno"
                 variant="outlined"
                 label="EPF NO / UAN N0"
                 placeholder="Enter Here"
                 onChange={handleInputChange}
               />
               <Input
-              name="esi"
+                name="esi"
                 variant="outlined"
                 label="ESI"
                 placeholder="Enter Here"
                 onChange={handleInputChange}
               />
               <Input
-              name="esiip"
+                name="esiip"
                 variant="outlined"
                 label="ESI IP"
                 placeholder="Enter Here"
                 onChange={handleInputChange}
               />
               <Input
-              name="otherAllowance"
+                name="otherAllowance"
                 variant="outlined"
                 label="Other Allowances"
                 placeholder="Enter Here"
@@ -415,14 +437,14 @@ const AddStaffDetails = () => {
             </div>
 
             <div className="Laptop:grid Laptop:grid-cols-4 ipad:grid ipad:grid-cols-3 Tablet:grid Tablet:grid-cols-3 mobile:grid mobile:grid-cols-1 gap-4 p-8  ">
-              <Select label="User Type " onChange={(e)=>setUserType(e)}>
+              <Select label="User Type " onChange={(e) => setUserType(e)}>
                 <Option>Self</Option>
                 <Option>Joint</Option>
                 <Option>Other</Option>
               </Select>
 
               <Input
-              name="loginemail"
+                name="email"
                 variant="outlined"
                 label="Email ID"
                 placeholder="Enter Here"
@@ -430,7 +452,7 @@ const AddStaffDetails = () => {
                 onChange={handleInputChange}
               />
               <Input
-              name="loginpassword"
+                name="password"
                 variant="outlined"
                 label="Password"
                 placeholder="Enter Here"

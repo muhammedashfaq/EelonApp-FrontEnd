@@ -1,6 +1,38 @@
 import React from "react";
+import { useState, useEffect } from "react";
+import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 
 const LibrarysettingsCard = () => {
+  const axiosPrivate = useAxiosPrivate();
+
+  const [bookCount, setbookCount] = useState();
+  const [issueCount, setissueCount] = useState();
+
+  const getBookCount = async () => {
+    try {
+      const response = await axiosPrivate.get("library/reports/bookcount");
+      console.log(response.data);
+      setbookCount(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getBooksIssued = async () => {
+    try {
+      const response = await axiosPrivate.get("library/reports/issuecount");
+      console.log(response.data);
+      setissueCount(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getBookCount();
+    getBooksIssued();
+  }, []);
+
   return (
     <div className="mx-10 mt-4">
       <div className="flex flex-wrap gap-4 justify-around bg-blue-gray-50 shadow-inherit rounded-xl p-2">
@@ -12,10 +44,12 @@ const LibrarysettingsCard = () => {
               </span>
               <div>
                 <span className="text-2xl font-semibold flex flex-col">
-                  Toatal Books
+                  Total Books
                 </span>
                 <div className="flex justify-end p-1 bg-yellow-50">
-                  <span className="font-extrabold text-xl">100 nos</span>
+                  <span className="font-extrabold text-xl">
+                    {bookCount} nos
+                  </span>
                 </div>
               </div>
             </div>
@@ -48,10 +82,12 @@ const LibrarysettingsCard = () => {
               </span>
               <div>
                 <span className="text-2xl font-semibold flex flex-col">
-                  Toatal Books Issued
+                  Total Books Issued
                 </span>
                 <div className="flex justify-end p-1 bg-yellow-50">
-                  <span className="font-extrabold text-xl">100 nos</span>
+                  <span className="font-extrabold text-xl">
+                    {issueCount} nos
+                  </span>
                 </div>
               </div>
             </div>
@@ -112,7 +148,6 @@ const LibrarysettingsCard = () => {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );

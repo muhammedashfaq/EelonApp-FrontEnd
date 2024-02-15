@@ -57,16 +57,17 @@ const ClassDetails = () => {
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success",
+          });
+          axiosPrivate.delete(`/classsection/${id}`);
+          getAllClass();
+        }
       });
-      if (result.isConfirmed) {
-        const response = await axiosPrivate.delete(`/classsection/${id}`);
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success",
-        });
-      }
-      getAllClass();
     } catch (error) {
       console.error(error);
     }
@@ -167,7 +168,10 @@ const ClassDetails = () => {
           </div>
 
           <div>
-            <AddClassModal AcademicYrs={AcademicYrs} />
+            <AddClassModal
+              AcademicYrs={AcademicYrs}
+              getAllClass={getAllClass}
+            />
           </div>
         </div>
 
