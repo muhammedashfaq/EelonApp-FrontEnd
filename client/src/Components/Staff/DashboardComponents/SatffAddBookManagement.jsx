@@ -37,9 +37,7 @@ const SatffAddBookManagement = () => {
   const axiosPrivate = useAxiosPrivate();
   const [GenreList, setGenreList] = useState();
 
-
-
-  const deleteBook = async (id,name) => {
+  const deleteBook = async (id, name) => {
     try {
       const result = await Swal.fire({
         title: "Are you sure?",
@@ -48,18 +46,18 @@ const SatffAddBookManagement = () => {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
+        confirmButtonText: "Yes, delete it!",
       });
-  
+
       if (result.isConfirmed) {
         // User confirmed, proceed with deletion
         await axiosPrivate.delete(`/library/books/${id}`);
         Swal.fire({
           title: "Deleted!",
           text: `${name} Book has been deleted`,
-          icon: "success"
+          icon: "success",
         });
-        getBooks()
+        getBooks();
       }
     } catch (error) {
       toast.error("Something went wrong");
@@ -142,8 +140,10 @@ const SatffAddBookManagement = () => {
             >
               <>
                 {GenreList &&
-                  GenreList.map((list,i) => (
-                    <Option key={i} value={list?.genre}>{list?.genre}</Option>
+                  GenreList.map((list, i) => (
+                    <Option key={i} value={list?.genre}>
+                      {list?.genre}
+                    </Option>
                   ))}
               </>
             </Select>
@@ -159,7 +159,7 @@ const SatffAddBookManagement = () => {
               onClick={() => {
                 setsearchData();
                 setgenre();
-                setsearchQuery("")
+                setsearchQuery("");
               }}
               style={{ textTransform: "none" }}
             >
@@ -418,6 +418,7 @@ const SatffAddBookManagement = () => {
                             <LibraryEditBooksModal
                               data={data}
                               getBooks={getBooks}
+                              GenreList={GenreList}
                             />
 
                             {data?.students?.currentlyIssued ? (
@@ -438,7 +439,14 @@ const SatffAddBookManagement = () => {
                                   unmount: { scale: 0, y: 25 },
                                 }}
                               >
-                                <FontAwesomeIcon className="cursor-pointer" icon={faTrash} color="red" onClick={()=>deleteBook(data._id,data.bookName)} />
+                                <FontAwesomeIcon
+                                  className="cursor-pointer"
+                                  icon={faTrash}
+                                  color="red"
+                                  onClick={() =>
+                                    deleteBook(data._id, data.bookName)
+                                  }
+                                />
                               </Tooltip>
                             )}
                           </td>
@@ -543,6 +551,7 @@ const SatffAddBookManagement = () => {
                             <LibraryEditBooksModal
                               data={data}
                               getBooks={getBooks}
+                              GenreList={GenreList}
                             />
 
                             {data?.students?.currentlyIssued ? (
@@ -563,7 +572,14 @@ const SatffAddBookManagement = () => {
                                   unmount: { scale: 0, y: 25 },
                                 }}
                               >
-                                <FontAwesomeIcon className="cursor-pointer" icon={faTrash} color="red" onClick={()=>deleteBook(data._id ,data.bookName)} />
+                                <FontAwesomeIcon
+                                  className="cursor-pointer"
+                                  icon={faTrash}
+                                  color="red"
+                                  onClick={() =>
+                                    deleteBook(data._id, data.bookName)
+                                  }
+                                />
                               </Tooltip>
                             )}
                           </td>
