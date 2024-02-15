@@ -4,8 +4,10 @@ import { useState, useEffect } from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 
 const LibraryPieReportChart = () => {
-  
-  const [genreCount, setgenreCount] =useState([])
+  const [genreCount, setgenreCount] = useState();
+  const [genreNameArray, setgenreNameArray] = useState();
+  const [genreCountArray, setgenreCountArray] = useState();
+
   const axiosPrivate = useAxiosPrivate();
 
 
@@ -64,7 +66,9 @@ console.log(genreCount,'count');
       const response = await axiosPrivate.get("library/reports/genrecount");
       console.log(response,'dataaaaaaaaaa');
       setgenreCount(response.data);
-
+      console.log(response.data);
+      setgenreNameArray(Object.keys(response.data));
+      setgenreCountArray(Object.values(response.data));
     } catch (error) {
       console.error(error);
     }

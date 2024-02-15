@@ -5,8 +5,7 @@ const StaffProfile = () => {
    
     <div className="bg-gray-100">
   
-        {/* <!-- End of Navbar --> */}
-    
+  <div class="w-full text-white bg-main-color">    
         <div className="container mx-auto my-5 p-5">
             <div className="md:flex no-wrap md:-mx-2 ">
                 {/* <!-- Left Side --> */}
@@ -204,6 +203,7 @@ const StaffProfile = () => {
                     </div>
                     {/* <!-- End of profile tab --> */}
                 </div>
+            </div>
             </div>
         </div>
     </div> 

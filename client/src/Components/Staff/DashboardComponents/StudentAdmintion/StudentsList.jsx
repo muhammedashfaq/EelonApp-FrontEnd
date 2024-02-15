@@ -17,6 +17,7 @@ import {
   PopoverContent,
 } from "@material-tailwind/react";
 import Swal from "sweetalert2";
+import { useParams } from "react-router-dom";
 
 import axios from "../../../../api/axios";
 import { useEffect, useState } from "react";
@@ -31,6 +32,7 @@ import {
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
+import { useNavigate } from "react-router-dom";
 
 const TABS = [
   {
@@ -72,15 +74,24 @@ const TABLE_ROWS = [
 const StudentsList = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
+  const { page } = useParams();
+  const [pageInt, setpageInt] = useState(Number(page));
+
   const [studentData, setStudentData] = useState();
   const [searchQuery, setsearchQuery] = useState();
   const [searchData, setsearchData] = useState();
-  const axiosPrivate = useAxiosPrivate();
+  const [paginationData, setpaginationData] = useState();
 
-  const getUsers = async () => {
+  const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
+
+  const getUsers = async (pageNo) => {
     try {
-      const response = await axiosPrivate.get("/users/student");
-      setStudentData(response.data);
+      const response = await axiosPrivate.get(
+        `/users/student/pagination?page=${pageNo}&limit=2`
+      );
+      setStudentData(response.data.users);
+      setpaginationData(response.data.pagination);
     } catch (error) {
       console.log(error);
     }
@@ -129,8 +140,13 @@ const StudentsList = () => {
   };
 
   useEffect(() => {
-    getUsers();
+    getUsers(page);
   }, []);
+
+  useEffect(() => {
+    setpageInt(Number(page));
+  }, [page]);
+
   return (
     <div>
       <Card className="  m-8">
@@ -551,13 +567,29 @@ const StudentsList = () => {
         </CardBody>
         <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
           <Typography variant="small" color="blue-gray" className="font-normal">
-            Page 1 of 10
+            Page {page} of {paginationData?.totalPages}
           </Typography>
           <div className="flex gap-2">
-            <Button variant="outlined" size="sm">
+            <Button
+              variant="outlined"
+              size="sm"
+              disabled={page == 1 ? true : false}
+              onClick={() => {
+                navigate(`${RouteObjects.StudentsList}/${pageInt - 1}`);
+                getUsers(pageInt - 1);
+              }}
+            >
               Previous
             </Button>
-            <Button variant="outlined" size="sm">
+            <Button
+              variant="outlined"
+              size="sm"
+              disabled={page == paginationData?.totalPages ? true : false}
+              onClick={() => {
+                navigate(`${RouteObjects.StudentsList}/${pageInt + 1}`);
+                getUsers(pageInt + 1);
+              }}
+            >
               Next
             </Button>
           </div>

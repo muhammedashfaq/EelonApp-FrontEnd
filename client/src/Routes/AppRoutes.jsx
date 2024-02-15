@@ -90,14 +90,20 @@ const AppRoutes = () => {
           path={RouteObjects.Stafflibrary}
           element={<LibraryManagemnet />}
         />
-        <Route path={RouteObjects.Bookmanagment} element={<AddBooks />} />
+        <Route
+          path={`${RouteObjects.Bookmanagment}/:page`}
+          element={<AddBooks />}
+        />
         <Route path={RouteObjects.Issuebooks} element={<IssueBooks />} />
         <Route path={RouteObjects.Issuecards} element={<Issuecards />} />
         <Route
           path={RouteObjects.LibrarySettings}
           element={<LibrarySettings />}
         />
-        <Route path={RouteObjects.StudentsList} element={<StudentsList />} />
+        <Route
+          path={`${RouteObjects.StudentsList}/:page`}
+          element={<StudentsList />}
+        />
         <Route
           path={`${RouteObjects.StudentProfile}/:id`}
           element={<StudentProfile />}
@@ -132,11 +138,14 @@ const AppRoutes = () => {
         <Route path={RouteObjects.StaffList} element={<StaffListPage />} />
         <Route path={RouteObjects.AddStaffList} element={<StaffAddPage />} />
 
-        <Route path={`${RouteObjects.EditStaffList}/:id`} element={<StaffEditPage />} />
-        <Route path={`${RouteObjects.StaffProfile}/:id`} element={<StaffProfilePage />} />
-
-
-
+        <Route
+          path={`${RouteObjects.EditStaffList}/:id`}
+          element={<StaffEditPage />}
+        />
+        <Route
+          path={`${RouteObjects.StaffProfile}/:id`}
+          element={<StaffProfilePage />}
+        />
 
         <Route
           path={RouteObjects.StaffAcademicsSettings}
