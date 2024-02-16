@@ -5,11 +5,7 @@ import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 
 const LibraryPieReportChart = () => {
   const [genreCount, setgenreCount] = useState();
-  const [genreNameArray, setgenreNameArray] = useState();
-  const [genreCountArray, setgenreCountArray] = useState();
-
   const axiosPrivate = useAxiosPrivate();
-
   const [chartDataPie, setChartDataPie] = useState({
     series: [],
     options: {
@@ -55,14 +51,11 @@ const LibraryPieReportChart = () => {
       },
     }));
   }, [genreCount]);
-
   const getGenreCount = async () => {
     try {
       const response = await axiosPrivate.get("library/reports/genrecount");
       setgenreCount(response.data);
       console.log(response.data);
-      setgenreNameArray(Object.keys(response.data));
-      setgenreCountArray(Object.values(response.data));
     } catch (error) {
       console.error(error);
     }
