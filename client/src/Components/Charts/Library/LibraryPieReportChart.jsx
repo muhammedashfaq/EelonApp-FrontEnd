@@ -5,13 +5,7 @@ import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 
 const LibraryPieReportChart = () => {
   const [genreCount, setgenreCount] = useState();
-  const [genreNameArray, setgenreNameArray] = useState();
-  const [genreCountArray, setgenreCountArray] = useState();
-
   const axiosPrivate = useAxiosPrivate();
-
-
-
   const [chartDataPie, setChartDataPie] = useState({
     series: [],
     options: {
@@ -40,25 +34,25 @@ const LibraryPieReportChart = () => {
     },
   });
 
-console.log(genreCount,'count');
-
-
   useEffect(() => {
-
     const labels = genreCount
-    .filter((hubName) => hubName._id !== null)
-    .map((hubName) => hubName._id);    
-    const series = genreCount.map((count) => count.count);
-
+      ? genreCount
+          .filter((hubName) => hubName._id !== null)
+          .map((hubName) => hubName._id)
+      : [];
+  
+    const series = genreCount ? genreCount.map((count) => count.count) : [];
+  
     setChartDataPie((prevChartDataPie) => ({
       ...prevChartDataPie,
-      series:series,
+      series: series,
       options: {
         ...prevChartDataPie.options,
         labels: labels,
       },
     }));
   }, [genreCount]);
+  
   
   const getGenreCount = async () => {
     try {
@@ -67,8 +61,6 @@ console.log(genreCount,'count');
       console.log(response,'dataaaaaaaaaa');
       setgenreCount(response.data);
       console.log(response.data);
-      setgenreNameArray(Object.keys(response.data));
-      setgenreCountArray(Object.values(response.data));
     } catch (error) {
       console.error(error);
     }
