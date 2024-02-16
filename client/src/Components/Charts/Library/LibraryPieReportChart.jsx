@@ -40,9 +40,8 @@ const LibraryPieReportChart = () => {
           .filter((hubName) => hubName._id !== null)
           .map((hubName) => hubName._id)
       : [];
-  
     const series = genreCount ? genreCount.map((count) => count.count) : [];
-  
+
     setChartDataPie((prevChartDataPie) => ({
       ...prevChartDataPie,
       series: series,
@@ -52,20 +51,16 @@ const LibraryPieReportChart = () => {
       },
     }));
   }, [genreCount]);
-  
-  
   const getGenreCount = async () => {
     try {
-      console.log('send')
       const response = await axiosPrivate.get("library/reports/genrecount");
-      console.log(response,'dataaaaaaaaaa');
       setgenreCount(response.data);
       console.log(response.data);
     } catch (error) {
       console.error(error);
     }
   };
-  
+
   useEffect(() => {
     getGenreCount();
   }, []);

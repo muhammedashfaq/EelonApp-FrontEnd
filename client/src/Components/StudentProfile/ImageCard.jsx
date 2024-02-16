@@ -21,22 +21,24 @@ import {
   faEye,
   faLock,
   faLockOpen,
+  faTrash,
   faUpload,
 } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import useAuth from "../../Hooks/useAuth";
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import notFoundImg from "../../assets/placeholderImg.jpg";
 
-const ImageCard = ({ userData }) => {
-  console.log(userData, "image cardf");
+const ImageCard = ({ userData, getData }) => {
   const [showModal, setShowModal] = useState(false);
-  const [Image, setImage] = useState(
-    "https://img.freepik.com/premium-photo/man-is-smiling-holding-laptop-with-smile-his-face_973047-1028.jpg"
-  );
+  const [Image, setImage] = useState();
   const [errorImage, setErrorImage] = useState("");
   const [profileImage, setProfileImage] = useState("");
   const [open, setOpen] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+
+  const axiosPrivate = useAxiosPrivate();
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
@@ -89,6 +91,47 @@ const ImageCard = ({ userData }) => {
     }
   };
 
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    setFileToBase(file);
+    console.log(file);
+  };
+
+  const setFileToBase = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImage(reader.result);
+    };
+  };
+
+  const uploadImage = async () => {
+    try {
+      if (!Image) return;
+      const response = await axiosPrivate.post(
+        `images/studentprofile/${userData?._id}`,
+        { Image }
+      );
+      console.log(response);
+      getData();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const deleteImage = async () => {
+    if (!userData?.studentProfilePic) return;
+    try {
+      const response = await axiosPrivate.delete(
+        `images/studentprofile/${userData?._id}`
+      );
+      console.log(response);
+      getData();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     console.log(Image);
   }, [Image]);
@@ -102,7 +145,7 @@ const ImageCard = ({ userData }) => {
           onClick={handleOpen}
         >
           <img
-            src={Image}
+            src={userData?.studentProfilePic?.url || Image || notFoundImg}
             alt="card-image"
             className="h-full w-full object-cover"
           />
@@ -121,12 +164,20 @@ const ImageCard = ({ userData }) => {
                 id="imageUpload"
                 name="profileimage"
                 className="hidden"
-                onChange={ImageChange}
+                onChange={handleImage}
               />
             </Button>
 
-            <Button color="lime" className="" onClick={submitimage}>
+            <Button color="lime" className="" onClick={uploadImage}>
               <FontAwesomeIcon icon={faUpload} size="2xl" />
+            </Button>
+            <Button
+              color="red"
+              className=""
+              onClick={deleteImage}
+              disabled={userData?.studentProfilePic ? false : true}
+            >
+              <FontAwesomeIcon icon={faTrash} size="2xl" />
             </Button>
           </div>
         )}
