@@ -39,6 +39,7 @@ import StaffAddPage from "../Pages/Staff/Dashboard/StaffDetails/StaffAddPage";
 import StaffEditPage from "../Pages/Staff/Dashboard/StaffDetails/StaffEditPage";
 import StaffProfilePage from "../Pages/Staff/Dashboard/StaffDetails/StaffProfilePage";
 import AcademicsSettings from "../Pages/Staff/Dashboard/Academics/AcademicsSettingsPage";
+import ClasstimetablePage from "../Components/Staff/DashboardComponents/Timetables/Classtimetable/ClasstimetablePage";
 
 const AppRoutes = () => {
   const isLoading = useSelector((state) => state.loading.isLoading);
@@ -131,6 +132,11 @@ const AppRoutes = () => {
         <Route
           path={RouteObjects.AttandanceReport}
           element={<AttendanceReportPage />}
+        />
+
+        <Route
+          path={RouteObjects.ClasstimetablePage}
+          element={<ClasstimetablePage />}
         />
 
         <Route path={RouteObjects.StaffManageClass} element={<ManageClass />} />
