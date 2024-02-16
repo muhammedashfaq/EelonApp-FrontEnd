@@ -111,6 +111,24 @@ const NavBar = () => {
       icon: faChalkboard,
     },
     {
+      title: "Timetables",
+      icon: faUserPlus,
+      submenu: true,
+      submenuItems: [
+        {
+          title: "Exam timetable",
+          icon: faCaretRight,
+          href: RouteObjects.StaffList,
+        },
+        {
+          title: "Class timetable",
+          icon: faCaretRight,
+          href: RouteObjects.ClasstimetablePage,
+        },
+      ],
+    },
+
+    {
       title: "Logout",
       icon: faRightFromBracket,
     },

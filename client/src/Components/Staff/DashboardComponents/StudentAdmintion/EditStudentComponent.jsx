@@ -23,10 +23,9 @@ const useDropdownState = (initialValue, fetchedValue) => {
 
   return [value, setValue];
 };
-const EditStudentComponent = () => {
+const EditStudentComponent = ({classDetails,name}) => {
   const [fetData, setFetchData] = useState("");
-  const stdState = useDropdownState("", fetData?.std);
-  const sectionState = useDropdownState("", fetData?.section);
+  const classSectionState = useDropdownState("", fetData?.classSection);
   const bloodGpState = useDropdownState("", fetData?.bloodGp);
   const motherTongueState = useDropdownState("", fetData?.motherTongue);
   const religionState = useDropdownState("", fetData?.religion);
@@ -108,8 +107,7 @@ const EditStudentComponent = () => {
     const reqData = {
       ...formData,
       gender: genderState[0],
-      std: stdState[0],
-      section: sectionState[0],
+      section: classSectionState[0],
       bloodGp: bloodGpState[0],
       motherTongue: motherTongueState[0],
       religion: religionState[0],
@@ -120,7 +118,7 @@ const EditStudentComponent = () => {
       academicYear: academicYearState[0],
       studentCategory: studentCategoryState[0],
       studentGp: studentGpState[0],
-      classId: `${stdState[0]}-${sectionState[0]}`,
+      classId: classSectionState[0],
     };
     try {
       console.log(reqData, "dfgkhfs");
@@ -162,7 +160,11 @@ const EditStudentComponent = () => {
       <div className="flex justify-center">
         <div className=" border-2 rounded-lg shadow-lg  mt-2 ">
           <div className="bg-blue-900 rounded-t-lg flex justify-center items-center h-10 text-white ">
-            <h1 className="text-2xl">Add student </h1>
+            <h1 className="text-2xl">Edit <span className="font-semibold m-1 ">
+              
+              {name?name:""}
+              </span>
+               Details </h1>
           </div>
           <form onSubmit={handleSubmitForm}>
             <div className="px-6 pt-6">
@@ -307,6 +309,8 @@ const EditStudentComponent = () => {
                 <Option value="Hindu">Hindu</Option>
                 <Option value="Muslim">Muslim</Option>
                 <Option value="Christian">Christian</Option>
+                <Option value="Other">Other</Option>
+
               </Select>
               <Input
                 name="caste"
@@ -336,6 +340,8 @@ const EditStudentComponent = () => {
                 <Option value="OBC">OBC</Option>
                 <Option value="SC">SC</Option>
                 <Option value="ST">ST</Option>
+                <Option value="Other">Other</Option>
+
               </Select>
 
               <Input
@@ -545,34 +551,20 @@ const EditStudentComponent = () => {
                 defaultValue={fetData?.EMSno}
                 onChange={handleInputChange}
               />
+       
               <Select
                 variant="outlined"
-                value={stdState[0]}
-                onChange={(e) => stdState[1](e)}
-                label="Class"
-              >
-                <Option value="01">First std</Option>
-                <Option value="02">Second std</Option>
-                <Option value="03">Third std</Option>
-                <Option value="04">Fourth std</Option>
-                <Option value="05">Fifth std</Option>
-                <Option value="06">Sixth std</Option>
-                <Option value="07">Seventh std</Option>
-                <Option value="08">Eighth std</Option>
-                <Option value="09">Nineth std</Option>
-                <Option value="10">Tenth std</Option>
-                <Option value="11">Plus one</Option>
-                <Option value="12">Plus two</Option>
-              </Select>
-              <Select
-                variant="outlined"
-                value={sectionState[0]}
-                onChange={(e) => sectionState[1](e)}
+                // value={classSectionState[0]}
+                onChange={(e) => classSectionState[1](e)}
                 label="Section"
               >
-                <Option value="A">A</Option>
-                <Option value="B">B</Option>
-                <Option value="C">C</Option>
+                {
+                  classDetails&&classDetails.map((data,i)=>(
+
+                    <Option key={i} value={data}>{data}</Option>
+                  ))
+                }
+                
               </Select>
 
               <Select

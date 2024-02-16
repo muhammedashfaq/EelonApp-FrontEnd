@@ -207,7 +207,7 @@ const StaffList = () => {
                     <td className={classes}>
                       <div>
                         <Tooltip content="View Details">
-                          <Link to={`${RouteObjects.StaffProfile}/1`}>
+                          <Link to={`${RouteObjects.StaffProfile}/${data._id}`}>
                             <IconButton variant="text">
                               <FontAwesomeIcon
                                 icon={faEye}

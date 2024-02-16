@@ -19,6 +19,7 @@ const Report = () => {
       const sortedData = response.data.sort((a, b) => a.localeCompare(b));
 
       setClss(sortedData);
+      
     } catch (error) {
       console.log(error);
     }
