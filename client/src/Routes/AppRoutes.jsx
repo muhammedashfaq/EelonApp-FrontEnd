@@ -42,6 +42,7 @@ import AcademicsSettings from "../Pages/Staff/Dashboard/Academics/AcademicsSetti
 import ClassTimeTablePage from "../Pages/Staff/Dashboard/TimeTable/ClassTimeTablePage";
 import TableStaff from "../Pages/Staff/Dashboard/Attandance/TableStaff";
 import ExamTimeTablePage from "../Pages/Staff/Dashboard/TimeTable/ExamTimeTablePage";
+import AddClassTimetable from "../Components/Staff/DashboardComponents/Timetables/Classtimetable/AddClassTimetable";
 
 const AppRoutes = () => {
   const isLoading = useSelector((state) => state.loading.isLoading);
@@ -131,7 +132,7 @@ const AppRoutes = () => {
           path={RouteObjects.StaffAttandance}
           element={<StaffAttandancePage />}
         />
-         <Route
+        <Route
           path={`${RouteObjects.StaffAttandanceTable}/:id/:date`}
           element={<TableStaff />}
         />
@@ -144,9 +145,13 @@ const AppRoutes = () => {
           path={RouteObjects.examTimeTable}
           element={<ExamTimeTablePage />}
         />
-<Route
+        <Route
           path={RouteObjects.ClasstimetablePage}
           element={<ClassTimeTablePage />}
+        />
+        <Route
+          path={RouteObjects.AddClassTimetable}
+          element={<AddClassTimetable />}
         />
         <Route path={RouteObjects.StaffManageClass} element={<ManageClass />} />
 

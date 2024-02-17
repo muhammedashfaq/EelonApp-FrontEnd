@@ -22,7 +22,7 @@ export const RouteObjects = {
   RequireForms: "/forms",
   StudentsAttendance: "/students/attendance",
   StudentsAttendanceTable: "/students/attendancetable",
-  StaffAttandanceTable:"/staff/attendancetable",
+  StaffAttandanceTable: "/staff/attendancetable",
   StaffAttandance: "/staff/attendance",
   AttandanceReport: "/attendance/reports",
   StaffList: "/staffdetails",
@@ -45,7 +45,8 @@ export const RouteObjects = {
   AllstudentsPage: "/admin/student/allstudents",
 
   ClasstimetablePage: "/staff/timetables/class",
-  examTimeTable:"/staff/timetables/exam",
+  examTimeTable: "/staff/timetables/exam",
+  AddClassTimetable: "/staff/timetables/addtimetable",
 
   AdminHome: "/adminhome",
 };
