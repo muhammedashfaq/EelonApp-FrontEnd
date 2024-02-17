@@ -1,37 +1,77 @@
-import { Card, Typography } from "@material-tailwind/react";
+import { Button, Card, Typography } from "@material-tailwind/react";
+import StaffRow from "./StaffRow";
+import { useEffect, useState } from "react";
+import useAxiosPrivate from "../../../../../Hooks/useAxiosPrivate";
+import Swal from "sweetalert2";
+import { useNavigate, useParams } from "react-router-dom";
+import { RouteObjects } from "../../../../../Routes/RoutObjects";
  
 const TABLE_HEAD = ["#NO","Name", "Attendance", "Remarks","Aprove", ""];
  
-const TABLE_ROWS = [
-  {
-    name: "John Michael",
-    job: "Manager",
-    date: "23/04/18",
-  },
-  {
-    name: "Alexa Liras",
-    job: "Developer",
-    date: "23/04/18",
-  },
-  {
-    name: "Laurent Perrier",
-    job: "Executive",
-    date: "19/09/17",
-  },
-  {
-    name: "Michael Levi",
-    job: "Developer",
-    date: "24/12/08",
-  },
-  {
-    name: "Richard Gran",
-    job: "Manager",
-    date: "04/10/21",
-  },
-];
- 
 const StaffAttendanceTable = () => {
+ const navigate=useNavigate()
+  const [staffData,setStaffData]=useState([])
+  const [attendanceArray, setAttendanceArray] = useState([]);
+
+  const axiosPrivate =useAxiosPrivate()
+  const { id } = useParams();
+  const { date } = useParams();
+
+
+
+  const addAttendanceToCollection = async () => {
+    try {
+      const response = await axiosPrivate.post(
+        `attendance/staff/addattendance/${id}`,
+        attendanceArray
+      );
+      Swal.fire({
+        title: "Attendance added!",
+        text: `Attendance on ${date} is added`,
+        icon: "success",
+      });
+      navigate(RouteObjects.StaffAttandance)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+
+
+  const createAttendanceArray = (value) => {
+    const index = value.index;
+    const existingIndex = attendanceArray.findIndex(
+      (item) => item.index === index
+    );
+
+    if (existingIndex !== -1) {
+      const newArray = [...attendanceArray];
+      newArray[existingIndex] = value;
+      setAttendanceArray(newArray);
+    } else {
+      setAttendanceArray([...attendanceArray, value]);
+    }
+  };
+  const getstaffData =async()=>{
+    try {
+      const response= await axiosPrivate.get("users/staff")
+      setStaffData(response.data)
+      console.log(response,"res");
+    } catch (error) {
+      console.log(error)
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.response?error.response:"Something went wrong!",
+      });
+    }
+  }
+  useEffect(()=>{
+ getstaffData()
+  },[])
     return (
+      <>
         <Card className="h-full w-full overflow-scroll">
           <table className="w-full min-w-max table-auto text-left">
             <thead>
@@ -42,7 +82,7 @@ const StaffAttendanceTable = () => {
                       variant="small"
                       color="blue-gray"
                       className="font-normal leading-none opacity-70"
-                    >
+                      >
                       {head}
                     </Typography>
                   </th>
@@ -50,43 +90,21 @@ const StaffAttendanceTable = () => {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROWS.map(({ name, attendance , remarks }, index) => {
-                const isLast = index === TABLE_ROWS.length - 1;
-                const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
-     
-                return (
-                  <tr key={index}>
-                     <td className={classes}>
-                      <Typography variant="small" color="blue-gray" className="font-normal">
-                        {index+1}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography variant="small" color="blue-gray" className="font-normal">
-                        {name}
-                      </Typography>
-                    </td>
-                    <td className={`${classes} bg-blue-gray-50/50`}>
-                      <Typography variant="small" color="blue-gray" className="font-normal">
-                        {attendance}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography variant="small" color="blue-gray" className="font-normal">
-                        {remarks}
-                      </Typography>
-                    </td>
-                    <td className={`${classes} bg-blue-gray-50/50`}>
-                      <Typography as="a" href="#" variant="small" color="blue-gray" className="font-medium">
-                      Approve Button
-                      </Typography>
-                    </td>
-                  </tr>
-                );
-              })}
+              {staffData&&staffData.map((data,index)=>(
+
+                 <StaffRow key={data?._id}
+                 StaffName={data?.name}
+                 index={index}
+                 StaffId={data._id}
+                 createAttendanceArray={createAttendanceArray}/> 
+              ))}
             </tbody>
           </table>
         </Card>
+         <div style={{ textAlign: "center" }} className="p-5">
+         <Button onClick={addAttendanceToCollection}>Save</Button>
+       </div>
+                 </>
       );
     }
 export default StaffAttendanceTable

@@ -17,6 +17,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 import useAxiosPrivate from "../../../../../Hooks/useAxiosPrivate";
+import { RouteObjects } from "../../../../../Routes/RoutObjects";
+import { useNavigate } from "react-router-dom";
 const CreateSatffAttandanceModal = () => {
   const [open, setOpen] = useState(false);
   const [board, setBoard] = useState("");
@@ -25,7 +27,7 @@ const CreateSatffAttandanceModal = () => {
   const [date, setDate] = useState("");
   const [error, setError] = useState("");
   const axiosPrivate = useAxiosPrivate();
-
+const navigate =useNavigate()
   const handleOpen = ({setCreated}) => {
     setOpen((cur) => !cur);
     setBoard("");
@@ -50,8 +52,10 @@ const CreateSatffAttandanceModal = () => {
         return;
       }
 
-      const response = await axiosPrivate.post("/attendance", formData);
-      console.log(response);
+      const response = await axiosPrivate.post("/attendance/staff", formData);
+      navigate(
+        `${RouteObjects.StaffAttandanceTable}/${response.data._id}/${date}`
+      );
       setBoard("");
       setAcademicYear("");
       setStaffType("");
@@ -59,6 +63,8 @@ const CreateSatffAttandanceModal = () => {
       setError("");
 
       setOpen(false);
+
+
     } catch (error) {
       console.log(error);
     }
@@ -109,10 +115,8 @@ const CreateSatffAttandanceModal = () => {
               value={staffType}
               onChange={(e) => setStaffType(e)}
             >
-              <Option value="one">Teachers</Option>
-              <Option value="two">Material Tailwind React</Option>
-              <Option value="three">Material Tailwind Vue</Option>
-              <Option value="four">Material Tailwind Angular</Option>
+               <Option value="Teaching">Teaching</Option>
+                <Option value="Non-Teaching">Non-Teaching</Option>
             </Select>
 
             <Input
