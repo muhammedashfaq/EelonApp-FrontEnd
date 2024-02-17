@@ -1,12 +1,14 @@
 import TimeTableModal from "./TimeTableModal";
 import { useEffect, useState } from "react";
+import TimetableCell from "./TimetableCell";
 
-const TimetableRow = ({
+const TableRowDiv = ({
   data,
   index,
   handleData,
   dataArray,
   intervalArray,
+  ClassTable,
 }) => {
   // useEffect(() => {
   //   console.log(dataArray.find((obj) => obj.id === "0-0"));
@@ -52,17 +54,11 @@ const TimetableRow = ({
         </td>
         {divs &&
           divs.map((item, i) => (
-            <TimeTableModal
-              createTimetableArray={handleData}
-              data={data}
-              index={i}
-              rowIndex={index}
-              intervalArray={intervalArray}
-            />
+            <TimetableCell index={i} rowIndex={index} ClassTable={ClassTable} />
           ))}
       </tr>
     </>
   );
 };
 
-export default TimetableRow;
+export default TableRowDiv;

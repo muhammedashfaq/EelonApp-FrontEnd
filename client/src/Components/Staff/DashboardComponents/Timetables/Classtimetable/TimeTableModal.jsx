@@ -30,7 +30,6 @@ export default function TimeTableModal({
     setTiming(intervalArray.find((obj) => obj.id === value));
   };
   const handleChange = () => {
-    getDataFromArray(index);
     const jsonData = {
       id: `${index}-${rowIndex}`,
       periodType,
@@ -53,14 +52,18 @@ export default function TimeTableModal({
       <td class="border p-1 h-32 xl:w-30 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
         <div class="flex flex-col h-32 xl:w-30 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
           <div class="top h-5 w-full">
-            <Button
-              onClick={handleOpen}
-              variant="text"
-              style={{ textTransform: "none" }}
-              size="sm"
-            >
-              Add timetable
-            </Button>
+            {index === 2 || index === 5 || index === 8 ? (
+              <div></div>
+            ) : (
+              <Button
+                onClick={handleOpen}
+                variant="text"
+                style={{ textTransform: "none" }}
+                size="sm"
+              >
+                Add timetable
+              </Button>
+            )}
             <span class="text-gray-500">{subject}</span>
             <br />
             <span class="text-gray-500">{teachersName}</span>
