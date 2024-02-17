@@ -5,6 +5,7 @@ import TimeSettingModal from "./TimeSettingModal";
 import useAxiosPrivate from "../../../../../Hooks/useAxiosPrivate";
 import StaffHeader from "../../../Header/landingPageHeader";
 import Banner from "../../../../Banner/Banner";
+import Swal from "sweetalert2";
 
 const days = [
   "Monday",
@@ -48,6 +49,13 @@ const AddClassTimetable = () => {
       console.log(response);
     } catch (error) {
       console.error(error);
+      if (error.response.status === 409) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `Time table for class ${classId} already exists`,
+        });
+      }
     }
   };
 
@@ -92,13 +100,13 @@ const AddClassTimetable = () => {
     }
   };
 
-  useEffect(() => {
-    console.log("dataArray:", dataArray);
-  }, [dataArray]);
+  //   useEffect(() => {
+  //     console.log("dataArray:", dataArray);
+  //   }, [dataArray]);
 
-  useEffect(() => {
-    console.log("Interval array:", intervalArray);
-  }, [intervalArray]);
+  //   useEffect(() => {
+  //     console.log("Interval array:", intervalArray);
+  //   }, [intervalArray]);
 
   useEffect(() => {
     getClsSection();
