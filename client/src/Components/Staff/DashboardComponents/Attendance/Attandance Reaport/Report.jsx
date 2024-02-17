@@ -6,53 +6,19 @@ import useAxiosPrivate from "../../../../../Hooks/useAxiosPrivate";
 import ClassWiseReport from "./ClassWiseReport";
 import ClassWiseAttendanceOptions from "../../../../OptionGroup/ClassWiseAttendanceOptions";
 import StaffAttendanceReport from "../../../../OptionGroup/StaffAttendanceReport";
-import StaffDailyReport from "./StaffDailyReport";
 
 const Report = () => {
   const [clss, setClss] = useState([]);
   const axiosPrivate = useAxiosPrivate();
-  const [selectClass, setselectClass] = useState();
-  const [date, setDate] = useState();
-  const [classwiseAttendance, setclasswiseAttendance] = useState();
-  const [attdate, setAttDate] =useState();
 
- const getReport =async()=>{
-  try {
-    const data={
-      date:attdate
-    }
-    const response =await axiosPrivate.get("attendance/staff/datewiseattendance",data)
-    console.log(response,"attresssss")
-  } catch (error) {
-    console.log(error)
-  }
- }
   const getClsSection = async () => {
     try {
       const response = await axiosPrivate.get("/classsection/dropdowns");
       const sortedData = response.data.sort((a, b) => a.localeCompare(b));
 
       setClss(sortedData);
-      
     } catch (error) {
       console.log(error);
-    }
-  };
-
-  const getClasswiseAttendance = async () => {
-    try {
-      const reqData = {
-        date: date,
-      };
-
-      const response = await axiosPrivate.put(
-        `attendance/class/datewiseattendance/${selectClass}`,
-        reqData
-      );
-      setclasswiseAttendance(response.data[0]?.attendance);
-      // setattendanceDbId(response.data[0]?._id);
-    } catch (error) {
-      console.error(error);
     }
   };
 
@@ -61,24 +27,6 @@ const Report = () => {
   }, []);
   return (
     <div className="m-9 space-y-8 ">
-      <div className="bg-blue-800 p-2 rounded-t-lg">
-        <ClassWiseAttendanceOptions
-          clss={clss}
-          Name="Students"
-          setselectClass={setselectClass}
-          date={date}
-          setDate={setDate}
-          getClasswiseAttendance={getClasswiseAttendance}
-          setclasswiseAttendance={setclasswiseAttendance}
-        />
-        <ClassWiseReport classwiseAttendance={classwiseAttendance} />
-      </div>
-
-      <div className="bg-blue-800 p-2 rounded-t-lg">
-        <StaffAttendanceReport attdate={attdate} setAttDate={setAttDate} getReport={getReport}/>
-        <StaffDailyReport/>
-      </div>
-      
       <div className="bg-blue-800 p-2 rounded-t-lg">
         <OptionGroup clss={clss} Name="Students" />
         <ReportTable />

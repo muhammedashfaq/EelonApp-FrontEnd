@@ -23,7 +23,7 @@ const useDropdownState = (initialValue, fetchedValue) => {
 
   return [value, setValue];
 };
-const EditStudentComponent = ({classDetails,name}) => {
+const EditStudentComponent = ({classDetails,name,page}) => {
   const [fetData, setFetchData] = useState("");
   const classSectionState = useDropdownState("", fetData?.classSection);
   const bloodGpState = useDropdownState("", fetData?.bloodGp);
@@ -125,8 +125,8 @@ const EditStudentComponent = ({classDetails,name}) => {
       setIsLoading(true);
       const response = await axios.put(`/users/student/${id}`, reqData);
       console.log(response, "respo");
+      navigate(`${RouteObjects.StudentsList}/${1}`)
       setIsLoading(false);
-      navigate(RouteObjects.StudentsList);
     } catch (error) {
       setIsLoading(false);
 

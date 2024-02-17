@@ -1,32 +1,35 @@
 import { Button, Input } from '@material-tailwind/react'
 import React from 'react'
 
-const StaffAttendanceReport = ({attdate,stAttdate,getReport}) => {
+const StaffAttendanceReport = ({attdate,setAttDate,getReport}) => {
   return (
-<div className="flex items-center justify-between space-x-10">
+<div className=" flex space-x-3 ">
       
-      <div style={{ width: "50px" }}>
+      <div>
         <Input
           type="date"
           color="white"
-          onChange={(e) => stAttdate(e.target.value)}
+          onChange={(e) => setAttDate(e.target.value)}
           value={attdate}
         />
       </div>
+      <div>
+
       <Button
         onClick={getReport}
-        variant="outlined"
-        style={{ textTransform: "none" }}
+      color='green'
       >
-        Get attendance
+        Get 
       </Button>
+      </div>
+      <div>
       <Button
-        variant="text"
-        style={{ textTransform: "none" }}
+        color='amber'
         // onClick={() => setclasswiseAttendance()}
-      >
-        Clear
+        >
+        Reset
       </Button>
+      </div>
       {/* <div>
         <Typography className="text-2xl text-white font-body font-semibold ">
           Classwise Attendance Details <FontAwesomeIcon icon={faCalendarDays} />

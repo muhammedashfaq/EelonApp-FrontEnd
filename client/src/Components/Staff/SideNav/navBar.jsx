@@ -118,7 +118,7 @@ const NavBar = () => {
         {
           title: "Exam timetable",
           icon: faCaretRight,
-          href: RouteObjects.StaffList,
+          href: RouteObjects.examTimeTable,
         },
         {
           title: "Class timetable",
