@@ -16,7 +16,7 @@ const TimetableRow = ({
   //   return intervalArray.find((obj) => obj.id === value);
   // };
 
-  const divs = Array.from({ length: 8 }, (_, index) => index);
+  const divs = Array.from({ length: 11 }, (_, index) => index);
 
   // useEffect(() => {
   //   console.log(getDataFromArray(i));

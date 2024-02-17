@@ -11,7 +11,7 @@ const ClassTimeTablePage = () => {
       <Banner />
       <Classtimetable />
 
-      <TimeTable />
+      {/* <TimeTable /> */}
     </div>
   );
 };

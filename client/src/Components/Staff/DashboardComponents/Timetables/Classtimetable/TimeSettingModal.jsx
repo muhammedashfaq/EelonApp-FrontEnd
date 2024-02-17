@@ -15,7 +15,12 @@ import Datetime from "react-datetime";
 import moment from "moment";
 import { useState } from "react";
 
-export default function TimeSettingModal({ i, setPeriod, handleIntervalData }) {
+export default function TimeSettingModal({
+  i,
+  setPeriod,
+  handleIntervalData,
+  item,
+}) {
   const [open, setOpen] = React.useState(false);
   const [timeIn, setTimeIn] = useState();
   const [timeOut, setTimeOut] = useState();
@@ -47,11 +52,9 @@ export default function TimeSettingModal({ i, setPeriod, handleIntervalData }) {
   return (
     <>
       <th class="p-2 border-r h-20 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
-        <span class="xl:block lg:block md:block sm:block hidden">
-          Period {i}
-        </span>
+        <span class="xl:block lg:block md:block sm:block hidden">{item}</span>
         <span class="xl:hidden lg:hidden md:hidden sm:hidden block">
-          Period {i}
+          {item}
         </span>
         <Button
           onClick={handleOpen}
@@ -94,7 +97,14 @@ export default function TimeSettingModal({ i, setPeriod, handleIntervalData }) {
           >
             <span>Cancel</span>
           </Button>
-          <Button variant="gradient" color="green" onClick={handleChange}>
+          <Button
+            variant="gradient"
+            color="green"
+            onClick={() => {
+              handleChange();
+              handleOpen();
+            }}
+          >
             <span>Confirm</span>
           </Button>
         </DialogFooter>
