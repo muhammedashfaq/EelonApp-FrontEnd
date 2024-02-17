@@ -1,15 +1,8 @@
 import React from "react";
 import { Typography } from "@material-tailwind/react";
-import Datetime from "react-datetime";
-import moment from "moment";
 import { useState, useEffect } from "react";
 
-export default function TimeSettingDiv({
-  i,
-
-  item,
-  ClassTable,
-}) {
+export default function TimeSettingDiv({ i, item, ClassTable }) {
   const [cellData, setcellData] = useState();
 
   const getDataFromArray = (value) => {

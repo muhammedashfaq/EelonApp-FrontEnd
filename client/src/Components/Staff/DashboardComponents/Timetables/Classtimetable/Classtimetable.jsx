@@ -1,13 +1,5 @@
-import {
-  Button,
-  Input,
-  Option,
-  Select,
-  Typography,
-} from "@material-tailwind/react";
-import TimetableRow from "./TimetableRow";
+import { Button, Option, Select } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import TimeSettingModal from "./TimeSettingModal";
 import useAxiosPrivate from "../../../../../Hooks/useAxiosPrivate";
 import TimeSettingDiv from "./TimeSettingDiv";
 import TableRowDiv from "./TableRowDiv";

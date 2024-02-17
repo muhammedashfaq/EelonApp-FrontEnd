@@ -1,10 +1,4 @@
-import {
-  Button,
-  Input,
-  Option,
-  Select,
-  Typography,
-} from "@material-tailwind/react";
+import { Button, Option, Select } from "@material-tailwind/react";
 import TimetableRow from "./Staff/DashboardComponents/Timetables/Classtimetable/TimetableRow";
 import { useEffect, useState } from "react";
 import TimeSettingModal from "./Staff/DashboardComponents/Timetables/Classtimetable/TimeSettingModal";
