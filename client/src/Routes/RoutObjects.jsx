@@ -45,6 +45,7 @@ export const RouteObjects = {
   AllstudentsPage: "/admin/student/allstudents",
 
   ClasstimetablePage: "/staff/timetables/class",
+  examTimeTable:"/staff/timetables/exam",
 
   AdminHome: "/adminhome",
 };

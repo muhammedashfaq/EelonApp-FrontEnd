@@ -5,15 +5,36 @@ import { Tooltip, Typography } from '@material-tailwind/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPrint } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
+import useAxiosPrivate from '../../../../../Hooks/useAxiosPrivate'
+import StaffAttendanceReport from '../../../../OptionGroup/StaffAttendanceReport'
+import StaffDailyReport from '../Attandance Reaport/StaffDailyReport'
 
 const StaffAttendance = () => {
-  const [created,setCreated]=useState(false)
+  const [attdate, setAttDate] =useState();
+  const [staffAttendanceReport,setStaffAttendanceReport]=useState()
+  const axiosPrivate = useAxiosPrivate();
 
-  return (
-    <div className='mt-3 p-6'>
+ 
+  
+  const getReport =async()=>{
+    try {
+      const data={
+        date:attdate
+      }
+      console.log(data);
+      const response =await axiosPrivate.get("attendance/staff/datewiseattendance",data)
+      setStaffAttendanceReport(response.data)
+      console.log(response,"attresssss")
+    } catch (error) {
+      console.log(error)
+    }
+   }
+
+  return (<>
+    <div className='mt-3 p-6 space-y-9'>
             <div className="bg-blue-800 rounded-lg p-2 flex justify-between items-center">
 
-        <CreateSatffAttandanceModal setCreated={setCreated}/>
+        <CreateSatffAttandanceModal/>
         <Typography color="white" className="text-2xl font-semibold">
           Daily Staff Attendance 
         </Typography>
@@ -34,16 +55,17 @@ const StaffAttendance = () => {
 
         {/* filtering by  date acadamic year type     */}
 
-{
-  created&&(
-
-<StaffAttendanceTable/>
-  )
-}
 
 
 
+
+    <div className="bg-blue-800 p-2 rounded-t-lg">
+        <StaffAttendanceReport attdate={attdate} setAttDate={setAttDate} getReport={getReport}/>
+        <StaffDailyReport datewisereport={staffAttendanceReport}/>
+      </div>
     </div>
+      
+        </>
   )
 }
 

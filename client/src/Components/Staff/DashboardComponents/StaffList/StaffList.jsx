@@ -28,21 +28,8 @@ import { Link } from "react-router-dom";
 import { RouteObjects } from "../../../../Routes/RoutObjects";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
-const TABS = [
-  {
-    label: "All",
-    value: "all",
-  },
-  {
-    label: "Monitored",
-    value: "monitored",
-  },
-  {
-    label: "Unmonitored",
-    value: "unmonitored",
-  },
-];
 
 const TABLE_HEAD = [
   "#NO",
@@ -52,30 +39,50 @@ const TABLE_HEAD = [
   "Email ID",
   "City",
   "Base salary",
+  "Status",
   "Action",
 ];
 
-const TABLE_ROWS = [
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
-    name: "John Michael",
-    email: "john@creative-tim.com",
-    job: "Manager",
-    org: "Organization",
-    online: true,
-    date: "23/04/18",
-  },
-];
+
 const StaffList = () => {
   const [StaffData, setStaffData] = useState();
-
+  
   const axiosPrivate = useAxiosPrivate();
+  const deleteStaffDetails=async(id)=>{
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this Details!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      })
+        if (result.isConfirmed) {
+           await axiosPrivate.delete(`users/staff/${id}`)
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success"
+          });
+        }
+          getStaffs()
+    } catch (error) {
+      console.log(error)
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
+    
+    }
+  }
 
   const getStaffs = async () => {
     try {
       const response = await axiosPrivate.get("users/staff");
       setStaffData(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -83,7 +90,7 @@ const StaffList = () => {
 
   useEffect(() => {
     getStaffs();
-  }, []);
+  }, [StaffData]);
   return (
     <Card className="h-full w-full">
       <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -204,6 +211,16 @@ const StaffList = () => {
                         {data?.basicSalary}
                       </Typography>
                     </td>
+                    
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        nil
+                      </Typography>
+                    </td>
                     <td className={classes}>
                       <div>
                         <Tooltip content="View Details">
@@ -232,7 +249,9 @@ const StaffList = () => {
                           <IconButton variant="text">
                             <FontAwesomeIcon
                               icon={faTrash}
+                              color="red"
                               className="h-4 w-4"
+                              onClick={()=>deleteStaffDetails(data._id)}
                             />
                           </IconButton>
                         </Tooltip>

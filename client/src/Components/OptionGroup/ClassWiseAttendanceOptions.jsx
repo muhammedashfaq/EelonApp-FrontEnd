@@ -8,6 +8,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faCalendarDays } from "@fortawesome/free-regular-svg-icons";
+import { faDownload, faGear } from "@fortawesome/free-solid-svg-icons";
 
 const ClassWiseAttendanceOptions = ({
   clss,
@@ -19,7 +20,7 @@ const ClassWiseAttendanceOptions = ({
   setclasswiseAttendance,
 }) => {
   return (
-    <div className="flex items-center justify-between space-x-10">
+    <div className="flex items-center space-x-2">
       <div className="w-max m-1 flex space-x-2 ">
         <Select
           label="Select Class&Section"
@@ -32,8 +33,6 @@ const ClassWiseAttendanceOptions = ({
             </Option>
           ))}
         </Select>
-      </div>
-      <div style={{ width: "50px" }}>
         <Input
           type="date"
           color="white"
@@ -41,20 +40,29 @@ const ClassWiseAttendanceOptions = ({
           value={date}
         />
       </div>
+      <div>
+
       <Button
+      color="green"
         onClick={getClasswiseAttendance}
-        variant="outlined"
-        style={{ textTransform: "none" }}
       >
-        Get attendance
+Get
+        
       </Button>
+     
+    
+       </div>
+      <div>
       <Button
-        variant="text"
-        style={{ textTransform: "none" }}
+      color="amber"
+      
         onClick={() => setclasswiseAttendance()}
       >
-        Clear
+Reset
       </Button>
+        
+        
+        </div>
       {/* <div>
         <Typography className="text-2xl text-white font-body font-semibold ">
           Classwise Attendance Details <FontAwesomeIcon icon={faCalendarDays} />

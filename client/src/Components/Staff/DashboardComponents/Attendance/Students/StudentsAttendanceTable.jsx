@@ -5,9 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareCheck } from "@fortawesome/free-solid-svg-icons";
 import StudentRow from "./StudentRow";
 import useAxiosPrivate from "../../../../../Hooks/useAxiosPrivate";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import { RouteObjects } from "../../../../../Routes/RoutObjects";
 
 const TABLE_HEAD = ["#NO", "Name", "Attendance", "Remarks", "Aprove", ""];
 
@@ -18,6 +19,7 @@ const StudentsAttendanceTable = () => {
   const [studentData, setstudentData] = useState();
   const [classwiseAttendance, setclasswiseAttendance] = useState();
   const [attendanceDbId, setattendanceDbId] = useState();
+  const navigate=useNavigate()
 
   const axiosPrivate = useAxiosPrivate();
 
@@ -68,6 +70,7 @@ const StudentsAttendanceTable = () => {
 
   const addAttendanceToCollection = async () => {
     try {
+
       const response = await axiosPrivate.post(
         `attendance/class/addattendance/${attendanceDbId}`,
         attendanceArray
@@ -77,6 +80,8 @@ const StudentsAttendanceTable = () => {
         text: `Attendance for ${classId} on ${date} is added`,
         icon: "success",
       });
+      navigate(RouteObjects.StudentsAttendance)
+
     } catch (error) {
       console.log(error);
     }

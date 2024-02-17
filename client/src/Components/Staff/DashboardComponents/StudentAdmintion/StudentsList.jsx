@@ -81,7 +81,6 @@ const StudentsList = () => {
   const [searchQuery, setsearchQuery] = useState();
   const [searchData, setsearchData] = useState();
   const [paginationData, setpaginationData] = useState();
-
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
 
@@ -524,7 +523,7 @@ const StudentsList = () => {
                           </Link>
                         </td>
                         <td className={classes}>
-                          <Link to={`${RouteObjects.EditStudent}/${data._id}/${data.studentName}`}>
+                          <Link to={`${RouteObjects.EditStudent}/${data._id}/${data.studentName}/${page}`}>
                             <Tooltip
                               content="Edit Student Data"
                               animate={{
