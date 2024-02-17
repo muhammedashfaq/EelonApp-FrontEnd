@@ -65,58 +65,39 @@ const Classtimetable = () => {
               <Option value="Higher Secondary">Higher Secondary</Option>
             </Select>
           </div>
-          <div className="flex space-x-1">
-            <label className="bg-blue-100 p-2 rounded-lg border-2 font-semibold text-base">
-              Type:
-            </label>
-
-            <Select label="Choose" onFocus={false} onChange={(e) => setDay(e)}>
-              <Option  value="Monday">Monday</Option>
-              <Option value="Tuesday">Tuesday</Option>
-              <Option value="Wednesday">Wednesday</Option>
-              <Option value="Thursday">Thursday</Option>
-              <Option value="Friday">Friday</Option>
-              <Option value="Saturday">Saturday</Option>
-              <Option value="Sunday">Sunday</Option>
-            </Select>
-          </div>
-
           <div className="">
             <div className="flex  items-center space-x-1">
+              <label className="bg-blue-100 p-2 rounded-lg border-2 font-semibold text-base">
+                Type:
+              </label>
 
-            <label className="bg-blue-100 p-2 rounded-lg border-2 font-semibold text-base">
-              Type:
-            </label>
-            
               <Input
                 label="TemplateId"
                 value={templateId}
                 onChange={(e) => setTemplateId(e.target.value)}
               />
             </div>
-            
-              <FontAwesomeIcon
-                icon={faInfoCircle}
-                color="red"
-                className="opacity-55"
-              />
-              <span className="opacity-70 text-xs font-semibold ml-1">
-                Template Id Should be Unique
-              </span>
 
-            </div>
-            <div>
-
-          <Button
-            type="submit"
-            onClick={SubmitForm}
-            className="mt-2 flex items-center w-28"
-            color="blue"
+            <FontAwesomeIcon
+              icon={faInfoCircle}
+              color="red"
+              className="opacity-55"
+            />
+            <span className="opacity-70 text-xs font-semibold ml-1">
+              Template Id Should be Unique
+            </span>
+          </div>
+          <div>
+            <Button
+              type="submit"
+              onClick={SubmitForm}
+              className="mt-2 flex items-center w-28"
+              color="blue"
             >
-            <FontAwesomeIcon icon={faAdd} className="m-1 " />
-            Add
-          </Button>
-            </div>
+              <FontAwesomeIcon icon={faAdd} className="m-1 " />
+              Add
+            </Button>
+          </div>
         </div>
       </div>
     </div>
