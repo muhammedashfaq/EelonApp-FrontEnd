@@ -5,14 +5,28 @@ import { Typography } from "@material-tailwind/react";
 import useAxiosPrivate from "../../../../../Hooks/useAxiosPrivate";
 import ClassWiseReport from "./ClassWiseReport";
 import ClassWiseAttendanceOptions from "../../../../OptionGroup/ClassWiseAttendanceOptions";
+import StaffAttendanceReport from "../../../../OptionGroup/StaffAttendanceReport";
+import StaffDailyReport from "./StaffDailyReport";
 
 const Report = () => {
   const [clss, setClss] = useState([]);
   const axiosPrivate = useAxiosPrivate();
   const [selectClass, setselectClass] = useState();
-  const [date, setDate] = React.useState();
+  const [date, setDate] = useState();
   const [classwiseAttendance, setclasswiseAttendance] = useState();
+  const [attdate, setAttDate] =useState();
 
+ const getReport =async()=>{
+  try {
+    const data={
+      date:attdate
+    }
+    const response =await axiosPrivate.get("attendance/staff/datewiseattendance",data)
+    console.log(response,"attresssss")
+  } catch (error) {
+    console.log(error)
+  }
+ }
   const getClsSection = async () => {
     try {
       const response = await axiosPrivate.get("/classsection/dropdowns");
@@ -60,6 +74,11 @@ const Report = () => {
         <ClassWiseReport classwiseAttendance={classwiseAttendance} />
       </div>
 
+      <div className="bg-blue-800 p-2 rounded-t-lg">
+        <StaffAttendanceReport attdate={attdate} setAttDate={setAttDate} getReport={getReport}/>
+        <StaffDailyReport/>
+      </div>
+      
       <div className="bg-blue-800 p-2 rounded-t-lg">
         <OptionGroup clss={clss} Name="Students" />
         <ReportTable />

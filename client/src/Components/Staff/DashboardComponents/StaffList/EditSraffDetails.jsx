@@ -18,20 +18,24 @@ import {
 } from "@material-tailwind/react";
 import  { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
-const useDropdownState = (initialValue, fetchedValue) => {
-  const [value, setValue] = useState(initialValue);
-
-  useEffect(() => {
-    if (fetchedValue !== undefined) {
-      setValue(fetchedValue);
-    }
-  }, [fetchedValue]);
-
-  return [value, setValue];
-};
-const EditSraffDetails = () => {
-  const [fetchData, setFetchData] = useState();
-  const axiosPrivate = useAxiosPrivate();
+import Swal from "sweetalert2";
+import {useNavigate} from 'react-router-dom'
+import { RouteObjects } from "../../../../Routes/RoutObjects";
+const EditSraffDetails = ({fetchData}) => {
+  const useDropdownState = (initialValue, fetchedValue) => {
+    const [value, setValue] = useState(initialValue);
+  
+  
+    useEffect(() => {
+      if (fetchedValue !== undefined) {
+        setValue(fetchedValue);
+      }
+    }, [fetchedValue]);
+  
+    return [value, setValue];
+  };
+  const navigate=useNavigate()
+    const axiosPrivate = useAxiosPrivate();
   const genderState = useDropdownState("", fetchData?.gender);
   const maritalstatusState = useDropdownState(
     "",
@@ -42,17 +46,18 @@ const EditSraffDetails = () => {
   const jobRoleState = useDropdownState("", fetchData?.jobRole);
   const acTypeState = useDropdownState("", fetchData?.acType);
   const userTypeState = useDropdownState("", fetchData?.userType);
+  const bloodGpState=useDropdownState("",fetchData?.bloodGp)
 
   const [formData, setFormData] = useState({
     staffId: "",
-    staffName: "",
+    name: "",
     DOB: "",
     mob: "",
     mob2: "",
     wamob: "",
-    email: "",
+    contactEmail: "",
     DOJ: "",
-    adharno: "",
+    aadharNo: "",
     pan: "",
     nationality: "",
     state: "",
@@ -63,16 +68,16 @@ const EditSraffDetails = () => {
     bankAccountName: "",
     bankName: "",
     bankBranchName: "",
-    bankIFSECode: "",
-    bankMoredetails: "",
+    bankIFSCCode: "",
+    otherBankdetails: "",
     basicSalary: "",
     pf: "",
     epfno: "",
-    esi: "",
-    esiip: "",
+    esi: null,
+    esiip: null,
     otherAllowance: "",
-    loginemail: "",
-    loginpassword: "",
+    password: "",
+    email: "",
   });
 
   const handleInputChange = (event) => {
@@ -90,34 +95,41 @@ const EditSraffDetails = () => {
       [name]: inputValue,
     }));
   };
-  const handleSubmitForm = async () => {
+  const handleSubmitForm = async (e) => {
+    e.preventDefault()
     const allData = {
       ...formData,
       gender: genderState[0],
-      maritalstatuse: maritalstatusState[0],
+      maritalStatus: maritalstatusState[0],
       religion: religionState[0],
       jobType: jobTypeState[0],
       jobRole: jobRoleState[0],
       acType: acTypeState[0],
       userType: userTypeState[0],
+      bloodGp:bloodGpState[0]
     };
 
     try {
-      // const response = await axiosPrivate;
+      const response = await axiosPrivate(`users/staff/${fetchData._id}`,allData)
+      Swal.fire({
+        title: "Good job!",
+        text: "You clicked the button!",
+        icon: "success"
+      });
+      navigate(RouteObjects.StaffList)
+      console.log(response,"res");
     } catch (error) {
       console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.response?error.response:"Something went wrong!",
+        footer: '<a href="#">Why do I have this issue?</a>'
+      });
     }
   };
 
-  const getData = async () => {
-    try {
-      // const response = await axiosPrivate;
-      setFetchData(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => getData(), []);
+
   return (
     <div>
       <div className="m-10">
@@ -145,13 +157,13 @@ const EditSraffDetails = () => {
                 onChange={handleInputChange}
               />
               <Input
-                name="staffName"
+                name="name"
                 className="bg-gray-50"
                 variant="outlined"
                 label="Name"
                 placeholder="Enter Name"
                 required
-                defaultValue={fetchData?.staffName}
+                defaultValue={fetchData?.name}
                 onChange={handleInputChange}
               />
               <Select
@@ -160,11 +172,9 @@ const EditSraffDetails = () => {
                 value={genderState[0]}
                 onChange={(e) => genderState[1](e)}
               >
-                <Option>Material Tailwind HTML</Option>
-                <Option>Material Tailwind React</Option>
-                <Option>Material Tailwind Vue</Option>
-                <Option>Material Tailwind Angular</Option>
-                <Option>Material Tailwind Svelte</Option>
+                <Option value="Male">Male</Option>
+                <Option value="Female">Female</Option>
+                <Option value="Other">Other</Option>
               </Select>
               <Input
                 name="DOB"
@@ -174,7 +184,27 @@ const EditSraffDetails = () => {
                 label="DOB"
                 required
                 defaultValue={fetchData?.DOB}
+                onChange={handleInputChange}
+
               />
+                       <Select
+                variant="outlined"
+                value={bloodGpState[0]}
+                onChange={(e) => bloodGpState[0][1](e)}
+
+                label="Bloog Group"
+              >
+                <Option value="A+ve">A+ve</Option>
+                <Option value="A-ve">A-ve</Option>
+                <Option value="B+ve">B+ve</Option>
+                <Option value="B-ve">B-ve</Option>
+                <Option value="AB+ve">AB+ve</Option>
+                <Option value="AB-ve">AB-ve</Option>
+                <Option value="O+ve">O+ve</Option>
+                <Option value="O-ve">O-ve</Option>
+                <Option value="Unknown">Unknown</Option>
+              </Select>
+            
               <Input
                 name="mob"
                 className="bg-gray-50"
@@ -205,13 +235,13 @@ const EditSraffDetails = () => {
                 defaultValue={fetchData?.wamob}
               />
               <Input
-                name="email"
+                name="contactEmail"
                 className="bg-gray-50"
                 variant="outlined"
                 label="Email ID"
                 placeholder="Enter Email Id"
                 onChange={handleInputChange}
-                defaultValue={fetchData?.email}
+                defaultValue={fetchData?.contactEmail}
               />
               <Input
                 name="DOJ"
@@ -247,11 +277,9 @@ const EditSraffDetails = () => {
                 value={maritalstatusState[0]}
                 onChange={(e) => maritalstatusState[1](e)}
               >
-                <Option>Material Tailwind HTML</Option>
-                <Option>Material Tailwind React</Option>
-                <Option>Material Tailwind Vue</Option>
-                <Option>Material Tailwind Angular</Option>
-                <Option>Material Tailwind Svelte</Option>
+              <Option value="Married">Married</Option>
+                <Option value="Single">Single</Option>
+                <Option value="Other">Other</Option>
               </Select>
               <Input
                 name="nationality"
@@ -302,11 +330,10 @@ const EditSraffDetails = () => {
                 value={religionState[0]}
                 onChange={(e) => religionState[1](e)}
               >
-                <Option>Material Tailwind HTML</Option>
-                <Option>Material Tailwind React</Option>
-                <Option>Material Tailwind Vue</Option>
-                <Option>Material Tailwind Angular</Option>
-                <Option>Material Tailwind Svelte</Option>
+              <Option value="Hindu">Hindu</Option>
+                <Option value="Muslim">Muslim</Option>
+                <Option value="Christian">Christian</Option>
+                <Option value="Other">Other</Option>
               </Select>
               <Select
                 className="bg-gray-50"
@@ -314,8 +341,8 @@ const EditSraffDetails = () => {
                 value={jobTypeState[0]}
                 onChange={(e) => jobTypeState[0](e)}
               >
-                <Option>Teaching</Option>
-                <Option>Non-Teaching</Option>
+               <Option value="Teaching">Teaching</Option>
+                <Option value="Non-Teaching">Non-Teaching</Option>
               </Select>
               <Select
                 className="bg-gray-50"
@@ -323,11 +350,11 @@ const EditSraffDetails = () => {
                 value={jobRoleState[0]}
                 onChange={(e) => jobRoleState[0](e)}
               >
-                <Option>Material Tailwind HTML</Option>
-                <Option>Material Tailwind React</Option>
-                <Option>Material Tailwind Vue</Option>
-                <Option>Material Tailwind Angular</Option>
-                <Option>Material Tailwind Svelte</Option>
+                               <Option value="Teacher">Teacher</Option>
+                <Option value="Guest Teacher">Guest Teacher</Option>
+                <Option value="Accountant">Accountant</Option>
+                <Option value="Clerk">Clerk</Option>
+                <Option value="Other">Other</Option>
               </Select>
 
               <Textarea
@@ -365,9 +392,9 @@ const EditSraffDetails = () => {
                 value={acTypeState[0]}
                 onChange={(e) => acTypeState[0](e)}
               >
-                <Option>Self</Option>
-                <Option>Joint</Option>
-                <Option>Other</Option>
+             <Option value="Self">Self</Option>
+                <Option value="Joint">Joint</Option>
+                <Option value="Other">Other</Option>
               </Select>
 
               <Input
@@ -481,50 +508,7 @@ const EditSraffDetails = () => {
               />
             </div>
 
-            <div className="px-6 pt-6 bg-green-100 mx-2 flex justify-between items-center">
-              <Typography variant="lead" className="font-semibold text-2xl">
-                Login Details <FontAwesomeIcon icon={faKey} />
-              </Typography>
-              <div className="w-96 m-2"></div>
-              <hr />
-            </div>
-            <div className=" mt-6">
-              <span className="ml-10  opacity-70 ">
-                <FontAwesomeIcon icon={faInfoCircle} className="opacity-30" />{" "}
-                Please complete all required fields.
-              </span>
-            </div>
-
-            <div className="Laptop:grid Laptop:grid-cols-4 ipad:grid ipad:grid-cols-3 Tablet:grid Tablet:grid-cols-3 mobile:grid mobile:grid-cols-1 gap-4 p-8  ">
-              <Select
-                label="User Type "
-                value={userTypeState[0]}
-                onChange={(e) => userTypeState[1](e)}
-              >
-                <Option>Self</Option>
-                <Option>Joint</Option>
-                <Option>Other</Option>
-              </Select>
-
-              <Input
-                name="loginemail"
-                variant="outlined"
-                label="Email ID"
-                placeholder="Enter Here"
-                required
-                onChange={handleInputChange}
-                defaultValue={fetchData?.loginemail}
-              />
-              <Input
-                name="loginpassword"
-                variant="outlined"
-                label="Password"
-                placeholder="Enter Here"
-                required
-                onChange={handleInputChange}
-                defaultValue={fetchData?.loginpassword}
-              />
-            </div>
+          
 
             <Button fullWidth color="blue" type="submit">
               Submit

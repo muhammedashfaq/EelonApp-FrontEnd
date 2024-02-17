@@ -40,56 +40,56 @@ const ImageCard = ({ userData, getData }) => {
 
   const axiosPrivate = useAxiosPrivate();
 
-  const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
-  };
+  // const handleImageChange = (e) => {
+  //   setImage(e.target.files[0]);
+  // };
 
   const handleOpen = () => setOpen((cur) => !cur);
   const handleIsFavorite = () => setIsFavorite((cur) => !cur);
   const { auth } = useAuth();
-  const ImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setImage(imageUrl);
-      setProfileImage(imageUrl);
-    }
-  };
+  // const ImageChange = (event) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const imageUrl = URL.createObjectURL(file);
+  //     setImage(imageUrl);
+  //     setProfileImage(imageUrl);
+  //   }
+  // };
 
-  const submitimage = async (e) => {
-    try {
-      e.preventDefault();
-      if (!profileImage) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong! Choose Any Image 📷",
-        });
-        return;
-      }
-      console.log("image");
-      const response = null;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const submitimage = async (e) => {
+  //   try {
+  //     e.preventDefault();
+  //     if (!profileImage) {
+  //       Swal.fire({
+  //         icon: "error",
+  //         title: "Oops...",
+  //         text: "Something went wrong! Choose Any Image 📷",
+  //       });
+  //       return;
+  //     }
+  //     console.log("image");
+  //     const response = null;
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const handleUpload = async () => {
-    const formData = new FormData();
-    formData.append("file", image);
-    formData.append("upload_preset", "your_cloudinary_upload_preset");
+  // const handleUpload = async () => {
+  //   const formData = new FormData();
+  //   formData.append("file", image);
+  //   formData.append("upload_preset", "your_cloudinary_upload_preset");
 
-    try {
-      const res = await axios.post(
-        "https://api.cloudinary.com/v1_1/your_cloudinary_cloud_name/image/upload",
-        formData
-      );
-      console.log("Image uploaded:", res.data.secure_url);
-      // Now, you can save this URL to your MongoDB database
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    }
-  };
+  //   try {
+  //     const res = await axios.post(
+  //       "https://api.cloudinary.com/v1_1/your_cloudinary_cloud_name/image/upload",
+  //       formData
+  //     );
+  //     console.log("Image uploaded:", res.data.secure_url);
+  //     // Now, you can save this URL to your MongoDB database
+  //   } catch (error) {
+  //     console.error("Error uploading image:", error);
+  //   }
+  // };
 
   const handleImage = (e) => {
     const file = e.target.files[0];

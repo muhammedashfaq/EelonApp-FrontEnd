@@ -18,8 +18,12 @@ import {
 } from "@material-tailwind/react";
 import React, { useState } from "react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
+import Swal from "sweetalert2"
+import { RouteObjects } from "../../../../Routes/RoutObjects";
+import { useNavigate } from "react-router-dom";
 
 const AddStaffDetails = () => {
+  const navigate=useNavigate()
   const axiosPrivate = useAxiosPrivate();
   const [gender, setgender] = useState("");
   const [maritalStatus, setMaritalStatus] = useState();
@@ -28,9 +32,10 @@ const AddStaffDetails = () => {
   const [jobRole, setJobRole] = useState("");
   const [accType, setAccType] = useState("");
   const [userType, setUserType] = useState("");
+  const [bloodGp, setbloodGp] = useState("");
   const [formData, setFormData] = useState({
     staffId: "",
-    staffName: "",
+    name: "",
     DOB: "",
     mob: "",
     mob2: "",
@@ -48,7 +53,7 @@ const AddStaffDetails = () => {
     bankAccountName: "",
     bankName: "",
     bankBranchName: "",
-    bankIFSECode: "",
+    bankIFSCCode: "",
     otherBankdetails: "",
     basicSalary: "",
     pf: "",
@@ -90,9 +95,21 @@ const AddStaffDetails = () => {
 
     try {
       const response = await axiosPrivate.post("users/staff", allData);
+      Swal.fire({
+        title: "Good job!",
+        text: "You clicked the button!",
+        icon: "success"
+      });
+      navigate(RouteObjects.StaffList)
+
       console.log(response);
     } catch (error) {
       console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.response ? error.response:"Something went wrong!",
+      });
     }
   };
   return (
@@ -121,7 +138,7 @@ const AddStaffDetails = () => {
                 onChange={handleInputChange}
               />
               <Input
-                name="staffName"
+                name="name"
                 className="bg-gray-50"
                 variant="outlined"
                 label="Name"
@@ -134,11 +151,9 @@ const AddStaffDetails = () => {
                 label="Gender*"
                 onChange={(e) => setgender(e)}
               >
-                <Option>Material Tailwind HTML</Option>
-                <Option>Material Tailwind React</Option>
-                <Option>Material Tailwind Vue</Option>
-                <Option>Material Tailwind Angular</Option>
-                <Option>Material Tailwind Svelte</Option>
+                <Option value="Male">Male</Option>
+                <Option value="Male">Female</Option>
+                <Option value="Male">Other</Option>
               </Select>
               <Input
                 name="DOB"
@@ -147,7 +162,25 @@ const AddStaffDetails = () => {
                 variant="outlined"
                 label="DOB"
                 required
+                onChange={handleInputChange}
               />
+
+              <Select
+                variant="outlined"
+                value={bloodGp}
+                onChange={(e) => setbloodGp(e)}
+                label="Bloog Group"
+              >
+                <Option value="A+ve">A+ve</Option>
+                <Option value="A-ve">A-ve</Option>
+                <Option value="B+ve">B+ve</Option>
+                <Option value="B-ve">B-ve</Option>
+                <Option value="AB+ve">AB+ve</Option>
+                <Option value="AB-ve">AB-ve</Option>
+                <Option value="O+ve">O+ve</Option>
+                <Option value="O-ve">O-ve</Option>
+                <Option value="Unknown">Unknown</Option>
+              </Select>
               <Input
                 name="mob"
                 className="bg-gray-50"
@@ -189,6 +222,7 @@ const AddStaffDetails = () => {
                 variant="outlined"
                 label="DOJ"
                 required
+                onChange={handleInputChange}
               />
               <Input
                 name="adharno"
@@ -212,11 +246,9 @@ const AddStaffDetails = () => {
                 label="Marital Status"
                 onChange={(e) => setMaritalStatus(e)}
               >
-                <Option>Material Tailwind HTML</Option>
-                <Option>Material Tailwind React</Option>
-                <Option>Material Tailwind Vue</Option>
-                <Option>Material Tailwind Angular</Option>
-                <Option>Material Tailwind Svelte</Option>
+                <Option value="Married">Married</Option>
+                <Option value="Single">Single</Option>
+                <Option value="Other">Other</Option>
               </Select>
               <Input
                 name="nationality"
@@ -262,30 +294,29 @@ const AddStaffDetails = () => {
                 label="Religion"
                 onChange={(e) => setReligion(e)}
               >
-                <Option>Material Tailwind HTML</Option>
-                <Option>Material Tailwind React</Option>
-                <Option>Material Tailwind Vue</Option>
-                <Option>Material Tailwind Angular</Option>
-                <Option>Material Tailwind Svelte</Option>
+                <Option value="Hindu">Hindu</Option>
+                <Option value="Muslim">Muslim</Option>
+                <Option value="Christian">Christian</Option>
+                <Option value="Other">Other</Option>
               </Select>
               <Select
                 className="bg-gray-50"
                 label="Job Type* "
                 onChange={(e) => setJobType(e)}
               >
-                <Option>Teaching</Option>
-                <Option>Non-Teaching</Option>
+                <Option value="Teaching">Teaching</Option>
+                <Option value="Non-Teaching">Non-Teaching</Option>
               </Select>
               <Select
                 className="bg-gray-50"
                 label="Job Role"
                 onChange={(e) => setJobRole(e)}
               >
-                <Option>Material Tailwind HTML</Option>
-                <Option>Material Tailwind React</Option>
-                <Option>Material Tailwind Vue</Option>
-                <Option>Material Tailwind Angular</Option>
-                <Option>Material Tailwind Svelte</Option>
+                 <Option value="Teacher">Teacher</Option>
+                <Option value="Guest Teacher">Guest Teacher</Option>
+                <Option value="Accountant">Accountant</Option>
+                <Option value="Clerk">Clerk</Option>
+                <Option value="Other">Other</Option>
               </Select>
 
               <Textarea
@@ -318,9 +349,9 @@ const AddStaffDetails = () => {
                 </Typography>
               </div>
               <Select label="Account Type " onChange={(e) => setAccType(e)}>
-                <Option>Self</Option>
-                <Option>Joint</Option>
-                <Option>Other</Option>
+                <Option value="Self">Self</Option>
+                <Option value="Joint">Joint</Option>
+                <Option value="Other">Other</Option>
               </Select>
 
               <Input
@@ -356,7 +387,7 @@ const AddStaffDetails = () => {
                 onChange={handleInputChange}
               />
               <Input
-                name="bankIFSECode"
+                name="bankIFSCCode"
                 variant="outlined"
                 label="IFSE Code"
                 placeholder="Enter IFSE Code"
@@ -438,9 +469,11 @@ const AddStaffDetails = () => {
 
             <div className="Laptop:grid Laptop:grid-cols-4 ipad:grid ipad:grid-cols-3 Tablet:grid Tablet:grid-cols-3 mobile:grid mobile:grid-cols-1 gap-4 p-8  ">
               <Select label="User Type " onChange={(e) => setUserType(e)}>
-                <Option>Self</Option>
-                <Option>Joint</Option>
-                <Option>Other</Option>
+              <Option value="Teacher">Teacher</Option>
+                <Option value="Guest Teacher">Guest Teacher</Option>
+                <Option value="Accountant">Accountant</Option>
+                <Option value="Clerk">Clerk</Option>
+                <Option value="Other">Other</Option>
               </Select>
 
               <Input
