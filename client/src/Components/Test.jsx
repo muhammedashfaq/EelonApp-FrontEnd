@@ -1,5 +1,14 @@
-import { Button } from "@material-tailwind/react";
+import {
+  Button,
+  Input,
+  Option,
+  Select,
+  Typography,
+} from "@material-tailwind/react";
 import TimetableRow from "./Staff/DashboardComponents/Timetables/Classtimetable/TimetableRow";
+import { useEffect, useState } from "react";
+import TimeSettingModal from "./Staff/DashboardComponents/Timetables/Classtimetable/TimeSettingModal";
+import useAxiosPrivate from "../Hooks/useAxiosPrivate";
 
 const days = [
   "Monday",
@@ -9,28 +18,132 @@ const days = [
   "Friday",
   "Saturday",
 ];
+const period = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const Test = () => {
-  const createTimetableArray = (value) => {
-    const index = value.index;
-    const existingIndex = attendanceArray.findIndex(
-      (item) => item.index === index
-    );
+  const [dataArray, setDataArray] = useState([]);
+  const [intervalArray, setIntervalArray] = useState([]);
+  const [clss, setClss] = useState([]);
 
-    if (existingIndex !== -1) {
-      const newArray = [...attendanceArray];
-      newArray[existingIndex] = value;
-      setAttendanceArray(newArray);
-    } else {
-      setAttendanceArray([...attendanceArray, value]);
+  const [period1, setperiod1] = useState();
+  const [period2, setperiod2] = useState();
+  const [period3, setperiod3] = useState();
+  const [period4, setperiod4] = useState();
+  const [period5, setperiod5] = useState();
+  const [period6, setperiod6] = useState();
+  const [period7, setperiod7] = useState();
+  const [period8, setperiod8] = useState();
+
+  const [classId, setClassId] = useState();
+
+  const axiosPrivate = useAxiosPrivate();
+
+  const addTimetable = async () => {
+    console.log(dataArray);
+    try {
+      const response = await axiosPrivate.post("timetable/classwise", {
+        timeTableArray: dataArray,
+      });
+      console.log(response);
+    } catch (error) {
+      console.error(error);
     }
   };
+
+  // Function to handle incoming data
+  const handleData = (data) => {
+    const { id } = data;
+
+    // Check if an object with the same id already exists
+    const existingIndex = dataArray.findIndex((item) => item.id === id);
+
+    // If an object with the same id exists, replace it
+    if (existingIndex !== -1) {
+      setDataArray((prevDataArray) => {
+        const newDataArray = [...prevDataArray];
+        newDataArray[existingIndex] = data;
+        return newDataArray;
+      });
+    } else {
+      // If the id is unique, add the new object to the array
+      setDataArray((prevDataArray) => [...prevDataArray, data]);
+    }
+  };
+
+  const handleIntervalData = (data) => {
+    const { id } = data;
+
+    // Check if an object with the same id already exists
+    const existingIndex = intervalArray.findIndex((item) => item.id === id);
+
+    // If an object with the same id exists, replace it
+    if (existingIndex !== -1) {
+      setIntervalArray((prevDataArray) => {
+        const newDataArray = [...prevDataArray];
+        newDataArray[existingIndex] = data;
+        return newDataArray;
+      });
+    } else {
+      // If the id is unique, add the new object to the array
+      setIntervalArray((prevDataArray) => [...prevDataArray, data]);
+    }
+  };
+
+  const getClsSection = async () => {
+    try {
+      const response = await axiosPrivate.get("/classsection/dropdowns");
+      const sortedData = response.data.sort((a, b) => a.localeCompare(b));
+
+      setClss(sortedData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    console.log(dataArray);
+  }, [dataArray]);
+
+  useEffect(() => {
+    console.log(intervalArray);
+  }, [intervalArray]);
+
+  useEffect(() => {
+    getClsSection();
+  }, []);
 
   return (
     <div>
       <div class="container mx-auto mt-10">
         <div class="wrapper bg-white rounded  w-full ">
           <div class="header flex justify-between border-b p-2">
-            <span class="text-lg font-bold">2020 July</span>
+            <div className="w-60">
+              {/* <Input
+                placeholder="Enter Here"
+                onChange={(e) => setClassId(e.target.value)}
+                label="Enter classId"
+              /> */}
+              <div className="w-max m-1 flex space-x-2 ">
+                <Select
+                  label="Select Class&Section"
+                  className="bg-gray-100"
+                  onChange={(e) => setClassId(e)}
+                >
+                  {clss &&
+                    clss.map((value, i) => (
+                      <Option key={i} value={value}>
+                        {value}
+                      </Option>
+                    ))}
+                </Select>
+              </div>
+            </div>
+            <Button
+              variant="outlined"
+              style={{ textTransform: "none" }}
+              onClick={addTimetable}
+            >
+              Add attendance
+            </Button>
             <div class="buttons">
               <button class="p-1">
                 <svg
@@ -82,71 +195,30 @@ const Test = () => {
           </div>
           <table class="w-full">
             <thead>
+              <tr></tr>
               <tr>
-                <th class="p-2 border-r h-20 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs"></th>
-
-                <th class="p-2 border-r h-20 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
-                  <span class="xl:block lg:block md:block sm:block hidden">
-                    Period 1
-                  </span>
-                  <span class="xl:hidden lg:hidden md:hidden sm:hidden block">
-                    Period 1
-                  </span>
-                </th>
-                <th class="p-2 border-r h-20 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
-                  <span class="xl:block lg:block md:block sm:block hidden">
-                    Period 2
-                  </span>
-                  <span class="xl:hidden lg:hidden md:hidden sm:hidden block">
-                    Period 2
-                  </span>
-                </th>
-                <th class="p-2 border-r h-20 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
-                  <span class="xl:block lg:block md:block sm:block hidden">
-                    Period 3
-                  </span>
-                  <span class="xl:hidden lg:hidden md:hidden sm:hidden block">
-                    Period 3
-                  </span>
-                </th>
-                <th class="p-2 border-r h-20 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
-                  <span class="xl:block lg:block md:block sm:block hidden">
-                    Period 4
-                  </span>
-                  <span class="xl:hidden lg:hidden md:hidden sm:hidden block">
-                    Period 4
-                  </span>
-                </th>
-                <th class="p-2 border-r h-20 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
-                  <span class="xl:block lg:block md:block sm:block hidden">
-                    Period 5
-                  </span>
-                  <span class="xl:hidden lg:hidden md:hidden sm:hidden block">
-                    Period 5
-                  </span>
-                </th>
-                <th class="p-2 border-r h-20 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
-                  <span class="xl:block lg:block md:block sm:block hidden">
-                    Period 6
-                  </span>
-                  <span class="xl:hidden lg:hidden md:hidden sm:hidden block">
-                    Period 6
-                  </span>
-                </th>
-                <th class="p-2 border-r h-20 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
-                  <span class="xl:block lg:block md:block sm:block hidden">
-                    Period 7
-                  </span>
-                  <span class="xl:hidden lg:hidden md:hidden sm:hidden block">
-                    Period 7
-                  </span>
-                </th>
+                {period &&
+                  period.map((item, i) => (
+                    <TimeSettingModal
+                      setPeriod={setperiod1}
+                      i={i}
+                      handleIntervalData={handleIntervalData}
+                    />
+                  ))}
               </tr>
             </thead>
 
             <tbody>
               {days &&
-                days.map((data, i) => <TimetableRow data={data} index={i} />)}
+                days.map((data, i) => (
+                  <TimetableRow
+                    data={data}
+                    index={i}
+                    handleData={handleData}
+                    dataArray={dataArray}
+                    intervalArray={intervalArray}
+                  />
+                ))}
               {/* row */}
             </tbody>
           </table>
