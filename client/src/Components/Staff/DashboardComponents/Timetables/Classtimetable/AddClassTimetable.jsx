@@ -46,6 +46,11 @@ const AddClassTimetable = () => {
         timeTableArray: dataArray,
         timing: intervalArray,
       });
+      Swal.fire({
+        title: "Time table created!",
+        text: `Time table for ${classId} has been created`,
+        icon: "success",
+      });
       console.log(response);
     } catch (error) {
       console.error(error);

@@ -1,21 +1,25 @@
-import { Select, Option, Tooltip } from "@material-tailwind/react";
+import { Select, Option, Tooltip, IconButton } from "@material-tailwind/react";
 import { Input } from "@material-tailwind/react";
 import { useState } from "react";
 import ExamPortionsModal from "./ExamPortionsModal";
+import SetExamTimeModal from "./SetExamTimeModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const ExamTimeTable = () => {
   const [std, setstd] = useState();
-  const [FNSub, setFNSub] = useState();
-  const [ANSub, setANSub] = useState();
+  const [exam1StartTime, setexam1StartTime] = useState();
+  const [exam1EndTime, setexam1EndTime] = useState();
+  const [exam2StartTime, setexam2StartTime] = useState();
+  const [exam2EndTime, setexam2EndTime] = useState();
+
   return (
     <div>
       {" "}
       <div>
         <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
           <div className="align-middle rounded-tl-lg rounded-tr-lg inline-block w-full py-4 overflow-hidden bg-white shadow-lg px-12">
-            <div className="flex justify-between">
-              Exam Name ----- From Which Day to Which Day
-            </div>
+            <div className="flex justify-between"></div>
           </div>
           <div
             className="align-middle inline-block min-w-full shadow overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg"
@@ -31,14 +35,39 @@ const ExamTimeTable = () => {
                     Date
                   </th>
                   <th className="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">
-                    1st exm Time
+                    <div>
+                      1st exm Time
+                      <SetExamTimeModal
+                        setexamStartTime={setexam1StartTime}
+                        setexamEndTime={setexam1EndTime}
+                      />
+                    </div>
+                    {(exam1StartTime || exam1EndTime) && (
+                      <div className="text-gray-600">
+                        {exam1StartTime} - {exam1EndTime}
+                      </div>
+                    )}
                   </th>
                   <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
                     Break
                   </th>
 
                   <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                    2nd exm Time
+                    <div>
+                      2nd exm Time
+                      <SetExamTimeModal
+                        setexamStartTime={setexam2StartTime}
+                        setexamEndTime={setexam2EndTime}
+                      />
+                    </div>
+                    {(exam2StartTime || exam2EndTime) && (
+                      <div className="text-gray-600">
+                        {exam2StartTime} - {exam2EndTime}
+                      </div>
+                    )}
+                  </th>
+                  <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
+                    Action
                   </th>
                 </tr>
               </thead>
@@ -84,6 +113,11 @@ const ExamTimeTable = () => {
                       <Input label="AN subject" />
                       <ExamPortionsModal />
                     </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+                    <IconButton variant="outlined">
+                      <FontAwesomeIcon icon={faPlus} size="2x" />
+                    </IconButton>
                   </td>
                 </tr>
               </tbody>
