@@ -49,7 +49,13 @@ export default function TimeTableModal({
 
   return (
     <>
-      <td class="border p-1 h-32 xl:w-30 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
+      <td
+        class={
+          index === 2 || index === 5 || index === 8
+            ? "border p-1 h-32 xl:w-30 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto bg-gradient-to-r from-gray-400 to-gray-500"
+            : "border p-1 h-32 xl:w-30 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300"
+        }
+      >
         <div class="flex flex-col h-32 xl:w-30 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
           <div class="top h-5 w-full">
             {index === 2 || index === 5 || index === 8 ? (

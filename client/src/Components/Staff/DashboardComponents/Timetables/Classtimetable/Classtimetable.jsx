@@ -114,7 +114,7 @@ const Classtimetable = () => {
 
   return (
     <div>
-      <div class="container mx-auto mt-10 shadow-2xl shadow-black">
+      <div class="container mx-auto mt-10 mb-20 shadow-2xl shadow-black">
         <div class="wrapper bg-white rounded  w-full ">
           <div class="header flex justify-between border-b p-2">
             <div className="w-60">
