@@ -121,6 +121,11 @@ const NavBar = () => {
           href: RouteObjects.examTimeTable,
         },
         {
+          title: "Add Class timetable",
+          icon: faCaretRight,
+          href: RouteObjects.AddClassTimetable,
+        },
+        {
           title: "Class timetable",
           icon: faCaretRight,
           href: RouteObjects.ClasstimetablePage,
