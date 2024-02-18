@@ -50,11 +50,6 @@ const NavBar = () => {
           icon: faCaretRight,
         },
         {
-          title: "Add Form Requirments",
-          href: RouteObjects.RequireForms,
-          icon: faCaretRight,
-        },
-        {
           title: "Manage Classes",
           href: RouteObjects.StaffManageClass,
           icon: faCaretRight,

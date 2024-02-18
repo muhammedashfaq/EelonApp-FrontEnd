@@ -13,13 +13,10 @@ import {
   Avatar,
   IconButton,
   Tooltip,
-  Popover,
-  PopoverContent,
 } from "@material-tailwind/react";
 import Swal from "sweetalert2";
 import { useParams } from "react-router-dom";
 
-import axios from "../../../../api/axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { RouteObjects } from "../../../../Routes/RoutObjects";
@@ -34,32 +31,6 @@ import {
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
 
-const TABS = [
-  {
-    label: "All",
-    value: "all",
-  },
-  {
-    label: "Monitored",
-    value: "monitored",
-  },
-  {
-    label: "Unmonitored",
-    value: "unmonitored",
-  },
-];
-
-const TABLE_HEAD = [
-  "Sl NO",
-  "Admition Number",
-  "Name",
-  "Class",
-  "Contact Number",
-  "Email ID",
-  "DOJ",
-  "View",
-];
-
 const TABLE_ROWS = [
   {
     name: "John Michael",
@@ -72,8 +43,6 @@ const TABLE_ROWS = [
 ];
 
 const StudentsList = () => {
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
   const { page } = useParams();
   const [pageInt, setpageInt] = useState(Number(page));
 
@@ -87,7 +56,7 @@ const StudentsList = () => {
   const getUsers = async (pageNo) => {
     try {
       const response = await axiosPrivate.get(
-        `/users/student/pagination?page=${pageNo}&limit=2`
+        `/users/student/pagination?page=${pageNo}&limit=10`
       );
       setStudentData(response.data.users);
       setpaginationData(response.data.pagination);
@@ -150,16 +119,7 @@ const StudentsList = () => {
     <div>
       <Card className="  m-8">
         <CardHeader floated={false} shadow={false} className="rounded-none">
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <Tabs value="all" className="w-full md:w-max">
-              <TabsHeader>
-                {TABS.map(({ label, value }) => (
-                  <Tab key={value} value={value}>
-                    &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                  </Tab>
-                ))}
-              </TabsHeader>
-            </Tabs>
+          <div className="flex flex-col items-center justify-evenly gap-4 md:flex-row">
             <div className="w-full md:w-80">
               <form onSubmit={searchStudent} className="flex gap-1">
                 <Input
@@ -207,17 +167,14 @@ const StudentsList = () => {
             </div>
 
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-              <Button variant="outlined" size="sm">
-                view all
-              </Button>
               <Link to={RouteObjects.AddStudent}>
                 <Button className="flex items-center gap-3" size="sm">
                   <FontAwesomeIcon
                     icon={faUserPlus}
                     strokeWidth={2}
                     className="h-4 w-4"
-                  />{" "}
-                  Add member
+                  />
+                  Add students
                 </Button>
               </Link>
             </div>
@@ -523,7 +480,9 @@ const StudentsList = () => {
                           </Link>
                         </td>
                         <td className={classes}>
-                          <Link to={`${RouteObjects.EditStudent}/${data._id}/${data.studentName}/${page}`}>
+                          <Link
+                            to={`${RouteObjects.EditStudent}/${data._id}/${data.studentName}/${page}`}
+                          >
                             <Tooltip
                               content="Edit Student Data"
                               animate={{

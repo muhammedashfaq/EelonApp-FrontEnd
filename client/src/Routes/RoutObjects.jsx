@@ -19,7 +19,6 @@ export const RouteObjects = {
   StudentProfile: "/studentprofile",
   AddStudent: "/addstudent",
   EditStudent: "/editstudent",
-  RequireForms: "/forms",
   StudentsAttendance: "/students/attendance",
   StudentsAttendanceTable: "/students/attendancetable",
   StaffAttandanceTable: "/staff/attendancetable",
