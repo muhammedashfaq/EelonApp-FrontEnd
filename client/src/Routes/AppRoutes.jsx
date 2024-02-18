@@ -98,7 +98,10 @@ const AppRoutes = () => {
           path={`${RouteObjects.Bookmanagment}/:page`}
           element={<AddBooks />}
         />
-        <Route path={RouteObjects.Issuebooks} element={<IssueBooks />} />
+        <Route
+          path={`${RouteObjects.Issuebooks}/:page`}
+          element={<IssueBooks />}
+        />
         <Route path={RouteObjects.Issuecards} element={<Issuecards />} />
         <Route
           path={RouteObjects.LibrarySettings}

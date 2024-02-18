@@ -78,7 +78,7 @@ const SatffAddBookManagement = () => {
     try {
       setisLoading(true);
       const response = await axiosPrivate.get(
-        `/library/books/pagination?page=${pageNo}&limit=2`
+        `/library/books/pagination?page=${pageNo}&limit=10`
       );
       // dispatch(hideloading());
       console.log(response.data.pagination);

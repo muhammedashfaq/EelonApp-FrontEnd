@@ -12,7 +12,7 @@ export const RouteObjects = {
   StaffDashboard: "/staffdash",
   Stafflibrary: "/stafflibrary",
   Bookmanagment: "/bookdetails/page",
-  Issuebooks: "/issuedbookdetails",
+  Issuebooks: "/issuedbookdetails/page",
   Issuecards: "/issuedcarddetails",
   LibrarySettings: "/librarysettings",
   StudentsList: "/studentlist/page",
