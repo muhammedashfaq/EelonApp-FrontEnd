@@ -1,21 +1,72 @@
 import { Select, Option, Tooltip, IconButton } from "@material-tailwind/react";
 import { Input } from "@material-tailwind/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ExamPortionsModal from "./ExamPortionsModal";
 import SetExamTimeModal from "./SetExamTimeModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import ExamTableRow from "./ExamTableRow";
+import { v4 as uuidv4 } from "uuid";
+import useAxiosPrivate from "../../../../../Hooks/useAxiosPrivate";
 
 const ExamTimeTable = () => {
   const [std, setstd] = useState();
+  const [dataArray, setDataArray] = useState([]);
+  const [divs, setdivs] = useState([]);
+  const [classDropdowns, setclassDropdowns] = useState([]);
+
   const [exam1StartTime, setexam1StartTime] = useState();
   const [exam1EndTime, setexam1EndTime] = useState();
   const [exam2StartTime, setexam2StartTime] = useState();
   const [exam2EndTime, setexam2EndTime] = useState();
 
+  const axiosPrivate = useAxiosPrivate();
+
+  const addDiv = () => {
+    const newId = uuidv4();
+    const newObj = { id: newId };
+    setDataArray([...dataArray, newObj]);
+  };
+  const removeDiv = (idToRemove) => {
+    if (!idToRemove) return;
+    const updatedDivs = dataArray.filter((item) => item.id !== idToRemove);
+    setDataArray(updatedDivs);
+  };
+
+  const handleData = (data) => {
+    const { id } = data;
+    const existingIndex = dataArray.findIndex((item) => item.id === id);
+
+    if (existingIndex !== -1) {
+      setDataArray((prevDataArray) => {
+        const newDataArray = [...prevDataArray];
+        newDataArray[existingIndex] = data;
+        return newDataArray;
+      });
+    } else {
+      setDataArray((prevDataArray) => [...prevDataArray, data]);
+    }
+  };
+
+  const getClassSection = async () => {
+    try {
+      const response = await axiosPrivate.get("/classsection/dropdowns");
+      const sortedData = response.data.sort((a, b) => a.localeCompare(b));
+      setclassDropdowns(sortedData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    console.log(dataArray);
+  }, [dataArray]);
+
+  useEffect(() => {
+    getClassSection();
+  }, []);
   return (
     <div>
-      {" "}
       <div>
         <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
           <div className="align-middle rounded-tl-lg rounded-tr-lg inline-block w-full py-4 overflow-hidden bg-white shadow-lg px-12">
@@ -25,16 +76,33 @@ const ExamTimeTable = () => {
             className="align-middle inline-block min-w-full shadow overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg"
             style={{ height: "100vh" }}
           >
+            <div>
+              <div className="w-60">
+                <Select
+                  label="Select class"
+                  onChange={(e) => setclassDropdowns(e)}
+                  className="bg-gray-100"
+                >
+                  {classDropdowns &&
+                    classDropdowns.map((item, i) => (
+                      <Option key={i} value={item}>
+                        {item}
+                      </Option>
+                    ))}
+                </Select>
+              </div>
+            </div>
+
             <table className="min-w-full">
               <thead>
                 <tr>
-                  <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                    Class
+                  <th className="px-6 py-3 border-b-2 border-gray-300 text-center text-sm leading-4 text-blue-500 tracking-wider">
+                    Sl.no
                   </th>
-                  <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
+                  <th className="px-6 py-3 border-b-2 border-gray-300  text-sm leading-4 text-blue-500 tracking-wider text-center">
                     Date
                   </th>
-                  <th className="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">
+                  <th className="px-6 py-3 border-b-2 border-gray-300 text-center leading-4 text-blue-500 tracking-wider">
                     <div>
                       1st exm Time
                       <SetExamTimeModal
@@ -48,11 +116,11 @@ const ExamTimeTable = () => {
                       </div>
                     )}
                   </th>
-                  <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
+                  <th className="px-6 py-3 border-b-2 border-gray-300 text-right text-sm leading-4 text-blue-500 tracking-wider">
                     Break
                   </th>
 
-                  <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
+                  <th className="px-6 py-3 border-b-2 border-gray-300 text-right text-sm leading-4 text-blue-500 tracking-wider">
                     <div>
                       2nd exm Time
                       <SetExamTimeModal
@@ -67,11 +135,13 @@ const ExamTimeTable = () => {
                     )}
                   </th>
                   <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                    Action
+                    <IconButton variant="outlined" onClick={addDiv}>
+                      <FontAwesomeIcon icon={faPlus} size="2x" />
+                    </IconButton>
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white">
+              {/* <tbody className="bg-white">
                 <tr>
                   <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                     <div className="flex items-center">
@@ -115,13 +185,23 @@ const ExamTimeTable = () => {
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                    <IconButton variant="outlined">
+                    <IconButton variant="outlined" onClick={addDiv}>
                       <FontAwesomeIcon icon={faPlus} size="2x" />
                     </IconButton>
                   </td>
                 </tr>
-              </tbody>
+              </tbody> */}
             </table>
+            {dataArray &&
+              dataArray.map((item, i) => (
+                <ExamTableRow
+                  key={item.id}
+                  index={i + 1}
+                  uuid={item.id}
+                  removeDiv={removeDiv}
+                  handleData={handleData}
+                />
+              ))}
           </div>
         </div>
       </div>
