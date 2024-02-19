@@ -59,6 +59,11 @@ const NavBar = () => {
           href: RouteObjects.StaffAcademicsSettings,
           icon: faCaretRight,
         },
+        {
+          title: "Syllabus Planning",
+          href: RouteObjects.SyllubusPlanning,
+          icon: faCaretRight,
+        },
       ],
     },
     {
