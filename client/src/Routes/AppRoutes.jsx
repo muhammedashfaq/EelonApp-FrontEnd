@@ -43,6 +43,7 @@ import TableStaff from "../Pages/Staff/Dashboard/Attandance/TableStaff";
 import ExamTimeTablePage from "../Pages/Staff/Dashboard/TimeTable/ExamTimeTablePage";
 import AddClassTimetable from "../Components/Staff/DashboardComponents/Timetables/Classtimetable/AddClassTimetable";
 import ErrorPage from "../Pages/Error/ErrorPage";
+import SyllubusPlanningPage from "../Pages/Staff/Dashboard/Academics/SyllubusPlanningPage";
 
 const AppRoutes = () => {
   const isLoading = useSelector((state) => state.loading.isLoading);
@@ -173,6 +174,11 @@ const AppRoutes = () => {
           path={RouteObjects.StaffAcademicsSettings}
           element={<AcademicsSettings />}
         />
+              <Route
+          path={RouteObjects.SyllubusPlanning}
+          element={<SyllubusPlanningPage />}
+        />
+        
 
         {/* Staff CLASS ROOM ROUTS */}
         <Route

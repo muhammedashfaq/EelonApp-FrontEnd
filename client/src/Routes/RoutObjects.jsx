@@ -31,6 +31,7 @@ export const RouteObjects = {
 
   StaffManageClass: "/staff/manageclass",
   StaffAcademicsSettings: "/staff/academics/settings",
+  SyllubusPlanning:"/staff/syllubusplanning",
 
   StaffStudyRoom: "/staff/studyroom*",
   StudyRoomHome: "/staff/studyroom/home",

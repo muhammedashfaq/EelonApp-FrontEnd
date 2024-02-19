@@ -2,10 +2,10 @@ import useAuth from "../../Hooks/useAuth";
 import NavBar from "../Staff/SideNav/navBar";
 import SideNavbar from "../Student/SideNav/SideNavbar";
 
-const Banner = ({ name }) => {
+const Banner = () => {
   const { auth } = useAuth();
   return (
-    <div className="bg-dark-purple text-gray-100 w-screen">
+    <div className="bg-dark-purple text-gray-100 ">
       <section className="container mx-auto flex flex-wrap items-center justify-between py-4">
         {auth.roles == 5151 ? (
           <NavBar />

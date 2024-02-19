@@ -4,10 +4,12 @@ import { Typography, Input, Button } from "@material-tailwind/react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useEffect, useState } from "react";
 import { TrashIcon } from "lucide-react";
+import Swal from "sweetalert2";
 
 const AcademicYear = () => {
   const [AcademicYrs, setAcademicYrs] = useState();
   const [addAcademicYr, setAddAcademicYr] = useState();
+  const [error,setError]=useState("")
 
   const axiosPrivate = useAxiosPrivate();
 
@@ -29,19 +31,45 @@ const AcademicYear = () => {
 
   const addYear = async (e) => {
     e.preventDefault();
-    if (!addAcademicYr) return;
-    try {
+    if (!addAcademicYr)
+    {
+      setError("Required")
+      return;
+    }
+    
+     try {
       const reqData = {
         academicYear: [addAcademicYr],
       };
-      const response = await axiosPrivate.put(
+      await axiosPrivate.put(
         "classsection/academicyear/academicyear",
         reqData
       );
-      console.log(response);
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        color:"red",
+        background:"yellow",
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: "success",
+        title: "Added successfully"
+      });
       getAcademicYrdropdown();
     } catch (error) {
       console.error(error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
     }
   };
 
@@ -53,11 +81,29 @@ const AcademicYear = () => {
           academicYear: [value],
         },
       };
+      const response = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      })
+
+      if (response.isConfirmed) {
+
       const response = await axiosPrivate.delete(
         "classsection/academicyear/academicyear",
         reqData
       );
       console.log(response);
+      Swal.fire({
+        title: "Deleted!",
+        text: "Your file has been deleted.",
+        icon: "success"
+      });
+    }
       getAcademicYrdropdown();
     } catch (error) {
       console.log(error);
@@ -84,9 +130,9 @@ const AcademicYear = () => {
                 <div>
                   <div className="relative flex w-full max-w-[24rem]">
                     <Input
-                      label="Add Academic year"
+                      label={error?error:"Add Academic year"}
                       variant="standard"
-                      required
+                      error={error&&error}
                       placeholder="eg: 2023-2024"
                       className=" !border-t-blue-gray-200 focus:!border-t-gray-900 pr-20 pl-4"
                       labelProps={{
