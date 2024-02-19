@@ -1,4 +1,10 @@
-import { Select, Option, Tooltip, IconButton } from "@material-tailwind/react";
+import {
+  Select,
+  Option,
+  Tooltip,
+  IconButton,
+  Button,
+} from "@material-tailwind/react";
 import { Input } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import ExamPortionsModal from "./ExamPortionsModal";
@@ -14,6 +20,7 @@ const ExamTimeTable = () => {
   const [dataArray, setDataArray] = useState([]);
   const [divs, setdivs] = useState([]);
   const [classDropdowns, setclassDropdowns] = useState([]);
+  const [selectClass, setselectClass] = useState();
 
   const [exam1StartTime, setexam1StartTime] = useState();
   const [exam1EndTime, setexam1EndTime] = useState();
@@ -50,9 +57,27 @@ const ExamTimeTable = () => {
 
   const getClassSection = async () => {
     try {
-      const response = await axiosPrivate.get("/classsection/dropdowns");
+      const response = await axiosPrivate.get("/classsection/dropdowns/std");
       const sortedData = response.data.sort((a, b) => a.localeCompare(b));
       setclassDropdowns(sortedData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const addTimetable = async () => {
+    if (!dataArray || !selectClass) return;
+    try {
+      const jsonData = {
+        classId: selectClass,
+        exam1StartTime,
+        exam1EndTime,
+        exam2StartTime,
+        exam2EndTime,
+        timeTableArray: dataArray,
+      };
+      const response = await axiosPrivate.post("/timetable/exam", jsonData);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -76,21 +101,28 @@ const ExamTimeTable = () => {
             className="align-middle inline-block min-w-full shadow overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg"
             style={{ height: "100vh" }}
           >
-            <div>
+            <div className="flex justify-evenly">
               <div className="w-60">
                 <Select
                   label="Select class"
-                  onChange={(e) => setclassDropdowns(e)}
+                  onChange={(e) => setselectClass(e)}
                   className="bg-gray-100"
                 >
                   {classDropdowns &&
                     classDropdowns.map((item, i) => (
                       <Option key={i} value={item}>
-                        {item}
+                        class {item}
                       </Option>
                     ))}
                 </Select>
               </div>
+              <Button
+                variant="outlined"
+                onClick={addTimetable}
+                disabled={!dataArray || !selectClass}
+              >
+                Add timetable
+              </Button>
             </div>
 
             <table className="min-w-full">
