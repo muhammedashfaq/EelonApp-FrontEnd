@@ -40,6 +40,7 @@ const AttandanceRadio = ({
             >
               <ListItemPrefix className="mr-3">
                 <Radio
+                required
                   icon={<FontAwesomeIcon icon={faCheck} color="green" />}
                   name={`horizontal-list-${index}`}
                   id={`horizontal-list-react-1-${index}`}

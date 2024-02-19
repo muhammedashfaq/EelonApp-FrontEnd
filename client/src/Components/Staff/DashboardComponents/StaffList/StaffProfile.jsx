@@ -15,6 +15,8 @@ import notFoundImg from "../../../../assets/placeholderImg.jpg";
 import React, { useState } from "react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { faSquarePlus } from "@fortawesome/free-regular-svg-icons";
+import AddStaffExperianceDocuModal from "./AddStaffExperianceDocuModal";
+import AddStaffEducationalModal from "./AddStaffEducationalModal";
 
 const StaffProfile = ({ userData }) => {
   const axiosPrivate = useAxiosPrivate();
@@ -161,16 +163,8 @@ const StaffProfile = ({ userData }) => {
                 <FontAwesomeIcon icon={faBook} />
                 <div className="flex space-x-5 w-full">
                   <span className="tracking-wide">Experience</span>
-                  <Tooltip content="Add New">
-                    <span>
-                      <FontAwesomeIcon
-                        icon={faSquarePlus}
-                        beat
-                        size="2xl"
-                        className="cursor-pointer"
-                      />
-                    </span>
-                  </Tooltip>
+                  <AddStaffExperianceDocuModal/>
+
                 </div>
               </div>
 
@@ -201,16 +195,8 @@ const StaffProfile = ({ userData }) => {
 
                 <div className="flex space-x-5 w-full">
                   <span className="tracking-wide">Education</span>
-                  <Tooltip content="Add New">
-                    <span>
-                      <FontAwesomeIcon
-                        icon={faSquarePlus}
-                        beat
-                        size="2xl"
-                        className="cursor-pointer"
-                      />
-                    </span>
-                  </Tooltip>
+                  
+                  <AddStaffEducationalModal/>
                 </div>
               </div>
               <ul className="list-inside space-y-2">

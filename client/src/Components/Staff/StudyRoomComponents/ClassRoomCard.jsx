@@ -24,7 +24,7 @@ const ClassRoomCard = ({ classroom }) => {
           <Typography
             variant="paragraph"
             color="white"
-            className="mt-6 flex justify-center gap-1 text-1xl font-normal hover:underline hover:scale-150 duration-300"
+            className="mt-6 flex justify-center gap-1 text-1xl font-normal hover:underline  duration-300"
           >
             {classroom?.description}
           </Typography>
