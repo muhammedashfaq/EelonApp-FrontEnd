@@ -42,7 +42,7 @@ const AddSyllubusModal = ({ acYr, subjects,classes }) => {
           syllubusPdf:selectedFile
           
       }
-      if(!formdata.year||!formdata.teacherName||!formdata.subject||!formdata.examName || formdata.std){
+      if(!formdata.year||!formdata.teacherName||!formdata.subject||!formdata.examName || !formdata.std){
           setError("All Field Are Reuqired")
           return;
       }
