@@ -1,6 +1,6 @@
 import StaffHeader from "../../Header/landingPageHeader";
 import Banner from "../../../Banner/Banner";
-import { Typography, Input, Button,  } from "@material-tailwind/react";
+import { Typography, Input, Button } from "@material-tailwind/react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useEffect, useState } from "react";
 import { TrashIcon } from "lucide-react";
@@ -113,7 +113,7 @@ const AcademicYear = () => {
               </div>
             </form>
 
-            <div className="mt-10 h-40 overflow-auto ">
+            <div className="mt-10 h-96 overflow-auto ">
               {AcademicYrs &&
                 AcademicYrs.map((data, i) => (
                   <Typography

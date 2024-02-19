@@ -1,21 +1,29 @@
-import { Button, IconButton, Typography } from "@material-tailwind/react";
+import {
+  Button,
+  IconButton,
+  Tooltip,
+  Typography,
+} from "@material-tailwind/react";
 import axios from "../../../api/axios";
 import { useEffect, useState } from "react";
 import IssueLibCardModal from "./IssueLibCardModal";
 import StaffStudentLibrarycardModal from "./StaffStudentLibrarycardModal";
 import Banner from "../../Banner/Banner";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMinusSquare } from "@fortawesome/free-solid-svg-icons";
+import Swal from "sweetalert2";
 
 const StaffLibraryCardPage = () => {
   const [searchQuery, setsearchQuery] = useState();
   const [searchData, setsearchData] = useState();
   const [studentData, setstudentData] = useState();
-  
+
   const getStudents = async (e) => {
     e.preventDefault();
     try {
       if (!searchQuery) return;
       const response = await axios.get(`users/student/search/${searchQuery}`);
-      console.log(response)
+      console.log(response);
       setsearchData(response.data);
     } catch (error) {
       console.log(error);
@@ -30,9 +38,45 @@ const StaffLibraryCardPage = () => {
     }
   };
 
+  const unIssueCard = async (studentId) => {
+    try {
+      if (!studentId) return;
+      Swal.fire({
+        title: "Revoke library card?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Confirm",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios.put(`users/student/issuelibrarycard/${studentId}`, {
+            libCardNo: null,
+            libCardStatus: false,
+          });
+          Swal.fire({
+            title: "Success!",
+            text: "Library card has been revoked",
+            icon: "success",
+          });
+        }
+      });
+
+      // const response = await axios.put(
+      //   `users/student/issuelibrarycard/${studentId}`,
+      //   { libCardNo: null, libCardStatus: false }
+      // );
+      // console.log(response, "reres");
+      getStudents();
+      handleClose();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   useEffect(() => {
     getAllStudents();
-  }, [studentData,searchData]);
+  }, [studentData, searchData]);
 
   return (
     <>
@@ -102,7 +146,7 @@ const StaffLibraryCardPage = () => {
               <table className="w-full text-left table-auto min-w-max">
                 <thead>
                   <tr>
-                  <th className="p-2 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                    <th className="p-2 border-y border-blue-gray-100 bg-blue-gray-50/50">
                       <p className="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
                         #NO
                       </p>
@@ -150,19 +194,16 @@ const StaffLibraryCardPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                    
-                  
                   {searchData
-                    ? searchData.map((data,i) => (
+                    ? searchData.map((data, i) => (
                         <>
                           <tr>
-                          <td className="p-4 border-b border-blue-gray-50">
+                            <td className="p-4 border-b border-blue-gray-50">
                               <Typography
-                                
                                 color="blue-gray"
                                 classNameName=" text-blue-900 border-l  "
                               >
-                                {i+1}
+                                {i + 1}
                               </Typography>
                             </td>
                             <td className="p-4 border-b border-blue-gray-50">
@@ -254,21 +295,19 @@ const StaffLibraryCardPage = () => {
                         </>
                       ))
                     : studentData &&
-                      studentData.map((data,i) => (
+                      studentData.map((data, i) => (
                         <>
                           <tr>
-                          <td className="p-2 border-b border-blue-gray-50">
+                            <td className="p-2 border-b border-blue-gray-50">
                               <Typography
-                                
                                 color="blue-gray"
                                 classNameName=" text-blue-900 border-l  "
                               >
-                                {i+1}
+                                {i + 1}
                               </Typography>
                             </td>
                             <td className="p-1 border-b border-blue-gray-50">
                               <Typography
-                                
                                 color="blue-gray"
                                 classNameName=" text-blue-900 border-l  "
                               >
@@ -281,7 +320,7 @@ const StaffLibraryCardPage = () => {
                                 color="blue-gray"
                                 classNameName="  text-blue-900 border-l  "
                               >
-                                {data?.name}
+                                {data?.studentName}
                               </Typography>
                             </td>
                             <td className="p-1 border-b border-blue-gray-50">
@@ -343,12 +382,35 @@ const StaffLibraryCardPage = () => {
                                 color="blue-gray"
                                 classNameName=" text-blue-900 border-l  "
                               >
-                                <IssueLibCardModal
-                                  libCardNo={data?.libCardNo}
-                                  libCardStatus={data?.libCardStatus}
-                                  getStudents={getStudents}
-                                  studentId={data?._id}
-                                />
+                                {data?.libCardStatus ? (
+                                  <Tooltip
+                                    content="Re-call Library Card"
+                                    animate={{
+                                      mount: { scale: 1, y: 0 },
+                                      unmount: { scale: 0, y: 25 },
+                                    }}
+                                  >
+                                    <FontAwesomeIcon
+                                      className="cursor-pointer"
+                                      icon={faMinusSquare}
+                                      size="xl"
+                                      color="red"
+                                      onClick={() =>
+                                        unIssueCard(
+                                          data?._id,
+                                          data?.studentName
+                                        )
+                                      }
+                                    />
+                                  </Tooltip>
+                                ) : (
+                                  <IssueLibCardModal
+                                    libCardNo={data?.libCardNo}
+                                    libCardStatus={data?.libCardStatus}
+                                    getStudents={getStudents}
+                                    studentId={data?._id}
+                                  />
+                                )}
                               </Typography>
                             </td>
                           </tr>

@@ -22,7 +22,6 @@ import Issuecards from "../Pages/Staff/Dashboard/Issuecards";
 import StudentLibrary from "../Pages/Student/Dashboard/SudentLibrary";
 import AddStudents from "../Pages/Staff/Dashboard/AddStudents";
 import StudentsList from "../Pages/Staff/Dashboard/StudentsList";
-import AddForms from "../Pages/Staff/Dashboard/AddForms";
 import StudentProfile from "../Pages/Staff/Dashboard/StudentProfile";
 import EditStudent from "../Pages/Staff/Dashboard/EditStudent";
 import StaffClassRoom from "../Pages/StudyRoom/Staff/DashPage";
@@ -99,7 +98,10 @@ const AppRoutes = () => {
           path={`${RouteObjects.Bookmanagment}/:page`}
           element={<AddBooks />}
         />
-        <Route path={RouteObjects.Issuebooks} element={<IssueBooks />} />
+        <Route
+          path={`${RouteObjects.Issuebooks}/:page`}
+          element={<IssueBooks />}
+        />
         <Route path={RouteObjects.Issuecards} element={<Issuecards />} />
         <Route
           path={RouteObjects.LibrarySettings}
@@ -120,7 +122,6 @@ const AppRoutes = () => {
           element={<EditStudent />}
         />
 
-        <Route path={RouteObjects.RequireForms} element={<AddForms />} />
         <Route
           path={RouteObjects.StudentsAttendance}
           element={<StudentsAttandancePage />}

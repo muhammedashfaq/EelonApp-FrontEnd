@@ -10,6 +10,7 @@ import {
   Option,
   Alert,
   Tooltip,
+  CardFooter,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import axios from "../../../api/axios";
@@ -21,25 +22,37 @@ import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import LibraryUnIssueStudentModal from "./LibraryUnIssueStudentModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { RouteObjects } from "../../../Routes/RoutObjects";
 
 const StaffIssueBookManagement = () => {
-  const [alertunissue, setAlertunissue] = useState(false);
+  const { page } = useParams();
+  const navigate = useNavigate();
 
+  const [alertunissue, setAlertunissue] = useState(false);
   const [alertissue, setAlertissue] = useState(false);
   const [bookData, setbookData] = useState();
   const [searchBookName, setSearchBookName] = useState();
   const [searchData, setsearchData] = useState();
   const [genre, setgenre] = useState();
   const [isLoading, setisLoading] = useState(false);
-  const [genreList,setGenreList] =useState()
+  const [genreList, setGenreList] = useState();
+  const [pageInt, setpageInt] = useState(Number(page));
+  const [paginationData, setpaginationData] = useState();
+  const [open, setOpen] = useState(true);
 
   const axiosPrivate = useAxiosPrivate();
 
-  const getBooks = async () => {
+  const getBooks = async (pageNo) => {
     try {
       setisLoading(true);
-      const response = await axiosPrivate.get("/library/books");
-      setbookData(response.data);
+      const response = await axiosPrivate.get(
+        `/library/books/pagination?page=${pageNo}&limit=10`
+      );
+      setbookData(response.data.books);
+      setpaginationData(response.data.pagination);
+
       setisLoading(false);
     } catch (error) {
       console.log(error);
@@ -65,23 +78,16 @@ const StaffIssueBookManagement = () => {
     try {
       const response = await axiosPrivate.get(`librarysettings`);
       setGenreList(response.data);
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
   };
-  useEffect(() => {
-    getBooks();
-    getSettings()
-  }, [  ]);
-
-  const [open, setOpen] = useState(true);
 
   const searchBook = async (e) => {
     e.preventDefault();
     setisLoading(true);
     try {
-      if(!searchBookName){
+      if (!searchBookName) {
         setisLoading(false);
         return;
       }
@@ -95,6 +101,16 @@ const StaffIssueBookManagement = () => {
       setisLoading(false);
     }
   };
+
+  useEffect(() => {
+    getBooks(page);
+    getSettings();
+  }, []);
+
+  useEffect(() => {
+    setpageInt(Number(page));
+  }, [page]);
+
   return (
     <div className="w-full">
       {isLoading && <Spinner />}
@@ -139,11 +155,13 @@ const StaffIssueBookManagement = () => {
                 value={genre}
               >
                 <>
-                {genreList &&
-                  genreList.map((list,i) => (
-                    <Option key={i} value={list?.genre}>{list?.genre}</Option>
-                  ))}
-              </>
+                  {genreList &&
+                    genreList.map((list, i) => (
+                      <Option key={i} value={list?.genre}>
+                        {list?.genre}
+                      </Option>
+                    ))}
+                </>
               </Select>
               {/* <Button
               variant="text"
@@ -166,7 +184,7 @@ const StaffIssueBookManagement = () => {
             <div className="w-full md:w-auto flex">
               <form onSubmit={searchBook} className="flex gap-1">
                 <Input
-                name="searching"
+                  name="searching"
                   label="Search"
                   onChange={(e) => setSearchBookName(e.target.value)}
 
@@ -302,7 +320,7 @@ const StaffIssueBookManagement = () => {
                       Action
                     </Typography>
                   </th>
-                  
+
                   {/* <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
                       <Typography
                         variant="small"
@@ -416,46 +434,39 @@ const StaffIssueBookManagement = () => {
                           </td>
                           <td className={classes}>
                             <div className="flex space-x-2">
-                            {
-                            data?.students?.currentlyIssued ?(
-
-                              <Typography
-                                variant="small"
-                                color="blue-gray"
-                                className="font-normal"
-                              >
-                              
-                                <LibraryUnIssueStudentModal
-                              
-                                  unissueAlert={setAlertunissue}
-                                  setAlert={setAlertissue}
-                                  bookId={data?._id}
-                                  getBooks={searchBook}
-                                  currentlyIssued={
-                                    data?.students?.currentlyIssued
-                                  }
+                              {data?.students?.currentlyIssued ? (
+                                <Typography
+                                  variant="small"
+                                  color="blue-gray"
+                                  className="font-normal"
+                                >
+                                  <LibraryUnIssueStudentModal
+                                    unissueAlert={setAlertunissue}
+                                    setAlert={setAlertissue}
+                                    bookId={data?._id}
+                                    getBooks={searchBook}
+                                    currentlyIssued={
+                                      data?.students?.currentlyIssued
+                                    }
                                   />
-                              </Typography>
-                            ):(
-
-                              <Typography
-                                variant="small"
-                                color="blue-gray"
-                                className="font-normal"
-                              >
-                                <LibraryIssueStudentModal
-                                  unissueAlert={setAlertunissue}
-                                  setAlert={setAlertissue}
-                                  bookId={data?._id}
-                                  getBooks={searchBook}
-                                  currentlyIssued={
-                                    data?.students?.currentlyIssued
-                                  }
-                                />
-                            </Typography>
-
-                            )
-                          }
+                                </Typography>
+                              ) : (
+                                <Typography
+                                  variant="small"
+                                  color="blue-gray"
+                                  className="font-normal"
+                                >
+                                  <LibraryIssueStudentModal
+                                    unissueAlert={setAlertunissue}
+                                    setAlert={setAlertissue}
+                                    bookId={data?._id}
+                                    getBooks={searchBook}
+                                    currentlyIssued={
+                                      data?.students?.currentlyIssued
+                                    }
+                                  />
+                                </Typography>
+                              )}
                             </div>
                           </td>
                         </tr>
@@ -547,9 +558,7 @@ const StaffIssueBookManagement = () => {
                               variant="small"
                               color="blue-gray"
                               className="font-normal"
-                            >
-                          
-                            </Typography>
+                            ></Typography>
                           </td>
                           <td className={classes}>
                             <Typography
@@ -562,52 +571,42 @@ const StaffIssueBookManagement = () => {
                           </td>
                           <td className={classes}>
                             <div className="flex space-x-2">
-                          {
-                            data?.students?.currentlyIssued ?(
-
-                              <Typography
-                                variant="small"
-                                color="blue-gray"
-                                className="font-normal"
-                              >
-                              
-                                <LibraryUnIssueStudentModal
-                              
-                                  unissueAlert={setAlertunissue}
-                                  setAlert={setAlertissue}
-                                  bookId={data?._id}
-                                  getBooks={searchBook}
-                                  currentlyIssued={
-                                    data?.students?.currentlyIssued
-                                  }
+                              {data?.students?.currentlyIssued ? (
+                                <Typography
+                                  variant="small"
+                                  color="blue-gray"
+                                  className="font-normal"
+                                >
+                                  <LibraryUnIssueStudentModal
+                                    unissueAlert={setAlertunissue}
+                                    setAlert={setAlertissue}
+                                    bookId={data?._id}
+                                    getBooks={searchBook}
+                                    currentlyIssued={
+                                      data?.students?.currentlyIssued
+                                    }
                                   />
-                              </Typography>
-                            ):(
+                                </Typography>
+                              ) : (
                                 <>
-
-                                
-                              <Typography
-                                variant="small"
-                                color="blue-gray"
-                                className="font-normal"
-                              >
-                                <LibraryIssueStudentModal
-                                  unissueAlert={setAlertunissue}
-                                  setAlert={setAlertissue}
-                                  bookId={data?._id}
-                                  getBooks={searchBook}
-                                  currentlyIssued={
-                                    data?.students?.currentlyIssued
-                                  }
-                                />
-                            </Typography>
-
-  </>
-
-                            )
-                          }
-                             
-                          </div>
+                                  <Typography
+                                    variant="small"
+                                    color="blue-gray"
+                                    className="font-normal"
+                                  >
+                                    <LibraryIssueStudentModal
+                                      unissueAlert={setAlertunissue}
+                                      setAlert={setAlertissue}
+                                      bookId={data?._id}
+                                      getBooks={searchBook}
+                                      currentlyIssued={
+                                        data?.students?.currentlyIssued
+                                      }
+                                    />
+                                  </Typography>
+                                </>
+                              )}
+                            </div>
                           </td>
                         </tr>
                       );
@@ -615,10 +614,43 @@ const StaffIssueBookManagement = () => {
               </tbody>
             </table>
           </Card>
+          <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+            <Typography
+              variant="small"
+              color="blue-gray"
+              className="font-normal"
+            >
+              Page {page} of {paginationData?.totalPages}
+            </Typography>
+            <div className="flex gap-2">
+              <Button
+                variant="outlined"
+                size="sm"
+                disabled={page == 1 ? true : false}
+                onClick={() => {
+                  navigate(`${RouteObjects.Issuebooks}/${pageInt - 1}`);
+                  getBooks(pageInt - 1);
+                }}
+              >
+                Previous
+              </Button>
+              <Button
+                variant="outlined"
+                size="sm"
+                disabled={page == paginationData?.totalPages ? true : false}
+                onClick={() => {
+                  navigate(`${RouteObjects.Issuebooks}/${pageInt + 1}`);
+                  getBooks(pageInt + 1);
+                }}
+              >
+                Next
+              </Button>
+            </div>
+          </CardFooter>{" "}
         </div>
       </div>
     </div>
-    );
+  );
 };
 
 export default StaffIssueBookManagement;

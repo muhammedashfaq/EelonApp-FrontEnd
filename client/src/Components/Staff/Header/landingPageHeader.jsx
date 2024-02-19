@@ -14,17 +14,16 @@ const StaffHeader = () => {
   const { auth } = useAuth();
   const logOut = useLogout();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-const menu=[
- { title:"Menu",href:"",icon:""},
- { title:"About",href:"",icon:""},
- { title:"Acadamics",href:"",icon:""},
- { title:"Contact Us",href:"",icon:""}
-]
+  const menu = [
+    { title: "Menu", href: "", icon: "" },
+    { title: "About", href: "", icon: "" },
+    { title: "Acadamics", href: "", icon: "" },
+    { title: "Contact Us", href: "", icon: "" },
+  ];
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  console.log(auth);
   return (
     <div>
       <div className=" w-full p-4 shadow-md ">
@@ -38,11 +37,10 @@ const menu=[
                   alt="Logo"
                 />
               </Link>
-            <MobileNavBar/>
+              <MobileNavBar />
             </li>
 
             <li className="Tablet:hidden Laptop:hidden ipad:hidden mobile:block">
-
               {/* <a onClick={toggleMenu}>
                 {isMenuOpen ? (
                   <FontAwesomeIcon icon={faClose} size="2x" />
@@ -52,9 +50,6 @@ const menu=[
               </a> */}
             </li>
           </div>
-          
-
-
         </ul>
         <ul className="flex justify-between items-start space-x-6 pr-8 ">
           <div className="mobile:hidden Laptop:block ipad:block Tablet:block">
@@ -128,11 +123,8 @@ const menu=[
               {auth.roles && <button onClick={logOut}>logout</button>}
             </li>
           </div>
-          
         </ul>
       </div>
-      
-    
     </div>
   );
 };

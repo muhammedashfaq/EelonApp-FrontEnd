@@ -3,7 +3,6 @@ import {
   Button,
   Dialog,
   Card,
-  CardHeader,
   CardBody,
   CardFooter,
   Typography,
@@ -14,21 +13,7 @@ import {
 import { useState } from "react";
 import axios from "../../../api/axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faAd,
-  faAdd,
-  faEye,
-  faHome,
-  faMinimize,
-  faMinus,
-  faMinusCircle,
-  faMinusSquare,
-  faPlus,
-  faPlusCircle,
-  faStream,
-  faStreetView,
-  faUserMinus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 export default function IssueLibCardModal({
   libCardNo,
@@ -42,11 +27,11 @@ export default function IssueLibCardModal({
   const [validationError, setValidationError] = useState("");
   const handleOpen = () => setOpen((cur) => !cur);
   const handleClose = () => {
-    setlibCdNo(""); 
+    setlibCdNo("");
     setValidationError("");
     setOpen(false);
   };
-  
+
   useEffect(() => {
     setcheckBx(libCardStatus);
     if (libCardNo) setlibCdNo(libCardNo);
@@ -61,7 +46,7 @@ export default function IssueLibCardModal({
       setValidationError("");
     }
   };
-  
+
   const issueCard = async () => {
     try {
       if (!studentId) return;
@@ -74,7 +59,7 @@ export default function IssueLibCardModal({
         `users/student/issuelibrarycard/${studentId}`,
         { libCardNo: libCdNo, libCardStatus: checkBx }
       );
-      console.log(response,"reres");
+      console.log(response, "reres");
       getStudents();
       handleClose();
     } catch (error) {
@@ -83,40 +68,22 @@ export default function IssueLibCardModal({
   };
   return (
     <>
-      {libCardStatus ? (
-        <Tooltip
-          content="Re-call Library Card"
-          animate={{
-            mount: { scale: 1, y: 0 },
-            unmount: { scale: 0, y: 25 },
-          }}
-        >
-          <FontAwesomeIcon
-            className="cursor-pointer"
-            icon={faMinusSquare}
-            size="xl"
-            color="red"
-            onClick={handleOpen}
-          />
-        </Tooltip>
-      ) : (
-        <Tooltip
-          content="Issue Library Card"
-          className="bg-blue-gray-300"
-          animate={{
-            mount: { scale: 1, y: 0 },
-            unmount: { scale: 0, y: 25 },
-          }}
-        >
-          <FontAwesomeIcon
-            className="cursor-pointer"
-            icon={faPlusCircle}
-            size="xl"
-            color="Green"
-            onClick={handleOpen}
-          />
-        </Tooltip>
-      )}
+      <Tooltip
+        content="Issue Library Card"
+        className="bg-blue-gray-300"
+        animate={{
+          mount: { scale: 1, y: 0 },
+          unmount: { scale: 0, y: 25 },
+        }}
+      >
+        <FontAwesomeIcon
+          className="cursor-pointer"
+          icon={faPlusCircle}
+          size="xl"
+          color="Green"
+          onClick={handleOpen}
+        />
+      </Tooltip>
 
       <Dialog
         size="xs"
@@ -176,7 +143,7 @@ export default function IssueLibCardModal({
               onClick={issueCard}
               fullWidth
             >
-              {libCardStatus?"Re-Call Library Card":"Issue Library Card"}
+              {libCardStatus ? "Re-Call Library Card" : "Issue Library Card"}
             </Button>
           </CardFooter>
         </Card>

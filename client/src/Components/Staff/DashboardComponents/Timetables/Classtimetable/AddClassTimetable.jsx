@@ -39,8 +39,8 @@ const AddClassTimetable = () => {
   const axiosPrivate = useAxiosPrivate();
 
   const addTimetable = async () => {
+    if (!classId) return;
     try {
-      console.log(intervalArray);
       const response = await axiosPrivate.post("timetable/classwise", {
         classId: classId,
         timeTableArray: dataArray,
@@ -154,6 +154,7 @@ const AddClassTimetable = () => {
               variant="outlined"
               style={{ textTransform: "none" }}
               onClick={addTimetable}
+              disabled={!classId}
             >
               Add timetable
             </Button>
