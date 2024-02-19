@@ -167,9 +167,11 @@ const ExamTimeTable = () => {
                     )}
                   </th>
                   <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                    <IconButton variant="outlined" onClick={addDiv}>
-                      <FontAwesomeIcon icon={faPlus} size="2x" />
-                    </IconButton>
+                    <Tooltip content="Add fields">
+                      <IconButton variant="outlined" onClick={addDiv}>
+                        <FontAwesomeIcon icon={faPlus} size="2x" beatFade />
+                      </IconButton>
+                    </Tooltip>
                   </th>
                 </tr>
               </thead>
