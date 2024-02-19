@@ -28,7 +28,7 @@ const CreateSatffAttandanceModal = () => {
   const [error, setError] = useState("");
   const axiosPrivate = useAxiosPrivate();
 const navigate =useNavigate()
-  const handleOpen = ({setCreated}) => {
+  const handleOpen = () => {
     setOpen((cur) => !cur);
     setBoard("");
     setAcademicYear("");
@@ -47,7 +47,7 @@ const navigate =useNavigate()
       };
 
       console.log(formData);
-      if (!board || !academicYear || !staffType  || !date) {
+      if (!staffType  || !date) {
         setError("All fields are required");
         return;
       }
@@ -98,18 +98,7 @@ const navigate =useNavigate()
              Staff Attendance
             </Typography>
             {error && <Alert color="red">{error}</Alert>}
-            <Select label="Board" value={board} onChange={(e) => setBoard(e)}>
-              <Option value="one">Material Tailwind HTML</Option>
-              <Option value="two">Material Tailwind React</Option>
-              <Option value="three">Material Tailwind Vue</Option>
-              <Option value="four">Material Tailwind Angular</Option>
-            </Select>
-            <Select label="Academic Year" onChange={(e) => setAcademicYear(e)}>
-              <Option value="one">Material Tailwind HTML</Option>
-              <Option value="two">Material Tailwind React</Option>
-              <Option value="three">Material Tailwind Vue</Option>
-              <Option value="four">Material Tailwind Angular</Option>
-            </Select>
+           
             <Select
               label="Staff Type"
               value={staffType}

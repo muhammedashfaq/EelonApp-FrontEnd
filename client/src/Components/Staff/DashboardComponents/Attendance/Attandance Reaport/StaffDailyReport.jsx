@@ -48,7 +48,7 @@ const StaffDailyReport = ({datewisereport}) => {
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {data?.studentName}
+                      {data?.staffName}
                     </Typography>
                   </td>
 

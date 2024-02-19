@@ -43,6 +43,7 @@ import ClassTimeTablePage from "../Pages/Staff/Dashboard/TimeTable/ClassTimeTabl
 import TableStaff from "../Pages/Staff/Dashboard/Attandance/TableStaff";
 import ExamTimeTablePage from "../Pages/Staff/Dashboard/TimeTable/ExamTimeTablePage";
 import AddClassTimetable from "../Components/Staff/DashboardComponents/Timetables/Classtimetable/AddClassTimetable";
+import ErrorPage from "../Pages/Error/ErrorPage";
 
 const AppRoutes = () => {
   const isLoading = useSelector((state) => state.loading.isLoading);
@@ -192,6 +193,9 @@ const AppRoutes = () => {
         <Route path={RouteObjects.AllstudentsPage} element={<Allstudents />} />
         <Route path="/test" element={<Test />} />
         <Route path="/testyk" element={<TestYk />} />
+
+        <Route path="*" element={<ErrorPage/>} />
+
       </Routes>
     </div>
   );

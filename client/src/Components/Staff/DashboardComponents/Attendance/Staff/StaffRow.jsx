@@ -10,7 +10,7 @@ const StaffRow = ({ index, StaffName, StaffId, createAttendanceArray }) => {
 
   const handleChange = () => {
     const data = {
-      name: StaffName,
+      staffName: StaffName,
       StaffId,
       index,
       isPresent,

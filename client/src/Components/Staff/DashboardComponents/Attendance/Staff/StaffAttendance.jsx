@@ -8,10 +8,11 @@ import { useState } from 'react'
 import useAxiosPrivate from '../../../../../Hooks/useAxiosPrivate'
 import StaffAttendanceReport from '../../../../OptionGroup/StaffAttendanceReport'
 import StaffDailyReport from '../Attandance Reaport/StaffDailyReport'
+import Swal from 'sweetalert2'
 
 const StaffAttendance = () => {
   const [attdate, setAttDate] =useState();
-  const [staffAttendanceReport,setStaffAttendanceReport]=useState()
+  const [staffAttendanceReport,setStaffAttendanceReport]=useState([])
   const axiosPrivate = useAxiosPrivate();
 
  
@@ -21,12 +22,17 @@ const StaffAttendance = () => {
       const data={
         date:attdate
       }
-      console.log(data);
-      const response =await axiosPrivate.get("attendance/staff/datewiseattendance",data)
-      setStaffAttendanceReport(response.data)
-      console.log(response,"attresssss")
+      const response =await axiosPrivate.put("attendance/staff/datewiseattendance",data)
+      setStaffAttendanceReport(response.data[0].attendance)
+      console.log(response.data[0].attendance,"attresssss")
     } catch (error) {
       console.log(error)
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+        
+      });
     }
    }
 
