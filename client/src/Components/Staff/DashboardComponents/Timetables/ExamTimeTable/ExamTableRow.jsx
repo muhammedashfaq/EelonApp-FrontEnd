@@ -4,6 +4,7 @@ import {
   Input,
   Option,
   Select,
+  Tooltip,
   Typography,
 } from "@material-tailwind/react";
 import React, { useEffect } from "react";
@@ -14,8 +15,14 @@ import ExamPortionsModal from "./ExamPortionsModal";
 const ExamTableRow = ({ index, removeDiv, handleData, uuid }) => {
   const [date, setdate] = useState();
   const [FnSub, setFnSub] = useState();
+  const [FnDuty, setFnDuty] = useState();
+  const [FnRevTopic, setFnRevTopic] = useState();
+  const [FnRevDuty, setFnRevDuty] = useState();
   const [FNPortions, setFNPortions] = useState();
   const [ANSub, setANSub] = useState();
+  const [AnDuty, setAnDuty] = useState();
+  const [AnRevTopic, setAnRevTopic] = useState();
+  const [AnRevDuty, setAnRevDuty] = useState();
   const [ANPortions, setANPortions] = useState();
   const [day, setday] = useState();
 
@@ -25,15 +32,34 @@ const ExamTableRow = ({ index, removeDiv, handleData, uuid }) => {
       day,
       date,
       FnSub,
+      FnDuty,
+      FnRevTopic,
+      FnRevDuty,
       FNPortions,
       ANSub,
+      AnDuty,
+      AnRevTopic,
+      AnRevDuty,
       ANPortions,
     };
     handleData(jsonData);
   };
   useEffect(() => {
     createData();
-  }, [date, FnSub, FNPortions, ANSub, ANPortions, day]);
+  }, [
+    date,
+    FnSub,
+    FnDuty,
+    FnRevTopic,
+    FnRevDuty,
+    FNPortions,
+    ANSub,
+    AnDuty,
+    AnRevTopic,
+    AnRevDuty,
+    ANPortions,
+    day,
+  ]);
 
   useEffect(() => {
     if (!date) return;
@@ -43,41 +69,84 @@ const ExamTableRow = ({ index, removeDiv, handleData, uuid }) => {
 
   return (
     <>
-      <div className="h-16 w-auto bg-gray-200 my-5 px-10 shadow-2xl rounded-2xl shadow-black flex justify-between items-center">
-        <div>{index}</div>
-        <div className="flex gap-5 items-center">
+      <div className="h-28 w-auto bg-gray-200 my-5 px-10 shadow-2xl rounded-2xl shadow-black flex justify-between items-center">
+        <div className="bg-brown-200 rounded-xl px-4 py-3">{index}</div>
+        <div className="flex flex-col gap-2 items-center">
           <Input
             type="date"
             value={date}
             onChange={(e) => setdate(e.target.value)}
           />
           {day && (
-            <Typography variant="h6" color="gray">
+            <Typography
+              variant="h6"
+              color="gray"
+              className="bg-brown-200 rounded-xl px-16 py-2"
+            >
               {day}
             </Typography>
           )}
         </div>
-        <div className="w-72 flex gap-2">
+        <div className="w-64 flex flex-col gap-2">
+          <div className="flex gap-2">
+            <Input
+              label="FN subject"
+              value={FnSub}
+              onChange={(e) => setFnSub(e.target.value)}
+            />
+            <ExamPortionsModal setFNPortions={setFNPortions} />
+          </div>
           <Input
-            label="FN subject"
-            value={FnSub}
-            onChange={(e) => setFnSub(e.target.value)}
+            label="FN Exam duty"
+            value={FnDuty}
+            onChange={(e) => setFnDuty(e.target.value)}
           />
-          <ExamPortionsModal setFNPortions={setFNPortions} />
         </div>
 
-        <div></div>
-        <div className="w-72 flex gap-2">
+        <div className="w-44 flex flex-col gap-2">
           <Input
-            label="AN subject"
-            onChange={(e) => setANSub(e.target.value)}
-            setANSub={setANPortions}
+            label="Exam 1 Revision Topic"
+            value={FnRevTopic}
+            onChange={(e) => setFnRevTopic(e.target.value)}
           />
-          <ExamPortionsModal setANPortions={setANPortions} />
+          <Input
+            label="Exam 1 Revision duty"
+            value={FnRevDuty}
+            onChange={(e) => setFnRevDuty(e.target.value)}
+          />
         </div>
-        <IconButton variant="outlined" onClick={() => removeDiv(uuid)}>
-          <FontAwesomeIcon icon={faMinus} />
-        </IconButton>
+        <div className="w-64 flex flex-col gap-2">
+          <div className="flex gap-2">
+            <Input
+              label="AN subject"
+              onChange={(e) => setANSub(e.target.value)}
+              value={ANSub}
+            />
+            <ExamPortionsModal setANPortions={setANPortions} />
+          </div>
+          <Input
+            label="AN Exam duty"
+            value={AnDuty}
+            onChange={(e) => setAnDuty(e.target.value)}
+          />
+        </div>
+        <div className="w-44 flex flex-col gap-2">
+          <Input
+            label="Exam 2 Revision Topic"
+            onChange={(e) => setAnRevTopic(e.target.value)}
+            value={AnRevTopic}
+          />
+          <Input
+            label="Exam 2 Revision duty"
+            value={AnRevDuty}
+            onChange={(e) => setAnRevDuty(e.target.value)}
+          />
+        </div>
+        <Tooltip content="Remove field">
+          <IconButton variant="outlined" onClick={() => removeDiv(uuid)}>
+            <FontAwesomeIcon icon={faMinus} />
+          </IconButton>
+        </Tooltip>
       </div>
     </>
   );
