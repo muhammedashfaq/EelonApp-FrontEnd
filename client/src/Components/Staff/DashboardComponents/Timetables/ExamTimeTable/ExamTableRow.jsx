@@ -126,8 +126,8 @@ const ExamTableRow = ({ index, removeDiv, handleData, uuid }) => {
           </div>
           <Input
             label="AN Exam duty"
-            value={FnDuty}
-            onChange={(e) => setFnDuty(e.target.value)}
+            value={AnDuty}
+            onChange={(e) => setAnDuty(e.target.value)}
           />
         </div>
         <div className="w-44 flex flex-col gap-2">
