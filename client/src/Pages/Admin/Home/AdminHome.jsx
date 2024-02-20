@@ -3,6 +3,7 @@ import Banner from '../../../Components/Banner/Banner'
 const AdminHome = () => {
   return (
     <div>
+      <StaffHeader/>
         <Banner/>
     </div>
   )

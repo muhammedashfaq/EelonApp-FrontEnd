@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import AprovalTable from "./AprovalTable";
 import AprovalFilter from "./AprovalFilter";
-// import AprovalTabs from "./AprovalTabs";
+
 
 const AprovalPage = () => {
   const [activeTab, setActiveTab] = React.useState("1");
@@ -102,13 +102,13 @@ const AprovalPage = () => {
             <TabPanel key={value} value={value}>
               {value === "1" ? (
                 <>
-                  <div className="border-2">
+                  <div className="border-1 h-screen">
                     <div className="flex justify-center p-3 ">
                       <h1 className="text-2xl font-extrabold underline">
                         Class Syllabus Aproval
                       </h1>
                     </div>
-                    <AprovalFilter
+                    <AprovalFilter 
                       acYr={acYr}
                       classes={classes}
                       subjects={subjects}
@@ -118,7 +118,7 @@ const AprovalPage = () => {
                 </>
               ) : value === "2" ? (
                 <>
-                  <div className="border-2">
+                  <div className="border-2 h-screen">
                     <div className="flex justify-center p-3 ">
                       <h1 className="text-2xl font-extrabold underline">
                         Qustion Pattern Aproval
@@ -135,7 +135,7 @@ const AprovalPage = () => {
                 </>
               ) : value === "3" ? (
                 <>
-                  <div className="border-2">
+                  <div className="border-2 h-screen">
                     <div className="flex justify-center p-3 ">
                       <h1 className="text-2xl font-extrabold underline">
                         Qustion Bank Aproval
@@ -151,7 +151,7 @@ const AprovalPage = () => {
                 </>
               ) : value === "4" ? (
                 <>
-                  <div className="border-2">
+                  <div className="border-2 h-screen" >
                     <div className="flex justify-center p-3 ">
                       <h1 className="text-2xl font-extrabold underline">
                         Qustion Papper Aproval

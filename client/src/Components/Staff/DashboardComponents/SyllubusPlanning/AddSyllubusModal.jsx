@@ -3,6 +3,7 @@ import {
   faInfoCircle,
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
+import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Button,
@@ -11,19 +12,21 @@ import {
   Option,
   Select,
 } from "@material-tailwind/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
+import useAuth from "../../../../Hooks/useAuth";
 
-const AddSyllubusModal = ({ acYr, subjects, classes }) => {
+const AddSyllubusModal = ({ acYr, subjects, classes,getDetails }) => {
+  const { auth } = useAuth();
   const [open, setOpen] = React.useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
-
-  const [year,setYear]=useState("")
-  const [teacherName,setTeacherName]=useState("")
-  const [subject,setSubject]=useState("")
-  const [termName,settermName]=useState("")
-  const [std,setStd]=useState("")
-  const [error,setError]=useState()
-
+  const [year, setYear] = useState("");
+  const [teacherName, setTeacherName] = useState("");
+  const [subject, setSubject] = useState("");
+  const [termName, settermName] = useState("");
+  const [std, setStd] = useState("");
+  const [error, setError] = useState();
+  const axiosPrivate = useAxiosPrivate();
 
   const handleOpen = () => setOpen(!open);
   const handleFileChange = (e) => {
@@ -34,27 +37,41 @@ const AddSyllubusModal = ({ acYr, subjects, classes }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-
-      const formdata  ={
-          year,
-          teacherName,
-          subject,
-          termName,
-          std,
-          syllubusPdf:selectedFile
-          
-      }
-      if(!formdata.year||!formdata.teacherName||!formdata.subject||!formdata.termName || !formdata.std){
-          setError("All Field Are Reuqired")
-          return;
-
+      const formData = {
+        year,
+        teacherName,
+        subject,
+        termName,
+        std,
+        teacherId: auth?.userId,
+      };
+      if (
+        !formData.year ||
+        !formData.teacherName ||
+        !formData.subject ||
+        !formData.termName ||
+        !formData.std
+      ) {
+        setError("All Field Are Reuqired");
+        return;
       }
       setError(null);
-      console.log(formdata);
+
+      console.log(formData);
+      const response = await axiosPrivate.post(
+        "/lessonplanning/syllabus",
+        formData
+      );
+      handleOpen();
+      getDetails()
+      toast.success("success");
     } catch (error) {
       console.log(error);
+      toast.error(error.response);
     }
   };
+
+
   return (
     <div>
       <Button
@@ -106,8 +123,7 @@ const AddSyllubusModal = ({ acYr, subjects, classes }) => {
             <div className="w-full sm:w-1/2 mt-2 sm:mt-0">
               <p className="mb-2 font-semibold text-gray-700">Exam Name</p>
 
-              <Select label="Select The Exam" onChange={(e)=>settermName(e)}>
-
+              <Select label="Select The Exam" onChange={(e) => settermName(e)}>
                 <Option value="1st Mid Term Exam">1. 1st Mid Term </Option>
                 <Option value="Quarterly Exam">2. Quarterly Exam</Option>
                 <Option value="2nd Mid Term Exam">3. 2nd Mid Term </Option>
