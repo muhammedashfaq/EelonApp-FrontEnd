@@ -44,6 +44,10 @@ import ExamTimeTablePage from "../Pages/Staff/Dashboard/TimeTable/ExamTimeTableP
 import AddClassTimetable from "../Components/Staff/DashboardComponents/Timetables/Classtimetable/AddClassTimetable";
 import ErrorPage from "../Pages/Error/ErrorPage";
 import SyllubusPlanningPage from "../Pages/Staff/Dashboard/Academics/SyllubusPlanningPage";
+import QustionBankPage from "../Pages/Staff/Dashboard/Academics/QustionBankPage";
+import QustionPatternPage from "../Pages/Staff/Dashboard/Academics/QustionPatternPage";
+import QustionPapperPage from "../Pages/Staff/Dashboard/Academics/QustionPapperPage";
+import AdminAprovals from "../Pages/Admin/Home/AdminAprovals";
 
 const AppRoutes = () => {
   const isLoading = useSelector((state) => state.loading.isLoading);
@@ -61,6 +65,9 @@ const AppRoutes = () => {
       <Routes>
         {/* Admin ROUTS */}
         <Route path={RouteObjects.AdminHome} element={<AdminHome />} />
+
+        <Route path={RouteObjects.AdminAprovals} element={<AdminAprovals />} />
+
 
         {/* STUDENTS ROUTS */}
         <Route path={RouteObjects.root} element={<LandingPage />} />
@@ -178,7 +185,18 @@ const AppRoutes = () => {
           path={RouteObjects.SyllubusPlanning}
           element={<SyllubusPlanningPage />}
         />
-        
+                <Route
+          path={RouteObjects.QustionBank}
+          element={<QustionBankPage />}
+        />
+                <Route
+          path={RouteObjects.QustionPattern}
+          element={<QustionPatternPage />}
+        />
+                <Route
+          path={RouteObjects.QustionPaper}
+          element={<QustionPapperPage />}
+        />
 
         {/* Staff CLASS ROOM ROUTS */}
         <Route
