@@ -7,13 +7,13 @@ const Banner = () => {
   return (
     <div className="bg-dark-purple text-gray-100 ">
       <section className="container mx-auto flex flex-wrap items-center justify-between py-4">
-        {auth.roles == 5151 ? (
+        {auth.roles == 5151? (
           <NavBar />
         ) : auth.roles == 999 ? (
           <SideNavbar />
-        ) : (
-          ""
-        )}
+        ) : auth.roles == 2000 ?(
+          <NavBar />
+        ):""}
 
         <div className="flex items-center space-x-4">
           <img

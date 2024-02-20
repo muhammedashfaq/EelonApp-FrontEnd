@@ -1,144 +1,19 @@
 import { useState } from "react";
 import logo from "../../../assets/EelonLogo.png";
-import { Drawer, Typography, IconButton } from "@material-tailwind/react";
+import { Drawer,} from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-import { RouteObjects } from "../../../Routes/RoutObjects";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
-  faBook,
-  faCaretRight,
-  faChalkboard,
-  faHome,
   faRightFromBracket,
-  faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import StaffAttandancePage from "../../../Pages/Staff/Dashboard/Attandance/StaffAttandancePage";
+import useLogout from "../../../Hooks/useLogout";
+import menu from './menuLinks.jsx'
 
 const NavBar = () => {
   const [open, setOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState({});
-
-  const menu = [
-    {
-      title: "Home",
-      icon: faHome,
-      href: RouteObjects.root,
-    },
-    {
-      title: "Dashboard",
-      icon: faBars,
-    },
-    {
-      title: "Library",
-      icon: faBook,
-      href: RouteObjects.Stafflibrary,
-    },
-    {
-      title: "Academics",
-      icon: faUserPlus,
-      submenu: true,
-      submenuItems: [
-        {
-          title: "Students List ",
-          href: `${RouteObjects.StudentsList}/1`,
-          icon: faCaretRight,
-        },
-        {
-          title: "Add Student",
-          href: RouteObjects.AddStudent,
-          icon: faCaretRight,
-        },
-        {
-          title: "Manage Classes",
-          href: RouteObjects.StaffManageClass,
-          icon: faCaretRight,
-        },
-        {
-          title: "Settings",
-          href: RouteObjects.StaffAcademicsSettings,
-          icon: faCaretRight,
-        },
-        {
-          title: "Syllabus Planning",
-          href: RouteObjects.SyllubusPlanning,
-          icon: faCaretRight,
-        },
-      ],
-    },
-    {
-      title: "Attendance",
-      icon: faUserPlus,
-      submenu: true,
-      submenuItems: [
-        {
-          title: "Students",
-          icon: faCaretRight,
-          href: RouteObjects.StudentsAttendance,
-        },
-        {
-          title: "Staff",
-          icon: faCaretRight,
-          href: RouteObjects.StaffAttandance,
-        },
-        {
-          title: "Attandance Report",
-          icon: faCaretRight,
-          href: RouteObjects.AttandanceReport,
-        },
-      ],
-    },
-    {
-      title: "Manage Staff",
-      icon: faUserPlus,
-      submenu: true,
-      submenuItems: [
-        {
-          title: "Staff List",
-          icon: faCaretRight,
-          href: RouteObjects.StaffList,
-        },
-        {
-          title: "Staff Category",
-          icon: faCaretRight,
-          href: RouteObjects.StaffAttandance,
-        },
-      ],
-    },
-    {
-      title: "Study Room",
-      href: RouteObjects.StudyRoomHome,
-      icon: faChalkboard,
-    },
-    {
-      title: "Timetables",
-      icon: faUserPlus,
-      submenu: true,
-      submenuItems: [
-        {
-          title: "Exam timetable",
-          icon: faCaretRight,
-          href: RouteObjects.examTimeTable,
-        },
-        {
-          title: "Add Class timetable",
-          icon: faCaretRight,
-          href: RouteObjects.AddClassTimetable,
-        },
-        {
-          title: "Class timetable",
-          icon: faCaretRight,
-          href: RouteObjects.ClasstimetablePage,
-        },
-      ],
-    },
-
-    {
-      title: "Logout",
-      icon: faRightFromBracket,
-    },
-  ];
-
+  const logOut = useLogout();
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
   const toggleSubmenu = (index) =>
@@ -203,6 +78,16 @@ const NavBar = () => {
               </li>
             ))}
           </ul>
+          <li
+            className={`text-gray-200 text-sm flex flex-col cursor-pointer p-2 hover:bg-deep-orange-500 rounded-md mt-2 relative`}
+          >
+            <div className="flex items-center gap-x-4" onClick={logOut}>
+              <FontAwesomeIcon icon={faRightFromBracket} />
+              <span className={`duration-200 flex-1 text-base font-medium`}>
+                Logout
+              </span>
+            </div>
+          </li>
           <li
             className={` text-sm flex items-stretch gap-x-8 cursor-pointer  fixed w-max m-3 p-6 bg-blue-500 rounded-lg text-white mt-4`}
           >

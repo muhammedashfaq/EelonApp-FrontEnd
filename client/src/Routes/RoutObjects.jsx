@@ -32,6 +32,9 @@ export const RouteObjects = {
   StaffManageClass: "/staff/manageclass",
   StaffAcademicsSettings: "/staff/academics/settings",
   SyllubusPlanning:"/staff/syllubusplanning",
+  QustionBank:"/staff/qustionbank",
+  QustionPattern:"/staff/qustionpattern",
+  QustionPaper:"/staff/qustionpaper",
 
   StaffStudyRoom: "/staff/studyroom*",
   StudyRoomHome: "/staff/studyroom/home",
@@ -49,4 +52,5 @@ export const RouteObjects = {
   AddClassTimetable: "/staff/timetables/addtimetable",
 
   AdminHome: "/adminhome",
+  AdminAprovals:"/adminaprovals"
 };
