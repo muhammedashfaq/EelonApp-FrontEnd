@@ -1,28 +1,11 @@
-// import React from 'react'
-// import AdminSideNavBar from '../../../Components/Admin/DashoardComponents/AdminSideNavBar'
-// import SideNavbar from '../../../Components/Student/SideNav/SideNavbar'
-// import NavBar from '../../../Components/Staff/SideNav/navBar'
-// import AdminHeader from '../../../Components/Admin/DashoardComponents/AdminHeader'
-
-// const AdminHome = () => {
-//   return (
-//     <div>
-// <div className='bg-red-200'>
-
-//       <AdminSideNavBar/>
-//       <AdminHeader/>
-// </div>
-
-//     </div>
-//   )
-// }
-
-// export default AdminHome
-
-import React from "react";
-
+import StaffHeader from '../../../Components/Staff/Header/landingPageHeader'
+import Banner from '../../../Components/Banner/Banner'
 const AdminHome = () => {
-  return <div>AdminHome</div>;
-};
+  return (
+    <div>
+        <Banner/>
+    </div>
+  )
+}
 
-export default AdminHome;
+export default AdminHome

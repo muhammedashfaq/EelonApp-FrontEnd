@@ -1,60 +1,56 @@
 import {
-  faEdit,
-  faInfoCircle,
-  faUserPlus,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  Button,
-  Dialog,
-  Input,
-  Option,
-  Select,
-} from "@material-tailwind/react";
-import React, { useState } from "react";
-
-const AddSyllubusModal = ({ acYr, subjects,classes }) => {
-  const [open, setOpen] = React.useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [year,setYear]=useState("")
-  const [teacherName,setTeacherName]=useState("")
-  const [subject,setSubject]=useState("")
-  const [termName,settermName]=useState("")
-  const [std,setStd]=useState("")
-  const [error,setError]=useState()
-
-  const handleOpen = () => setOpen(!open);
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setSelectedFile(file);
-  };
-
-  const handleSubmit =async(e)=>{
-
-      e.preventDefault()
-    try {
-      const formdata  ={
-          year,
-          teacherName,
-          subject,
-          termName,
-          std,
-          syllubusPdf:selectedFile
-          
+    faEdit,
+    faInfoCircle,
+    faUserPlus,
+  } from "@fortawesome/free-solid-svg-icons";
+  import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+  import {
+    Button,
+    Dialog,
+    Input,
+    Option,
+    Select,
+  } from "@material-tailwind/react";
+  import React, { useState } from "react";
+const AddQpaperModal = ({acYr,classes,subjects}) => {
+    const [open, setOpen] = React.useState(false);
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [year,setYear]=useState("")
+    const [teacherName,setTeacherName]=useState("")
+    const [subject,setSubject]=useState("")
+    const [termName,settermName]=useState("")
+    const [std,setStd]=useState("")
+    const [error,setError]=useState()
+    const handleOpen = () => setOpen(!open);
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setSelectedFile(file);
+      };
+      const handleSubmit =(e)=>{
+        e.preventDefault()
+        try {
+          const formdata  ={
+              year,
+              teacherName,
+              subject,
+              termName,
+              std,
+              syllubusPdf:selectedFile
+              
+          }
+          if(!formdata.year||!formdata.teacherName||!formdata.subject||!formdata.termName || !formdata.std){
+              setError("All Field Are Reuqired")
+              return;
+          }
+          setError(null)
+            console.log(formdata );
+    
+        } catch (error) {
+            console.log(error)
+        }
       }
-      if(!formdata.year||!formdata.teacherName||!formdata.subject||!formdata.termName || !formdata.std){
-          setError("All Field Are Reuqired")
-          return;
-      }
-      setError(null)
-        console.log(formdata );
-
-    } catch (error) {
-        console.log(error)
-    }
-  }
   return (
-    <div>
+<div>
       <Button
         className="flex items-center gap-3"
         size="sm"
@@ -169,8 +165,7 @@ const AddSyllubusModal = ({ acYr, subjects,classes }) => {
           </Button>
         </div>
       </Dialog>
-    </div>
-  );
-};
+    </div>   )
+}
 
-export default AddSyllubusModal;
+export default AddQpaperModal

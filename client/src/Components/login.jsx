@@ -92,11 +92,13 @@ const Login = () => {
 
         if (
           userType === "Student" ||
-          userType === "Staff" ||
-          userType === "Admin"
+          userType === "Staff" 
+          
         ) {
           navigate(RouteObjects.root);
           location.reload();
+        }else if (userType === "Admin"){
+          navigate(RouteObjects.AdminHome)
         }
       }
     } catch (error) {
