@@ -52,6 +52,9 @@ const TestYk = () => {
     <>
       <div className="flex justify-center mt-16">
         <div className="container xl">
+          <div>
+            <Typography></Typography>
+          </div>
           <div className="flex justify-evenly items-center">
             <div className="w-60 p-5">
               <Select
