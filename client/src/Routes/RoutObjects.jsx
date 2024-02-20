@@ -31,10 +31,10 @@ export const RouteObjects = {
 
   StaffManageClass: "/staff/manageclass",
   StaffAcademicsSettings: "/staff/academics/settings",
-  SyllubusPlanning:"/staff/syllubusplanning",
-  QustionBank:"/staff/qustionbank",
-  QustionPattern:"/staff/qustionpattern",
-  QustionPaper:"/staff/qustionpaper",
+  SyllubusPlanning: "/staff/syllubusplanning",
+  QustionBank: "/staff/qustionbank",
+  QustionPattern: "/staff/qustionpattern",
+  QustionPaper: "/staff/qustionpaper",
 
   StaffStudyRoom: "/staff/studyroom*",
   StudyRoomHome: "/staff/studyroom/home",
@@ -48,9 +48,10 @@ export const RouteObjects = {
   AllstudentsPage: "/admin/student/allstudents",
 
   ClasstimetablePage: "/staff/timetables/class",
-  examTimeTable: "/staff/timetables/exam",
+  examTimeTable: "/staff/timetables/addexam",
   AddClassTimetable: "/staff/timetables/addtimetable",
+  ExamtableDisplayPage: "/staff/timetables/exam",
 
   AdminHome: "/adminhome",
-  AdminAprovals:"/adminaprovals"
+  AdminAprovals: "/adminaprovals",
 };

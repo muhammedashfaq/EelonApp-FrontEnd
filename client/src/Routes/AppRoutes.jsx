@@ -48,6 +48,7 @@ import QustionBankPage from "../Pages/Staff/Dashboard/Academics/QustionBankPage"
 import QustionPatternPage from "../Pages/Staff/Dashboard/Academics/QustionPatternPage";
 import QustionPapperPage from "../Pages/Staff/Dashboard/Academics/QustionPapperPage";
 import AdminAprovals from "../Pages/Admin/Home/AdminAprovals";
+import TimetableExamPage from "../Components/Staff/DashboardComponents/Timetables/ExamTimeTable/TimetableExamPage";
 
 const AppRoutes = () => {
   const isLoading = useSelector((state) => state.loading.isLoading);
@@ -67,7 +68,6 @@ const AppRoutes = () => {
         <Route path={RouteObjects.AdminHome} element={<AdminHome />} />
 
         <Route path={RouteObjects.AdminAprovals} element={<AdminAprovals />} />
-
 
         {/* STUDENTS ROUTS */}
         <Route path={RouteObjects.root} element={<LandingPage />} />
@@ -156,6 +156,10 @@ const AppRoutes = () => {
           element={<ExamTimeTablePage />}
         />
         <Route
+          path={RouteObjects.ExamtableDisplayPage}
+          element={<TimetableExamPage />}
+        />
+        <Route
           path={RouteObjects.ClasstimetablePage}
           element={<ClassTimeTablePage />}
         />
@@ -181,19 +185,16 @@ const AppRoutes = () => {
           path={RouteObjects.StaffAcademicsSettings}
           element={<AcademicsSettings />}
         />
-              <Route
+        <Route
           path={RouteObjects.SyllubusPlanning}
           element={<SyllubusPlanningPage />}
         />
-                <Route
-          path={RouteObjects.QustionBank}
-          element={<QustionBankPage />}
-        />
-                <Route
+        <Route path={RouteObjects.QustionBank} element={<QustionBankPage />} />
+        <Route
           path={RouteObjects.QustionPattern}
           element={<QustionPatternPage />}
         />
-                <Route
+        <Route
           path={RouteObjects.QustionPaper}
           element={<QustionPapperPage />}
         />
@@ -219,8 +220,7 @@ const AppRoutes = () => {
         <Route path="/test" element={<Test />} />
         <Route path="/testyk" element={<TestYk />} />
 
-        <Route path="*" element={<ErrorPage/>} />
-
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </div>
   );

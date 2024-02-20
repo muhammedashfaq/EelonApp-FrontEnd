@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import AprovalTable from "./AprovalTable";
 import AprovalFilter from "./AprovalFilter";
-import AprovalTabs from "./AprovalTabs";
+// import AprovalTabs from "./AprovalTabs";
 
 const AprovalPage = () => {
   const [activeTab, setActiveTab] = React.useState("1");
