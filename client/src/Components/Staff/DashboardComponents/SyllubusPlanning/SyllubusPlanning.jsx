@@ -2,6 +2,8 @@ import {
   faChevronDown,
   faEdit,
   faMagnifyingGlass,
+  faTrash,
+  faTrashCan,
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,6 +14,7 @@ import {
   Typography,
   CardBody,
   Chip,
+  Tooltip,
 } from "@material-tailwind/react";
 import AddSyllubusModal from "./AddSyllubusModal";
 import { useEffect, useState } from "react";
@@ -27,6 +30,7 @@ const TABLE_HEAD = [
   "calss",
   "Status",
   " Remarks",
+  "Remove",
 ];
 const SyllubusPlanning = () => {
   const [syllabusdata, setSyllabusdata] = useState([]);
@@ -36,6 +40,46 @@ const SyllubusPlanning = () => {
   const { auth } = useAuth();
 
   const axiosPrivate = useAxiosPrivate();
+
+  const deletefile = async (id) => {
+    try {
+      const response = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+      if (response.isConfirmed) {
+        await axiosPrivate.delete(`lessonplanning/syllabus/${id}`);
+        getDetails();
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Removed successfully",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
+    }
+  };
 
   const getAcYrndubjects = async () => {
     try {
@@ -81,6 +125,7 @@ const SyllubusPlanning = () => {
         "/lessonplanning/syllabus/filter",
         { teacherId: auth?.userId }
       );
+
       setSyllabusdata(response.data);
     } catch (error) {
       console.log(error);
@@ -88,101 +133,140 @@ const SyllubusPlanning = () => {
   };
   useEffect(() => {
     getDetails();
-  }, [ auth.userId]);
+  }, [auth.userId]);
   return (
-    <div className="m-10">
+    <div className="mx-5 my-5 ">
       <Card className="h-full w-full ">
-        <CardHeader floated={false} shadow={false} className="rounded-none">
-          <div className="mb-8 flex items-center justify-between gap-8">
-            <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-              <AddSyllubusModal
-                acYr={acYr}
-                subjects={subjects}
-                classes={classes}
-                getDetails={getDetails}
-              />
-            </div>
-            <div className="w-full md:w-72">
-              <Input
-                label="Search"
-                icon={
-                  <FontAwesomeIcon
-                    icon={faMagnifyingGlass}
-                    className="h-5 w-5"
-                  />
-                }
-              />
-            </div>
-          </div>
-        </CardHeader>
+        <div className="flex shrink-0 flex-col gap-2 sm:flex-row p-2">
+          <AddSyllubusModal
+            acYr={acYr}
+            subjects={subjects}
+            classes={classes}
+            getDetails={getDetails}
+          />
+        </div>
+
         <CardBody className=" px-0">
-          <table className="mt-4 w-full min-w-max table-auto text-left">
-            <thead>
-              <tr>
-                {TABLE_HEAD.map((head) => (
-                  <th
-                    key={head}
-                    className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
-                  >
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
+          <div className="table-container overflow-y-auto max-h-96">
+            <table className="w-full min-w-max text-left table-fixed">
+              <thead>
+                <tr>
+                  {TABLE_HEAD.map((head) => (
+                    <th
+                      key={head}
+                      className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
                     >
-                      {head}{" "}
-                    </Typography>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {syllabusdata &&
-                syllabusdata.map((item, index) => (
-                  <>
-                    <tr key={index}>
-                      <td className="p-4 border-b border-blue-gray-50">
-                        {index + 1}
-                      </td>
-                      <td className="p-4 border-b border-blue-gray-50">
-                        {item?.year}
-                      </td>
-                      <td className="p-4 border-b border-blue-gray-50">
-                        {item?.subject}
-                      </td>
-                      <td className="p-4 border-b border-blue-gray-50">
-                        {item?.termName}
-                      </td>
-                      <td className="p-4 border-b border-blue-gray-50">.pdf</td>
-                      <td className="p-4 border-b border-blue-gray-50">
-                        {item?.std}
-                      </td>
-                      <td className="p-4 border-b border-blue-gray-50">
-                        <div className="w-max">
-                          {/* Assuming 'online' is a property in your data */}
-                          <Chip
-                            variant="ghost"
-                            size="sm"
-                            value={item.status}
-                            color={
-                              item.status === "Rejected"
-                                ? "red"
-                                : item.status === "Approved"
-                                ? "green"
-                                : item.status === "Pending"
-                                ? "blue-gray"
-                                : ""
-                            }
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
+                      >
+                        {head}{" "}
+                      </Typography>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {syllabusdata &&
+                  syllabusdata.map((item, index) => (
+                    <>
+                      <tr
+                        key={index}
+                        className={
+                          item.status == "Rejected" ? "bg-red-200" : ""
+                        }
+                      >
+                        <td className="p-4 border-b border-blue-gray-50">
+                          {index + 1}
+                        </td>
+                        <td className="p-4 border-b border-blue-gray-50">
+                          {item?.year}
+                        </td>
+                        <td className="p-4 border-b border-blue-gray-50">
+                          {item?.subject}
+                        </td>
+                        <td className="p-4 border-b border-blue-gray-50">
+                          {item?.termName}
+                        </td>
+                        <td className="p-4 border-b border-blue-gray-50">
+                          .pdf
+                        </td>
+                        <td className="p-4 border-b border-blue-gray-50">
+                          {item?.std}
+                        </td>
+                        <td className="p-4 border-b border-blue-gray-50">
+                          <div className="w-max">
+                            {/* Assuming 'online' is a property in your data */}
+                            <Chip
+                              variant="ghost"
+                              size="sm"
+                              value={item.status}
+                              color={
+                                item.status === "Rejected"
+                                  ? "red"
+                                  : item.status === "Approved"
+                                  ? "green"
+                                  : item.status === "Pending"
+                                  ? "blue-gray"
+                                  : ""
+                              }
+                            />
+                          </div>
+                        </td>
+                        <td className="p-4 border-b border-blue-gray-50">
+                          {item.remarks && (
+                            <Tooltip
+                              content={
+                                <div className="w-auto">
+                                  <Typography
+                                    color="white"
+                                    className="font-medium "
+                                  >
+                                    Remarks From Admin
+                                  </Typography>
+                                  <hr />
+                                  <Typography
+                                    variant="small"
+                                    color="white"
+                                    className="font-normal opacity-80"
+                                  >
+                                    {item.remarks}
+                                  </Typography>
+                                </div>
+                              }
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                strokeWidth={2}
+                                className="h-5 w-5 cursor-pointer text-blue-gray-500"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                                />
+                              </svg>
+                            </Tooltip>
+                          )}
+                        </td>
+                        <td className="p-4 border-b border-blue-gray-50">
+                          <FontAwesomeIcon
+                            icon={faTrashCan}
+                            color="red"
+                            onClick={() => deletefile(item._id)}
+                            className="cursor-pointer   hover:scale-150  transition-all duration-300 rounded-md"
                           />
-                        </div>
-                      </td>
-                      <td className="p-4 border-b border-blue-gray-50">
-                        Approved by Admin
-                      </td>
-                    </tr>
-                  </>
-                ))}
-            </tbody>
-          </table>
+                        </td>
+                      </tr>
+                    </>
+                  ))}
+              </tbody>
+            </table>
+          </div>
         </CardBody>
       </Card>
     </div>

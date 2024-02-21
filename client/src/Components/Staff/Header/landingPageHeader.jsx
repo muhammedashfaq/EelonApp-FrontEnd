@@ -5,108 +5,75 @@ import { Link } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
 import useLogout from "../../../Hooks/useLogout";
 import MobileNavBar from "./MobileNavBar";
-import Contact from "./Contact";
+
 
 const StaffHeader = () => {
   const { auth } = useAuth();
-  const logOut = useLogout();
+
+
 
   return (
     <div>
-      <Contact />
-      <div className=" w-full p-4 shadow-md ">
+      <div className="w-full p-4 shadow-md">
         <ul className="mobile:block Laptop:hidden ipad:hidden Tablet:hidden">
-          <div className="">
-            <li className="mr-auto mobile:flex mobile:justify-center mobile:items-center">
+          <div className="flex">
+            <li className="mr-auto flex justify-center items-center">
               <Link to="/">
-                <img
-                  src={logoimage}
-                  className="w-16 Tablet:block Laptop:block ipad:block "
-                  alt="Logo"
-                />
+                <img src={logoimage} className="w-16 block" alt="Logo" />
               </Link>
               <MobileNavBar />
             </li>
-
-            <li className="Tablet:hidden Laptop:hidden ipad:hidden mobile:block"></li>
+            <li className="hidden"></li>
           </div>
         </ul>
-        <ul className="flex justify-between items-start space-x-6 pr-8 ">
-          <div className="mobile:hidden Laptop:block ipad:block Tablet:block">
-            <li className="mr-auto mobile:flex mobile:justify-center mobile:items-center">
+        <ul className="flex justify-between items-start space-x-6 pr-8">
+          <div className="hidden Laptop:block ipad:block Tablet:block">
+            <li className="mr-auto flex justify-center items-center">
               <Link to="/">
-                <img src={logoimage} className="w-16 " alt="Logo" />
+                <img src={logoimage} className="w-16" alt="Logo" />
               </Link>
             </li>
           </div>
-          <div className="flex justify-center items-center space-x-6 ">
-            <li className="Tablet:block Laptop:block ipad:block mobile:hidden">
-              <a className="hover:text-blue-400" href="#">
-                Home
-              </a>
-            </li>
-            <li className="Tablet:block Laptop:block ipad:block mobile:hidden">
-              <a className="hover:text-blue-400" href="#About">
-                About
-              </a>
-            </li>
-            <li className="Tablet:block Laptop:block ipad:block mobile:hidden">
-              <a className="hover:text-blue-400" href="#academics">
-                Academics
-              </a>
-            </li>
-            <li className="Tablet:block Laptop:block ipad:block mobile:hidden">
-              <a className="hover:text-blue-400 " href="#contact">
-                Contact
-              </a>
-            </li>
-            <li className="Tablet:block Laptop:block ipad:block mobile:hidden">
-              {auth?.accessToken ? (
-                ""
-              ) : (
-                <Link to={RouteObjects.Login}>
-                  <Button className="bg-yellow-900">Login</Button>
-                </Link>
-              )}
-            </li>
-            <li className="Tablet:block Laptop:block ipad:block mobile:hidden">
-              {auth.roles == 5151 ? (
-                <Link to={RouteObjects.StaffDashboard}>
-                  {/* <NavBar /> */}
-                  <Button
-                    className="hover:bg-dark-purple hover:text-white"
-                    variant="outlined"
-                  >
-                    DashBoard
-                  </Button>
-                </Link>
-              ) : auth.roles == 999 ? (
-                <Link to={RouteObjects.StudentDashboard}>
-                  <Button
-                    className="hover:bg-dark-purple hover:text-white"
-                    variant="outlined"
-                  >
-                    DashBoard
-                  </Button>
-                </Link>
-              ) : auth.roles == 2000 ? (
-                <Link to={RouteObjects.AdminHome}>
-                  <Button
-                    className="hover:bg-dark-purple hover:text-white"
-                    variant="outlined"
-                  >
-                    DashBoard
-                  </Button>
-                </Link>
-              ) : (
-                ""
-              )}
-            </li>
+          <div className="flex justify-center items-center space-x-6">
+          <NavItem href="#" label="Home" />
+            <NavItem href="#About" label="About" />
+            <NavItem href="#academics" label="Academics" />
+            <NavItem href="#contact" label="Contact" />
+            {!auth?.accessToken && <Link to={RouteObjects.Login}><Button className="bg-yellow-900">Login</Button></Link>}
+            {renderDashboardButton(auth?.roles)}
           </div>
         </ul>
       </div>
     </div>
   );
+};
+
+const NavItem = ({ href, label }) => (
+  <li className="block Laptop:block ipad:block Tablet:block hidden">
+    <a className="hover:text-blue-400" href={href}>
+      {label}
+    </a>
+  </li>
+);
+
+const renderDashboardButton = (userRoles) => {
+  const roleToDashboard = {
+    5151: RouteObjects.StaffDashboard,
+    999: RouteObjects.StudentDashboard,
+    2000: RouteObjects.AdminHome,
+  };
+
+  if (roleToDashboard.hasOwnProperty(userRoles)) {
+    return (
+      <li className="block Laptop:block ipad:block Tablet:block hidden">
+        <Link to={roleToDashboard[userRoles]}>
+          <Button className="hover:bg-dark-purple hover:text-white" variant="outlined">Dashboard</Button>
+        </Link>
+      </li>
+    );
+  }
+
+  return null;
 };
 
 export default StaffHeader;

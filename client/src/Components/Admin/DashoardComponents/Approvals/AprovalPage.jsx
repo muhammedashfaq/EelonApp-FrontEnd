@@ -12,31 +12,38 @@ import AprovalTable from "./AprovalTable";
 import AprovalFilter from "./AprovalFilter";
 
 
+const data = [
+  {
+    label: "Syllubus ",
+    value: "1",
+    filterapi:"lessonplanning/syllabus/filter",
+    approveApi:"lessonplanning/syllabus"
+  },
+  {
+    label: "Question Pattern",
+    value: "2",
+    filterapi:"lessonplanning/qpattern/filter",
+    approveApi:"lessonplanning/qpattern"
+  },
+  {
+    label: "Question Bank",
+    value: "3",
+    filterapi:"lessonplanning/qbank/filter",
+    approveApi:"lessonplanning/qbank"
+  },
+  {
+    label: "Question Papper",
+    value: "4",
+    filterapi:"lessonplanning/qpaper/filter",
+    approveApi:"lessonplanning/qpaper"
+  },
+];
 const AprovalPage = () => {
-  const [activeTab, setActiveTab] = React.useState("1");
-  const data = [
-    {
-      label: "Syllubus ",
-      value: "1",
-    },
-    {
-      label: "Question Pattern",
-      value: "2",
-    },
-    {
-      label: "Question Bank",
-      value: "3",
-    },
-    {
-      label: "Question Papper",
-      value: "4",
-    },
-  ];
-
+  const [activeTab, setActiveTab] = useState("1");
+  const[filteredData,setFilteredData]=useState([])
   const [acYr, setAcYr] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [classes, setClasses] = useState([]);
-
   const axiosPrivate = useAxiosPrivate();
 
   const getAcYrndubjects = async () => {
@@ -76,6 +83,11 @@ const AprovalPage = () => {
   useEffect(() => {
     getAcYrndubjects();
   }, []);
+
+
+  useEffect(()=>{
+    setFilteredData(null)
+  },[activeTab])
   return (
     <div className="m-10 space-y-10">
       <Tabs value={activeTab}>
@@ -98,39 +110,43 @@ const AprovalPage = () => {
           ))}
         </TabsHeader>
         <TabsBody>
-          {data.map(({ value, desc }) => (
+          {data.map(({ value, filterapi,approveApi }) => (
             <TabPanel key={value} value={value}>
               {value === "1" ? (
                 <>
                   <div className="border-1 h-screen">
                     <div className="flex justify-center p-3 ">
                       <h1 className="text-2xl font-extrabold underline">
-                        Class Syllabus Aproval
+                        Class Syllabus Aproval 
                       </h1>
                     </div>
                     <AprovalFilter 
                       acYr={acYr}
                       classes={classes}
-                      subjects={subjects}
-                    />
-                    <AprovalTable />
+                      subject={subjects}
+                      api={filterapi}
+                      setFilteredData={setFilteredData}
+                      />
+                      <AprovalTable filteredData={filteredData} api={approveApi} />
                   </div>
-                </>
+                </>  
               ) : value === "2" ? (
                 <>
                   <div className="border-2 h-screen">
                     <div className="flex justify-center p-3 ">
                       <h1 className="text-2xl font-extrabold underline">
-                        Qustion Pattern Aproval
+                      Question Pattern Aproval 
                       </h1>
                     </div>
 
                     <AprovalFilter
                       acYr={acYr}
                       classes={classes}
-                      subjects={subjects}
-                    />
-                    <AprovalTable />
+                      subject={subjects}
+                      api={filterapi}
+                      setFilteredData={setFilteredData}
+                      />
+                      <AprovalTable filteredData={filteredData} api={approveApi}/>
                   </div>
                 </>
               ) : value === "3" ? (
@@ -138,15 +154,17 @@ const AprovalPage = () => {
                   <div className="border-2 h-screen">
                     <div className="flex justify-center p-3 ">
                       <h1 className="text-2xl font-extrabold underline">
-                        Qustion Bank Aproval
+                      Question Bank Aproval
                       </h1>
                     </div>
                     <AprovalFilter
                       acYr={acYr}
                       classes={classes}
-                      subjects={subjects}
+                      subject={subjects}
+                      api={filterapi}
+                      setFilteredData={setFilteredData}
                     />
-                    <AprovalTable />
+                    <AprovalTable filteredData={filteredData} api={approveApi}/>
                   </div>
                 </>
               ) : value === "4" ? (
@@ -154,15 +172,17 @@ const AprovalPage = () => {
                   <div className="border-2 h-screen" >
                     <div className="flex justify-center p-3 ">
                       <h1 className="text-2xl font-extrabold underline">
-                        Qustion Papper Aproval
+                        Question Papper Aproval
                       </h1>
                     </div>
                     <AprovalFilter
                       acYr={acYr}
                       classes={classes}
-                      subjects={subjects}
+                      subject={subjects}
+                      api={filterapi}
+                      setFilteredData={setFilteredData}
                     />
-                    <AprovalTable />
+                    <AprovalTable filteredData={filteredData} api={approveApi}/>
                   </div>
                 </>
               ) : (
@@ -170,7 +190,7 @@ const AprovalPage = () => {
               )}
             </TabPanel>
           ))}
-        </TabsBody>
+        </TabsBody> 
       </Tabs>
     </div>
   );
