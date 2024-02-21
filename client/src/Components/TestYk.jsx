@@ -13,6 +13,8 @@ import {
   Avatar,
   IconButton,
   Tooltip,
+  Select,
+  Option,
 } from "@material-tailwind/react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,6 +25,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import StaffHeader from "./Staff/Header/landingPageHeader";
 import Banner from "./Banner/Banner";
+import useAxiosPrivate from "../Hooks/useAxiosPrivate";
+import { useEffect, useState } from "react";
+import StudentMarkRow from "./Staff/DashboardComponents/ExamModule/StudentMarkRow";
 
 const TABS = [
   {
@@ -41,6 +46,7 @@ const TABS = [
 
 const TABLE_HEAD = [
   "Sl.no",
+  "Roll no",
   "Student name",
   "Internal mark",
   "External mark",
@@ -94,29 +100,100 @@ const TABLE_ROWS = [
 ];
 
 const TestYk = () => {
+  const axiosPrivate = useAxiosPrivate();
+  const [subjectDropdowns, setsubjectDropdowns] = useState();
+  const [classSectionDropdowns, setClassSectionDropdowns] = useState();
+  const [students, setstudents] = useState([]);
+  const [selectedSubject, setselectedSubject] = useState();
+  const [selectedClass, setselectedClass] = useState();
+
+  const getSubjectsDropdown = async () => {
+    try {
+      const response = await axiosPrivate.get(
+        "classsection/subjects/dropdowns"
+      );
+      setsubjectDropdowns(response.data.subjects);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getClasssections = async () => {
+    try {
+      const response = await axiosPrivate.get("classsection/dropdowns");
+      setClassSectionDropdowns(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getClasswiseStudents = async () => {
+    try {
+      const response = await axiosPrivate.get("users/student");
+      console.log(response);
+      setstudents(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getSubjectsDropdown();
+    getClasssections();
+  }, []);
   return (
     <>
       <StaffHeader />
       <Banner />
       <div className="flex justify-center">
         <div className="container xl">
-          <Card className="h-full w-full">
+          <Card className="h-full w-full m-5">
             <CardHeader floated={false} shadow={false} className="rounded-none">
               <div className="mb-8 flex items-center justify-between gap-8">
                 <div>
                   <Typography variant="h5" color="blue-gray">
-                    studnets mark entry
+                    Students mark entry
                   </Typography>
-                  <Typography color="gray" className="mt-1 font-normal">
+                  {/* <Typography color="gray" className="mt-1 font-normal">
                     See information about all members
-                  </Typography>
+                  </Typography> */}
                 </div>
+
+                <div className="w-40">
+                  <select
+                    label="Select subject"
+                    onChange={(e) => setselectedSubject(e.target.value)}
+                  >
+                    {subjectDropdowns &&
+                      subjectDropdowns.map((item) => <option>{item}</option>)}
+                  </select>
+                </div>
+                <div className="w-40">
+                  <select
+                    label="Select class"
+                    onChange={(e) => setselectedClass(e.target.value)}
+                  >
+                    {classSectionDropdowns &&
+                      classSectionDropdowns.map((item) => (
+                        <option>{item}</option>
+                      ))}
+                  </select>
+                </div>
+
                 <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-                  <Button variant="outlined" size="sm">
-                    view all
+                  <Button
+                    variant="outlined"
+                    size="sm"
+                    onClick={() => getClasswiseStudents()}
+                  >
+                    Fetch data
                   </Button>
-                  <Button className="flex items-center gap-3" size="sm">
-                    Add member
+                  <Button
+                    variant="gradient"
+                    size="sm"
+                    onClick={() => getClasswiseStudents()}
+                  >
+                    Add marks
                   </Button>
                 </div>
               </div>
@@ -137,7 +214,9 @@ const TestYk = () => {
                         >
                           {head}{" "}
                           {index !== TABLE_HEAD.length - 1 && (
-                            <FontAwesomeIcon icon={faSort} />
+                            <IconButton variant="text" size="sm">
+                              <FontAwesomeIcon icon={faSort} />
+                            </IconButton>
                           )}
                         </Typography>
                       </th>
@@ -145,99 +224,23 @@ const TestYk = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {TABLE_ROWS.map((item, index) => {
-                    const isLast = index === TABLE_ROWS.length - 1;
+                  {students.map((item, index) => {
+                    const isLast = index === students.length - 1;
                     const classes = isLast
                       ? "p-4"
                       : "p-4 border-b border-blue-gray-50";
 
                     return (
-                      <tr key={index} className="even:bg-teal-50/50">
-                        <td className={`${classes} w-10 bg-blue-gray-50/50 `}>
-                          <Typography className="text-center">
-                            {index + 1}
-                          </Typography>
-                        </td>
-                        <td className={classes}>
-                          <div className="flex items-center gap-3">
-                            <Avatar size="sm" />
-                            <div className="flex flex-col">
-                              <Typography
-                                variant="small"
-                                color="blue-gray"
-                                className="font-normal"
-                              >
-                                name
-                              </Typography>
-                              <Typography
-                                variant="small"
-                                color="blue-gray"
-                                className="font-normal opacity-70"
-                              >
-                                email
-                              </Typography>
-                            </div>
-                          </div>
-                        </td>
-                        <td className={`${classes} bg-blue-gray-50/50 `}>
-                          <div className="flex flex-col">
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              20
-                            </Typography>
-                          </div>
-                        </td>
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            60
-                          </Typography>
-                        </td>
-                        <td className={`${classes} bg-blue-gray-50/50 `}>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            80
-                          </Typography>
-                        </td>
-                        <td className={classes}>
-                          <Tooltip content="Edit User">
-                            <IconButton variant="text">
-                              <FontAwesomeIcon icon={faPencilSquare} />
-                            </IconButton>
-                          </Tooltip>
-                        </td>
-                      </tr>
+                      <StudentMarkRow
+                        item={item}
+                        index={index}
+                        classes={classes}
+                      />
                     );
                   })}
                 </tbody>
               </table>
             </CardBody>
-            <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-              <Typography
-                variant="small"
-                color="blue-gray"
-                className="font-normal"
-              >
-                Page 1 of 10
-              </Typography>
-              <div className="flex gap-2">
-                <Button variant="outlined" size="sm">
-                  Previous
-                </Button>
-                <Button variant="outlined" size="sm">
-                  Next
-                </Button>
-              </div>
-            </CardFooter>
           </Card>
         </div>
       </div>
