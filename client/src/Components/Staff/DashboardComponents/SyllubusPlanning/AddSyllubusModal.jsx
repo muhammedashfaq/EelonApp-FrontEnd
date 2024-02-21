@@ -16,7 +16,7 @@ import React, { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import useAuth from "../../../../Hooks/useAuth";
 
-const AddSyllubusModal = ({ acYr, subjects, classes,getDetails }) => {
+const AddSyllubusModal = ({ acYr, subjects, classes, getDetails }) => {
   const { auth } = useAuth();
   const [open, setOpen] = React.useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -63,14 +63,13 @@ const AddSyllubusModal = ({ acYr, subjects, classes,getDetails }) => {
         formData
       );
       handleOpen();
-      getDetails()
+      getDetails();
       toast.success("success");
     } catch (error) {
       console.log(error);
       toast.error(error.response);
     }
   };
-
 
   return (
     <div>

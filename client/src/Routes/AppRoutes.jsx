@@ -49,6 +49,7 @@ import QustionPatternPage from "../Pages/Staff/Dashboard/Academics/QustionPatter
 import QustionPapperPage from "../Pages/Staff/Dashboard/Academics/QustionPapperPage";
 import AdminAprovals from "../Pages/Admin/Home/AdminAprovals";
 import TimetableExamPage from "../Components/Staff/DashboardComponents/Timetables/ExamTimeTable/TimetableExamPage";
+import AddSubwiseMarks from "../Components/Staff/DashboardComponents/ExamModule/AddSubwiseMarks";
 
 const AppRoutes = () => {
   const isLoading = useSelector((state) => state.loading.isLoading);
@@ -149,6 +150,11 @@ const AppRoutes = () => {
         <Route
           path={RouteObjects.AttandanceReport}
           element={<AttendanceReportPage />}
+        />
+
+        <Route
+          path={RouteObjects.ExamAddSubwiseMarks}
+          element={<AddSubwiseMarks />}
         />
 
         <Route

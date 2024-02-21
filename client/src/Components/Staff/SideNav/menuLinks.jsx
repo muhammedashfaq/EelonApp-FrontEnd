@@ -146,6 +146,23 @@ const menu = [
       },
     ],
   },
+  {
+    title: "Exam module",
+    icon: faUserPlus,
+    submenu: true,
+    submenuItems: [
+      {
+        title: "Add marks",
+        icon: faCaretRight,
+        href: RouteObjects.ExamAddSubwiseMarks,
+      },
+      {
+        title: "Show Subject wise marks",
+        icon: faCaretRight,
+        href: RouteObjects.ExamtableDisplayPage,
+      },
+    ],
+  },
 ];
 
 export default menu;

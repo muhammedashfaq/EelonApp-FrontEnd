@@ -197,18 +197,6 @@ const ExamTimeTable = () => {
                   </div>
                 )}
               </div>
-              <div className="w-60">
-                <select
-                  label="Select term"
-                  className="bg-gray-100"
-                  onChange={(e) => setacademicYr(e.target.value)}
-                >
-                  {academicYrDropdown &&
-                    academicYrDropdown.map((item) => (
-                      <option value={item}>{item}</option>
-                    ))}
-                </select>
-              </div>
               <div>
                 <Button
                   variant="outlined"

@@ -5,15 +5,47 @@ import {
   Tooltip,
   IconButton,
 } from "@material-tailwind/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilSquare } from "@fortawesome/free-solid-svg-icons";
 
-const StudentMarkRow = ({ item, index, classes }) => {
+const StudentMarkRow = ({ item, index, classes, handleData }) => {
   const [InternalMark, setInternalMark] = useState();
   const [externalMark, setexternalMark] = useState();
   const [totalMark, settotalMark] = useState();
 
+  function calculateTotal() {
+    if (InternalMark && externalMark) {
+      const total = Number(InternalMark) + Number(externalMark);
+      settotalMark(total);
+    } else if (InternalMark) {
+      settotalMark(Number(InternalMark));
+    } else if (externalMark) {
+      settotalMark(Number(externalMark));
+    } else if (!InternalMark || externalMark) {
+      settotalMark(null);
+    }
+  }
+
+  const createData = () => {
+    const jsonData = {
+      id: index,
+      internal: InternalMark,
+      external: externalMark,
+      total: totalMark,
+      studentId: item?._id,
+      rollNo: item?.rollNo,
+      studentName: item?.studentName,
+    };
+    handleData(jsonData);
+  };
+  useEffect(() => {
+    createData();
+  }, [InternalMark, externalMark, totalMark]);
+
+  useEffect(() => {
+    calculateTotal();
+  }, [externalMark, InternalMark]);
   return (
     <tr key={index} className="even:bg-teal-50/50">
       <td className={`${classes} w-10 `}>
@@ -50,6 +82,7 @@ const StudentMarkRow = ({ item, index, classes }) => {
               <Input
                 label="Internal mark"
                 onChange={(e) => setInternalMark(e.target.value)}
+                type="number"
               />
             </div>
           </Typography>
@@ -61,21 +94,14 @@ const StudentMarkRow = ({ item, index, classes }) => {
             <Input
               label="External mark"
               onChange={(e) => setexternalMark(e.target.value)}
+              type="number"
             />
           </div>
         </Typography>
       </td>
       <td className={`${classes} bg-blue-gray-50/50 `}>
         <Typography variant="small" color="blue-gray" className="font-normal">
-          {InternalMark && externalMark ? (
-            Number(InternalMark) + Number(externalMark)
-          ) : InternalMark ? (
-            InternalMark
-          ) : externalMark ? (
-            externalMark
-          ) : (
-            <span></span>
-          )}
+          {totalMark && totalMark}
         </Typography>
       </td>
       <td className={classes}>
