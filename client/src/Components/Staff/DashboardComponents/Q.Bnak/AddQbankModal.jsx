@@ -12,7 +12,10 @@ import {
     Select,
   } from "@material-tailwind/react";
   import React, { useState } from "react";
+import toast from "react-hot-toast";
+import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 const AddQbankModal = ({acYr,classes,subjects}) => {
+  const axiosPrivate = useAxiosPrivate();
     const [open, setOpen] = React.useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [year,setYear]=useState("")
@@ -26,24 +29,30 @@ const AddQbankModal = ({acYr,classes,subjects}) => {
         const file = e.target.files[0];
         setSelectedFile(file);
       };
-    const handleSubmit=(e)=>{
+    const handleSubmit=async(e)=>{
       e.preventDefault()
       try {
-        const formdata  ={
+        const formData  ={
             year,
             teacherName,
             subject,
             termName,
             std,
-            syllubusPdf:selectedFile
+        
             
         }
-        if(!formdata.year||!formdata.teacherName||!formdata.subject||!formdata.termName || !formdata.std){
+        if(!formData.year||!formData.teacherName||!formData.subject||!formData.termName || !formData.std){
             setError("All Field Are Reuqired")
             return;
         }
         setError(null)
-          console.log(formdata );
+        console.log(formData);
+        const response = await axiosPrivate.post(
+          "/lessonplanning/qbank",
+          formData
+        );
+        handleOpen();
+        toast.success("success");
   
       } catch (error) {
           console.log(error)
