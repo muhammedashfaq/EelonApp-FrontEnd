@@ -14,8 +14,9 @@ import {
   import React, { useState } from "react";
 import toast from "react-hot-toast";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
-const AddQpaperModal = ({acYr,classes,subjects}) => {
+const AddQpaperModal = ({acYr,classes,subjects,getDetails,teacherId}) => {
   const axiosPrivate = useAxiosPrivate();
+  const [isLoading,setIsLoading]=useState(false)
 
     const [open, setOpen] = React.useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
@@ -39,7 +40,7 @@ const AddQpaperModal = ({acYr,classes,subjects}) => {
               subject,
               termName,
               std,
-              syllubusPdf:selectedFile
+              teacherId
               
           }
           if(!formData.year||!formData.teacherName||!formData.subject||!formData.termName || !formData.std){
@@ -47,15 +48,18 @@ const AddQpaperModal = ({acYr,classes,subjects}) => {
               return;
           }
           setError(null)
-          console.log(formData);
+          setIsLoading(true)
           const response = await axiosPrivate.post(
-            "/lessonplanning/qpapper",
+            "/lessonplanning/qpaper",
             formData
           );
+          setIsLoading(false)
           handleOpen();
+          getDetails()
           toast.success("success");
     
         } catch (error) {
+          setIsLoading(false)
             console.log(error)
         }
       }
@@ -71,9 +75,9 @@ const AddQpaperModal = ({acYr,classes,subjects}) => {
           strokeWidth={2}
           className="h-4 w-4"
         />{" "}
-        Add Syllabus
+       Add Question Paper
       </Button>
-      <Dialog size="md" open={open} handler={handleOpen} className="w-full">
+      <Dialog size="md" open={open}  className="w-full">
         <div className="flex flex-row justify-between p-6 bg-white border-b border-gray-200 rounded-tl-lg rounded-tr-lg">
           <p className="font-semibold text-gray-800">Add  {error&& <p className="text-red-600">{error}</p> }</p>
           <svg onClick={handleOpen} 
@@ -170,8 +174,13 @@ const AddQpaperModal = ({acYr,classes,subjects}) => {
           </p>
         </div>
         <div className="flex flex-row items-center justify-between p-5 bg-white border-t border-gray-200 rounded-bl-lg rounded-br-lg">
-          <Button type="submit"  className="px-4 py-2 text-white font-semibold bg-blue-500 rounded" onClick={handleSubmit}>
-            Send
+               <Button
+          disabled={isLoading?true:false}
+            type="submit"
+            className="px-4 py-2 text-white font-semibold bg-blue-500 rounded"
+            onClick={handleSubmit}
+          >
+            {isLoading?"Sending...":"Send"}
           </Button>
         </div>
       </Dialog>

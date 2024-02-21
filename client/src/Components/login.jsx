@@ -99,6 +99,7 @@ const Login = () => {
           location.reload();
         }else if (userType === "Admin"){
           navigate(RouteObjects.AdminHome)
+          location.reload();
         }
       }
     } catch (error) {

@@ -16,8 +16,9 @@ import React, { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import useAuth from "../../../../Hooks/useAuth";
 
-const AddSyllubusModal = ({ acYr, subjects, classes,getDetails }) => {
+const AddSyllubusModal = ({ acYr, subjects, classes, getDetails }) => {
   const { auth } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [year, setYear] = useState("");
@@ -57,20 +58,21 @@ const AddSyllubusModal = ({ acYr, subjects, classes,getDetails }) => {
       }
       setError(null);
 
-      console.log(formData);
+      setIsLoading(true);
       const response = await axiosPrivate.post(
         "/lessonplanning/syllabus",
         formData
       );
+      setIsLoading(false);
       handleOpen();
-      getDetails()
+      getDetails();
       toast.success("success");
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
       toast.error(error.response);
     }
   };
-
 
   return (
     <div>
@@ -86,7 +88,7 @@ const AddSyllubusModal = ({ acYr, subjects, classes,getDetails }) => {
         />{" "}
         Add Syllabus
       </Button>
-      <Dialog size="md" open={open} handler={handleOpen} className="w-full">
+      <Dialog size="md" open={open} className="w-full">
         <div className="flex flex-row justify-between p-6 bg-white border-b border-gray-200 rounded-tl-lg rounded-tr-lg">
           <p className="font-semibold text-gray-800">
             Add {error && <p className="text-red-600">{error}</p>}
@@ -191,11 +193,12 @@ const AddSyllubusModal = ({ acYr, subjects, classes,getDetails }) => {
         </div>
         <div className="flex flex-row items-center justify-between p-5 bg-white border-t border-gray-200 rounded-bl-lg rounded-br-lg">
           <Button
+            disabled={isLoading ? true : false}
             type="submit"
             className="px-4 py-2 text-white font-semibold bg-blue-500 rounded"
             onClick={handleSubmit}
           >
-            Send
+            {isLoading ? "Sending..." : "Send"}
           </Button>
         </div>
       </Dialog>

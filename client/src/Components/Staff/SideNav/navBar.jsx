@@ -31,7 +31,7 @@ const NavBar = () => {
         className="cursor-pointer bg-blue-gray-400 px-6 py-3 rounded-lg text-white"
       />
 
-      <Drawer open={open} onClose={closeDrawer} className="p-4 bg-dark-purple">
+      <Drawer open={open} onClose={closeDrawer} className="p-4 bg-dark-purple overflow-y-auto">
         <div className="h-screen">
           <ul className="pt-2">
             {menu.map((item, index) => (
@@ -88,12 +88,12 @@ const NavBar = () => {
               </span>
             </div>
           </li>
-          <li
+          {/* <li
             className={` text-sm flex items-stretch gap-x-8 cursor-pointer  fixed w-max m-3 p-6 bg-blue-500 rounded-lg text-white mt-4`}
           >
             <img src={logo} alt="Logo" className="w-8 h-8" />
             <span className="ml-2 text-base font-medium">Eelon.com </span>
-          </li>
+          </li> */}
         </div>
       </Drawer>
     </div>
