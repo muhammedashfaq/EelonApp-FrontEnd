@@ -52,6 +52,9 @@ export const RouteObjects = {
   AddClassTimetable: "/staff/timetables/addtimetable",
   ExamtableDisplayPage: "/staff/timetables/exam",
 
+  ExamAddSubwiseMarks: "/staff/exam-module/addmarks",
+  ShowSubwiseMarks: "/staff/exam-module/subjectwise-marks",
+
   AdminHome: "/adminhome",
   AdminAprovals: "/adminaprovals",
 };

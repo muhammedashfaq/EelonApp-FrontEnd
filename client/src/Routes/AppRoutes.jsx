@@ -49,6 +49,8 @@ import QustionPatternPage from "../Pages/Staff/Dashboard/Academics/QustionPatter
 import QustionPapperPage from "../Pages/Staff/Dashboard/Academics/QustionPapperPage";
 import AdminAprovals from "../Pages/Admin/Home/AdminAprovals";
 import TimetableExamPage from "../Components/Staff/DashboardComponents/Timetables/ExamTimeTable/TimetableExamPage";
+import AddSubwiseMarks from "../Components/Staff/DashboardComponents/ExamModule/AddSubwiseMarks";
+import ShowSubwiseMarklist from "../Components/Staff/DashboardComponents/ExamModule/ShowSubwiseMarklist";
 
 const AppRoutes = () => {
   const isLoading = useSelector((state) => state.loading.isLoading);
@@ -66,9 +68,7 @@ const AppRoutes = () => {
       <Routes>
         {/* Admin ROUTS */}
         <Route path={RouteObjects.AdminHome} element={<AdminHome />} />
-
         <Route path={RouteObjects.AdminAprovals} element={<AdminAprovals />} />
-
         {/* STUDENTS ROUTS */}
        
         <Route path={RouteObjects.root} element={<LandingPage />} />
@@ -92,9 +92,7 @@ const AppRoutes = () => {
           path={RouteObjects.StudentLibrary}
           element={<StudentLibrary />}
         />
-
         {/* STAFF ROUTS */}
-
         <Route
           path={RouteObjects.StaffDashboard}
           element={<StaffDashBoard />}
@@ -124,13 +122,11 @@ const AppRoutes = () => {
           path={`${RouteObjects.StudentProfile}/:id`}
           element={<StudentProfile />}
         />
-
         <Route path={RouteObjects.AddStudent} element={<AddStudents />} />
         <Route
           path={`${RouteObjects.EditStudent}/:id/:name/:page`}
           element={<EditStudent />}
         />
-
         <Route
           path={RouteObjects.StudentsAttendance}
           element={<StudentsAttandancePage />}
@@ -151,7 +147,16 @@ const AppRoutes = () => {
           path={RouteObjects.AttandanceReport}
           element={<AttendanceReportPage />}
         />
-
+        /////////////////// Exam module //////////////////
+        <Route
+          path={RouteObjects.ExamAddSubwiseMarks}
+          element={<AddSubwiseMarks />}
+        />
+        <Route
+          path={RouteObjects.ShowSubwiseMarks}
+          element={<ShowSubwiseMarklist />}
+        />
+        ////////////////// TimeTable //////////////////////
         <Route
           path={RouteObjects.examTimeTable}
           element={<ExamTimeTablePage />}
@@ -169,10 +174,8 @@ const AppRoutes = () => {
           element={<AddClassTimetable />}
         />
         <Route path={RouteObjects.StaffManageClass} element={<ManageClass />} />
-
         <Route path={RouteObjects.StaffList} element={<StaffListPage />} />
         <Route path={RouteObjects.AddStaffList} element={<StaffAddPage />} />
-
         <Route
           path={`${RouteObjects.EditStaffList}/:id`}
           element={<StaffEditPage />}
@@ -181,7 +184,6 @@ const AppRoutes = () => {
           path={`${RouteObjects.StaffProfile}/:id`}
           element={<StaffProfilePage />}
         />
-
         <Route
           path={RouteObjects.StaffAcademicsSettings}
           element={<AcademicsSettings />}
@@ -199,20 +201,16 @@ const AppRoutes = () => {
           path={RouteObjects.QustionPaper}
           element={<QustionPapperPage />}
         />
-
         {/* Staff CLASS ROOM ROUTS */}
         <Route
           path={RouteObjects.StaffStudyRoom}
           element={<StaffClassRoom />}
         />
-
         {/* Student CLASS ROOM ROUTS */}
-
         <Route
           path={RouteObjects.StudentStudyRoom}
           element={<StudentClassRoom />}
         />
-
         <Route
           path={RouteObjects.AdminStudentPage}
           element={<AdminStudentPage />}
@@ -220,7 +218,6 @@ const AppRoutes = () => {
         <Route path={RouteObjects.AllstudentsPage} element={<Allstudents />} />
         <Route path="/test" element={<Test />} />
         <Route path="/testyk" element={<TestYk />} />
-
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </div>
