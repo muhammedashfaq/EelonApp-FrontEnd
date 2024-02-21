@@ -1,65 +1,76 @@
 import {
-    faEdit,
-    faInfoCircle,
-    faUserPlus,
-  } from "@fortawesome/free-solid-svg-icons";
-  import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-  import {
-    Button,
-    Dialog,
-    Input,
-    Option,
-    Select,
-  } from "@material-tailwind/react";
-  import React, { useState } from "react";
+  faEdit,
+  faInfoCircle,
+  faUserPlus,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  Button,
+  Dialog,
+  Input,
+  Option,
+  Select,
+} from "@material-tailwind/react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
-const AddQbankModal = ({acYr,classes,subjects}) => {
+const AddQbankModal = ({ acYr, classes, subjects, teacherId, getDetails }) => {
+  const [isLoading,setIsLoading]=useState(false)
   const axiosPrivate = useAxiosPrivate();
-    const [open, setOpen] = React.useState(false);
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [year,setYear]=useState("")
-    const [teacherName,setTeacherName]=useState("")
-    const [subject,setSubject]=useState("")
-    const [termName,settermName]=useState("")
-    const [std,setStd]=useState("")
-    const [error,setError]=useState()
-    const handleOpen = () => setOpen(!open);
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        setSelectedFile(file);
+  const [open, setOpen] = React.useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [year, setYear] = useState("");
+  const [teacherName, setTeacherName] = useState("");
+  const [subject, setSubject] = useState("");
+  const [termName, settermName] = useState("");
+  const [std, setStd] = useState("");
+  const [error, setError] = useState();
+  const handleOpen = () => setOpen(!open);
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const formData = {
+        year,
+        teacherName,
+        subject,
+        termName,
+        std,
+        teacherId,
       };
-    const handleSubmit=async(e)=>{
-      e.preventDefault()
-      try {
-        const formData  ={
-            year,
-            teacherName,
-            subject,
-            termName,
-            std,
-        
-            
-        }
-        if(!formData.year||!formData.teacherName||!formData.subject||!formData.termName || !formData.std){
-            setError("All Field Are Reuqired")
-            return;
-        }
-        setError(null)
-        console.log(formData);
-        const response = await axiosPrivate.post(
-          "/lessonplanning/qbank",
-          formData
-        );
-        handleOpen();
-        toast.success("success");
-  
-      } catch (error) {
-          console.log(error)
+      if (
+        !formData.year ||
+        !formData.teacherName ||
+        !formData.subject ||
+        !formData.termName ||
+        !formData.std
+      ) {
+        setError("All Field Are Reuqired");
+        return;
       }
+      setError(null);
+      setIsLoading(true)
+      const response = await axiosPrivate.post(
+        "/lessonplanning/qbank",
+        formData
+      );
+      setIsLoading(false)
+
+      handleOpen();
+      getDetails();
+
+      toast.success("success");
+    } catch (error) {
+      setIsLoading(false)
+
+      console.log(error);
     }
+  };
   return (
-<div>
+    <div>
       <Button
         className="flex items-center gap-3"
         size="sm"
@@ -70,12 +81,15 @@ const AddQbankModal = ({acYr,classes,subjects}) => {
           strokeWidth={2}
           className="h-4 w-4"
         />{" "}
-        Add Syllabus
+        Add Question Bank
       </Button>
-      <Dialog size="md" open={open} handler={handleOpen} className="w-full">
+      <Dialog size="md" open={open}  className="w-full">
         <div className="flex flex-row justify-between p-6 bg-white border-b border-gray-200 rounded-tl-lg rounded-tr-lg">
-          <p className="font-semibold text-gray-800">Add  {error&& <p className="text-red-600">{error}</p> }</p>
-          <svg onClick={handleOpen} 
+          <p className="font-semibold text-gray-800">
+            Add {error && <p className="text-red-600">{error}</p>}
+          </p>
+          <svg
+            onClick={handleOpen}
             className="w-6 h-6 cursor-pointer bg-gray-400 text-black p-1 rounded-md"
             fill="none"
             stroke="currentColor"
@@ -94,18 +108,18 @@ const AddQbankModal = ({acYr,classes,subjects}) => {
           <div className="flex flex-col sm:flex-row items-center mb-5 sm:space-x-5">
             <div className="w-full sm:w-1/2">
               <p className="mb-2 font-semibold text-gray-700">Accademic Year</p>
-              <Select label="Select Year" onChange={(e)=>setYear(e)}>
+              <Select label="Select Year" onChange={(e) => setYear(e)}>
                 {acYr &&
                   acYr.map((item, i) => (
                     <Option key={i} value={item}>
-                      {i+1}. {item}
+                      {i + 1}. {item}
                     </Option>
                   ))}
               </Select>
             </div>
             <div className="w-full sm:w-1/2 mt-2 sm:mt-0">
               <p className="mb-2 font-semibold text-gray-700">Exam Name</p>
-              <Select label="Select The Exam" onChange={(e)=>settermName(e)}>
+              <Select label="Select The Exam" onChange={(e) => settermName(e)}>
                 <Option value="1st Mid Term Exam">1. 1st Mid Term </Option>
                 <Option value="Quarterly Exam">2. Quarterly Exam</Option>
                 <Option value="2nd Mid Term Exam">3. 2nd Mid Term </Option>
@@ -118,24 +132,27 @@ const AddQbankModal = ({acYr,classes,subjects}) => {
           <div className="flex flex-col sm:flex-row items-center mb-5 sm:space-x-5 space-y-3">
             <div className="w-full sm:w-1/2">
               <p className="mb-2 font-semibold text-gray-700">Teacher Name</p>
-              <Input label="Enter Teacher Name" onChange={(e)=>setTeacherName(e.target.value)}/>
+              <Input
+                label="Enter Teacher Name"
+                onChange={(e) => setTeacherName(e.target.value)}
+              />
             </div>
             <div className="w-full sm:w-1/2 mt-2 sm:mt-0">
               <p className="mb-2 font-semibold text-gray-700">Subject</p>
-              <Select label="Select Subject" onChange={(e)=>setSubject(e)}>
+              <Select label="Select Subject" onChange={(e) => setSubject(e)}>
                 {subjects &&
                   subjects.map((item, i) => (
                     <Option key={i} value={item}>
-                      {i+1}. {item}
+                      {i + 1}. {item}
                     </Option>
                   ))}
               </Select>
               <p className="mb-2 font-semibold text-gray-700">Class</p>
-              <Select label="Select Subject" onChange={(e)=>setStd(e)}>
+              <Select label="Select Subject" onChange={(e) => setStd(e)}>
                 {classes &&
                   classes.map((item, i) => (
                     <Option key={i} value={item}>
-                      {i+1}. {item}
+                      {i + 1}. {item}
                     </Option>
                   ))}
               </Select>
@@ -169,12 +186,19 @@ const AddQbankModal = ({acYr,classes,subjects}) => {
           </p>
         </div>
         <div className="flex flex-row items-center justify-between p-5 bg-white border-t border-gray-200 rounded-bl-lg rounded-br-lg">
-          <Button type="submit"  className="px-4 py-2 text-white font-semibold bg-blue-500 rounded" onClick={handleSubmit}>
-            Send
+         
+          <Button
+          disabled={isLoading?true:false}
+            type="submit"
+            className="px-4 py-2 text-white font-semibold bg-blue-500 rounded"
+            onClick={handleSubmit}
+          >
+            {isLoading?"Sending...":"Send"}
           </Button>
         </div>
       </Dialog>
-    </div>   )
-}
+    </div>
+  );
+};
 
-export default AddQbankModal
+export default AddQbankModal;

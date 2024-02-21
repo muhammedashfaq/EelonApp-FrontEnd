@@ -70,6 +70,7 @@ const AppRoutes = () => {
         <Route path={RouteObjects.AdminAprovals} element={<AdminAprovals />} />
 
         {/* STUDENTS ROUTS */}
+       
         <Route path={RouteObjects.root} element={<LandingPage />} />
         <Route path={RouteObjects.Login} element={<Login />} />
         <Route
