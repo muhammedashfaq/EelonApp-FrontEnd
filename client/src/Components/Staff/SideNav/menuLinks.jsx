@@ -159,7 +159,7 @@ const menu = [
       {
         title: "Show Subject wise marks",
         icon: faCaretRight,
-        href: RouteObjects.ExamtableDisplayPage,
+        href: RouteObjects.ShowSubwiseMarks,
       },
     ],
   },
