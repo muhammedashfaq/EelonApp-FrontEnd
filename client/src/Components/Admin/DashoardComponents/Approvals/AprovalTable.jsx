@@ -1,22 +1,89 @@
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Typography, Chip } from "@material-tailwind/react";
+import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import { RouteObjects } from '../../../../Routes/RoutObjects'
 
-const TABLE_HEAD = ["#NO", "Subject", "Term", "Document", "Status", " Remarks"];
+const TABLE_HEAD = ["#NO", "Subject", "Term", "Document", "Status", " Action"];
 
-const TABLE_ROWS = [
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
-    name: "John Michael",
-    email: "john@creative-tim.com",
-    job: "Manager",
-    org: "Organization",
-    online: true,
-    date: "23/04/18",
-  },
-];
+const AprovalTable = ({filteredData,api}) => {
+  const navigate=useNavigate()
+  const axiosPrivate=useAxiosPrivate()
+  const approveApi =api
+const RejectThis =async(id)=>{
+  try {
 
-const AprovalTable = () => {
+    const { value: text } = await Swal.fire({
+      input: "textarea",
+      inputLabel: "Message",
+      inputPlaceholder: "Type your message here...",
+      inputAttributes: {
+        "aria-label": "Type your message here"
+      },
+      showCancelButton: true
+    });
+    if (text) {
+   await axiosPrivate.put(`${approveApi}/${id}`,{status:"Rejected",remarks:text})
+   const Toast = Swal.mixin({
+     toast: true,
+     position: "top-end",
+     showConfirmButton: false,
+     timer: 3000,
+     color:"white",
+     background:"green",
+     timerProgressBar: true,
+     didOpen: (toast) => {
+       toast.onmouseenter = Swal.stopTimer;
+       toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    Toast.fire({
+      icon: "success",
+      title: "successfully Rejected"
+    });
+  }
+  } catch (error) {
+    console.log(error);
+  }
+}
+const ApproveThis =async(id)=>{
+  try {
+    const { value: text } = await Swal.fire({
+      input: "textarea",
+      inputLabel: "Message",
+      inputPlaceholder: "Type your message here...",
+      inputAttributes: {
+        "aria-label": "Type your message here"
+      },
+      showCancelButton: true
+    });
+    if (text) {
+      await axiosPrivate.put(`${approveApi}/${id}`,{status:"Approved" ,remarks:text})
+      
+      const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      color:"white",
+      background:"green",
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    Toast.fire({
+      icon: "success",
+      title: "successfully Approved"
+    });
+  }
+  } catch (error) {
+    console.log(error);
+  }
+}
   return (
     <div>
       <table className="mt-4 w-full min-w-max table-auto text-left">
@@ -33,43 +100,62 @@ const AprovalTable = () => {
                   className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
                 >
                   {head}{" "}
-                  {index !== TABLE_HEAD.length - 1 && (
-                    <FontAwesomeIcon
-                      icon={faChevronDown}
-                      strokeWidth={2}
-                      className="h-4 w-4"
-                    />
-                  )}
+              
                 </Typography>
               </th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {TABLE_ROWS.map(
-            ({ img, name, email, job, org, online, date }, index) => {
-              const isLast = index === TABLE_ROWS.length - 1;
-              const classes = isLast
-                ? "p-4"
-                : "p-4 border-b border-blue-gray-50";
+          {filteredData&&filteredData.map(
+            ({_id, subject,termName,status}, index) => {
+              const classes ="p-4 border-b border-blue-gray-50";
 
               return (
-                <tr key={name}>
+                <tr key={index}>
                   <td className={classes}>{index + 1}</td>{" "}
-                  <td className={classes}>English</td>
-                  <td className={classes}>1st Mid Term</td>
+                  <td className={classes}>{subject}</td>
+                  <td className={classes}>{termName}</td>
                   <td className={classes}>.pdf</td>
-                  <td className={classes}>
+                  <td className={classes}> 
                     <div className="w-max">
-                      <Chip
-                        variant="ghost"
-                        size="sm"
-                        value={online ? "Approved" : "Rejected"}
-                        color={online ? "green" : "blue-gray"}
-                      />
+
+               
+                    <Chip
+                            variant="ghost"
+                            size="sm"
+                            value={status}
+                            color={
+                              status === "Rejected"
+                                ? "red"
+                                : status === "Approved"
+                                ? "green"
+                                : status === "Pending"
+                                ? "blue-gray"
+                                : ""
+                            }
+                          />
                     </div>
                   </td>
-                  <td className={classes}>Approved by Admin</td>
+                  <td className={classes} >
+                    {status === "Pending" &&(
+
+                      
+                      <div className="flex space-x-3" >
+                             <span onClick={()=>ApproveThis(_id)}>
+                              <Chip color="green" size="sm" value="Aprove" className="cursor-pointer hover:bg-green-600" />
+                              </span> 
+                          
+                            <span onClick={()=>RejectThis(_id)}>
+
+                              <Chip color="red" size="sm" value="Reject" className="cursor-pointer hover:bg-red-600"/>
+                            </span>
+                            </div>
+                        )
+
+                            }
+
+                  </td>
                 </tr>
               );
             }

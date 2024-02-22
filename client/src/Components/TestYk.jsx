@@ -175,7 +175,9 @@ const TestYk = () => {
               <div className="mb-8 flex items-center justify-between gap-8">
                 <div>
                   <Typography variant="h5" color="blue-gray">
+
                     Students mark entry
+
                   </Typography>
                   {/* <Typography color="gray" className="mt-1 font-normal">
                     See information about all members

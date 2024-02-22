@@ -2,6 +2,7 @@ import {
   faClose,
   faEdit,
   faInfoCircle,
+  faPlus,
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,8 +17,9 @@ import React, { useState } from "react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import toast from "react-hot-toast";
 import useAuth from "../../../../Hooks/useAuth";
-const AddQpatternModal = ({ acYr, classes, subjects }) => {
+const AddQpatternModal = ({ acYr, classes, subjects,getDetails }) => {
   const { auth } = useAuth();
+  const [isLoading,setIsLoading]=useState(false)
 
   const axiosPrivate = useAxiosPrivate();
   const [open, setOpen] = React.useState(false);
@@ -56,14 +58,17 @@ const AddQpatternModal = ({ acYr, classes, subjects }) => {
         return;
       }
       setError(null);
-      console.log(formData);
+      setIsLoading(true)
       const response = await axiosPrivate.post(
         "/lessonplanning/qpattern",
         formData
       );
+      setIsLoading(false)
       handleOpen();
+      getDetails()
       toast.success("success");
     } catch (error) {
+      setIsLoading(false)
       console.log(error);
     }
   };
@@ -75,13 +80,13 @@ const AddQpatternModal = ({ acYr, classes, subjects }) => {
         onClick={handleOpen}
       >
         <FontAwesomeIcon
-          icon={faUserPlus}
+          icon={faPlus}
           strokeWidth={2}
           className="h-4 w-4"
         />{" "}
-        Add Syllabus
+        Add Question Pattern
       </Button>
-      <Dialog size="md" open={open} handler={handleOpen} className="w-full">
+      <Dialog size="md" open={open}  className="w-full">
         <div className="flex flex-row justify-between p-6 bg-white border-b border-gray-200 rounded-tl-lg rounded-tr-lg">
           <p className="font-semibold text-gray-800">
             Add {error && <p className="text-red-600">{error}</p>}
@@ -171,12 +176,13 @@ const AddQpatternModal = ({ acYr, classes, subjects }) => {
           </p>
         </div>
         <div className="flex flex-row items-center justify-between p-5 bg-white border-t border-gray-200 rounded-bl-lg rounded-br-lg">
-          <Button
+        <Button
+          disabled={isLoading?true:false}
             type="submit"
             className="px-4 py-2 text-white font-semibold bg-blue-500 rounded"
             onClick={handleSubmit}
           >
-            Send
+            {isLoading?"Sending...":"Send"}
           </Button>
         </div>
       </Dialog>
