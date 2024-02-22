@@ -13,18 +13,11 @@ import { faSort } from "@fortawesome/free-solid-svg-icons";
 import StaffHeader from "../../Header/landingPageHeader";
 import Banner from "../../../Banner/Banner";
 import StudentmarkDispRow from "./StudentmarkDispRow";
+import StudentClasswiseMarkDispRow from "./StudentClasswiseMarkDispRow";
 
-const TABLE_HEAD = [
-  "Sl.no",
-  "Roll no",
-  "Student name",
-  "Internal mark",
-  "External mark",
-  "Total",
-  "",
-];
+const TABLE_HEAD = ["Sl.no", "Roll no", "Student name"];
 
-const ShowSubwiseMarklist = () => {
+const ShowClasswiseMarks = () => {
   const axiosPrivate = useAxiosPrivate();
   const [marksData, setMarksData] = useState();
 
@@ -33,6 +26,7 @@ const ShowSubwiseMarklist = () => {
   const [academicYrDropdown, setacademicYrDropdown] = useState([]);
   const [selectedSubject, setselectedSubject] = useState();
   const [selectedClass, setselectedClass] = useState();
+  const [newTableHead, setnewTableHead] = useState(TABLE_HEAD);
 
   const [examType, setexamType] = useState();
   const [examTerm, setexamTerm] = useState();
@@ -45,6 +39,9 @@ const ShowSubwiseMarklist = () => {
         "classsection/subjects/dropdowns"
       );
       setsubjectDropdowns(response.data.subjects);
+      const newArray = TABLE_HEAD.concat([...response.data.subjects, "Total"]);
+      setnewTableHead(newArray);
+      console.log(response.data.subjects);
     } catch (error) {
       console.error(error);
     }
@@ -84,7 +81,7 @@ const ShowSubwiseMarklist = () => {
     };
     try {
       const response = await axiosPrivate.put(
-        "marks/exam/filter/subwise",
+        "marks/exam/filter/classwise",
         filterQuery
       );
       console.log(response);
@@ -112,26 +109,14 @@ const ShowSubwiseMarklist = () => {
               <div className="mb-8 flex items-center justify-between gap-8">
                 <div>
                   <Typography variant="h5" color="blue-gray">
-                    Students mark entry
+                    Class wise marklist
                   </Typography>
                   {/* <Typography color="gray" className="mt-1 font-normal">
                       See information about all members
                     </Typography> */}
                 </div>
 
-                <div className="w-40">
-                  <select
-                    label="Select subject"
-                    onChange={(e) => setselectedSubject(e.target.value)}
-                  >
-                    <option selected disabled>
-                      Select subject
-                    </option>
-                    {subjectDropdowns &&
-                      subjectDropdowns.map((item) => <option>{item}</option>)}
-                  </select>
-                </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex gap-2">
                   <div className="w-40">
                     <select
                       label="Select class"
@@ -180,7 +165,7 @@ const ShowSubwiseMarklist = () => {
               <table className="mt-4 w-full min-w-max table-auto text-left">
                 <thead>
                   <tr>
-                    {TABLE_HEAD.map((head, index) => (
+                    {newTableHead.map((head, index) => (
                       <th
                         key={head}
                         className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
@@ -191,7 +176,7 @@ const ShowSubwiseMarklist = () => {
                           className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
                         >
                           {head}{" "}
-                          {index !== TABLE_HEAD.length - 1 && (
+                          {index !== newTableHead.length - 1 && (
                             <IconButton variant="text" size="sm">
                               <FontAwesomeIcon icon={faSort} />
                             </IconButton>
@@ -210,7 +195,7 @@ const ShowSubwiseMarklist = () => {
                         : "p-4 border-b border-blue-gray-50";
 
                       return (
-                        <StudentmarkDispRow
+                        <StudentClasswiseMarkDispRow
                           index={index}
                           item={item}
                           classes={classes}
@@ -227,4 +212,4 @@ const ShowSubwiseMarklist = () => {
   );
 };
 
-export default ShowSubwiseMarklist;
+export default ShowClasswiseMarks;

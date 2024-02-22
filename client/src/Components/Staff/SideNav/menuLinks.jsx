@@ -161,6 +161,11 @@ const menu = [
         icon: faCaretRight,
         href: RouteObjects.ShowSubwiseMarks,
       },
+      {
+        title: "Class Subject wise marks",
+        icon: faCaretRight,
+        href: RouteObjects.ShowClasswiseMarks,
+      },
     ],
   },
 ];

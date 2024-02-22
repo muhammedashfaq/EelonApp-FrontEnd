@@ -51,6 +51,7 @@ import AdminAprovals from "../Pages/Admin/Home/AdminAprovals";
 import TimetableExamPage from "../Components/Staff/DashboardComponents/Timetables/ExamTimeTable/TimetableExamPage";
 import AddSubwiseMarks from "../Components/Staff/DashboardComponents/ExamModule/AddSubwiseMarks";
 import ShowSubwiseMarklist from "../Components/Staff/DashboardComponents/ExamModule/ShowSubwiseMarklist";
+import ShowClasswiseMarks from "../Components/Staff/DashboardComponents/ExamModule/ShowClasswiseMarks";
 
 const AppRoutes = () => {
   const isLoading = useSelector((state) => state.loading.isLoading);
@@ -154,6 +155,10 @@ const AppRoutes = () => {
         <Route
           path={RouteObjects.ShowSubwiseMarks}
           element={<ShowSubwiseMarklist />}
+        />
+        <Route
+          path={RouteObjects.ShowClasswiseMarks}
+          element={<ShowClasswiseMarks />}
         />
         ////////////////// TimeTable //////////////////////
         <Route

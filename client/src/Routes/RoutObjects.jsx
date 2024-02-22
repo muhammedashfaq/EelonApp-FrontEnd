@@ -54,6 +54,7 @@ export const RouteObjects = {
 
   ExamAddSubwiseMarks: "/staff/exam-module/addmarks",
   ShowSubwiseMarks: "/staff/exam-module/subjectwise-marks",
+  ShowClasswiseMarks: "/staff/exam-module/classwise-marks",
 
   AdminHome: "/adminhome",
   AdminAprovals: "/adminaprovals",
