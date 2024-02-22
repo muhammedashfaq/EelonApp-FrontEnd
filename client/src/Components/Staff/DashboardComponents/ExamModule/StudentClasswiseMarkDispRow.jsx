@@ -8,8 +8,16 @@ import {
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilSquare } from "@fortawesome/free-solid-svg-icons";
+import ShowClasswiseCell from "./ShowClasswiseCell";
 
-const StudentClasswiseMarkDispRow = ({ item, index, classes }) => {
+const StudentClasswiseMarkDispRow = ({
+  item,
+  index,
+  classes,
+  marksData,
+  subjectDropdowns,
+  student,
+}) => {
   const [InternalMark, setInternalMark] = useState();
   const [externalMark, setexternalMark] = useState();
   const [totalMark, settotalMark] = useState();
@@ -43,32 +51,15 @@ const StudentClasswiseMarkDispRow = ({ item, index, classes }) => {
           </div>
         </div>
       </td>
-      <td className={`${classes} bg-blue-gray-50/50 `}>
-        <div className="flex flex-col">
-          <Typography variant="small" color="blue-gray" className="font-normal">
-            {item?.internal}
-          </Typography>
-        </div>
-      </td>
-      <td className={classes}>
-        <Typography variant="small" color="blue-gray" className="font-normal">
-          {item?.external}
-        </Typography>
-      </td>
-      <td className={`${classes} bg-blue-gray-50/50 `}>
-        <Typography
-          variant="small"
-          color="blue-gray"
-          className="font-normal"
-        ></Typography>
-      </td>
-      <td className={`${classes}`}>
-        <Typography
-          variant="small"
-          color="blue-gray"
-          className="font-normal"
-        ></Typography>
-      </td>
+      {subjectDropdowns &&
+        subjectDropdowns.map((item) => (
+          <ShowClasswiseCell
+            classes={classes}
+            marksData={marksData}
+            subjectName={item}
+            student={student}
+          />
+        ))}
       <td className={`${classes} bg-blue-gray-50/50 `}>
         <Typography variant="small" color="blue-gray" className="font-normal">
           {item?.total}

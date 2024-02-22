@@ -31,6 +31,7 @@ const ShowClasswiseMarks = () => {
   const [examTerm, setexamTerm] = useState();
   const [examMonth, setexamMonth] = useState();
   const [academicYr, setacademicYr] = useState();
+  const [students, setstudents] = useState();
 
   const getSubjectsDropdown = async () => {
     try {
@@ -40,7 +41,6 @@ const ShowClasswiseMarks = () => {
       setsubjectDropdowns(response.data.subjects);
       const newArray = TABLE_HEAD.concat([...response.data.subjects, "Total"]);
       setnewTableHead(newArray);
-      console.log(response.data.subjects);
     } catch (error) {
       console.error(error);
     }
@@ -83,11 +83,24 @@ const ShowClasswiseMarks = () => {
         "marks/exam/filter/classwise",
         filterQuery
       );
-      console.log(response);
-      setMarksData(response.data[0].marksArray);
-      console.log(response.data[0].marksArray);
+      setMarksData(response.data);
+      console.log(response.data);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const getClasswiseStudents = async () => {
+    if (!selectedClass) return;
+    setstudents("");
+    const reqData = {
+      classId: selectedClass,
+    };
+    try {
+      const response = await axiosPrivate.put("users/student/filter", reqData);
+      setstudents(response.data);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -153,7 +166,10 @@ const ShowClasswiseMarks = () => {
                   <Button
                     variant="outlined"
                     size="sm"
-                    onClick={() => getMarks()}
+                    onClick={() => {
+                      getMarks();
+                      getClasswiseStudents();
+                    }}
                   >
                     Fetch data
                   </Button>
@@ -186,9 +202,9 @@ const ShowClasswiseMarks = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {marksData &&
-                    marksData.map((item, index) => {
-                      const isLast = index === marksData.length - 1;
+                  {students &&
+                    students.map((item, index) => {
+                      const isLast = index === students.length - 1;
                       const classes = isLast
                         ? "p-4"
                         : "p-4 border-b border-blue-gray-50";
@@ -198,6 +214,9 @@ const ShowClasswiseMarks = () => {
                           index={index}
                           item={item}
                           classes={classes}
+                          marksData={marksData}
+                          subjectDropdowns={subjectDropdowns}
+                          student={item}
                         />
                       );
                     })}
