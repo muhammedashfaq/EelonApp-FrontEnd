@@ -45,6 +45,7 @@ const AddSyllubusModal = ({ acYr, subjects, classes, getDetails }) => {
         termName,
         std,
         teacherId: auth?.userId,
+
       };
       if (
         !formData.year ||
@@ -59,7 +60,7 @@ const AddSyllubusModal = ({ acYr, subjects, classes, getDetails }) => {
       setError(null);
 
       setIsLoading(true);
-      const response = await axiosPrivate.post(
+    await axiosPrivate.post(
         "/lessonplanning/syllabus",
         formData
       );
@@ -69,8 +70,23 @@ const AddSyllubusModal = ({ acYr, subjects, classes, getDetails }) => {
       toast.success("success");
     } catch (error) {
       setIsLoading(false);
-      console.log(error);
-      toast.error(error.response);
+      console.error(error);
+    
+      let errorMessage = "An error occurred";
+    
+      if (error.response) {
+        const responseData = error.response.data;
+        
+        // Check if there is a specific error message in the response data
+        if (responseData && responseData.message) {
+          errorMessage = responseData.message;
+        } else {
+          errorMessage = "Something went wrong with the server";
+        }
+      }
+    
+      setError(errorMessage);
+      toast.error(errorMessage);
     }
   };
 
@@ -193,7 +209,7 @@ const AddSyllubusModal = ({ acYr, subjects, classes, getDetails }) => {
         </div>
         <div className="flex flex-row items-center justify-between p-5 bg-white border-t border-gray-200 rounded-bl-lg rounded-br-lg">
           <Button
-            disabled={isLoading ? true : false}
+            loading={isLoading}
             type="submit"
             className="px-4 py-2 text-white font-semibold bg-blue-500 rounded"
             onClick={handleSubmit}

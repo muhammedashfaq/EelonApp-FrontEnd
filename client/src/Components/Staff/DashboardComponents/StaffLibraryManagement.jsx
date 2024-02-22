@@ -38,7 +38,7 @@ const StaffLibraryManagement = () => {
             </Card>
           </Link>
 
-          <Link to={RouteObjects.Issuebooks}>
+          <Link to={`${RouteObjects.Issuebooks}/${1}`}>
             <Card className="flex flex-col border-cyan-200 rounded-md hover:cursor-pointer border-2 h-60 w-40 hover:scale-110 transition-all duration-200">
               <CardHeader>
                 <div className="bg-hero-pattern rounded-t-md">
