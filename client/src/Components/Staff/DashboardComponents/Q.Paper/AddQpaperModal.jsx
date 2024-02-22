@@ -175,7 +175,7 @@ const AddQpaperModal = ({acYr,classes,subjects,getDetails,teacherId}) => {
         </div>
         <div className="flex flex-row items-center justify-between p-5 bg-white border-t border-gray-200 rounded-bl-lg rounded-br-lg">
                <Button
-          disabled={isLoading?true:false}
+          loading={isLoading}
             type="submit"
             className="px-4 py-2 text-white font-semibold bg-blue-500 rounded"
             onClick={handleSubmit}

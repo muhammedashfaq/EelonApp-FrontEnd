@@ -73,6 +73,11 @@ const menu = [
         href: RouteObjects.AdminAprovals,
         icon: faCaretRight,
       },
+      {
+        title: "Generate HT",
+        href: RouteObjects.AdminGenerateHT,
+        icon: faCaretRight,
+      },
     ],
   },
   {

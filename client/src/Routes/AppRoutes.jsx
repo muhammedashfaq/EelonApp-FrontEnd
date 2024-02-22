@@ -52,6 +52,8 @@ import TimetableExamPage from "../Components/Staff/DashboardComponents/Timetable
 import AddSubwiseMarks from "../Components/Staff/DashboardComponents/ExamModule/AddSubwiseMarks";
 import ShowSubwiseMarklist from "../Components/Staff/DashboardComponents/ExamModule/ShowSubwiseMarklist";
 import ShowClasswiseMarks from "../Components/Staff/DashboardComponents/ExamModule/ShowClasswiseMarks";
+import AdminGenerateHT from "../Pages/Admin/Home/AdminGenerateHT";
+
 
 const AppRoutes = () => {
   const isLoading = useSelector((state) => state.loading.isLoading);
@@ -70,6 +72,10 @@ const AppRoutes = () => {
         {/* Admin ROUTS */}
         <Route path={RouteObjects.AdminHome} element={<AdminHome />} />
         <Route path={RouteObjects.AdminAprovals} element={<AdminAprovals />} />
+        <Route path={RouteObjects.AdminGenerateHT} element={<AdminGenerateHT />} />
+        {/* <Route path={RouteObjects.Admin} element={<AdminHome />} /> */}
+
+
         {/* STUDENTS ROUTS */}
        
         <Route path={RouteObjects.root} element={<LandingPage />} />
@@ -148,7 +154,7 @@ const AppRoutes = () => {
           path={RouteObjects.AttandanceReport}
           element={<AttendanceReportPage />}
         />
-        /////////////////// Exam module //////////////////
+        {/* /////////////////// Exam module ////////////////// */}
         <Route
           path={RouteObjects.ExamAddSubwiseMarks}
           element={<AddSubwiseMarks />}
@@ -157,11 +163,15 @@ const AppRoutes = () => {
           path={RouteObjects.ShowSubwiseMarks}
           element={<ShowSubwiseMarklist />}
         />
+
         <Route
           path={RouteObjects.ShowClasswiseMarks}
           element={<ShowClasswiseMarks />}
         />
         ////////////////// TimeTable //////////////////////
+
+  
+
         <Route
           path={RouteObjects.examTimeTable}
           element={<ExamTimeTablePage />}
