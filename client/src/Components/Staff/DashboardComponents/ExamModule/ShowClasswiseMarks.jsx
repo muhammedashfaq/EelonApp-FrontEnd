@@ -12,7 +12,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
 import StaffHeader from "../../Header/landingPageHeader";
 import Banner from "../../../Banner/Banner";
-import StudentmarkDispRow from "./StudentmarkDispRow";
 import StudentClasswiseMarkDispRow from "./StudentClasswiseMarkDispRow";
 
 const TABLE_HEAD = ["Sl.no", "Roll no", "Student name"];

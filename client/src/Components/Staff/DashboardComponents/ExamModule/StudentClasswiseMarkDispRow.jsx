@@ -62,7 +62,7 @@ const StudentClasswiseMarkDispRow = ({ item, index, classes }) => {
           className="font-normal"
         ></Typography>
       </td>
-      <td className={`${classes} bg-blue-gray-50/50 `}>
+      <td className={`${classes}`}>
         <Typography
           variant="small"
           color="blue-gray"
