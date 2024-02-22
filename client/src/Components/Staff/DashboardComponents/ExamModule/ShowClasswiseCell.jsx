@@ -30,7 +30,17 @@ const ShowClasswiseCell = ({
     <>
       <td className={`${classes} bg-blue-gray-50/50 `}>
         <div className="flex flex-col">
-          <Typography variant="small" color="blue-gray" className="font-normal">
+          <Typography
+            variant="small"
+            color={
+              Celldata?.total >= Number(80)
+                ? "light-green"
+                : Celldata?.total <= 45
+                ? "red"
+                : "blue-gray"
+            }
+            className="font-normal"
+          >
             {Celldata?.total}
           </Typography>
         </div>
