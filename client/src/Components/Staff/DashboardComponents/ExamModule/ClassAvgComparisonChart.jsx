@@ -68,7 +68,7 @@ const ClassAvgComparisonChart = ({ classAvgData, studentMarklist }) => {
     },
     yaxis: {
       title: {
-        text: "Grade point",
+        text: "Total marks",
       },
     },
     fill: {

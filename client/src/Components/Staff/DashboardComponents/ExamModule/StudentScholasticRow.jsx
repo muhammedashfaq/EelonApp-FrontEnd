@@ -9,30 +9,21 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilSquare } from "@fortawesome/free-solid-svg-icons";
 
-const StudentMarkRow = ({ item, index, classes, handleData }) => {
-  const [InternalMark, setInternalMark] = useState();
-  const [externalMark, setexternalMark] = useState();
-  const [totalMark, settotalMark] = useState();
-
-  function calculateTotal() {
-    if (InternalMark && externalMark) {
-      const total = Number(InternalMark) + Number(externalMark);
-      settotalMark(total);
-    } else if (InternalMark) {
-      settotalMark(Number(InternalMark));
-    } else if (externalMark) {
-      settotalMark(Number(externalMark));
-    } else if (!InternalMark || externalMark) {
-      settotalMark(null);
-    }
-  }
+const StudentScholasticRow = ({ item, index, classes, handleData }) => {
+  const [art_craft, setart_craft] = useState();
+  const [mentalAttitudes, setmentalAttitudes] = useState();
+  const [activitiesLs, setactivitiesLs] = useState();
+  const [physicalExcs, setphysicalExcs] = useState();
+  const [lifeSkills, setlifeSkills] = useState();
 
   const createData = () => {
     const jsonData = {
       id: index,
-      internal: InternalMark,
-      external: externalMark,
-      total: totalMark,
+      art_craft,
+      mentalAttitudes,
+      activitiesLs,
+      physicalExcs,
+      lifeSkills,
       studentId: item?._id,
       rollNo: item?.rollNo,
       studentName: item?.studentName,
@@ -41,11 +32,8 @@ const StudentMarkRow = ({ item, index, classes, handleData }) => {
   };
   useEffect(() => {
     createData();
-  }, [InternalMark, externalMark, totalMark]);
+  }, [art_craft, mentalAttitudes, activitiesLs, physicalExcs, lifeSkills]);
 
-  useEffect(() => {
-    calculateTotal();
-  }, [externalMark, InternalMark]);
   return (
     <tr key={index} className="even:bg-teal-50/50">
       <td className={`${classes} w-10 `}>
@@ -79,7 +67,10 @@ const StudentMarkRow = ({ item, index, classes, handleData }) => {
         <div className="flex flex-col">
           <Typography variant="small" color="blue-gray" className="font-normal">
             <div className="w-28">
-              <select>
+              <select onChange={(e) => setart_craft(e.target.value)}>
+                <option selected disabled value="">
+                  Select grade
+                </option>
                 <option value="A">A Grade</option>
                 <option value="B">B Grade</option>
                 <option value="C">C Grade</option>
@@ -91,7 +82,11 @@ const StudentMarkRow = ({ item, index, classes, handleData }) => {
       <td className={classes}>
         <Typography variant="small" color="blue-gray" className="font-normal">
           <div className="w-28">
-            <select>
+            <select onChange={(e) => setmentalAttitudes(e.target.value)}>
+              <option selected disabled value="">
+                Select grade
+              </option>
+
               <option value="A">A Grade</option>
               <option value="B">B Grade</option>
               <option value="C">C Grade</option>
@@ -102,7 +97,11 @@ const StudentMarkRow = ({ item, index, classes, handleData }) => {
       <td className={`${classes} bg-blue-gray-50/50 `}>
         <Typography variant="small" color="blue-gray" className="font-normal">
           <div className="w-28">
-            <select>
+            <select onChange={(e) => setactivitiesLs(e.target.value)}>
+              <option selected disabled value="">
+                Select grade
+              </option>
+
               <option value="A">A Grade</option>
               <option value="B">B Grade</option>
               <option value="C">C Grade</option>
@@ -113,7 +112,11 @@ const StudentMarkRow = ({ item, index, classes, handleData }) => {
       <td className={classes}>
         <Typography variant="small" color="blue-gray" className="font-normal">
           <div className="w-28">
-            <select>
+            <select onChange={(e) => setphysicalExcs(e.target.value)}>
+              <option selected disabled value="">
+                Select grade
+              </option>
+
               <option value="A">A Grade</option>
               <option value="B">B Grade</option>
               <option value="C">C Grade</option>
@@ -124,7 +127,11 @@ const StudentMarkRow = ({ item, index, classes, handleData }) => {
       <td className={`${classes} bg-blue-gray-50/50 `}>
         <Typography variant="small" color="blue-gray" className="font-normal">
           <div className="w-28">
-            <select>
+            <select onChange={(e) => setlifeSkills(e.target.value)}>
+              <option selected disabled value="">
+                Select grade
+              </option>
+
               <option value="A">A Grade</option>
               <option value="B">B Grade</option>
               <option value="C">C Grade</option>
@@ -136,4 +143,4 @@ const StudentMarkRow = ({ item, index, classes, handleData }) => {
   );
 };
 
-export default StudentMarkRow;
+export default StudentScholasticRow;
