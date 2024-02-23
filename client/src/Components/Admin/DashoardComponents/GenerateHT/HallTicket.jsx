@@ -61,7 +61,7 @@ getTimetable()
           <div className="w-1/2 m-10 border-2 border-gray-300 bg-gradient-to-r from-orange-50 to-lime-50 rounded-lg shadow-md p-4 sm:w-4/5 md:w-4/5 lg:w-3/5">
             <div className=" ">
               <div className="flex justify-center mb-4 text-2xl font-bold text-blue-600">
-                The New JKKM School
+              Munirajah Matriculation High School
               </div>
 
               <hr className="mb-4" />

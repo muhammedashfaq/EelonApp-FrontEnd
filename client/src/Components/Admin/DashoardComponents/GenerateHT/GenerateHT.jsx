@@ -114,10 +114,20 @@ const GenerateHT = () => {
   }, []);
   return (
     <div className="m-10">
-      <GenerateModal acYr={acYr} classes={classes} />
-
       <Card className="h-full w-full">
-        <CardBody className=" px-0">
+
+
+        <div  className="flex items-center bg-dark-purple rounded-md" >
+    <span className="mr-auto">
+
+      <GenerateModal acYr={acYr} classes={classes}  />
+    </span>
+       <span className="mr-auto">
+
+        <h1 className="font-normal font-semibold text-white text-2xl uppercase">Class Section Details of HallTicket</h1>
+       </span>
+        </div>
+        <CardBody className=" h-96 overflow-y-auto px-0">
           <table className="mt-4 w-full min-w-max table-auto text-left">
             <thead>
               <tr>
