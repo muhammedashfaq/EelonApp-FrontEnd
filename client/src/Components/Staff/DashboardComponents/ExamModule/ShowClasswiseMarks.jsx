@@ -31,10 +31,7 @@ const ShowClasswiseMarks = () => {
   const [sortedArray, setsortedArray] = useState();
   const [asc, setasc] = useState(false);
 
-  const [examType, setexamType] = useState();
-  const [examTerm, setexamTerm] = useState();
-  const [examMonth, setexamMonth] = useState();
-  const [students, setstudents] = useState();
+  const [SubjectsArray, setSubjectsArray] = useState();
 
   const getSubjectsDropdown = async () => {
     try {
@@ -42,12 +39,12 @@ const ShowClasswiseMarks = () => {
         "classsection/subjects/dropdowns"
       );
       setsubjectDropdowns(response.data.subjects);
-      const sortedArray = response.data.subjects.sort((a, b) =>
-        a.localeCompare(b)
-      );
-      const newArray = TABLE_HEAD.concat([...sortedArray, "Total"]);
+      // const sortedArray = response.data.subjects.sort((a, b) =>
+      //   a.localeCompare(b)
+      // );
+      // const newArray = TABLE_HEAD.concat([...sortedArray, "Total"]);
 
-      setnewTableHead(newArray);
+      // setnewTableHead(newArray);
     } catch (error) {
       console.error(error);
     }
@@ -86,6 +83,7 @@ const ShowClasswiseMarks = () => {
       classSection: selectedClass,
       subject: selectedSubject,
     };
+    if (!filterQuery) return;
     try {
       const response = await axiosPrivate.put(
         "marks/exam/filter/classwise",
@@ -104,15 +102,24 @@ const ShowClasswiseMarks = () => {
     }
   };
 
-  const getClasswiseStudents = async () => {
-    if (!selectedClass) return;
-    setstudents("");
-    const reqData = {
-      classId: selectedClass,
-    };
+  const getSubs = async () => {
     try {
-      const response = await axiosPrivate.put("users/student/filter", reqData);
-      setstudents(response.data);
+      const filterQuery = {
+        academicYear: academicYr,
+        classSection: selectedClass,
+        subject: selectedSubject,
+      };
+      if (!filterQuery) return;
+      const response = await axiosPrivate.put("marks/exam/subs", filterQuery);
+
+      const sortedArray = response.data[0].subjects.sort((a, b) =>
+        a.localeCompare(b)
+      );
+
+      const newArray = TABLE_HEAD.concat([...sortedArray, "Total"]);
+
+      setnewTableHead(newArray);
+      setSubjectsArray(response.data[0].subjects);
     } catch (error) {
       console.error(error);
     }
@@ -216,7 +223,7 @@ const ShowClasswiseMarks = () => {
                     size="sm"
                     onClick={() => {
                       getMarks();
-                      getClasswiseStudents();
+                      getSubs();
                     }}
                   >
                     Fetch data
