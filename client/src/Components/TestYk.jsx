@@ -20,6 +20,8 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
+import GradeDistPieChart from "./Staff/DashboardComponents/ExamModule/GradeDistPieChart";
+import ClassAvgComparisonChart from "./Staff/DashboardComponents/ExamModule/ClassAvgComparisonChart";
 
 const TABLE_HEAD = [
   "Sl.no",
@@ -318,7 +320,12 @@ export default function TestYk() {
                 </tbody>
               </table>
             </CardBody>
-            <CardFooter></CardFooter>
+            <CardFooter>
+              <div className="flex justify-evenly my-10">
+                <GradeDistPieChart />
+                <ClassAvgComparisonChart />
+              </div>
+            </CardFooter>
           </Card>
         </div>
       </div>
