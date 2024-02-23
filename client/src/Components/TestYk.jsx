@@ -35,7 +35,7 @@ const TABLE_HEAD = [
 export default function TestYk() {
   const axiosPrivate = useAxiosPrivate();
   const [StudentId, setStudentId] = useState();
-  const [studentMarklist, setstudentMarklist] = useState();
+  const [studentMarklist, setstudentMarklist] = useState([]);
   const [classSectionDropdowns, setClassSectionDropdowns] = useState();
   const [academicYrDropdown, setacademicYrDropdown] = useState([]);
   const [selectedClass, setselectedClass] = useState();
@@ -339,7 +339,7 @@ export default function TestYk() {
             <CardFooter>
               {classAvgData && (
                 <div className="flex justify-evenly my-10">
-                  <GradeDistPieChart />
+                  <GradeDistPieChart studentMarklist={studentMarklist}/>
                   <ClassAvgComparisonChart
                     classAvgData={classAvgData}
                     studentMarklist={studentMarklist}

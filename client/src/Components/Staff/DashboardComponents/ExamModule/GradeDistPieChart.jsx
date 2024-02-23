@@ -1,15 +1,22 @@
 import React, { useEffect } from "react";
 import ApexCharts from "apexcharts";
 
-const GradeDistPieChart = () => {
+const GradeDistPieChart = (studentMarklist) => {
+
+
+  const data = studentMarklist.studentMarklist
+
+  const labels = data.map(data => data._id);
+  const series = data.map(data => data.total);
+  console.log(series);
   useEffect(() => {
     const options = {
-      series: [44, 50, 13, 43, 22, 5],
+      series: series,
       chart: {
         width: 380,
         type: "pie",
       },
-      labels: ["A2", "B1", "B2", "C1", "D", "E2"],
+      labels:labels,
       responsive: [
         {
           breakpoint: 480,

@@ -132,6 +132,8 @@ const ShowClasswiseMarks = () => {
                   <div className="w-40">
                     <select
                       label="Select class"
+                      className="rounded-md list-none"
+                      
                       onChange={(e) => setselectedClass(e.target.value)}
                     >
                       <option selected disabled>
@@ -139,8 +141,8 @@ const ShowClasswiseMarks = () => {
                       </option>
 
                       {classSectionDropdowns &&
-                        classSectionDropdowns.map((item) => (
-                          <option>{item}</option>
+                        classSectionDropdowns.map((item,i) => (
+                          <option key={i}>{item}</option>
                         ))}
                     </select>
                   </div>

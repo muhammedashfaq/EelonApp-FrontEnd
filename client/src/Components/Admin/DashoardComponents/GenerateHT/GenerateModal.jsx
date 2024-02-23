@@ -7,6 +7,7 @@ import {
   CardBody,
   CardFooter,
   Dialog,
+  IconButton,
   Input,
   Option,
   Select,
@@ -17,7 +18,7 @@ import React from "react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { faClose, faL } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faL, faPlus } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 
 const GenerateModal = ({ acYr, classes }) => {
@@ -68,7 +69,7 @@ const GenerateModal = ({ acYr, classes }) => {
       });
       Toast.fire({
         icon: "success",
-        title: "Signed in successfully",
+        title: "Generated successfully",
       });
     } catch (error) {
       setIsLoading(false);
@@ -90,13 +91,16 @@ const GenerateModal = ({ acYr, classes }) => {
           unmount: { scale: 0, y: 25 },
         }}
       >
+        <IconButton variant="text">
+
         <FontAwesomeIcon
           icon={faSquarePlus}
           onClick={handleOpen}
           size="3x"
+          color="white"
           className="cursor-pointer"
-          style={{ color: "#54c066" }}
-        />
+          />
+          </IconButton>
       </Tooltip>
       <Dialog size="xs" open={open} className="bg-transparent shadow-none ">
         <Card className="mx-auto w-full max-w-[24rem]">

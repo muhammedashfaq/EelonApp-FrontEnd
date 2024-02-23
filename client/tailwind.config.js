@@ -12,6 +12,10 @@ export default withMT({
       'Laptop': '1280px',
     },
     extend: {
+      fontFamily:{
+        normal:["Mitr" ,"sans-serif"],
+        stylish:["Tilt Prism", "sans-serif"]
+      },
       colors: {
         "dark-purple": "#081A51",
         "light-white": "rgba(255,255,255,0.18)",
