@@ -1,4 +1,4 @@
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Card,
@@ -13,171 +13,176 @@ import GenerateModal from "./GenerateModal";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
-import HallTicket from "./HallTicket";
+import { Link } from "react-router-dom";
+import { RouteObjects } from "../../../../Routes/RoutObjects";
 
-const TABLE_HEAD = ["Member", "Function", "Status", "Employed", ""];
-
-const TABLE_ROWS = [
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
-    name: "John Michael",
-    email: "john@creative-tim.com",
-    job: "Manager",
-    org: "Organization",
-    online: true,
-    date: "23/04/18",
-  },
-];
+const TABLE_HEAD = ["#NO", "Class", "Term Name", "view" ,"Action"];
 
 const GenerateHT = () => {
-    const [acYr,setAcYr]=useState([])
-    const[classes,setClasses]=useState([])
+  const [acYr, setAcYr] = useState([]);
+  const [classes, setClasses] = useState([]);
+  const [htData, setHTdata] = useState([]);
 
-    const axiosPrivate=useAxiosPrivate()
-  
-  const getAcYrndubjects =async()=>{
+  const axiosPrivate = useAxiosPrivate();
+
+
+  const deleteItem= async (id)=>{
     try {
+
+     const result= await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      })
+        if (result.isConfirmed) {
+          const response = await axiosPrivate.delete(`marks/halltickets/${id}`)
+          if(response.data){
+
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success"
+            });
+            getGeneratedHT()
+          }else{
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Something went wrong!",
+            });
+          }
+          
+        }
         
-        const response= await axiosPrivate.get("classsection/academicyear/academicyear")
-        if(response){
-            const sortedData = response.data?.academicYear.sort((a, b) =>
+    } catch (error) {
+      console.log(error)
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
+    }
+    
+  }
+  const getGeneratedHT = async () => {
+    try {
+      const response = await axiosPrivate.get("marks/halltickets");
+      setHTdata(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getGeneratedHT();
+  });
+
+  const getAcYrndubjects = async () => {
+    try {
+      const response = await axiosPrivate.get(
+        "classsection/academicyear/academicyear"
+      );
+      if (response) {
+        const sortedData = response.data?.academicYear.sort((a, b) =>
+          a.localeCompare(b)
+        );
+        setAcYr(sortedData);
+
+        if (response) {
+          const response3 = await axiosPrivate.get("classsection/dropdowns");
+          const sortedData2 = response3.data?.sort((a, b) =>
             a.localeCompare(b)
           );
-            setAcYr(sortedData)
-
-            if(response){
-                const response3 =await axiosPrivate.get("classsection/dropdowns/std")
-                const sortedData2 = response3.data?.sort((a, b) =>
-                a.localeCompare(b))
-                setClasses(sortedData2)
-            }
+          setClasses(sortedData2);
         }
-
-
+      }
     } catch (error) {
-        console.log(error);
-        Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong!",
-          });
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
     }
-  }
-    useEffect(()=>{
-getAcYrndubjects()
-
-  },[])
+  };
+  useEffect(() => {
+    getAcYrndubjects();
+  }, []);
   return (
-
     <div className="m-10">
-        <GenerateModal acYr={acYr} classes={classes}/>
-    <Card className="h-full w-full">
-      <CardBody className=" px-0">
-        <table className="mt-4 w-full min-w-max table-auto text-left">
-          <thead>
-            <tr>
-              {TABLE_HEAD.map((head) => (
-                <th
-                  key={head}
-                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
-                >
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                    >
-                    {head}
-                  </Typography>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {TABLE_ROWS.map(
-              ({ img, name, email, job, org, online, date }, index) => {
-                const isLast = index === TABLE_ROWS.length - 1;
-                const classes = isLast
-                  ? "p-4"
-                  : "p-4 border-b border-blue-gray-50";
-                  
-                  return (
-                  <tr key={name}>
-                    <td className={classes}>
-                      <div className="flex items-center gap-3">
-                        <Avatar src={img} alt={name} size="sm" />
-                        <div className="flex flex-col">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                            >
-                            {name}
-                          </Typography>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal opacity-70"
-                            >
-                            {email}
-                          </Typography>
-                        </div>
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <div className="flex flex-col">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                          >
-                          {job}
-                        </Typography>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal opacity-70"
-                          >
-                          {org}
-                        </Typography>
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <div className="w-max">
-                        <Chip
-                          variant="ghost"
-                          size="sm"
-                          value={online ? "online" : "offline"}
-                          color={online ? "green" : "blue-gray"}
-                          />
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {date}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Tooltip content="Edit User">
-                        <IconButton variant="text">
-                          <FontAwesomeIcon icon={faEdit} className="h-4 w-4" />
-                        </IconButton>
-                      </Tooltip>
-                    </td>
-                  </tr>
-                );
-              }
-            )}
-          </tbody>
-        </table>
-      </CardBody>
-    </Card>
+      <GenerateModal acYr={acYr} classes={classes} />
 
-    <HallTicket/>
-                </div>
+      <Card className="h-full w-full">
+        <CardBody className=" px-0">
+          <table className="mt-4 w-full min-w-max table-auto text-left">
+            <thead>
+              <tr>
+                {TABLE_HEAD.map((head) => (
+                  <th
+                    key={head}
+                    className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                  >
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal leading-none opacity-70"
+                    >
+                      {head}
+                    </Typography>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {htData.length === 0 ? (
+                <tr className="flex justify-center items-center">
+                  No Data Availiable
+                </tr>
+              ):(
+                <>
+
+                {htData &&
+                  htData.map((item, index) => {
+                  const classes = "p-2 border-b border-blue-gray-50 ";
+
+                  return (
+                    <tr key={index}>
+                      <td className={classes}>{index + 1}</td>
+                      <td className={classes}>{item.classSection}</td>
+                      <td className={classes}>{item.term}</td>
+
+                      <td className={classes}>
+                        <div className="w-max">
+
+                        <Link to={`${RouteObjects.HTClasswise}/${item.classSection}/${item.term}/${item.academicYear}`}  >
+                        <Chip className="cursor-pointer" size="sm" color="green" value="Generate" />
+                        </Link>
+                        
+                        </div>
+                      </td>
+                      <td className={classes}>
+                            <IconButton variant="text" onClick={()=>deleteItem(item._id)}>
+                                <FontAwesomeIcon icon={faTrashCan} color="red" size="xl"/>
+                            </IconButton>
+
+                        </td>
+                    </tr>
+                  );
+                })}
+
+                </>
+                )}
+                
+            </tbody>
+          </table>
+        </CardBody>
+      </Card>
+
+    </div>
   );
 };
 

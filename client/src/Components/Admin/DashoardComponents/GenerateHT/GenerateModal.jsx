@@ -18,6 +18,7 @@ import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { faClose, faL } from "@fortawesome/free-solid-svg-icons";
+import Swal from "sweetalert2";
 
 const GenerateModal = ({ acYr, classes }) => {
   const [open, setOpen] = useState(false);
@@ -25,7 +26,7 @@ const GenerateModal = ({ acYr, classes }) => {
   const [std, setStd] = useState("");
   const [termName, setTermName] = useState("");
   const [error, setError] = useState("");
-  const [isLoading,setIsLoading]=useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
 
@@ -39,22 +40,44 @@ const GenerateModal = ({ acYr, classes }) => {
   const handleSubmit = async () => {
     const formData = {
       academicYear,
-      std,
-      termName,
+      classSection: std,
+      term: termName,
     };
 
-    if (!formData.academicYear || !formData.std || !formData.termName) {
+    if (!formData.academicYear || !formData.classSection || !formData.term) {
       setError("All Fields Are Required");
       return;
     }
     try {
-        setIsLoading(true)
-      const generateHalticketResponse = await axiosPrivate.post("");
-      setIsLoading(false)
+      setIsLoading(true);
+      await axiosPrivate.post("marks/halltickets", formData);
+      setIsLoading(false);
+      handleOpen();
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        color: "white",
+        background: "green",
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        },
+      });
+      Toast.fire({
+        icon: "success",
+        title: "Signed in successfully",
+      });
     } catch (error) {
-        setIsLoading(false)
+      setIsLoading(false);
       console.log(error);
-
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
     }
   };
 
@@ -113,7 +136,7 @@ const GenerateModal = ({ acYr, classes }) => {
               <Option value="Annual Exam">6. Annual Exam</Option>
             </Select>
 
-            <Select label="Class" value={std} onChange={(e) => setStd(e)}>
+            <Select label="Class" onChange={(e) => setStd(e)}>
               {classes &&
                 classes.map((item, i) => (
                   <Option key={i} value={item}>
@@ -123,17 +146,16 @@ const GenerateModal = ({ acYr, classes }) => {
             </Select>
           </CardBody>
           <CardFooter className="pt-0">
-          <Button
-  loading={isLoading}
-  color="blue"
-  type="submit"
-  variant="gradient"
-  onClick={handleSubmit}
-  fullWidth
->
-  {isLoading ? "Loading.." : "Submit"}
-</Button>
-
+            <Button
+              loading={isLoading}
+              color="blue"
+              type="submit"
+              variant="gradient"
+              onClick={handleSubmit}
+              fullWidth
+            >
+              {isLoading ? "Loading.." : "Submit"}
+            </Button>
           </CardFooter>
         </Card>
       </Dialog>
