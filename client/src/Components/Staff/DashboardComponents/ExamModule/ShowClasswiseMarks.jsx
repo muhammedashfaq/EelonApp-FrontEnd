@@ -28,6 +28,9 @@ const ShowClasswiseMarks = () => {
   const [academicYr, setacademicYr] = useState();
   const [newTableHead, setnewTableHead] = useState(TABLE_HEAD);
 
+  const [sortedArray, setsortedArray] = useState();
+  const [asc, setasc] = useState(false);
+
   const [examType, setexamType] = useState();
   const [examTerm, setexamTerm] = useState();
   const [examMonth, setexamMonth] = useState();
@@ -39,7 +42,11 @@ const ShowClasswiseMarks = () => {
         "classsection/subjects/dropdowns"
       );
       setsubjectDropdowns(response.data.subjects);
-      const newArray = TABLE_HEAD.concat([...response.data.subjects, "Total"]);
+      const sortedArray = response.data.subjects.sort((a, b) =>
+        a.localeCompare(b)
+      );
+      const newArray = TABLE_HEAD.concat([...sortedArray, "Total"]);
+
       setnewTableHead(newArray);
     } catch (error) {
       console.error(error);
@@ -73,6 +80,7 @@ const ShowClasswiseMarks = () => {
 
   const getMarks = async () => {
     setMarksData(null);
+    setsortedArray(null);
     const filterQuery = {
       academicYear: academicYr,
       classSection: selectedClass,
@@ -83,6 +91,12 @@ const ShowClasswiseMarks = () => {
         "marks/exam/filter/classwise",
         filterQuery
       );
+      const sortArray = () => {
+        setsortedArray(
+          item.marks.sort((a, b) => a.subject.localeCompare(b.subject))
+        );
+      };
+
       setMarksData(response.data);
       console.log(response.data);
     } catch (error) {
@@ -101,6 +115,40 @@ const ShowClasswiseMarks = () => {
       setstudents(response.data);
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const sortByTotal = (value) => {
+    setasc((prev) => !prev);
+    if (value === "Subject" && asc) {
+      setsortedArray(marksData.sort((a, b) => b._id.localeCompare(a._id)));
+    } else if (value === "Subject" && !asc) {
+      setsortedArray(marksData.sort((a, b) => a._id.localeCompare(b._id)));
+    }
+    if (value === "Chemistry" && asc) {
+      setsortedArray(marksData.sort((a, b) => b.total - a.total));
+    } else if (value === "Chemistry" && !asc) {
+      setsortedArray(marksData.sort((a, b) => a.total - b.total));
+    }
+    if (value === "English" && asc) {
+      setsortedArray(marksData.sort((a, b) => b.total - a.total));
+    } else if (value === "English" && !asc) {
+      setsortedArray(marksData.sort((a, b) => a.total - b.total));
+    }
+    if (value === "Maths" && asc) {
+      setsortedArray(marksData.sort((a, b) => b.total - a.total));
+    } else if (value === "Maths" && !asc) {
+      setsortedArray(marksData.sort((a, b) => a.total - b.total));
+    }
+    if (value === "Physics" && asc) {
+      setsortedArray(marksData.sort((a, b) => b.total - a.total));
+    } else if (value === "Physics" && !asc) {
+      setsortedArray(marksData.sort((a, b) => a.total - b.total));
+    }
+    if (value === "Tamil" && asc) {
+      setsortedArray(marksData.sort((a, b) => b.total - a.total));
+    } else if (value === "Tamil" && !asc) {
+      setsortedArray(marksData.sort((a, b) => a.total - b.total));
     }
   };
 
@@ -194,7 +242,11 @@ const ShowClasswiseMarks = () => {
                         >
                           {head}{" "}
                           {index !== newTableHead.length - 1 && (
-                            <IconButton variant="text" size="sm">
+                            <IconButton
+                              variant="text"
+                              size="sm"
+                              onClick={() => sortByTotal(head)}
+                            >
                               <FontAwesomeIcon icon={faSort} />
                             </IconButton>
                           )}
@@ -204,24 +256,40 @@ const ShowClasswiseMarks = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {students &&
-                    students.map((item, index) => {
-                      const isLast = index === students.length - 1;
-                      const classes = isLast
-                        ? "p-4"
-                        : "p-4 border-b border-blue-gray-50";
+                  {sortedArray
+                    ? sortedArray.map((item, index) => {
+                        const isLast = index === sortedArray.length - 1;
+                        const classes = isLast
+                          ? "p-4"
+                          : "p-4 border-b border-blue-gray-50";
 
-                      return (
-                        <StudentClasswiseMarkDispRow
-                          index={index}
-                          item={item}
-                          classes={classes}
-                          marksData={marksData}
-                          subjectDropdowns={subjectDropdowns}
-                          student={item}
-                        />
-                      );
-                    })}
+                        return (
+                          <StudentClasswiseMarkDispRow
+                            index={index}
+                            item={item}
+                            classes={classes}
+                            subjectDropdowns={subjectDropdowns}
+                            student={item}
+                          />
+                        );
+                      })
+                    : marksData &&
+                      marksData.map((item, index) => {
+                        const isLast = index === marksData.length - 1;
+                        const classes = isLast
+                          ? "p-4"
+                          : "p-4 border-b border-blue-gray-50";
+
+                        return (
+                          <StudentClasswiseMarkDispRow
+                            index={index}
+                            item={item}
+                            classes={classes}
+                            subjectDropdowns={subjectDropdowns}
+                            student={item}
+                          />
+                        );
+                      })}
                 </tbody>
               </table>
             </CardBody>

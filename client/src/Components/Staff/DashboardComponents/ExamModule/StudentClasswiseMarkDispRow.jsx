@@ -18,16 +18,60 @@ const StudentClasswiseMarkDispRow = ({
   subjectDropdowns,
   student,
 }) => {
-  const [InternalMark, setInternalMark] = useState();
-  const [externalMark, setexternalMark] = useState();
-  const [totalMark, settotalMark] = useState();
+  const [sortedArray, setsortedArray] = useState();
+  const [grandTotal, setgrandTotal] = useState();
 
+  const sortArray = () => {
+    setsortedArray(
+      item.marks.sort((a, b) => a.subject.localeCompare(b.subject))
+    );
+  };
+
+  function calculateGrandTotal() {
+    let Total = 0;
+    item?.marks.forEach((item) => {
+      Total += item.total;
+    });
+    setgrandTotal(Total);
+  }
+
+  useEffect(() => {
+    sortArray();
+    calculateGrandTotal();
+  }, [item]);
   return (
-    <tr key={index} className="even:bg-teal-50/50">
-      <td className={`${classes} w-10 `}>
-        <Typography className="text-center">{index + 1}</Typography>
-      </td>
-      <td className={`${classes} w-10 bg-blue-gray-50/50 `}>
+    <>
+      <tr key={index} className="even:bg-teal-50/50">
+        <td className={`${classes} w-10 `}>
+          <Typography className="text-center">{index + 1}</Typography>
+        </td>
+        <td className={`${classes} w-10 `}>
+          <Typography className="text-center">{item?.rollNo}</Typography>
+        </td>
+        <td className={`${classes} w-10 `}>
+          <Typography className="text-center">{item?.studentName}</Typography>
+        </td>
+        {sortedArray &&
+          sortedArray.map((data) => (
+            <td className={`${classes} w-10 `}>
+              <Typography
+                className="text-center"
+                color={
+                  data?.total >= Number(80)
+                    ? "light-green"
+                    : data?.total <= 45
+                    ? "red"
+                    : "blue-gray"
+                }
+              >
+                {data?.total}
+              </Typography>
+            </td>
+          ))}
+        <td className={`${classes} w-10 `}>
+          <Typography className="text-center">{grandTotal}</Typography>
+        </td>
+        {/* <td className={`${classes} w-10 bg-blue-gray-50/50 `}>
         <Typography className="text-center">{item?.rollNo}</Typography>
       </td>
       <td className={classes}>
@@ -64,8 +108,9 @@ const StudentClasswiseMarkDispRow = ({
         <Typography variant="small" color="blue-gray" className="font-normal">
           {item?.total}
         </Typography>
-      </td>
-    </tr>
+      </td> */}
+      </tr>
+    </>
   );
 };
 
