@@ -54,6 +54,7 @@ import ShowSubwiseMarklist from "../Components/Staff/DashboardComponents/ExamMod
 import ShowClasswiseMarks from "../Components/Staff/DashboardComponents/ExamModule/ShowClasswiseMarks";
 import AdminGenerateHT from "../Pages/Admin/Home/AdminGenerateHT";
 import AddScholasticGrades from "../Components/Staff/DashboardComponents/ExamModule/AddScholasticGrades";
+import HTclasswiseTable from "../Pages/Admin/Home/HTclasswiseTable";
 
 const AppRoutes = () => {
   const isLoading = useSelector((state) => state.loading.isLoading);
@@ -77,6 +78,11 @@ const AppRoutes = () => {
           element={<AdminGenerateHT />}
         />
         {/* <Route path={RouteObjects.Admin} element={<AdminHome />} /> */}
+        <Route path={RouteObjects.AdminGenerateHT} element={<AdminGenerateHT />} />
+        <Route path={`${RouteObjects.HTClasswise}/:id/:term/:year`} element={<HTclasswiseTable />} />
+
+
+
         {/* STUDENTS ROUTS */}
         <Route path={RouteObjects.root} element={<LandingPage />} />
         <Route path={RouteObjects.Login} element={<Login />} />
