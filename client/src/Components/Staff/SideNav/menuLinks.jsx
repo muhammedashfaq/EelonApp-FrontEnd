@@ -162,6 +162,11 @@ const menu = [
         href: RouteObjects.ExamAddSubwiseMarks,
       },
       {
+        title: "Add Co-Scholastic grades",
+        icon: faCaretRight,
+        href: RouteObjects.ScholasticSubwiseMarks,
+      },
+      {
         title: "Show Subject wise marks",
         icon: faCaretRight,
         href: RouteObjects.ShowSubwiseMarks,

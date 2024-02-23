@@ -46,6 +46,7 @@ export default function TestYk() {
   const [studName, setstudName] = useState();
   const [sortedArray, setsortedArray] = useState();
   const [asc, setasc] = useState(false);
+  const [classAvgData, setclassAvgData] = useState();
 
   const getAcademicYear = async () => {
     try {
@@ -87,7 +88,6 @@ export default function TestYk() {
         }
       );
       setstudentMarklist(response.data);
-      console.log(response);
     } catch (error) {
       console.error(error);
     }
@@ -105,7 +105,6 @@ export default function TestYk() {
         "users/student/filterbydata",
         query
       );
-      console.log(response);
       setsearchData(response.data);
     } catch (error) {
       console.error(error);
@@ -128,6 +127,22 @@ export default function TestYk() {
       setsortedArray(studentMarklist.sort((a, b) => b.total - a.total));
     } else if (value === "Total" && !asc) {
       setsortedArray(studentMarklist.sort((a, b) => a.total - b.total));
+    }
+  };
+
+  const getClassAvg = async () => {
+    try {
+      const response = await axiosPrivate.put(
+        "marks/exam/filter/classwisetotal",
+        {
+          academicYear: academicYr,
+          classSection: selectedClass,
+        }
+      );
+      console.log(response, "avg data");
+      setclassAvgData(response.data);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -186,7 +201,7 @@ export default function TestYk() {
                     </select>
                   </div>
                 </div>
-                <Button onClick={sortByTotal}> Sort</Button>
+                {/* <Button onClick={sortByTotal}> Sort</Button> */}
                 <form className="w-full md:w-72" onSubmit={searchStudent}>
                   <Menu
                     animate={{
@@ -215,6 +230,7 @@ export default function TestYk() {
                             onClick={() => {
                               setStudentId(item?._id);
                               getStudentMarklist(item?._id);
+                              getClassAvg();
                               setmenuOpen(false);
                               setstudName(item?.studentName);
                             }}
@@ -321,10 +337,15 @@ export default function TestYk() {
               </table>
             </CardBody>
             <CardFooter>
-              <div className="flex justify-evenly my-10">
-                <GradeDistPieChart />
-                <ClassAvgComparisonChart />
-              </div>
+              {classAvgData && (
+                <div className="flex justify-evenly my-10">
+                  <GradeDistPieChart />
+                  <ClassAvgComparisonChart
+                    classAvgData={classAvgData}
+                    studentMarklist={studentMarklist}
+                  />
+                </div>
+              )}
             </CardFooter>
           </Card>
         </div>

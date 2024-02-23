@@ -53,8 +53,8 @@ import AddSubwiseMarks from "../Components/Staff/DashboardComponents/ExamModule/
 import ShowSubwiseMarklist from "../Components/Staff/DashboardComponents/ExamModule/ShowSubwiseMarklist";
 import ShowClasswiseMarks from "../Components/Staff/DashboardComponents/ExamModule/ShowClasswiseMarks";
 import AdminGenerateHT from "../Pages/Admin/Home/AdminGenerateHT";
+import AddScholasticGrades from "../Components/Staff/DashboardComponents/ExamModule/AddScholasticGrades";
 import HTclasswiseTable from "../Pages/Admin/Home/HTclasswiseTable";
-
 
 const AppRoutes = () => {
   const isLoading = useSelector((state) => state.loading.isLoading);
@@ -73,13 +73,17 @@ const AppRoutes = () => {
         {/* Admin ROUTS */}
         <Route path={RouteObjects.AdminHome} element={<AdminHome />} />
         <Route path={RouteObjects.AdminAprovals} element={<AdminAprovals />} />
+        <Route
+          path={RouteObjects.AdminGenerateHT}
+          element={<AdminGenerateHT />}
+        />
+        {/* <Route path={RouteObjects.Admin} element={<AdminHome />} /> */}
         <Route path={RouteObjects.AdminGenerateHT} element={<AdminGenerateHT />} />
         <Route path={`${RouteObjects.HTClasswise}/:id/:term/:year`} element={<HTclasswiseTable />} />
 
 
 
         {/* STUDENTS ROUTS */}
-       
         <Route path={RouteObjects.root} element={<LandingPage />} />
         <Route path={RouteObjects.Login} element={<Login />} />
         <Route
@@ -162,18 +166,18 @@ const AppRoutes = () => {
           element={<AddSubwiseMarks />}
         />
         <Route
+          path={RouteObjects.ScholasticSubwiseMarks}
+          element={<AddScholasticGrades />}
+        />
+        <Route
           path={RouteObjects.ShowSubwiseMarks}
           element={<ShowSubwiseMarklist />}
         />
-
         <Route
           path={RouteObjects.ShowClasswiseMarks}
           element={<ShowClasswiseMarks />}
         />
         ////////////////// TimeTable //////////////////////
-
-  
-
         <Route
           path={RouteObjects.examTimeTable}
           element={<ExamTimeTablePage />}

@@ -27,24 +27,25 @@ import StaffHeader from "../../Header/landingPageHeader";
 import Banner from "../../../Banner/Banner";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useEffect, useState } from "react";
-import StudentMarkRow from "./StudentMarkRow";
+import StudentScholasticRow from "./StudentScholasticRow";
+import Swal from "sweetalert2";
 
 const TABLE_HEAD = [
   "Sl.no",
   "Roll no",
   "Student name",
-  "Internal mark",
-  "External mark",
-  "Total",
-  "",
+  "Art & Craft",
+  "Mental Attitudes & Values",
+  "Activities in Lessons",
+  "Good Act, Yoga & Physical Exercise",
+  "Life Skills",
 ];
 
-const AddSubwiseMarks = () => {
+const AddScholasticGrades = () => {
   const axiosPrivate = useAxiosPrivate();
   const [subjectDropdowns, setsubjectDropdowns] = useState();
   const [classSectionDropdowns, setClassSectionDropdowns] = useState();
   const [students, setstudents] = useState([]);
-  const [selectedSubject, setselectedSubject] = useState();
   const [selectedClass, setselectedClass] = useState();
   const [academicYrDropdown, setacademicYrDropdown] = useState([]);
   const [dataArray, setDataArray] = useState([]);
@@ -53,17 +54,6 @@ const AddSubwiseMarks = () => {
   const [examTerm, setexamTerm] = useState();
   const [examMonth, setexamMonth] = useState();
   const [academicYr, setacademicYr] = useState();
-
-  const getSubjectsDropdown = async () => {
-    try {
-      const response = await axiosPrivate.get(
-        "classsection/subjects/dropdowns"
-      );
-      setsubjectDropdowns(response.data.subjects);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const getClasssections = async () => {
     try {
@@ -130,21 +120,24 @@ const AddSubwiseMarks = () => {
         examType: examType,
         term: examTerm,
         marksArray: dataArray,
-        subject: selectedSubject,
+        // subject: selectedSubject,
       };
-      const response = await axiosPrivate.post("marks/exam", reqData);
+      const response = await axiosPrivate.post("marks/scholastic", reqData);
+      Swal.fire({
+        title: "Marks added!",
+        icon: "success",
+      });
       console.log(response);
     } catch (error) {
       console.error(error);
     }
   };
 
-  // useEffect(() => {
-  //   console.log(dataArray);
-  // }, [dataArray]);
+  useEffect(() => {
+    console.log(dataArray);
+  }, [dataArray]);
 
   useEffect(() => {
-    getSubjectsDropdown();
     getClasssections();
     getAcademicYear();
   }, []);
@@ -153,33 +146,19 @@ const AddSubwiseMarks = () => {
       <StaffHeader />
       <Banner />
       <div className="flex justify-center">
-        <div className="container xl">
-          <Card className="h-full w-full m-5">
+        <div className="container 2xl">
+          <Card className="h-full w-full mt-5">
             <CardHeader floated={false} shadow={false} className="rounded-none">
               <div className="mb-8 flex items-center justify-between gap-8">
                 <div>
                   <Typography variant="h5" color="blue-gray">
-                    Students mark entry
+                    Student's Co-Scholastic grade entry
                   </Typography>
                   {/* <Typography color="gray" className="mt-1 font-normal">
-                      See information about all members
-                    </Typography> */}
+                        See information about all members
+                      </Typography> */}
                 </div>
 
-                <div className="w-40">
-                  <select
-                    label="Select subject"
-                    onChange={(e) => setselectedSubject(e.target.value)}
-                  >
-                    <option selected disabled>
-                      Select subject
-                    </option>
-                    {subjectDropdowns &&
-                      subjectDropdowns.map((item, i) => (
-                        <option key={i}>{item}</option>
-                      ))}
-                  </select>
-                </div>
                 <div className="flex flex-col gap-2">
                   <div className="w-40">
                     <select
@@ -305,19 +284,19 @@ const AddSubwiseMarks = () => {
                     {TABLE_HEAD.map((head, index) => (
                       <th
                         key={head}
-                        className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
+                        className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 py-4 transition-colors hover:bg-blue-gray-50"
                       >
                         <Typography
                           variant="small"
                           color="blue-gray"
-                          className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
+                          className="flex items-center justify-center gap-2 font-normal leading-none opacity-70 max-w-36"
                         >
-                          {head}{" "}
-                          {index !== TABLE_HEAD.length - 1 && (
+                          {head}
+                          {/* {index !== TABLE_HEAD.length - 1 && (
                             <IconButton variant="text" size="sm">
                               <FontAwesomeIcon icon={faSort} />
                             </IconButton>
-                          )}
+                          )} */}
                         </Typography>
                       </th>
                     ))}
@@ -332,7 +311,7 @@ const AddSubwiseMarks = () => {
                         : "p-4 border-b border-blue-gray-50";
 
                       return (
-                        <StudentMarkRow
+                        <StudentScholasticRow
                           key={item?._id}
                           item={item}
                           index={index}
@@ -351,4 +330,4 @@ const AddSubwiseMarks = () => {
   );
 };
 
-export default AddSubwiseMarks;
+export default AddScholasticGrades;
