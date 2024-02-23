@@ -2,14 +2,11 @@ import {
   Card,
   CardHeader,
   Typography,
-  Button,
   CardBody,
-  Chip,
   CardFooter,
-  Avatar,
-  IconButton,
-  Tooltip,
   Input,
+  Button,
+  IconButton,
 } from "@material-tailwind/react";
 import useAxiosPrivate from "../Hooks/useAxiosPrivate";
 import { useEffect, useState } from "react";
@@ -21,66 +18,18 @@ import {
   MenuList,
   MenuItem,
 } from "@material-tailwind/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSort } from "@fortawesome/free-solid-svg-icons";
+import GradeDistPieChart from "./Staff/DashboardComponents/ExamModule/GradeDistPieChart";
+import ClassAvgComparisonChart from "./Staff/DashboardComponents/ExamModule/ClassAvgComparisonChart";
 
 const TABLE_HEAD = [
   "Sl.no",
-  "Student name",
+  "Subject",
   "Internal marks",
   "External marks",
   "Total",
-];
-
-const TABLE_ROWS = [
-  {
-    img: "https://docs.material-tailwind.com/img/logos/logo-spotify.svg",
-    name: "Spotify",
-    amount: "$2,500",
-    date: "Wed 3:00pm",
-    status: "paid",
-    account: "visa",
-    accountNumber: "1234",
-    expiry: "06/2026",
-  },
-  {
-    img: "https://docs.material-tailwind.com/img/logos/logo-amazon.svg",
-    name: "Amazon",
-    amount: "$5,000",
-    date: "Wed 1:00pm",
-    status: "paid",
-    account: "master-card",
-    accountNumber: "1234",
-    expiry: "06/2026",
-  },
-  {
-    img: "https://docs.material-tailwind.com/img/logos/logo-pinterest.svg",
-    name: "Pinterest",
-    amount: "$3,400",
-    date: "Mon 7:40pm",
-    status: "pending",
-    account: "master-card",
-    accountNumber: "1234",
-    expiry: "06/2026",
-  },
-  {
-    img: "https://docs.material-tailwind.com/img/logos/logo-google.svg",
-    name: "Google",
-    amount: "$1,000",
-    date: "Wed 5:00pm",
-    status: "paid",
-    account: "visa",
-    accountNumber: "1234",
-    expiry: "06/2026",
-  },
-  {
-    img: "https://docs.material-tailwind.com/img/logos/logo-netflix.svg",
-    name: "netflix",
-    amount: "$14,000",
-    date: "Wed 3:30am",
-    status: "cancelled",
-    account: "visa",
-    accountNumber: "1234",
-    expiry: "06/2026",
-  },
+  "Grade",
 ];
 
 export default function TestYk() {
@@ -95,6 +44,8 @@ export default function TestYk() {
   const [searchQuery, setsearchQuery] = useState();
   const [searchData, setsearchData] = useState();
   const [studName, setstudName] = useState();
+  const [sortedArray, setsortedArray] = useState();
+  const [asc, setasc] = useState(false);
 
   const getAcademicYear = async () => {
     try {
@@ -123,6 +74,7 @@ export default function TestYk() {
 
   const getStudentMarklist = async (value) => {
     // e.preventDefault();
+    setsortedArray(null);
     try {
       const id = value || StudentId;
       console.log(id);
@@ -158,6 +110,24 @@ export default function TestYk() {
     } catch (error) {
       console.error(error);
       setmenuOpen(false);
+    }
+  };
+
+  const sortByTotal = (value) => {
+    setasc((prev) => !prev);
+    if (value === "Subject" && asc) {
+      setsortedArray(
+        studentMarklist.sort((a, b) => b._id.localeCompare(a._id))
+      );
+    } else if (value === "Subject" && !asc) {
+      setsortedArray(
+        studentMarklist.sort((a, b) => a._id.localeCompare(b._id))
+      );
+    }
+    if (value === "Total" && asc) {
+      setsortedArray(studentMarklist.sort((a, b) => b.total - a.total));
+    } else if (value === "Total" && !asc) {
+      setsortedArray(studentMarklist.sort((a, b) => a.total - b.total));
     }
   };
 
@@ -216,7 +186,7 @@ export default function TestYk() {
                     </select>
                   </div>
                 </div>
-
+                <Button onClick={sortByTotal}> Sort</Button>
                 <form className="w-full md:w-72" onSubmit={searchStudent}>
                   <Menu
                     animate={{
@@ -294,92 +264,166 @@ export default function TestYk() {
                         key={head}
                         className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
                       >
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal leading-none opacity-70"
-                        >
-                          {head}
-                        </Typography>
+                        <div className="flex justify-evenly items-center">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal leading-none opacity-70"
+                          >
+                            {head}
+                          </Typography>
+                          {(head === "Total" || head === "Subject") && (
+                            <IconButton
+                              variant="text"
+                              size="sm"
+                              onClick={() => sortByTotal(head)}
+                            >
+                              <FontAwesomeIcon icon={faSort} />
+                            </IconButton>
+                          )}
+                        </div>
                       </th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {studentMarklist &&
-                    studentMarklist.map((item, index) => {
-                      const isLast = index === studentMarklist.length - 1;
-                      const classes = isLast
-                        ? "p-4"
-                        : "p-4 border-b border-blue-gray-50";
+                  {sortedArray
+                    ? sortedArray.map((item, index) => {
+                        const isLast = index === sortedArray.length - 1;
+                        const classes = isLast
+                          ? "p-4"
+                          : "p-4 border-b border-blue-gray-50";
 
-                      return (
-                        <tr key={item._id}>
-                          <td className={classes}>
-                            <div className="flex items-center gap-3">
-                              <Typography
-                                variant="small"
-                                color="blue-gray"
-                                className="font-bold"
-                              >
-                                {index + 1}
-                              </Typography>
-                            </div>
-                          </td>
-                          <td className={classes}>
-                            <div className="flex items-center gap-3">
-                              <Typography
-                                variant="small"
-                                color="blue-gray"
-                                className="font-bold"
-                              >
-                                {item?._id}
-                              </Typography>
-                            </div>
-                          </td>
-                          <td className={classes}>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {item?.internal}
-                            </Typography>
-                          </td>
-                          <td className={classes}>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {item?.external}
-                            </Typography>
-                          </td>
-                          <td className={classes}>
-                            <Typography
-                              variant="small"
-                              color={
-                                item?.total >= Number(80)
-                                  ? "light-green"
-                                  : item?.total <= 45
-                                  ? "red"
-                                  : "blue-gray"
-                              }
-                              className="font-normal"
-                            >
-                              {item?.total}
-                            </Typography>
-                          </td>
-                        </tr>
-                      );
-                    })}
+                        return (
+                          <MarksRow
+                            item={item}
+                            index={index}
+                            classes={classes}
+                          />
+                        );
+                      })
+                    : studentMarklist &&
+                      studentMarklist.map((item, index) => {
+                        const isLast = index === studentMarklist.length - 1;
+                        const classes = isLast
+                          ? "p-4"
+                          : "p-4 border-b border-blue-gray-50";
+
+                        return (
+                          <MarksRow
+                            item={item}
+                            index={index}
+                            classes={classes}
+                          />
+                        );
+                      })}
                 </tbody>
               </table>
             </CardBody>
-            <CardFooter></CardFooter>
+            <CardFooter>
+              <div className="flex justify-evenly my-10">
+                <GradeDistPieChart />
+                <ClassAvgComparisonChart />
+              </div>
+            </CardFooter>
           </Card>
         </div>
       </div>
     </>
   );
 }
+
+const MarksRow = ({ item, index, classes }) => {
+  return (
+    <>
+      <tr key={item._id}>
+        <td className={classes}>
+          <div className="flex items-center gap-3 justify-center">
+            <Typography variant="small" color="blue-gray" className="font-bold">
+              {index + 1}
+            </Typography>
+          </div>
+        </td>
+        <td className={classes}>
+          <div className="flex items-center gap-3 justify-center">
+            <Typography variant="small" color="blue-gray" className="font-bold">
+              {item?._id}
+            </Typography>
+          </div>
+        </td>
+        <td className={classes}>
+          <div className="flex items-center gap-3 justify-center">
+            <Typography
+              variant="small"
+              color="blue-gray"
+              className="font-normal"
+            >
+              {item?.internal}
+            </Typography>
+          </div>
+        </td>
+        <td className={classes}>
+          <div className="flex items-center gap-3 justify-center">
+            <Typography
+              variant="small"
+              color="blue-gray"
+              className="font-normal"
+            >
+              {item?.external}
+            </Typography>
+          </div>
+        </td>
+        <td className={classes}>
+          <div className="flex items-center gap-3 justify-center">
+            <Typography
+              variant="small"
+              color={
+                item?.total >= Number(80)
+                  ? "light-green"
+                  : item?.total <= 45
+                  ? "red"
+                  : "blue-gray"
+              }
+              className="font-bold"
+            >
+              {item?.total}
+            </Typography>
+          </div>
+        </td>
+        <td className={classes}>
+          <div className="flex items-center gap-3 justify-center">
+            <Typography
+              variant="small"
+              color={
+                item?.total >= Number(80)
+                  ? "light-green"
+                  : item?.total <= 45
+                  ? "red"
+                  : "blue-gray"
+              }
+              className="font-bold"
+            >
+              {item?.total >= 90
+                ? "A+"
+                : item?.total >= 80
+                ? "A"
+                : item?.total >= 70
+                ? "B+"
+                : item?.total >= 60
+                ? "B"
+                : item?.total >= 50
+                ? "C+"
+                : item?.total >= 40
+                ? "C"
+                : item?.total >= 30
+                ? "D+"
+                : item?.total >= 20
+                ? "D"
+                : "E"}
+            </Typography>
+          </div>
+        </td>
+      </tr>
+    </>
+  );
+};

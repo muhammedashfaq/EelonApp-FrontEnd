@@ -25,12 +25,12 @@ const ShowClasswiseMarks = () => {
   const [academicYrDropdown, setacademicYrDropdown] = useState([]);
   const [selectedSubject, setselectedSubject] = useState();
   const [selectedClass, setselectedClass] = useState();
+  const [academicYr, setacademicYr] = useState();
   const [newTableHead, setnewTableHead] = useState(TABLE_HEAD);
 
   const [examType, setexamType] = useState();
   const [examTerm, setexamTerm] = useState();
   const [examMonth, setexamMonth] = useState();
-  const [academicYr, setacademicYr] = useState();
   const [students, setstudents] = useState();
 
   const getSubjectsDropdown = async () => {
