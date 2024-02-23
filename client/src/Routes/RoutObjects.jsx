@@ -58,7 +58,9 @@ export const RouteObjects = {
 
   AdminHome: "/adminhome",
   AdminAprovals: "/adminaprovals",
-  AdminGenerateHT:"/admingeterateHT"
+  AdminGenerateHT:"/admingeterateHT",
+  HTClasswise:"/adminHTclasswise",
+  HallTicket:"/StudentHT"
 
 
 
