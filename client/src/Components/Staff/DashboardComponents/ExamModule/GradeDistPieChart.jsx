@@ -32,7 +32,7 @@ const GradeDistPieChart = () => {
     return () => {
       chart.destroy();
     };
-  }, []); // Empty dependency array means this effect runs only once after the component mounts
+  }, []);
 
   return <div id="chart"></div>;
 };

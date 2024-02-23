@@ -33,13 +33,14 @@ const TABLE_HEAD = [
   "Sl.no",
   "Roll no",
   "Student name",
-  "Internal mark",
-  "External mark",
-  "Total",
-  "",
+  "Art & Craft",
+  "Mental Attitudes & Values",
+  "Activities in Lessons",
+  "Good Act, Yoga & Physical Exercise",
+  "Life Skills",
 ];
 
-const AddSubwiseMarks = () => {
+const AddScholasticGrades = () => {
   const axiosPrivate = useAxiosPrivate();
   const [subjectDropdowns, setsubjectDropdowns] = useState();
   const [classSectionDropdowns, setClassSectionDropdowns] = useState();
@@ -159,11 +160,11 @@ const AddSubwiseMarks = () => {
               <div className="mb-8 flex items-center justify-between gap-8">
                 <div>
                   <Typography variant="h5" color="blue-gray">
-                    Students mark entry
+                    Student's Co-Scholastic grade entry
                   </Typography>
                   {/* <Typography color="gray" className="mt-1 font-normal">
-                      See information about all members
-                    </Typography> */}
+                        See information about all members
+                      </Typography> */}
                 </div>
 
                 <div className="w-40">
@@ -310,7 +311,7 @@ const AddSubwiseMarks = () => {
                         <Typography
                           variant="small"
                           color="blue-gray"
-                          className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
+                          className="flex items-center justify-between gap-2 font-normal leading-none opacity-70 max-w-24"
                         >
                           {head}{" "}
                           {index !== TABLE_HEAD.length - 1 && (
@@ -351,4 +352,4 @@ const AddSubwiseMarks = () => {
   );
 };
 
-export default AddSubwiseMarks;
+export default AddScholasticGrades;

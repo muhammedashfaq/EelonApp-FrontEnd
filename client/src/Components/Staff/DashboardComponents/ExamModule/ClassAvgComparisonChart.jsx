@@ -1,15 +1,45 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
+import { useState, useEffect } from "react";
 
-const ClassAvgComparisonChart = () => {
+const ClassAvgComparisonChart = ({ classAvgData, studentMarklist }) => {
+  const [subs, setsubs] = useState([]);
+  const [totalMarks, settotalMarks] = useState([]);
+  const [totalStuds, settotalStuds] = useState([]);
+  const [stdMarksArray, setstdMarksArray] = useState();
+
+  const processClassAvgData = () => {
+    if (!studentMarklist || !classAvgData) return;
+    const sortedData = classAvgData.sort((a, b) => a._id.localeCompare(b._id));
+    const stdSorted = studentMarklist.sort((a, b) =>
+      a._id.localeCompare(b._id)
+    );
+    setstdMarksArray(stdSorted.map((item) => item?.total));
+
+    setsubs(sortedData.map((item) => item._id));
+    const Stds = sortedData.map((item) => item.totalStudents);
+    settotalMarks(
+      sortedData.map((item, i) => Math.round(item.totalMarks / Stds[i]))
+    );
+  };
+  useEffect(() => {
+    processClassAvgData();
+  }, [classAvgData, studentMarklist]);
+
+  // useEffect(() => {
+  //   console.log(subs, "subs");
+  //   console.log(totalStuds, "totalStuds");
+  //   console.log(totalMarks, "totalMarks");
+  // }, [totalMarks]);
+
   const series = [
     {
       name: "Your marks",
-      data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
+      data: stdMarksArray,
     },
     {
       name: "Class average",
-      data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
+      data: totalMarks,
     },
   ];
 
@@ -34,16 +64,7 @@ const ClassAvgComparisonChart = () => {
       colors: ["transparent"],
     },
     xaxis: {
-      categories: [
-        "Tamil I",
-        "Tamil II",
-        "English I",
-        "English II",
-        "Maths",
-        "Science",
-        "Social science",
-        "Computer science",
-      ],
+      categories: subs,
     },
     yaxis: {
       title: {
@@ -56,7 +77,7 @@ const ClassAvgComparisonChart = () => {
     tooltip: {
       y: {
         formatter: function (val) {
-          return "Grade point";
+          return `${val}`;
         },
       },
     },
