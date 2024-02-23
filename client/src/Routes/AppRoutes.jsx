@@ -53,6 +53,7 @@ import AddSubwiseMarks from "../Components/Staff/DashboardComponents/ExamModule/
 import ShowSubwiseMarklist from "../Components/Staff/DashboardComponents/ExamModule/ShowSubwiseMarklist";
 import ShowClasswiseMarks from "../Components/Staff/DashboardComponents/ExamModule/ShowClasswiseMarks";
 import AdminGenerateHT from "../Pages/Admin/Home/AdminGenerateHT";
+import HTclasswiseTable from "../Pages/Admin/Home/HTclasswiseTable";
 
 
 const AppRoutes = () => {
@@ -73,7 +74,8 @@ const AppRoutes = () => {
         <Route path={RouteObjects.AdminHome} element={<AdminHome />} />
         <Route path={RouteObjects.AdminAprovals} element={<AdminAprovals />} />
         <Route path={RouteObjects.AdminGenerateHT} element={<AdminGenerateHT />} />
-        {/* <Route path={RouteObjects.Admin} element={<AdminHome />} /> */}
+        <Route path={`${RouteObjects.HTClasswise}/:id/:term/:year`} element={<HTclasswiseTable />} />
+
 
 
         {/* STUDENTS ROUTS */}
