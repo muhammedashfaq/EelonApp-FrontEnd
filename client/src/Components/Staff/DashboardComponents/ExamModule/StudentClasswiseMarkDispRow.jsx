@@ -19,7 +19,6 @@ const StudentClasswiseMarkDispRow = ({
   student,
 }) => {
   const [sortedArray, setsortedArray] = useState();
-  const [grandTotal, setgrandTotal] = useState();
 
   const sortArray = () => {
     setsortedArray(
@@ -27,17 +26,8 @@ const StudentClasswiseMarkDispRow = ({
     );
   };
 
-  function calculateGrandTotal() {
-    let Total = 0;
-    item?.marks.forEach((item) => {
-      Total += item.total;
-    });
-    setgrandTotal(Total);
-  }
-
   useEffect(() => {
     sortArray();
-    calculateGrandTotal();
   }, [item]);
   return (
     <>
@@ -68,47 +58,6 @@ const StudentClasswiseMarkDispRow = ({
               </Typography>
             </td>
           ))}
-        <td className={`${classes} w-10 `}>
-          <Typography className="text-center">{grandTotal}</Typography>
-        </td>
-        {/* <td className={`${classes} w-10 bg-blue-gray-50/50 `}>
-        <Typography className="text-center">{item?.rollNo}</Typography>
-      </td>
-      <td className={classes}>
-        <div className="flex items-center gap-3">
-          <Avatar size="sm" />
-          <div className="flex flex-col">
-            <Typography
-              variant="small"
-              color="blue-gray"
-              className="font-normal"
-            >
-              {item?.studentName}
-            </Typography>
-            <Typography
-              variant="small"
-              color="blue-gray"
-              className="font-normal opacity-70"
-            >
-              {item?.email}
-            </Typography>
-          </div>
-        </div>
-      </td>
-      {subjectDropdowns &&
-        subjectDropdowns.map((item) => (
-          <ShowClasswiseCell
-            classes={classes}
-            marksData={marksData}
-            subjectName={item}
-            student={student}
-          />
-        ))}
-      <td className={`${classes} bg-blue-gray-50/50 `}>
-        <Typography variant="small" color="blue-gray" className="font-normal">
-          {item?.total}
-        </Typography>
-      </td> */}
       </tr>
     </>
   );

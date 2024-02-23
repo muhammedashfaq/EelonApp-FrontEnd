@@ -9,7 +9,13 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSort } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleDown,
+  faAngleUp,
+  faSort,
+  faSortDown,
+  faSortUp,
+} from "@fortawesome/free-solid-svg-icons";
 import StaffHeader from "../../Header/landingPageHeader";
 import Banner from "../../../Banner/Banner";
 import StudentClasswiseMarkDispRow from "./StudentClasswiseMarkDispRow";
@@ -32,6 +38,23 @@ const ShowClasswiseMarks = () => {
   const [asc, setasc] = useState(false);
 
   const [SubjectsArray, setSubjectsArray] = useState();
+
+  const [studentMarks, setStudentMarks] = useState([]);
+
+  const sortMarks = (value) => {
+    const sortedMarks = [...marksData].sort((a, b) => {
+      const chemistryA =
+        a.marks.find((mark) => mark.subject === `${value}`)?.total || 0;
+      const chemistryB =
+        b.marks.find((mark) => mark.subject === `${value}`)?.total || 0;
+      if (asc) {
+        return chemistryB - chemistryA; // Sort in descending order
+      } else if (!asc) {
+        return chemistryA - chemistryB; // Sort in descending order
+      }
+    });
+    setsortedArray(sortedMarks);
+  };
 
   const getSubjectsDropdown = async () => {
     try {
@@ -125,40 +148,6 @@ const ShowClasswiseMarks = () => {
     }
   };
 
-  const sortByTotal = (value) => {
-    setasc((prev) => !prev);
-    if (value === "Subject" && asc) {
-      setsortedArray(marksData.sort((a, b) => b._id.localeCompare(a._id)));
-    } else if (value === "Subject" && !asc) {
-      setsortedArray(marksData.sort((a, b) => a._id.localeCompare(b._id)));
-    }
-    if (value === "Chemistry" && asc) {
-      setsortedArray(marksData.sort((a, b) => b.total - a.total));
-    } else if (value === "Chemistry" && !asc) {
-      setsortedArray(marksData.sort((a, b) => a.total - b.total));
-    }
-    if (value === "English" && asc) {
-      setsortedArray(marksData.sort((a, b) => b.total - a.total));
-    } else if (value === "English" && !asc) {
-      setsortedArray(marksData.sort((a, b) => a.total - b.total));
-    }
-    if (value === "Maths" && asc) {
-      setsortedArray(marksData.sort((a, b) => b.total - a.total));
-    } else if (value === "Maths" && !asc) {
-      setsortedArray(marksData.sort((a, b) => a.total - b.total));
-    }
-    if (value === "Physics" && asc) {
-      setsortedArray(marksData.sort((a, b) => b.total - a.total));
-    } else if (value === "Physics" && !asc) {
-      setsortedArray(marksData.sort((a, b) => a.total - b.total));
-    }
-    if (value === "Tamil" && asc) {
-      setsortedArray(marksData.sort((a, b) => b.total - a.total));
-    } else if (value === "Tamil" && !asc) {
-      setsortedArray(marksData.sort((a, b) => a.total - b.total));
-    }
-  };
-
   useEffect(() => {
     getAcademicYear();
     getClasssections();
@@ -169,6 +158,7 @@ const ShowClasswiseMarks = () => {
     <>
       <StaffHeader />
       <Banner />
+      {/* <Button onClick={sortMarksByChemistry}>Sort</Button> */}
       <div className="flex justify-center">
         <div className="container xl">
           <Card className="h-full w-full m-5">
@@ -246,15 +236,19 @@ const ShowClasswiseMarks = () => {
                           className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
                         >
                           {head}{" "}
-                          {index !== newTableHead.length - 1 && (
-                            <IconButton
-                              variant="text"
-                              size="sm"
-                              onClick={() => sortByTotal(head)}
-                            >
-                              <FontAwesomeIcon icon={faSort} />
-                            </IconButton>
-                          )}
+                          <IconButton
+                            variant="text"
+                            size="sm"
+                            onClick={() => {
+                              setasc((prev) => !prev);
+                              sortMarks(head);
+                            }}
+                          >
+                            <FontAwesomeIcon
+                              icon={asc ? faAngleUp : faAngleDown}
+                              size="1x"
+                            />
+                          </IconButton>
                         </Typography>
                       </th>
                     ))}
