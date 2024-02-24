@@ -9,7 +9,13 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSort } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleDown,
+  faAngleUp,
+  faSort,
+  faSortDown,
+  faSortUp,
+} from "@fortawesome/free-solid-svg-icons";
 import StaffHeader from "../../Header/landingPageHeader";
 import Banner from "../../../Banner/Banner";
 import StudentClasswiseMarkDispRow from "./StudentClasswiseMarkDispRow";
@@ -31,10 +37,24 @@ const ShowClasswiseMarks = () => {
   const [sortedArray, setsortedArray] = useState();
   const [asc, setasc] = useState(false);
 
-  const [examType, setexamType] = useState();
-  const [examTerm, setexamTerm] = useState();
-  const [examMonth, setexamMonth] = useState();
-  const [students, setstudents] = useState();
+  const [SubjectsArray, setSubjectsArray] = useState();
+
+  const [studentMarks, setStudentMarks] = useState([]);
+
+  const sortMarks = (value) => {
+    const sortedMarks = [...marksData].sort((a, b) => {
+      const chemistryA =
+        a.marks.find((mark) => mark.subject === `${value}`)?.total || 0;
+      const chemistryB =
+        b.marks.find((mark) => mark.subject === `${value}`)?.total || 0;
+      if (asc) {
+        return chemistryB - chemistryA; // Sort in descending order
+      } else if (!asc) {
+        return chemistryA - chemistryB; // Sort in descending order
+      }
+    });
+    setsortedArray(sortedMarks);
+  };
 
   const getSubjectsDropdown = async () => {
     try {
@@ -42,12 +62,12 @@ const ShowClasswiseMarks = () => {
         "classsection/subjects/dropdowns"
       );
       setsubjectDropdowns(response.data.subjects);
-      const sortedArray = response.data.subjects.sort((a, b) =>
-        a.localeCompare(b)
-      );
-      const newArray = TABLE_HEAD.concat([...sortedArray, "Total"]);
+      // const sortedArray = response.data.subjects.sort((a, b) =>
+      //   a.localeCompare(b)
+      // );
+      // const newArray = TABLE_HEAD.concat([...sortedArray, "Total"]);
 
-      setnewTableHead(newArray);
+      // setnewTableHead(newArray);
     } catch (error) {
       console.error(error);
     }
@@ -86,6 +106,7 @@ const ShowClasswiseMarks = () => {
       classSection: selectedClass,
       subject: selectedSubject,
     };
+    if (!filterQuery) return;
     try {
       const response = await axiosPrivate.put(
         "marks/exam/filter/classwise",
@@ -104,51 +125,26 @@ const ShowClasswiseMarks = () => {
     }
   };
 
-  const getClasswiseStudents = async () => {
-    if (!selectedClass) return;
-    setstudents("");
-    const reqData = {
-      classId: selectedClass,
-    };
+  const getSubs = async () => {
     try {
-      const response = await axiosPrivate.put("users/student/filter", reqData);
-      setstudents(response.data);
+      const filterQuery = {
+        academicYear: academicYr,
+        classSection: selectedClass,
+        subject: selectedSubject,
+      };
+      if (!filterQuery) return;
+      const response = await axiosPrivate.put("marks/exam/subs", filterQuery);
+
+      const sortedArray = response.data[0].subjects.sort((a, b) =>
+        a.localeCompare(b)
+      );
+
+      const newArray = TABLE_HEAD.concat([...sortedArray, "Total"]);
+
+      setnewTableHead(newArray);
+      setSubjectsArray(response.data[0].subjects);
     } catch (error) {
       console.error(error);
-    }
-  };
-
-  const sortByTotal = (value) => {
-    setasc((prev) => !prev);
-    if (value === "Subject" && asc) {
-      setsortedArray(marksData.sort((a, b) => b._id.localeCompare(a._id)));
-    } else if (value === "Subject" && !asc) {
-      setsortedArray(marksData.sort((a, b) => a._id.localeCompare(b._id)));
-    }
-    if (value === "Chemistry" && asc) {
-      setsortedArray(marksData.sort((a, b) => b.total - a.total));
-    } else if (value === "Chemistry" && !asc) {
-      setsortedArray(marksData.sort((a, b) => a.total - b.total));
-    }
-    if (value === "English" && asc) {
-      setsortedArray(marksData.sort((a, b) => b.total - a.total));
-    } else if (value === "English" && !asc) {
-      setsortedArray(marksData.sort((a, b) => a.total - b.total));
-    }
-    if (value === "Maths" && asc) {
-      setsortedArray(marksData.sort((a, b) => b.total - a.total));
-    } else if (value === "Maths" && !asc) {
-      setsortedArray(marksData.sort((a, b) => a.total - b.total));
-    }
-    if (value === "Physics" && asc) {
-      setsortedArray(marksData.sort((a, b) => b.total - a.total));
-    } else if (value === "Physics" && !asc) {
-      setsortedArray(marksData.sort((a, b) => a.total - b.total));
-    }
-    if (value === "Tamil" && asc) {
-      setsortedArray(marksData.sort((a, b) => b.total - a.total));
-    } else if (value === "Tamil" && !asc) {
-      setsortedArray(marksData.sort((a, b) => a.total - b.total));
     }
   };
 
@@ -162,6 +158,7 @@ const ShowClasswiseMarks = () => {
     <>
       <StaffHeader />
       <Banner />
+      {/* <Button onClick={sortMarksByChemistry}>Sort</Button> */}
       <div className="flex justify-center">
         <div className="container xl">
           <Card className="h-full w-full m-5">
@@ -218,7 +215,7 @@ const ShowClasswiseMarks = () => {
                     size="sm"
                     onClick={() => {
                       getMarks();
-                      getClasswiseStudents();
+                      getSubs();
                     }}
                   >
                     Fetch data
@@ -241,15 +238,19 @@ const ShowClasswiseMarks = () => {
                           className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
                         >
                           {head}{" "}
-                          {index !== newTableHead.length - 1 && (
-                            <IconButton
-                              variant="text"
-                              size="sm"
-                              onClick={() => sortByTotal(head)}
-                            >
-                              <FontAwesomeIcon icon={faSort} />
-                            </IconButton>
-                          )}
+                          <IconButton
+                            variant="text"
+                            size="sm"
+                            onClick={() => {
+                              setasc((prev) => !prev);
+                              sortMarks(head);
+                            }}
+                          >
+                            <FontAwesomeIcon
+                              icon={asc ? faAngleUp : faAngleDown}
+                              size="1x"
+                            />
+                          </IconButton>
                         </Typography>
                       </th>
                     ))}
