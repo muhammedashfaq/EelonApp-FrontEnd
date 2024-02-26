@@ -1,5 +1,4 @@
 import Banner from "../../../Components/Banner/Banner";
-import StaffHeader from "../../../Components/Staff/Header/landingPageHeader";
 import ClassroomNavbar from "../../../Components/Student/StudyRoomComponents/ClassroomNavbar";
 import HomeClassRoom from "../../../Components/Student/StudyRoomComponents/HomeClassRoom";
 import StudentClassroomPage from "../../../Components/Student/StudyRoomComponents/StudentClassroomPage";
@@ -9,7 +8,6 @@ import { Routes, Route } from "react-router-dom";
 const DashPage = () => {
   return (
     <>
-      <StaffHeader />
       <Banner/>
       <div className="flex">
         <ClassroomNavbar />

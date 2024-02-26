@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { RouteObjects } from "./RoutObjects";
 import { useSelector } from "react-redux";
 import { Toaster } from "react-hot-toast";
@@ -55,21 +55,38 @@ import ShowClasswiseMarks from "../Components/Staff/DashboardComponents/ExamModu
 import AdminGenerateHT from "../Pages/Admin/Home/AdminGenerateHT";
 import AddScholasticGrades from "../Components/Staff/DashboardComponents/ExamModule/AddScholasticGrades";
 import HTclasswiseTable from "../Pages/Admin/Home/HTclasswiseTable";
+import NewApplicationPage from "../Pages/Staff/Dashboard/Application/NewApplicationPage";
+import ApplicationFeePage from "../Pages/Staff/Dashboard/Application/ApplicationFeePage";
+import ApplicantTablePage from "../Pages/Staff/Dashboard/Application/ApplicantTablePage";
+import StaffHeader from "../Components/Staff/Header/landingPageHeader";
+import Banner from "../Components/Banner/Banner";
+import FeeCollectionPage from "../Pages/Staff/Dashboard/FeeCollection/FeeCollectionPage";
+import AdmissionFeePage from "../Pages/Staff/Dashboard/FeeCollection/AdmissionFeePage";
+import AddNewStudentPage from "../Pages/Staff/Dashboard/Application/AddNewStudentPage";
 
 const AppRoutes = () => {
-  const isLoading = useSelector((state) => state.loading.isLoading);
+
   return (
     <div>
-      {isLoading && (
-        <div className="flex justify-center items-center bg-slate-950 opacity-60 fixed top-0 left-0 w-full h-full z-50 space-x-3">
-          <div className="w-4 h-4 rounded-full  animate-pulse dark:bg-white"></div>
-          <div className="w-4 h-4 rounded-full  animate-pulse dark:bg-white"></div>
-          <div className="w-4 h-4 rounded-full animate-pulse dark:bg-white"></div>
-        </div>
-      )}
       <Toaster position="bottom-center" reverseOrder={false} />
-
+      <StaffHeader />
       <Routes>
+        <Route path={RouteObjects.Login} element={<Login />} />
+        {/* accountant Module  */}
+        <Route
+          path={RouteObjects.FeeCollection}
+          element={<FeeCollectionPage />}
+        />
+          <Route
+          path={RouteObjects.AdminssionFee}
+          element={<AdmissionFeePage />}
+          
+        />
+
+<Route
+          path={`${RouteObjects.NewApplicationFee}/:id`}
+          element={<ApplicationFeePage />}
+        />
         {/* Admin ROUTS */}
         <Route path={RouteObjects.AdminHome} element={<AdminHome />} />
         <Route path={RouteObjects.AdminAprovals} element={<AdminAprovals />} />
@@ -78,14 +95,16 @@ const AppRoutes = () => {
           element={<AdminGenerateHT />}
         />
         {/* <Route path={RouteObjects.Admin} element={<AdminHome />} /> */}
-        <Route path={RouteObjects.AdminGenerateHT} element={<AdminGenerateHT />} />
-        <Route path={`${RouteObjects.HTClasswise}/:id/:term/:year`} element={<HTclasswiseTable />} />
-
-
-
+        <Route
+          path={RouteObjects.AdminGenerateHT}
+          element={<AdminGenerateHT />}
+        />
+        <Route
+          path={`${RouteObjects.HTClasswise}/:id/:term/:year`}
+          element={<HTclasswiseTable />}
+        />
         {/* STUDENTS ROUTS */}
         <Route path={RouteObjects.root} element={<LandingPage />} />
-        <Route path={RouteObjects.Login} element={<Login />} />
         <Route
           path={RouteObjects.StudentDashboard}
           element={<StudentDashBoard />}
@@ -106,6 +125,20 @@ const AppRoutes = () => {
           element={<StudentLibrary />}
         />
         {/* STAFF ROUTS */}
+        {/* application  */}
+        <Route
+          path={RouteObjects.NewApplication}
+          element={<NewApplicationPage />}
+        />
+        <Route
+          path={RouteObjects.NewApplicants}
+          element={<ApplicantTablePage />}
+        />
+    
+    <Route
+  path={`${RouteObjects.AddNewStudent}/:id`}
+  element={<AddNewStudentPage />}
+/>
         <Route
           path={RouteObjects.StaffDashboard}
           element={<StaffDashBoard />}

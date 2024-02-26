@@ -1,4 +1,3 @@
-import StaffHeader from "../../../Components/Staff/Header/landingPageHeader";
 import Banner from "../../../Components/Banner/Banner";
 import Profile from "../../../Components/StudentProfile/Profile";
 import { useParams } from "react-router-dom";
@@ -21,7 +20,6 @@ const StudentProfile = () => {
   }, []);
   return (
     <div>
-      <StaffHeader />
       <Banner />
       <Profile userData={userData} getData={getData} />
     </div>

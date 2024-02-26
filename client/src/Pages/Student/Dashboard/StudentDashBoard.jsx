@@ -1,4 +1,3 @@
-import LandingPagHead from "../../../Components/Staff/Header/landingPageHeader";
 import useAuth from "../../../Hooks/useAuth";
 import Banner from "../../../Components/Banner/Banner";
 import Profile from "../../../Components/StudentProfile/Profile";
@@ -32,7 +31,6 @@ const userId = localStorage.getItem("userId")
 
   return (
     <div>
-      <LandingPagHead />
       <Banner/>
 
    

@@ -23,6 +23,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEnvelope,
   faEye,
+  faEyeSlash,
   faLock,
   faLockOpen,
 } from "@fortawesome/free-solid-svg-icons";
@@ -166,13 +167,13 @@ const Login = () => {
                     icon={
                       eyeOpen ? (
                         <FontAwesomeIcon
-                          icon={faLockOpen}
+                          icon={faEye}
                           onClick={() => setEyeOpen(false)}
                           className="cursor-pointer"
                         />
                       ) : (
                         <FontAwesomeIcon
-                          icon={faLock}
+                          icon={faEyeSlash}
                           onClick={() => setEyeOpen(true)}
                           className="cursor-pointer"
                         />

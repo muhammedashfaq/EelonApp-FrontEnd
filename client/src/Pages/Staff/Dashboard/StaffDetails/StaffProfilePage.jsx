@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import StaffHeader from '../../../../Components/Staff/Header/landingPageHeader'
 import Banner from '../../../../Components/Banner/Banner'
 import StaffProfile from '../../../../Components/Staff/DashboardComponents/StaffList/StaffProfile'
 import { useParams } from 'react-router-dom'
@@ -24,7 +23,6 @@ useEffect(()=>{
 },[])
   return (
     <div>
-        <StaffHeader/>
         <Banner/>
         <StaffProfile userData={userData}/>
     </div>

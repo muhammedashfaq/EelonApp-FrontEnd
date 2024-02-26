@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import StaffHeader from '../../../../Components/Staff/Header/landingPageHeader'
 import Banner from '../../../../Components/Banner/Banner'
 import EditSraffDetails from '../../../../Components/Staff/DashboardComponents/StaffList/EditSraffDetails'
 import { useParams } from 'react-router-dom'
@@ -22,7 +21,6 @@ const StaffEditPage = () => {
   useEffect(() => getData(), []);
   return (
     <div>
-    <StaffHeader/>
     <Banner/>
     <EditSraffDetails fetchData={fetchData}/>
     </div>

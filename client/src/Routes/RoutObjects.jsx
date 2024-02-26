@@ -9,6 +9,10 @@ export const RouteObjects = {
   StudyMaterials: "/studymaterials",
   StudentLibrary: "/studentlibrary",
 
+  NewApplication:"/newapplication",
+  NewApplicationFee:"/applicationfee",
+  NewApplicants:"/newapplicats",
+  AddNewStudent:"/addnewstudent",
   StaffDashboard: "/staffdash",
   Stafflibrary: "/stafflibrary",
   Bookmanagment: "/bookdetails/page",
@@ -62,9 +66,12 @@ export const RouteObjects = {
 
   AdminGenerateHT:"/admingeterateHT",
   HTClasswise:"/adminHTclasswise",
-  HallTicket:"/StudentHT"
+  HallTicket:"/StudentHT",
 
 
+// accountant
 
+FeeCollection:"/feecollection",
+AdminssionFee:"/admissionfee"
 
 };
