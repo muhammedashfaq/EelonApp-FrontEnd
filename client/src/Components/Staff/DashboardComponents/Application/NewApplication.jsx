@@ -23,6 +23,7 @@ const NewApplication = () => {
   const [medium, setMedium] = useState("");
   const [appliedClass, setApplicationClass] = useState("");
   const [group, setGroup] = useState("");
+  const [gender,setgender]=useState([])
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     studentName: "",
@@ -44,6 +45,7 @@ const NewApplication = () => {
 
   const allData = {
     ...formData,
+    gender,
     academicYear,
     group,
     board,
@@ -61,7 +63,6 @@ const NewApplication = () => {
       }
       setIsLoading(false);
 
-      // Add your form submission logic here
     } catch (error) {
       setIsLoading(false);
       console.log(error);
@@ -79,7 +80,8 @@ const NewApplication = () => {
       allData.DOB &&
       allData.FathersName &&
       allData.ContactNo &&
-      allData.address;
+      allData.address&&
+      allData.gender;
 
     setIsFormValid(isFormValid);
   }, [allData]);
@@ -159,6 +161,7 @@ const NewApplication = () => {
                 onChange={(e) => setMedium(e)}
                 required
               >
+                <Option value="Matriculation">Matriculation</Option>
                 <Option value="Tamil">Tamil</Option>
                 <Option value="English">English</Option>
               </Select>
@@ -193,7 +196,7 @@ const NewApplication = () => {
             </div>
             <div className="col-span-full sm:col-span-1">
               <label htmlFor="studentName" className="text-sm">
-                Student Name
+                Gender
               </label>
               <Select
                 label="Select "
