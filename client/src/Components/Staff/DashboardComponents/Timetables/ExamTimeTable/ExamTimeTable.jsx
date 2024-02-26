@@ -103,9 +103,9 @@ const ExamTimeTable = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(dataArray);
-  }, [dataArray]);
+  // useEffect(() => {
+  //   console.log(dataArray);
+  // }, [dataArray]);
 
   useEffect(() => {
     getClassSection();

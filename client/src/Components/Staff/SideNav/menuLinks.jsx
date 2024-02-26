@@ -38,7 +38,13 @@ const menu = [
         href: RouteObjects.AdminssionFee,
         icon: faCaretRight,
       },
-    ]},
+      {
+        title: "Add Fee structure ",
+        href: RouteObjects.AddFeeStructure,
+        icon: faCaretRight,
+      },
+    ],
+  },
   {
     title: "Admission",
     icon: faUserPlus,
@@ -54,7 +60,8 @@ const menu = [
         href: RouteObjects.NewApplicants,
         icon: faCaretRight,
       },
-    ]},
+    ],
+  },
   {
     title: "Academics",
     icon: faUserPlus,

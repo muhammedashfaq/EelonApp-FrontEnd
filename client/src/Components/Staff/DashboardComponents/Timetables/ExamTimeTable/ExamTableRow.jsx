@@ -69,7 +69,7 @@ const ExamTableRow = ({ index, removeDiv, handleData, uuid }) => {
 
   return (
     <>
-      <div className="h-28 w-auto bg-gray-200 my-5 px-10 shadow-2xl rounded-2xl shadow-black flex justify-between items-center">
+      <div className="h-28 w-auto bg-gray-200 m-5 px-10 shadow-2xl rounded-2xl shadow-black flex justify-between items-center">
         <div className="bg-brown-200 rounded-xl px-4 py-3">{index}</div>
         <div className="flex flex-col gap-2 items-center">
           <Input

@@ -63,9 +63,9 @@ import Banner from "../Components/Banner/Banner";
 import FeeCollectionPage from "../Pages/Staff/Dashboard/FeeCollection/FeeCollectionPage";
 import AdmissionFeePage from "../Pages/Staff/Dashboard/FeeCollection/AdmissionFeePage";
 import AddNewStudentPage from "../Pages/Staff/Dashboard/Application/AddNewStudentPage";
+import AddFeeStructures from "../Pages/Staff/Dashboard/FeeCollection/AddFeeStructures";
 
 const AppRoutes = () => {
-
   return (
     <div>
       <Toaster position="bottom-center" reverseOrder={false} />
@@ -77,13 +77,11 @@ const AppRoutes = () => {
           path={RouteObjects.FeeCollection}
           element={<FeeCollectionPage />}
         />
-          <Route
+        <Route
           path={RouteObjects.AdminssionFee}
           element={<AdmissionFeePage />}
-          
         />
-
-<Route
+        <Route
           path={`${RouteObjects.NewApplicationFee}/:id`}
           element={<ApplicationFeePage />}
         />
@@ -114,6 +112,10 @@ const AppRoutes = () => {
           path={RouteObjects.FeeStructure}
           element={<StudentFeeStructure />}
         />
+        <Route
+          path={RouteObjects.AddFeeStructure}
+          element={<AddFeeStructures />}
+        />
         <Route path={RouteObjects.HomeWorks} element={<StudentHomeWorks />} />
         <Route path={RouteObjects.Payment} element={<PaymentHistory />} />
         <Route
@@ -134,11 +136,10 @@ const AppRoutes = () => {
           path={RouteObjects.NewApplicants}
           element={<ApplicantTablePage />}
         />
-    
-    <Route
-  path={`${RouteObjects.AddNewStudent}/:id`}
-  element={<AddNewStudentPage />}
-/>
+        <Route
+          path={`${RouteObjects.AddNewStudent}/:id`}
+          element={<AddNewStudentPage />}
+        />
         <Route
           path={RouteObjects.StaffDashboard}
           element={<StaffDashBoard />}
