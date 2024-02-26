@@ -9,10 +9,10 @@ export const RouteObjects = {
   StudyMaterials: "/studymaterials",
   StudentLibrary: "/studentlibrary",
 
-  NewApplication:"/newapplication",
-  NewApplicationFee:"/applicationfee",
-  NewApplicants:"/newapplicats",
-  AddNewStudent:"/addnewstudent",
+  NewApplication: "/newapplication",
+  NewApplicationFee: "/applicationfee",
+  NewApplicants: "/newapplicats",
+  AddNewStudent: "/addnewstudent",
   StaffDashboard: "/staffdash",
   Stafflibrary: "/stafflibrary",
   Bookmanagment: "/bookdetails/page",
@@ -64,14 +64,13 @@ export const RouteObjects = {
   AdminHome: "/adminhome",
   AdminAprovals: "/adminaprovals",
 
-  AdminGenerateHT:"/admingeterateHT",
-  HTClasswise:"/adminHTclasswise",
-  HallTicket:"/StudentHT",
+  AdminGenerateHT: "/admingeterateHT",
+  HTClasswise: "/adminHTclasswise",
+  HallTicket: "/StudentHT",
 
+  // accountant
 
-// accountant
-
-FeeCollection:"/feecollection",
-AdminssionFee:"/admissionfee"
-
+  FeeCollection: "/feecollection",
+  AdminssionFee: "/admissionfee",
+  AddFeeStructure: "/addfeestructure",
 };

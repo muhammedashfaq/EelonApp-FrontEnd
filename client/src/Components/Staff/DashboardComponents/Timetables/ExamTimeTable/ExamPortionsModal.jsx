@@ -22,7 +22,7 @@ export default function ExamPortionsModal() {
   return (
     <>
       <Tooltip content="Add portions">
-        <IconButton color="gray" variant="outlined" onClick={handleOpen}>
+        <IconButton color="blue" variant="outlined" onClick={handleOpen}>
           <FontAwesomeIcon icon={faBook} />
         </IconButton>
       </Tooltip>
