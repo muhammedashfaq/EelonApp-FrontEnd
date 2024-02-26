@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import AddStudent from "../../../Components/Staff/DashboardComponents/StudentAdmintion/AddStudent";
-import StaffHeader from "../../../Components/Staff/Header/landingPageHeader";
 import Banner from "../../../Components/Banner/Banner";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 
@@ -31,7 +30,6 @@ const AddStudents = () => {
   }, []);
   return (
     <div>
-      <StaffHeader />
       <Banner />
       <div className="flex">
         <AddStudent classDetails={classDetails} AcademicYrs={AcademicYrs} />

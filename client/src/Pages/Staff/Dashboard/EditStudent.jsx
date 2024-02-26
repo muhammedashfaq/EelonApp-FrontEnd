@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import Banner from "../../../Components/Banner/Banner"
 import EditStudentComponent from "../../../Components/Staff/DashboardComponents/StudentAdmintion/EditStudentComponent"
-import StaffHeader from "../../../Components/Staff/Header/landingPageHeader"
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate"
 import { useParams } from "react-router-dom"
 
@@ -26,7 +25,6 @@ useEffect(()=>{
 },[])
   return (
     <div>
-        <StaffHeader />
         <Banner />
         <div className='flex'>
             <EditStudentComponent classDetails={classDetails} name={name}/>

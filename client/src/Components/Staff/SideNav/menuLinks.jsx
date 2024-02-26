@@ -24,6 +24,38 @@ const menu = [
     href: RouteObjects.Stafflibrary,
   },
   {
+    title: "Accounts",
+    icon: faUserPlus,
+    submenu: true,
+    submenuItems: [
+      {
+        title: "Fee Collection ",
+        href: RouteObjects.FeeCollection,
+        icon: faCaretRight,
+      },
+      {
+        title: "Admission Fee ",
+        href: RouteObjects.AdminssionFee,
+        icon: faCaretRight,
+      },
+    ]},
+  {
+    title: "Admission",
+    icon: faUserPlus,
+    submenu: true,
+    submenuItems: [
+      {
+        title: "New Application ",
+        href: RouteObjects.NewApplication,
+        icon: faCaretRight,
+      },
+      {
+        title: "New Applicants ",
+        href: RouteObjects.NewApplicants,
+        icon: faCaretRight,
+      },
+    ]},
+  {
     title: "Academics",
     icon: faUserPlus,
     submenu: true,

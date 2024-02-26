@@ -37,10 +37,10 @@ const NavBar = () => {
             {menu.map((item, index) => (
               <li
                 className={`text-gray-200 text-sm flex flex-col cursor-pointer p-2 hover:bg-deep-orange-500 rounded-md mt-2 relative`}
-                key={index}
+                key={index} onClick={() => toggleSubmenu(index)}
               >
                 <Link to={item.href}>
-                  <div className="flex items-center gap-x-4">
+                  <div className="flex items-center gap-x-4" >
                     <FontAwesomeIcon icon={item.icon} />
 
                     <span
@@ -54,7 +54,7 @@ const NavBar = () => {
                     {item.submenuItems && (
                       <span
                         className="material-symbols-outlined"
-                        onClick={() => toggleSubmenu(index)}
+                        
                       >
                         {submenuOpen[index] ? "expand_less" : "expand_more"}
                       </span>
