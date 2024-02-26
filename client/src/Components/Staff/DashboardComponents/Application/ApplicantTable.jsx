@@ -80,7 +80,7 @@ const ApplicantTable = () => {
                   return (
                     <tr key={index}>
                       <td className={classes}>{index + 1}</td>
-                      <td className={classes}>{item?.applicationNo}</td>
+                      <td className={classes}>{item?.admnNo}</td>
                       <td className={classes}>{item?.ContactNo}</td>
 
                       <td className={classes}>{item?.studentName}</td>

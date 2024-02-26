@@ -6,8 +6,11 @@ import { faCircleInfo, faIndianRupee } from "@fortawesome/free-solid-svg-icons";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useParams } from "react-router-dom";
 import { FeeType, PaymentMode } from "../../../DropDowns/DropDowns";
+import { RouteObjects } from "../../../../Routes/RoutObjects";
 
 const ApplicationFee = () => {
+  const navigate=useNavigate()
+
   const { id } = useParams();
   const [amount, setAmount] = useState(0);
   const [applicantData, setApplicantData] = useState("");
@@ -52,7 +55,7 @@ const ApplicationFee = () => {
     try {
       console.log(formData);
         const response = await axiosPrivate.post("/accounts/admissionfee", formData);
-        console.log(response,"rest")
+        navigate(RouteObjects.AdminssionFee)
     } catch (error) {
       console.log(error);
     }
@@ -93,8 +96,8 @@ const ApplicationFee = () => {
         </div>
         <div className="flex justify-evenly px-3 py-4 bg-cyan-100 rounded-sm m-1">
           <div className="m-2 p-2 border-r-2">
-            <span className="font-bold font-normal">Application Number:</span>
-            {applicantData?.applicationNo}
+            <span className="font-bold font-normal">Admission Number:</span>
+            {applicantData?.admnNo}
           </div>
           <div className="m-2 p-2 border-r-2">
             <span className="font-bold font-normal"> Student Name :</span>
