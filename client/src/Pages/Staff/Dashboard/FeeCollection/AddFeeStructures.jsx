@@ -35,7 +35,6 @@ const AddFeeStructures = () => {
   const getFeeStructures = async () => {
     try {
       const response = await axiosPrivate.get("accounts/feestructure");
-      console.log(response);
       setfeeStructures(response.data);
     } catch (error) {
       console.error(error);
@@ -70,7 +69,11 @@ const AddFeeStructures = () => {
           <div className="container xl grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
             {feeStructures &&
               feeStructures.map((item) => (
-                <FeeStructureCards item={item} key={item?._id} />
+                <FeeStructureCards
+                  item={item}
+                  key={item?._id}
+                  getFeeStructures={getFeeStructures}
+                />
               ))}
           </div>
         </div>
