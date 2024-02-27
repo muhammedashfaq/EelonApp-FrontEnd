@@ -12,10 +12,14 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 
-export default function AddFeeStrcrtModal({ academicYrDD, stdDD }) {
+export default function AddFeeStrcrtModal({
+  academicYrDD,
+  stdDD,
+  getFeeStructures,
+}) {
   const [open, setOpen] = React.useState(false);
 
   const [selectedClass, setselectedClass] = useState();
@@ -29,20 +33,29 @@ export default function AddFeeStrcrtModal({ academicYrDD, stdDD }) {
   const handleOpen = () => setOpen(!open);
 
   const addfeestructure = async () => {
+    if (!amount || !selectedClass || !feeType) return;
     try {
       const reqData = {
         std: selectedClass,
         academicYear: selectedAcademicYr,
         term,
-        amount,
+        amount: Number(amount),
         type: feeType,
       };
-      const response = axiosPrivate.post("feestructure", reqData);
-      console.log(response);
+      // console.log(reqData);
+      const response = await axiosPrivate.post(
+        "accounts/feestructure",
+        reqData
+      );
+      getFeeStructures();
     } catch (error) {
       console.error(error);
     }
   };
+
+  // useEffect(() => {
+  //   console.log(selectedAcademicYr);
+  // }, [selectedAcademicYr]);
 
   return (
     <>
@@ -58,34 +71,47 @@ export default function AddFeeStrcrtModal({ academicYrDD, stdDD }) {
                 label="Academic year"
                 onChange={(e) => setselectedAcademicYr(e)}
               >
-                <>
-                  <Option disabled>Select academic year</Option>
-                  {academicYrDD &&
-                    academicYrDD.map((item) => (
-                      <Option value={item}>{item}</Option>
-                    ))}
-                </>
-              </Select>
-            </div>
-            <div className="w-60">
-              <Select label="Class" onChange={(e) => setselectedClass(e)}>
-                <Option disabled>Select class</Option>
-                {stdDD &&
-                  stdDD.map((item) => (
-                    <>
-                      <Option value={item}>{item}</Option>
-                    </>
+                {/* <Option disabled>Select academic year</Option> */}
+                {academicYrDD &&
+                  academicYrDD.map((item) => (
+                    <Option value={item}>{item}</Option>
                   ))}
               </Select>
             </div>
             <div className="w-60">
-              <Input label="Fee type" />
+              <Select label="Class" onChange={(e) => setselectedClass(e)}>
+                {/* <Option disabled>Select class</Option> */}
+                {stdDD &&
+                  stdDD.map((item) => <Option value={item}>{item}</Option>)}
+              </Select>
             </div>
             <div className="w-60">
-              <Input label="Term" />
+              <Select label="Fee type" onChange={(e) => setfeeType(e)}>
+                <Option value="Admission fee">Admission fee</Option>
+                <Option value="Academic fee">Academic fee</Option>
+                <Option value="Competition fee">Competition fee</Option>
+                <Option value="Events fee">Events fee</Option>
+                <Option value="Annual day fee">Annual day fee</Option>
+                <Option value="Tour fee">Tour fee</Option>
+                <Option value="Fines">Fines</Option>
+              </Select>
             </div>
             <div className="w-60">
-              <Input label="Amount" />
+              <Select label="Fee type" onChange={(e) => setterm(e)}>
+                <Option value="Ist midterm">Ist midterm</Option>
+                <Option value="Quarterly midterm">Quarterly midterm</Option>
+                <Option value="IInd midterm">IInd midterm</Option>
+                <Option value="Half midterm">Half midterm</Option>
+                <Option value="IIIrd midterm">IIIrd midterm</Option>
+                <Option value="Annual midterm">Annual midterm</Option>
+              </Select>
+            </div>
+            <div className="w-60">
+              <Input
+                label="Amount"
+                type="text"
+                onChange={(e) => setamount(e.target.value)}
+              />
             </div>
           </div>
         </DialogBody>
@@ -98,7 +124,14 @@ export default function AddFeeStrcrtModal({ academicYrDD, stdDD }) {
           >
             <span>Cancel</span>
           </Button>
-          <Button variant="gradient" color="green" onClick={addfeestructure}>
+          <Button
+            variant="gradient"
+            color="green"
+            onClick={() => {
+              addfeestructure();
+              handleOpen();
+            }}
+          >
             <span>Add</span>
           </Button>
         </DialogFooter>
