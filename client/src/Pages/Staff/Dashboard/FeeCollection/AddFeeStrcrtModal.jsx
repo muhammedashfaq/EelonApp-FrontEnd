@@ -21,7 +21,7 @@ import { useState, useEffect } from "react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import AcademicFeeAdditionRow from "./AcademicFeeAdditionRow";
 import { v4 as uuidv4 } from "uuid";
-import AdditionalFeeAddRow from "./AdditionalFeeAddRow";
+// import AdditionalFeeAddRow from "./AdditionalFeeAddRow";
 
 export default function AddFeeStrcrtModal({
   academicYrDD,
@@ -40,7 +40,6 @@ export default function AddFeeStrcrtModal({
   const [installmentType, setinstallmentType] = useState("termWise");
 
   const [dataArray, setDataArray] = useState([]);
-  const [addnlFeeArr, setaddnlFeeArr] = useState([]);
 
   const axiosPrivate = useAxiosPrivate();
 
@@ -96,17 +95,6 @@ export default function AddFeeStrcrtModal({
     if (!idToRemove) return;
     const updatedDivs = dataArray.filter((item) => item.id !== idToRemove);
     setDataArray(updatedDivs);
-  };
-
-  const addAddtnlRow = () => {
-    const newId = uuidv4();
-    const newObj = { id: newId };
-    setaddnlFeeArr([...addnlFeeArr, newObj]);
-  };
-  const removeAddtnlRow = (idToRemove) => {
-    if (!idToRemove) return;
-    const updatedDivs = dataArray.filter((item) => item.id !== idToRemove);
-    setaddnlFeeArr(updatedDivs);
   };
 
   // useEffect(() => {
@@ -337,22 +325,11 @@ export default function AddFeeStrcrtModal({
             </TabPanel>
             <TabPanel value="Additional fees">
               <DialogBody>
-                <div className="flex flex-row-reverse mb-5">
-                  <IconButton variant="outlined" onClick={addAddtnlRow}>
-                    <FontAwesomeIcon icon={faPlus} size="xl" />
-                  </IconButton>
-                </div>
-                <div>
-                  {addnlFeeArr &&
-                    addnlFeeArr.map((item, i) => (
-                      <AdditionalFeeAddRow
-                        item={item}
-                        key={item?.id}
-                        i={i + 1}
-                        removeAddtnlRow={removeAddtnlRow}
-                      />
-                    ))}
-                </div>
+                {/* <AdditionalFeeAddRow
+                  academicYrDD={academicYrDD}
+                  getFeeStructures={getFeeStructures}
+                  handleClose={handleClose}
+                /> */}
               </DialogBody>
               <DialogFooter>
                 <Button
