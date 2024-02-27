@@ -8,10 +8,13 @@ import {
 
 export default function FeeStructureCards({ item }) {
   return (
-    <Card className="mt-6 w-96">
+    <Card className="mt-6 w-80">
       <CardBody>
         <Typography variant="h5" color="blue-gray" className="mb-2">
-          {item?.type}
+          {item?.feeType}
+        </Typography>
+        <Typography variant="small" color="blue-gray" className="mb-2">
+          {item?.othersType}
         </Typography>
         <Typography>Term: {item?.term}</Typography>
         <Typography>Class: {item?.std}</Typography>

@@ -27,10 +27,15 @@ export default function AddFeeStrcrtModal({
   const [term, setterm] = useState();
   const [amount, setamount] = useState();
   const [feeType, setfeeType] = useState();
+  const [othersType, setothersType] = useState();
 
   const axiosPrivate = useAxiosPrivate();
 
   const handleOpen = () => setOpen(!open);
+  const handleClose = () => {
+    setOpen(false);
+    setfeeType("");
+  };
 
   const addfeestructure = async () => {
     if (!amount || !selectedClass || !feeType) return;
@@ -40,7 +45,8 @@ export default function AddFeeStrcrtModal({
         academicYear: selectedAcademicYr,
         term,
         amount: Number(amount),
-        type: feeType,
+        feeType: feeType,
+        othersType,
       };
       // console.log(reqData);
       const response = await axiosPrivate.post(
@@ -94,10 +100,20 @@ export default function AddFeeStrcrtModal({
                 <Option value="Annual day fee">Annual day fee</Option>
                 <Option value="Tour fee">Tour fee</Option>
                 <Option value="Fines">Fines</Option>
+                <Option value="Others">Others</Option>
               </Select>
             </div>
             <div className="w-60">
-              <Select label="Fee type" onChange={(e) => setterm(e)}>
+              <Input
+                label="Other fees"
+                type="text"
+                disabled={feeType !== "others"}
+                onChange={(e) => setothersType(e.target.value)}
+              />
+            </div>
+
+            <div className="w-60">
+              <Select label="Term" onChange={(e) => setterm(e)}>
                 <Option value="Ist midterm">Ist midterm</Option>
                 <Option value="Quarterly midterm">Quarterly midterm</Option>
                 <Option value="IInd midterm">IInd midterm</Option>
@@ -119,17 +135,17 @@ export default function AddFeeStrcrtModal({
           <Button
             variant="text"
             color="red"
-            onClick={handleOpen}
+            onClick={handleClose}
             className="mr-1"
           >
-            <span>Cancel</span>
+            <span>Close</span>
           </Button>
           <Button
             variant="gradient"
             color="green"
             onClick={() => {
               addfeestructure();
-              handleOpen();
+              handleClose();
             }}
           >
             <span>Add</span>
