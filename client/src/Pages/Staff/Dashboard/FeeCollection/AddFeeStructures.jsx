@@ -4,11 +4,13 @@ import { Tooltip, Typography } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddFeeStrcrtModal from "./AddFeeStrcrtModal";
 import { useState, useEffect } from "react";
+import FeeStructureCards from "./FeeStructureCards";
 
 const AddFeeStructures = () => {
   const axiosPrivate = useAxiosPrivate();
   const [academicYrDD, setacademicYrDD] = useState([]);
   const [stdDD, setstdDD] = useState([]);
+  const [feeStructures, setfeeStructures] = useState([]);
 
   const getAcademicYrDropdowns = async () => {
     try {
@@ -30,9 +32,20 @@ const AddFeeStructures = () => {
     }
   };
 
+  const getFeeStructures = async () => {
+    try {
+      const response = await axiosPrivate.get("accounts/feestructure");
+      console.log(response);
+      setfeeStructures(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     getAcademicYrDropdowns();
     getStdDropdowns();
+    getFeeStructures();
   }, []);
   return (
     <>
@@ -40,13 +53,26 @@ const AddFeeStructures = () => {
       <div>
         <div className="bg-blue-gray-500 rounded-lg p-2 flex justify-between items-center mt-10 mx-5">
           <div>
-            <AddFeeStrcrtModal academicYrDD={academicYrDD} stdDD={stdDD} />
+            <AddFeeStrcrtModal
+              academicYrDD={academicYrDD}
+              stdDD={stdDD}
+              getFeeStructures={getFeeStructures}
+            />
           </div>
           <Typography color="white" className="text-2xl font-semibold">
             Add fee structure
           </Typography>
 
           <div></div>
+        </div>
+
+        <div className="flex justify-center">
+          <div className="container xl grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+            {feeStructures &&
+              feeStructures.map((item) => (
+                <FeeStructureCards item={item} key={item?._id} />
+              ))}
+          </div>
         </div>
       </div>
     </>
