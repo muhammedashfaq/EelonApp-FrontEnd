@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { TableHeaderName } from "../../../Table Header/TableHeader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faIndianRupee, faRupeeSign } from "@fortawesome/free-solid-svg-icons";
+import {
+  faIndianRupee,
+  faPlus,
+  faRupeeSign,
+} from "@fortawesome/free-solid-svg-icons";
 import { FeeType, PaymentMode } from "../../../DropDowns/DropDowns";
 import { Button, Input, Option, Select } from "@material-tailwind/react";
 import SearchbyRollno from "./SearchbyRollno";
+import { v4 as uuidv4 } from "uuid";
 
 import { Oval } from "react-loader-spinner";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
@@ -21,6 +26,8 @@ const FeeCollection = () => {
   const [acYr, setAcYr] = useState([]);
   const [FeeType, setFeeType] = useState();
   const axiosPrivate = useAxiosPrivate();
+  const [dataArray, setDataArray] = useState([]);
+  const [totalFee, settotalFee] = useState();
 
   const getacYR = async () => {
     try {
@@ -37,6 +44,43 @@ const FeeCollection = () => {
       console.log(error);
     }
   };
+
+  const handleData = (data) => {
+    const { id } = data;
+    const existingIndex = dataArray.findIndex((item) => item.id === id);
+
+    if (existingIndex !== -1) {
+      setDataArray((prevDataArray) => {
+        const newDataArray = [...prevDataArray];
+        newDataArray[existingIndex] = data;
+        return newDataArray;
+      });
+    } else {
+      setDataArray((prevDataArray) => [...prevDataArray, data]);
+    }
+  };
+
+  const addDiv = () => {
+    const newId = uuidv4();
+    const newObj = { id: newId };
+    setDataArray([...dataArray, newObj]);
+  };
+  const removeDiv = (idToRemove) => {
+    if (!idToRemove) return;
+    const updatedDivs = dataArray.filter((item) => item.id !== idToRemove);
+    setDataArray(updatedDivs);
+  };
+
+  useEffect(() => {
+    console.log(dataArray);
+
+    const calculateTotalFee = dataArray.reduce((total, fee) => {
+      const feeTotal = fee?.amount ? fee.amount : 0;
+      return total + feeTotal;
+    }, 0);
+    settotalFee(calculateTotalFee);
+    // console.log("Total fee", calculateTotalFee);
+  }, [dataArray]);
 
   useEffect(() => {
     getacYR();
@@ -99,36 +143,31 @@ const FeeCollection = () => {
                 ))}
             </Select>
           </div> */}
+          {dataArray &&
+            dataArray.map((item, i) => (
+              <div className="my-10">
+                <hr className="m-3" />
+                <FeeCollectionRow
+                  acYr={acYr}
+                  handleData={handleData}
+                  removeDiv={removeDiv}
+                  item={item}
+                  index={i + 1}
+                />
+              </div>
+            ))}
 
-          <FeeCollectionRow acYr={acYr} />
-
-          <div className="flex justify-between items-center px-6 py-6">
-            {/* <div className="">
-              <label htmlFor="academicYear" className="text-sm">
-                Fee Type
-              </label>
-
-            </div> */}
-            {/* <div className="">
-              <Input
-                type="number"
-                placeholder="0.00"
-                className="!border !border-gray-300 bg-white text-gray-900 shadow-lg shadow-gray-900/5 ring-4 ring-transparent placeholder:text-gray-500 focus:!border-gray-900 focus:!border-t-gray-900 focus:ring-gray-900/10"
-                labelProps={{
-                  className: "hidden",
-                }}
-                containerProps={{ className: "min-w-[100px]" }}
-              />
-            </div> */}
-
-            {/* 
-            <div className="">
-              <label htmlFor="academicYear" className="text-sm">
-               Payment Mode
-              </label>
-
-              <PaymentMode />
-            </div> */}
+          <hr className="m-3" />
+          <div className="flex justify-center">
+            <Button
+              variant="outlined"
+              onClick={addDiv}
+              style={{ textTransform: "none" }}
+              color="brown"
+            >
+              <FontAwesomeIcon icon={faPlus} size="xl" className="mr-3" />
+              Add field
+            </Button>
           </div>
           <hr className="m-3" />
           <div className="flex justify-end">
@@ -137,7 +176,7 @@ const FeeCollection = () => {
                 <p className="text-gray-700">Subtotal</p>
                 <p className="text-gray-700">
                   <FontAwesomeIcon icon={faIndianRupee} />
-                  129.99
+                  {totalFee}
                 </p>
               </div>
 
@@ -146,7 +185,7 @@ const FeeCollection = () => {
                 <p className="text-lg font-bold">Total</p>
                 <div className="">
                   <p className="mb-1 text-lg font-bold">
-                    <FontAwesomeIcon icon={faIndianRupee} /> 134.98
+                    <FontAwesomeIcon icon={faIndianRupee} /> {totalFee}
                   </p>
                 </div>
               </div>
