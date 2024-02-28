@@ -310,7 +310,7 @@ export default function AddFeeStrcrtModal({
                         ))}
                     </Select>
                   </div>
-                  {/* <div className="w-60">
+                  <div className="w-60">
                     <Select label="Fee type" onChange={(e) => setfeeType(e)}>
                       <Option value="Admission fee">Admission fee</Option>
                       <Option value="Academic fee">Academic fee</Option>
@@ -322,15 +322,15 @@ export default function AddFeeStrcrtModal({
                       <Option value="Others">Others</Option>
                     </Select>
                   </div>
-                  <div className="w-60">
+                  {/* <div className="w-60">
                     <Input
                       label="Other fees"
                       type="text"
                       disabled={feeType !== "Others"}
                       onChange={(e) => setothersType(e.target.value)}
                     />
-                  </div>
- */}
+                  </div> */}
+
                   <div className="w-60">
                     <Select label="Term" onChange={(e) => setterm(e)}>
                       <Option value="Term I">Term I</Option>
