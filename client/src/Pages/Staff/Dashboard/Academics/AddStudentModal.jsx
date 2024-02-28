@@ -16,7 +16,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
-export default function AddStudentModal({ classObjId, studentList }) {
+export default function AddStudentModal({ classObjId, studentList, classId }) {
   const [open, setOpen] = React.useState(false);
   const [searchQuery, setsearchQuery] = useState();
   const [searchData, setsearchData] = useState();
@@ -28,7 +28,6 @@ export default function AddStudentModal({ classObjId, studentList }) {
     setsearchData("");
     setsearchQuery("");
   };
-
   const getAllStudents = async (e) => {
     e.preventDefault();
     if (!searchQuery) return;
@@ -58,6 +57,7 @@ export default function AddStudentModal({ classObjId, studentList }) {
       if (!selectedUsers) return;
       const reqData = {
         students: selectedUsers,
+        classId,
       };
       const response = await axiosPrivate.put(
         `classsection/addstudent/${classObjId}`,

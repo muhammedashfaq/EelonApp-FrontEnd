@@ -21,6 +21,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
 import GradeDistPieChart from "./GradeDistPieChart";
 import ClassAvgComparisonChart from "./ClassAvgComparisonChart";
+import useAuth from "../../../../Hooks/useAuth";
 
 const TABLE_HEAD = [
   "Sl.no",
@@ -47,6 +48,11 @@ export default function StudentWiseReportCard() {
   const [asc, setasc] = useState(false);
   const [classAvgData, setclassAvgData] = useState();
   const [grandTotal, setgrandTotal] = useState();
+
+  const { auth } = useAuth();
+  useEffect(() => {
+    console.log(auth);
+  }, [auth]);
 
   const getAcademicYear = async () => {
     try {
