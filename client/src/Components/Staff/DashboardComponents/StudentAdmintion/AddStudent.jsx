@@ -14,6 +14,8 @@ import { RouteObjects } from "../../../../Routes/RoutObjects";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import Swal from "sweetalert2";
+import { addStudentsValidation } from "../../../../Helper/Validations/validations";
 const AddStudent = ({ classDetails, AcademicYrs }) => {
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
@@ -29,15 +31,14 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
   const [academicYear, setacademicYear] = useState();
   const [studentCategory, setstudentCategory] = useState();
   const [studentGp, setstudentGp] = useState();
-  const[board,setBoard]=useState("")
+  const [board, setBoard] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [frntentErors, setFrntentErors] = useState("");
-
-  const [formData, setFormdata] = useState({
+  const [DOB, setDOB] = useState("");
+  
+  const [frntentErors, setFrntentErors] = useState({
     admnNo: "",
     studentName: "",
     nameTamil: "",
-    DOB: "",
     studentPhoto: "",
     AadharNo: "",
     ContactNo: "",
@@ -69,59 +70,127 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
     guardianNameTamil: "",
     guardiansJob: "",
     annualIncome: "",
+    gender:"",
+    classSection:"",
+    bloodGp:"",
+    motherTongue:"",
+    religion:"",
+    community:"",
+    concessionStudent:"",
+    studentCategory:"",
+    board:"",
+    DOB:"",
 
+  });
+  const [formData, setFormdata] = useState({
+    admnNo: "",
+    studentName: "",
+    nameTamil: "",
+    studentPhoto: "",
+    AadharNo: "",
+    ContactNo: "",
+    AltCnctNo: "",
+    address: "",
+    weight: "",
+    height: "",
+    email: "",
+    password: "",
+    nationality: "",
+    mediumOfInstruction: "",
+    academicYear: "",
+    studentGp: "",
+    caste: "",
+    subCaste: "",
+    state: "",
+    city: "",
+    pincode: "",
+    dateOfJoin: "",
+    classOfJoin: "",
+    EMSno: "",
+    FathersName: "",
+    FathersNameTamil: "",
+    FathersJob: "",
+    MothersName: "",
+    MothersNameTamil: "",
+    MothersJob: "",
+    guardianName: "",
+    guardianNameTamil: "",
+    guardiansJob: "",
+    annualIncome: "",
+    
   });
   const handleInputChange = (event) => {
     console.log(event, "data");
     const { name, value, type, checked } = event.target;
 
     const inputValue =
-      type === "number"
+    type === "number"
         ? parseFloat(value)
         : type === "checkbox"
         ? checked
         : value;
 
-    setFormdata((prev) => ({
+        setFormdata((prev) => ({
       ...prev,
       [name]: inputValue,
     }));
   };
-
+  
+  const reqData = {
+    ...formData,
+    gender,
+    classSection,
+    bloodGp,
+    motherTongue,
+    religion,
+    community,
+    classOfJoin,
+    mediumOfInstruction,
+    concessionStudent,
+    academicYear,
+    studentCategory,
+    studentGp,
+    board,
+    DOB,
+  };
   const handleSubmitForm = async (event) => {
-    event.preventDefault();
-    const reqData = {
-      ...formData,
-      gender,
-      classSection,
-      bloodGp,
-      motherTongue,
-      religion,
-      community,
-      classOfJoin,
-      mediumOfInstruction,
-      concessionStudent,
-      academicYear,
-      studentCategory,
-      studentGp,
-      board
-    };
-    if (!reqData.studentName) {
-      setFrntentErors("Please fill required Fields");
-      return;
-    }
-    console.log(formData.DOB, "dob");
     try {
-      setIsLoading(true);
-      const response = await axiosPrivate.post("/users/student", reqData);
-      setIsLoading(false);
-      navigate(RouteObjects.StudentsList);
+  
+      event.preventDefault();
+      const addstudentErrors = addStudentsValidation(reqData);
+      console.log(addstudentErrors);
+      if (!Object.values(addstudentErrors).every((error) => error === "")) {
+        // There are validation errors
+        setFrntentErors(addstudentErrors)
+        return;
+      } else {
+        // No validation errors, proceed with API call
+        setIsLoading(true);
+        await axiosPrivate.post("/users/student", reqData);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Added successfully",
+        });
+        setIsLoading(false);
+        navigate(`${RouteObjects.StudentsList}/${1}`);
+      }
     } catch (error) {
       setIsLoading(false);
-
       console.log(error);
     }
   };
+  
 
   return (
     <div className=" w-screen">
@@ -141,24 +210,26 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
               <hr />
             </div>
             <div className=" mt-6">
-              <span className="ml-10  opacity-70 ">
-                <FontAwesomeIcon icon={faInfoCircle} className="opacity-30" />{" "}
-                Please complete all required fields.
+            <span className="ml-10 text-sm text-red-600">
+                <FontAwesomeIcon icon={faInfoCircle} />
+                Please complete all required  fields.
               </span>
             </div>
             <div className=" gap-4 p-8 Laptop:grid Laptop:grid-cols-4 Tablet:grid Tablet:grid-cols-3 ipad:grid ipad:grid-cols-3 mobile:grid mobile:grid-cols-2">
               <Input
-                required
                 name="studentName"
                 type="text"
                 variant="outlined"
                 label={
-                  frntentErors && frntentErors ? frntentErors : "Student Name"
+                  frntentErors.studentName
+                    ? frntentErors.studentName
+                    : "Student Name"
                 }
-                placeholder=" Name*"
+                placeholder="Name"
                 onChange={handleInputChange}
-                error={frntentErors}
+                error={frntentErors.studentName ? true : false}
               />
+
               <Input
                 name="nameTamil"
                 type="text"
@@ -172,7 +243,6 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
                 value={gender}
                 onChange={(e) => setgender(e)}
                 label="Gender**"
-                error={frntentErors?.frntentErors}
               >
                 <Option value="Male">Male</Option>
                 <Option value="Female">Female</Option>
@@ -185,10 +255,10 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
                 variant="outlined"
                 label="DOB"
                 placeholder="DOB"
-                onChange={handleInputChange}
+                onChange={(e) => setDOB(e.target.value)}
               />
               <Input
-                required
+                
                 name="AadharNo"
                 type="number"
                 variant="outlined"
@@ -213,13 +283,13 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
                 <Option value="Unknown">Unknown</Option>
               </Select>
               <Input
-                required
+                
                 name="ContactNo"
                 type="tel"
                 variant="outlined"
-                label="Contact Number"
+                label={frntentErors && frntentErors.ContactNo ? frntentErors.ContactNo : "Email"}
                 placeholder="Contact Number
-            "
+            "    error={frntentErors && frntentErors.ContactNo ? true : false}
                 onChange={handleInputChange}
               />
               <Input
@@ -231,7 +301,7 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
                 onChange={handleInputChange}
               />
               <Input
-                required
+                
                 variant="outlined"
                 name="city"
                 label="City"
@@ -239,7 +309,7 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
                 onChange={handleInputChange}
               />
               <Input
-                required
+                
                 variant="outlined"
                 name="state"
                 label="State"
@@ -248,7 +318,7 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
               />
 
               <Input
-                required
+                
                 name="nationality"
                 type="text"
                 variant="outlined"
@@ -257,7 +327,7 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
                 onChange={handleInputChange}
               />
               <Input
-                required
+                
                 variant="outlined"
                 name="pincode"
                 label="Pin"
@@ -274,7 +344,6 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
                 <Option value="Tamil">Tamil</Option>
                 <Option value="Hindi">Hindi</Option>
                 <Option value="Malayalam">Malayalam</Option>
-                
               </Select>
 
               <Select
@@ -287,7 +356,6 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
                 <Option value="Muslim">Muslim</Option>
                 <Option value="Christian">Christian</Option>
                 <Option value="Other">Other</Option>
-
               </Select>
               <Input
                 name="caste"
@@ -350,7 +418,7 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
             </div>
             <div className=" gap-4 p-8 Laptop:grid Laptop:grid-cols-4 Tablet:grid Tablet:grid-cols-3 ipad:grid ipad:grid-cols-3 mobile:grid mobile:grid-cols-2">
               <Input
-                required
+                
                 name="FathersName"
                 type="text"
                 variant="outlined"
@@ -359,7 +427,7 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
                 onChange={handleInputChange}
               />
               <Input
-                required
+                
                 name="FathersNameTamil"
                 type="text"
                 variant="outlined"
@@ -369,7 +437,7 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
               />
 
               <Input
-                required
+                
                 name="FathersJob"
                 type="text"
                 variant="outlined"
@@ -446,7 +514,7 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
 
             <div className=" gap-4 p-8 Laptop:grid Laptop:grid-cols-4 Tablet:grid Tablet:grid-cols-3 ipad:grid ipad:grid-cols-3 mobile:grid mobile:grid-cols-2">
               <Input
-                required
+                
                 name="admnNo"
                 type="number"
                 variant="outlined"
@@ -454,11 +522,11 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
                 placeholder="Admission Number*"
                 onChange={handleInputChange}
               />
-                 <Select label="Board" value={board} onChange={(e) => setBoard(e)}>
-              <Option value="CBSE">CBSE</Option>
-              <Option value="ICSE">ICSE</Option>
-              <Option value="State">State</Option>
-            </Select>
+              <Select label="Board" value={board} onChange={(e) => setBoard(e)}>
+                <Option value="CBSE">CBSE</Option>
+                <Option value="ICSE">ICSE</Option>
+                <Option value="State">State</Option>
+              </Select>
               <Select
                 variant="outlined"
                 onChange={(e) => setacademicYear(e)}
@@ -473,16 +541,16 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
               </Select>
 
               <Input
-                required
+                
                 name="email"
                 type="email"
                 variant="outlined"
-                label="Email"
+                label={frntentErors && frntentErors.email ? frntentErors.email : "Email"}
                 placeholder="Enter Your Email"
                 onChange={handleInputChange}
+                error={frntentErors && frntentErors.email ? true : false}
               />
               <Input
-                required
                 
                 name="password"
                 type="password"
@@ -519,7 +587,7 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
                 placeholder="EMIS Number"
                 onChange={handleInputChange}
               />
- 
+
               <Select
                 variant="outlined"
                 onChange={(e) => setClassSection(e)}

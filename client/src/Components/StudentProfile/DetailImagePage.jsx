@@ -9,82 +9,70 @@ import {
   CardBody,
   Card,
   CardHeader,
-  CardFooter,
-  Typography,
+  IconButton,
 } from "@material-tailwind/react";
-import { createElement } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBook,
-  faDatabase,
-  faEdit,
-  faFile,
   faGraduationCap,
   faMedal,
+  faFile,
   faUpload,
+  faEdit,
+  faDownload,
 } from "@fortawesome/free-solid-svg-icons";
 import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
+import AddDocuments from "./AddDocumentsModal";
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import Tab2 from "./Tab2";
+import FatherImageCard from "./FatherImageCard";
+import MotherImageCard from "./MotherImageCard";
+
+// Constants for tabs and card data
+const tabsData = [
+  { label: "Parents Details", value: "1", icon: faBook },
+  { label: "Academic Details", value: "2", icon: faGraduationCap },
+  { label: "Achievements", value: "3", icon: faMedal },
+  { label: "Documents", value: "4", icon: faFile },
+];
+
+const cardsData = [
+  { title: "Previous T.C", filename: "name_of_file_1.pdf", api: "" },
+  { title: "Birth Certificate", filename: "name_of_file_2.pdf", api: "" },
+  { title: "Community Certificate", filename: "name_of_file_3.pdf", api: "" },
+  { title: "Adhar", filename: "name_of_file_4.pdf", api: "" },
+];
 
 const DetailImagePage = ({ userData }) => {
-  const [fatherImage, setFatherImage] = useState(
-    "https://img.freepik.com/premium-photo/man-is-smiling-holding-laptop-with-smile-his-face_973047-1028.jpg"
-  );
-  const [profileImageFather, setProfileImageFather] = useState("");
+  const axiosPrivate = useAxiosPrivate();
   const { auth } = useAuth();
-  const ImageChange1 = (event) => {
-    event.stopPropagation();
-    const file = event.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setFatherImage(imageUrl);
-      setProfileImageFather(imageUrl);
-    }
-  };
-  const submitimage = async (e) => {
-    try {
-      e.preventDefault();
-      if (!profileImageFather) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong! Choose Any Image 📷",
-        });
-        return;
-      }
-      const response = null;
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
-  const data = [
-    {
-      label: "Parents Details",
-      value: "1",
-      icon: faBook,
-    },
-    {
-      label: "Academic Details",
-      value: "2",
-      icon: faGraduationCap,
-    },
-    {
-      label: "Achivements",
-      value: "3",
-      icon: faMedal,
-    },
-    {
-      label: "Documents",
-      value: "4",
-      icon: faFile,
-    },
-  ];
+  
 
+  
+  // State for selected tab
   const [selectedTab, setSelectedTab] = useState("1");
 
+  // Function to handle tab change
   const handleTabChange = (value) => {
     setSelectedTab(value);
+  };
+
+  // Fetch PDF content function
+  const fetchPdfContent = async (filename) => {
+    try {
+      const response = await axiosPrivate.get(""); // Update this with your API endpoint
+      const pdfBlob = await response.blob();
+      const pdfUrl = URL.createObjectURL(pdfBlob);
+      // Trigger download
+      const link = document.createElement("a");
+      link.href = pdfUrl;
+      link.download = `${filename}.pdf`;
+      link.click();
+    } catch (error) {
+      console.error('Error fetching PDF:', error);
+    }
   };
 
   return (
@@ -92,7 +80,7 @@ const DetailImagePage = ({ userData }) => {
       <div className="w-full max-w-[100rem] flex-row border-2">
         <Tabs value={selectedTab} onChange={handleTabChange}>
           <TabsHeader>
-            {data.map(({ label, value, icon }) => (
+            {tabsData.map(({ label, value, icon }) => (
               <Tab key={value} value={value}>
                 <div className="flex items-center gap-2">
                   <FontAwesomeIcon icon={icon} className="w-5 h-5" />
@@ -102,7 +90,7 @@ const DetailImagePage = ({ userData }) => {
             ))}
           </TabsHeader>
           <TabsBody>
-            {data.map(({ value }) => (
+            {tabsData.map(({ value }) => (
               <TabPanel key={value} value={value}>
                 {value === "1" ? (
                   <div>
@@ -114,163 +102,10 @@ const DetailImagePage = ({ userData }) => {
                           </h2>
                         </div>
                         <div className="grid grid-cols-2 grid-flow-col gap-4">
-                          <Card className="w-auto flex-row">
-                            <CardHeader
-                              shadow={false}
-                              floated={false}
-                              className="m-0 w-2/5 shrink-0 rounded-r-none"
-                            >
-                              <img
-                                src={fatherImage}
-                                alt="card-image"
-                                className=" w-auto h-auto object-cover m-1 rounded-lg"
-                              />
+                          
+                         <FatherImageCard userData={userData}/>
 
-                              {(auth.roles == 5151 || auth.roles == 2000) && (
-                                <div className="space-x-2 flex justify-center my-1 items-center">
-                                  <Button color="teal">
-                                    <label
-                                      htmlFor="imageUploadfather"
-                                      className=" cursor-pointer text-white"
-                                    >
-                                      <FontAwesomeIcon
-                                        icon={faEdit}
-                                        size="2xl"
-                                      />
-                                    </label>
-                                    <input
-                                      type="file"
-                                      id="imageUploadfather"
-                                      name="profileimage"
-                                      className="hidden"
-                                      onChange={ImageChange1}
-                                    />
-                                  </Button>
-
-                                  <Button
-                                    color="lime"
-                                    
-                                    onClick={submitimage}
-                                  >
-                                    <FontAwesomeIcon
-                                      icon={faUpload}
-                                      size="2xl"
-                                    />
-                                  </Button>
-                                </div>
-                              )}
-                            </CardHeader>
-
-                            <CardBody>
-                              <div className="mb-4">
-                                <h3 className="text-xl font-semibold mb-2">
-                                  Father Details
-                                </h3>
-                                <p>
-                                  <span className="font-semibold">Name:</span>{" "}
-                                  {userData?.FathersName}
-                                </p>
-                                <p>
-                                  <span className="font-semibold">
-                                    Name In Tamil:
-                                  </span>{" "}
-                                  {userData?.FathersNameTamil}
-                                </p>
-                                <p>
-                                  <span className="font-semibold">
-                                    Occupation:
-                                  </span>{" "}
-                                  {userData?.FathersJob}
-                                </p>
-                              </div>
-
-                              <div>
-                                <h3 className="text-xl font-semibold mb-2">
-                                  Additional Information
-                                </h3>
-                                <p>
-                                  <span className="font-semibold">
-                                    Annual Income:
-                                  </span>{" "}
-                                  {userData?.annualIncome}
-                                </p>
-                              </div>
-                            </CardBody>
-                          </Card>
-
-                          <Card className="w-auto flex-row">
-                            <CardHeader
-                              shadow={false}
-                              floated={false}
-                              className="m-0 w-2/5 shrink-0 rounded-r-none"
-                            >
-                              <img
-                                src={fatherImage}
-                                alt="card-image"
-                                className=" w-auto h-auto object-cover m-1 rounded-lg"
-                              />
-
-                              {(auth.roles == 5151 || auth.roles == 2000) && (
-                                <div className="space-x-2 flex justify-center my-1 items-center">
-                                  <Button color="teal">
-                                    <label
-                                      htmlFor="imageUploadfather"
-                                      className=" cursor-pointer text-white"
-                                    >
-                                      <FontAwesomeIcon
-                                        icon={faEdit}
-                                        size="2xl"
-                                      />
-                                    </label>
-                                    <input
-                                      type="file"
-                                      id="imageUploadfather"
-                                      name="profileimage"
-                                      className="hidden"
-                                      onChange={ImageChange1}
-                                    />
-                                  </Button>
-
-                                  <Button
-                                    color="lime"
-                                    
-                                    onClick={submitimage}
-                                  >
-                                    <FontAwesomeIcon
-                                      icon={faUpload}
-                                      size="2xl"
-                                    />
-                                  </Button>
-                                </div>
-                              )}
-                            </CardHeader>
-
-                            <CardBody>
-                              <div className="mb-4">
-                                <h3 className="text-xl font-semibold mb-2">
-                                  Mother Details
-                                </h3>
-                                <p>
-                                  <span className="font-semibold">Name:</span>{" "}
-                                  {userData?.MothersName}
-                                </p>
-                                <p>
-                                  <span className="font-semibold">
-                                    Name In Tamil:
-                                  </span>{" "}
-                                  {userData?.MothersNameTamil}
-                                </p>
-                                <p>
-                                  <span className="font-semibold">
-                                    Occupation:
-                                  </span>{" "}
-                                  {userData?.MothersJob}
-                                </p>
-                              </div>
-
-                        
-                            </CardBody>
-                          </Card>
+                       <MotherImageCard userData={userData}/>
                         </div>
                       </div>
                     </div>
@@ -279,217 +114,9 @@ const DetailImagePage = ({ userData }) => {
                   </div>
                 ) : value === "2" ? (
                   <div>
-                    <div className="bg-gray-700  shadow-lg rounded-lg p-2">
-                      <div className="w-full bg-white p-6 rounded-lg shadow-md ">
-                        <div className="w-full flex justify-center items-center">
-                          <h2 className="text-2xl font-bold mb-4">
-                            Dashboard Details
-                          </h2>
-                        </div>
 
-                        <div className="bg-white p-3 shadow-sm rounded-sm">
-    <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
-           <span className="tracking-wide">About</span>
-    </div>
-    <div className="text-gray-700">
-        <div className="grid md:grid-cols-2 text-sm">
-            <div className="grid grid-cols-2">
-                <div className="px-4 py-2 font-semibold">First Name</div>
-                <div className="px-4 py-2">Jane</div>
-            </div>
-            <div className="grid grid-cols-2">
-                <div className="px-4 py-2 font-semibold">Last Name</div>
-                <div className="px-4 py-2">Doe</div>
-            </div>
-            <div className="grid grid-cols-2">
-                <div className="px-4 py-2 font-semibold">Gender</div>
-                <div className="px-4 py-2">Female</div>
-            </div>
-            <div className="grid grid-cols-2">
-                <div className="px-4 py-2 font-semibold">Contact No.</div>
-                <div className="px-4 py-2">+11 998001001</div>
-            </div>
-            <div className="grid grid-cols-2">
-                <div className="px-4 py-2 font-semibold">Current Address</div>
-                <div className="px-4 py-2">Beech Creek, PA, Pennsylvania</div>
-            </div>
-            <div className="grid grid-cols-2">
-                <div className="px-4 py-2 font-semibold">Permanant Address</div>
-                <div className="px-4 py-2">Arlington Heights, IL, Illinois</div>
-            </div>
-            <div className="grid grid-cols-2">
-                <div className="px-4 py-2 font-semibold">Email.</div>
-                <div className="px-4 py-2">
-                    <a className="text-blue-800" href="mailto:jane@example.com">jane@example.com</a>
-                </div>
-            </div>
-            <div className="grid grid-cols-2">
-                <div className="px-4 py-2 font-semibold">Birthday</div>
-                <div className="px-4 py-2">Feb 06, 1998</div>
-            </div>
-        </div>
-    </div>
-  
-</div> 
-{/* 
-                        <Card className=" bg-blue-gray-50 shadow-inner flex-row p-10">
-                          <CardBody>
-                            <h3 className="text-xl font-semibold mb-2">
-                              Details:-
-                            </h3>
+                    <Tab2 userData={userData}/>
 
-
-                            <div className="flex flex-col space-y-3">
-
-
-                              <div className="flex space-x-12  ">
-                                <div >
-                                  <p>
-                                    <span className="font-semibold">
-                                      Board:
-                                    </span>{" "}
-                                  </p>
-                                  {userData?.board}
-                                </div>
-                                <div >
-                                  <span className="font-semibold">
-                                    Admission Year:
-                                  </span>{" "}
-                                  <p>{userData?.academicYear}</p>
-                                </div>
-                              </div>
-                              <hr className="border-b-2"/>
-
-                              <div className="flex space-x-12 ">
-                                <div >
-                                  <p>
-                                    <span className="font-semibold">
-                                      ClassSection:
-                                    </span>{" "}
-                                  </p>
-                                  {userData?.classSection}10-A
-                                </div>
-                                <div >
-                                  <p>
-                                    <span className="font-semibold">
-                                      EMIS Number:
-                                    </span>{" "}
-                                  </p>
-                                  {userData?.EMSno}
-                                </div>
-                                <hr className="border-b-2"/>
-                         
-                              </div>
-                              <hr className="border-b-2"/>
-                              <div className="flex space-x-12 ">
-                           
-                                <div >
-                                  <p>
-                                    <span className="font-semibold">
-                                      Category :
-                                    </span>{" "}
-                                  </p>
-                                  {userData?.studentCategory}
-                                </div>
-                                <div>
-                                  <p>
-                                    <span className="font-semibold">
-                                      Concession:
-                                    </span>{" "}
-                                  </p>
-                                  {userData?.concessionStudent? "yes":"No"}
-                                </div>
-                              </div>
-                              <hr className="border-b-2"/>
-
-                              <div className="flex space-x-12 ">
-                                <div >
-                                  <p>
-                                    <span className="font-semibold">
-                                      Medium:
-                                    </span>{" "}
-                                  </p>
-                                 {userData?.mediumOfInstruction}
-                                </div>
-                              </div>
-                            </div>
-                          </CardBody>
-                        </Card> */}
-                        <hr className="border-b-2"/>
-
-                        {/* <Card className="w-max bg-blue-gray-50 shadow-inner flex-row p-10">
-                          <CardBody>
-                          <h3 className="text-xl font-semibold mb-2">
-                                 Details:-
-                                </h3>
-                                <div className="space-y-3  ">
-
-                                <div className="flex space-x-12 ">
-                              <div >
-                                <p>
-                                  <span className="font-semibold">Board:</span>{" "}
-                                </p>
-                                  john.doe@example.com
-                              </div>
-                              <div >
-                                  <span className="font-semibold">Admission Year:</span>{" "}
-                                <p>
-                                  john.doe@example.com
-                                </p>
-                              </div>
-                            </div>
-
-
-
-
-                          <div className="flex space-x-12 ">
-                              <div >
-                                <p>
-                                  <span className="font-semibold">Class:</span>{" "}
-                                </p>
-                                  john.doe@example.com
-                              </div>
-                              <div >
-                                <p>
-                                  <span className="font-semibold">Section:</span>{" "}
-                                </p>
-                                  john.doe@example.com
-                              </div>
-                            </div>
-                            <div className="flex space-x-12 ">
-                              <div >
-                                <p>
-                                  <span className="font-semibold">EMIS Number:</span>{" "}
-                                </p>
-                                  john.doe@example.com
-                              </div>
-                              <div >
-                                <p>
-                                  <span className="font-semibold">Category :</span>{" "}
-                                </p>
-                                  john.doe@example.com
-                              </div>
-                            </div>
-                            <div className="flex space-x-12 ">
-                              <div >
-                                <p>
-                                  <span className="font-semibold">Concession:</span>{" "}
-                                </p>
-                                  john.doe@example.com
-                              </div>
-                              <div >
-                                <p>
-                                  <span className="font-semibold">Medium:</span>{" "}
-                                </p>
-                                  john.doe@example.com
-                              </div>
-                            </div>
-                                </div>
-                          </CardBody>
-                        </Card>
-                  */}
-                      </div>
-                    </div>
                   </div>
                 ) : value === "3" ? (
                   <div>
@@ -561,6 +188,40 @@ const DetailImagePage = ({ userData }) => {
 
                     {/* Add your dashboard content here */}
                   </div>
+                ) : value === "4" ? (
+                  <>
+                    <div className="grid grid-cols-4 gap-2">
+                      {cardsData.map((card, index) => (
+                        <div
+                          key={index}
+                          className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow"
+                        >
+                          <div className="flex w-full items-center justify-between space-x-6 p-6">
+                            <div className="flex-1 truncate">
+                              <div className="flex items-center space-x-3">
+                                <h3 className="truncate text-sm font-medium text-gray-900">
+                                  {card.title}
+                                </h3>
+                              </div>
+                              <span className="bg-gray-300 p-2"> {card.filename}</span>
+                            </div>
+                            <IconButton variant="text"  onClick={() => fetchPdfContent(card.filename)}>
+
+                            <FontAwesomeIcon  
+                              icon={faDownload}
+                              className="h-6 w-6 flex-shrink-0 "
+                               />
+                              </  IconButton>
+                          </div>
+                          <div>
+                            <div className="flex justify-center p-2">
+                              <AddDocuments />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </>
                 ) : null}
               </TabPanel>
             ))}

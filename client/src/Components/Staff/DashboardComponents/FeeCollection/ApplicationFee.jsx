@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo, faIndianRupee } from "@fortawesome/free-solid-svg-icons";
 
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FeeType, PaymentMode } from "../../../DropDowns/DropDowns";
 import { RouteObjects } from "../../../../Routes/RoutObjects";
 

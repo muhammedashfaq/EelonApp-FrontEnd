@@ -8,26 +8,39 @@ const EditStudent = () => {
   const { name } = useParams();
 
   const axiosPrivate =useAxiosPrivate()
-  const [classDetails, setclassDetails] = useState([]);
+  const [acYr,setAcYr]=useState([])
   const getClsSection = async () => {
     try {
-      const response = await axiosPrivate.get("/classsection/dropdowns");
-      const sortedData = response.data.sort((a, b) => a.localeCompare(b));
 
-      setclassDetails(sortedData);
+        
+        const response = await axiosPrivate.get(
+          "classsection/academicyear/academicyear"
+        );
+    
+          const sortedData = response.data?.academicYear.sort((a, b) =>
+            a.localeCompare(b)
+          );
+          setAcYr(sortedData);
+  
       
-    } catch (error) {
+    
+      } catch (error) {
       console.log(error);
     }
   };
+  
+
+
+
 useEffect(()=>{
   getClsSection()
+
 },[])
   return (
     <div>
         <Banner />
         <div className='flex'>
-            <EditStudentComponent classDetails={classDetails} name={name}/>
+            <EditStudentComponent  name={name} acYr={acYr}/>
         </div>
 
     </div>

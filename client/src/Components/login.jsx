@@ -123,9 +123,9 @@ const Login = () => {
     <div className="h-full">
       {isLoading && <Spinner />}
 
-      <div className="shadow-md p-0 flex justify-center">
+      {/* <div className="shadow-md p-0 flex justify-center">
         <img src={logoImage} className="w-25 h-20 p-2 cursor-pointer" />
-      </div>
+      </div> */}
       <div className="h-full mt-10">
         <LoginUserSelectButton setuserType={setuserType} />
         {userType && (

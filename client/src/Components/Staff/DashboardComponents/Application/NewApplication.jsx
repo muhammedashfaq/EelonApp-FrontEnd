@@ -18,6 +18,7 @@ const NewApplication = () => {
   const [acYr, setAcYr] = useState([]);
   const [classes, setClasses] = useState([]);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [contactError,setContactError]=useState("")
   const [academicYear, setAcademicYear] = useState("");
   const [board, setBoard] = useState("");
   const [medium, setMedium] = useState("");
@@ -41,6 +42,8 @@ const NewApplication = () => {
       ...pre,
       [id]: value,
     }));
+
+    
   };
 
   const allData = {
@@ -54,6 +57,13 @@ const NewApplication = () => {
   };
   const handleSubmit = async () => {
     try {
+
+      if( allData.ContactNo.length !== 10){
+        setContactError("10-digit Number is required ") 
+        return;
+      }
+      
+      setContactError("")
       setIsLoading(true);
       console.log("Form submitted:", allData);
       const response = await axiosPrivate.post("/admission", allData);
@@ -272,12 +282,14 @@ const NewApplication = () => {
             </div>
             <div className="col-span-full sm:col-span-3">
               <label htmlFor="contactNumber" className="text-sm">
-                Contact Number
+              Contact Number
               </label>
               <Input
                 variant="outlined"
                 id="ContactNo"
-                type="text"
+                type="number"
+                label={contactError? contactError:""}
+                error={contactError}
                 placeholder="Contact Number"
                 className="w-full rounded-md dark:border-gray-700 dark:text-gray-900"
                 onChange={handleInputChange}

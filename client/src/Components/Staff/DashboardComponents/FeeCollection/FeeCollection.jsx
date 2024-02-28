@@ -17,33 +17,28 @@ const InformationRow = ({ label, value }) => (
 const FeeCollection = () => {
   const [studentData, setStudentData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [acYr,setAcYr]=useState([])
-  const axiosPrivate =useAxiosPrivate()
+  const [acYr, setAcYr] = useState([]);
+  const axiosPrivate = useAxiosPrivate();
 
-const getacYR =async()=>{
-  try {
-    const response = await axiosPrivate.get(
-      "classsection/academicyear/academicyear"
-    );
-    if (response) {
-      const sortedData = response.data?.academicYear.sort((a, b) =>
-        a.localeCompare(b)
+  const getacYR = async () => {
+    try {
+      const response = await axiosPrivate.get(
+        "classsection/academicyear/academicyear"
       );
-      setAcYr(sortedData);
-
+      if (response) {
+        const sortedData = response.data?.academicYear.sort((a, b) =>
+          a.localeCompare(b)
+        );
+        setAcYr(sortedData);
+      }
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-
-
-    
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-    useEffect(()=>{
-      getacYR()
-    },[])
+  useEffect(() => {
+    getacYR();
+  }, []);
   return (
     <div className="m-6 flex justify-center">
       <div className="flex flex-col md:flex-row w-full">
@@ -86,17 +81,14 @@ const getacYR =async()=>{
 
         <div className="w-full md:w-2/3 shadow-inherit border-2 p-2 rounded-sm mt-4 md:mt-0 bg-white">
           <div>
-            <TableHeaderName name="Fee Collection" year="2023-2024"  />
+            <TableHeaderName name="Fee Collection" year="2023-2024" />
           </div>
 
-          <div className="Laptop:grid Laptop:grid-cols-3 gap-2 ipad:grid ipad:grid-cols-3 Tablet:grid Tablet:grid-cols-2 mobile:grid mobile:grid-cols-1 px-6 py-6">
-            <div className="">
-              <label htmlFor="academicYear" className="text-sm">
-                Academic Year
-              </label>
-              <Select
-              label="Accademic Year"
-            >
+          <div className="flex  justify-center w-72 mx-2 my-2">
+            <label htmlFor="academicYear" className="text-sm">
+              Academic Year
+            </label>
+            <Select label="Accademic Year">
               {acYr &&
                 acYr.map((item, i) => (
                   <Option key={i} value={item}>
@@ -104,8 +96,8 @@ const getacYR =async()=>{
                   </Option>
                 ))}
             </Select>
-
-            </div>
+          </div>
+          <div className="flex justify-between items-center px-6 py-6">
             <div className="">
               <label htmlFor="academicYear" className="text-sm">
                 Fee Type
@@ -114,41 +106,44 @@ const getacYR =async()=>{
               <FeeType />
             </div>
             <div className="">
-              <label htmlFor="academicYear" className="text-sm">
-                Academic Year
-              </label>
-
-              <PaymentMode />
+              <Input
+                type="number"
+                placeholder="0.00"
+                className="!border !border-gray-300 bg-white text-gray-900 shadow-lg shadow-gray-900/5 ring-4 ring-transparent placeholder:text-gray-500 focus:!border-gray-900 focus:!border-t-gray-900 focus:ring-gray-900/10"
+                labelProps={{
+                  className: "hidden",
+                }}
+                containerProps={{ className: "min-w-[100px]" }}
+              />
             </div>
+
+            {/* 
             <div className="">
               <label htmlFor="academicYear" className="text-sm">
-                Academic Year
+               Payment Mode
               </label>
 
               <PaymentMode />
-            </div>
-
-            <div className="">
-              <label htmlFor="academicYear" className="text-sm">
-                Academic Year
-              </label>
-
-              <PaymentMode />
-            </div>
+            </div> */}
           </div>
           <hr className="m-3" />
           <div className="flex justify-end">
             <div className=" mt-6  rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
               <div className="mb-2 flex justify-between">
                 <p className="text-gray-700">Subtotal</p>
-                <p className="text-gray-700"><FontAwesomeIcon icon={faIndianRupee}/>129.99</p>
+                <p className="text-gray-700">
+                  <FontAwesomeIcon icon={faIndianRupee} />
+                  129.99
+                </p>
               </div>
-          
+
               <hr className="my-4" />
               <div className="flex justify-between">
                 <p className="text-lg font-bold">Total</p>
                 <div className="">
-                  <p className="mb-1 text-lg font-bold"><FontAwesomeIcon icon={faIndianRupee}/> 134.98</p>
+                  <p className="mb-1 text-lg font-bold">
+                    <FontAwesomeIcon icon={faIndianRupee} /> 134.98
+                  </p>
                 </div>
               </div>
 

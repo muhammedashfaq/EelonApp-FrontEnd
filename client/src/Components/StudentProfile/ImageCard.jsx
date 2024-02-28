@@ -29,6 +29,7 @@ import { useEffect, useState } from "react";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import notFoundImg from "../../assets/placeholderImg.jpg";
+import { Oval } from "react-loader-spinner";
 
 const ImageCard = ({ userData, getData }) => {
   const [showModal, setShowModal] = useState(false);
@@ -37,59 +38,16 @@ const ImageCard = ({ userData, getData }) => {
   const [profileImage, setProfileImage] = useState("");
   const [open, setOpen] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isLoading,setIsLoading]=useState(false)
 
   const axiosPrivate = useAxiosPrivate();
 
-  // const handleImageChange = (e) => {
-  //   setImage(e.target.files[0]);
-  // };
+
 
   const handleOpen = () => setOpen((cur) => !cur);
   const handleIsFavorite = () => setIsFavorite((cur) => !cur);
   const { auth } = useAuth();
-  // const ImageChange = (event) => {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     const imageUrl = URL.createObjectURL(file);
-  //     setImage(imageUrl);
-  //     setProfileImage(imageUrl);
-  //   }
-  // };
 
-  // const submitimage = async (e) => {
-  //   try {
-  //     e.preventDefault();
-  //     if (!profileImage) {
-  //       Swal.fire({
-  //         icon: "error",
-  //         title: "Oops...",
-  //         text: "Something went wrong! Choose Any Image 📷",
-  //       });
-  //       return;
-  //     }
-  //     console.log("image");
-  //     const response = null;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // const handleUpload = async () => {
-  //   const formData = new FormData();
-  //   formData.append("file", image);
-  //   formData.append("upload_preset", "your_cloudinary_upload_preset");
-
-  //   try {
-  //     const res = await axios.post(
-  //       "https://api.cloudinary.com/v1_1/your_cloudinary_cloud_name/image/upload",
-  //       formData
-  //     );
-  //     console.log("Image uploaded:", res.data.secure_url);
-  //     // Now, you can save this URL to your MongoDB database
-  //   } catch (error) {
-  //     console.error("Error uploading image:", error);
-  //   }
-  // };
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -107,14 +65,20 @@ const ImageCard = ({ userData, getData }) => {
 
   const uploadImage = async () => {
     try {
-      if (!Image) return;
-      const response = await axiosPrivate.post(
+      if (!Image) return
+
+
+      setIsLoading(true)
+      await axiosPrivate.post(
         `images/studentprofile/${userData?._id}`,
         { Image }
       );
-      console.log(response);
+setIsLoading(false)
+
       getData();
     } catch (error) {
+      setIsLoading(false)
+
       console.error(error);
     }
   };
@@ -122,12 +86,14 @@ const ImageCard = ({ userData, getData }) => {
   const deleteImage = async () => {
     if (!userData?.studentProfilePic) return;
     try {
-      const response = await axiosPrivate.delete(
+      setIsLoading(true)
+       await axiosPrivate.delete(
         `images/studentprofile/${userData?._id}`
       );
-      console.log(response);
+      setIsLoading(false)
       getData();
     } catch (error) {
+      setIsLoading(false)
       console.error(error);
     }
   };
@@ -144,12 +110,26 @@ const ImageCard = ({ userData, getData }) => {
           className="h-96"
           onClick={handleOpen}
         >
-          <img
-            src={userData?.studentProfilePic?.url || Image || notFoundImg}
-            alt="card-image"
-            className="h-full w-full object-cover"
-          />
+          {
+            isLoading ? (
+              <>
+              <div className="flex justify-center items-center h-full">
+
+                   <Oval type="Oval" color="#00BFFF" height={40} width={40} />
+              </div>
+              </>
+            ):(
+              <img
+                src={userData?.studentProfilePic?.url || Image || notFoundImg}
+                alt="card-image"
+                className="h-full w-full object-cover"
+              />
+
+            )
+          }
         </CardHeader>
+
+
         {(auth.roles == 5151 || auth.roles == 2000) && (
           <div className="space-x-2 flex justify-center my-1 items-center">
             <Button color="teal">
