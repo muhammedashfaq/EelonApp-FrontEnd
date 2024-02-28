@@ -37,9 +37,9 @@ export default function FeeStructureCards({ item, getFeeStructures }) {
             text: "Fee structure has been deleted.",
             icon: "success",
           });
+          getFeeStructures();
         }
       });
-      getFeeStructures();
     } catch (error) {
       console.error(error);
       Swal.fire({
@@ -74,8 +74,12 @@ export default function FeeStructureCards({ item, getFeeStructures }) {
         <Typography variant="small" color="blue-gray" className="mb-2">
           {item?.othersType}
         </Typography>
-        <Typography>Term: {item?.term}</Typography>
-        <Typography>Class: {item?.std}</Typography>
+        {item?.othersType !== "Additional fee" && (
+          <>
+            <Typography>Term: {item?.term}</Typography>
+            <Typography>Class: {item?.std}</Typography>
+          </>
+        )}
         <Typography>Academic year: {item?.academicYear}</Typography>
         <Typography variant="h6">Amount: {item?.amount}</Typography>
       </CardBody>

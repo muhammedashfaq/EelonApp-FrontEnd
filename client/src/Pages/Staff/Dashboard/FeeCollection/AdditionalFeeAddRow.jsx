@@ -7,40 +7,69 @@ import {
   Option,
   Select,
 } from "@material-tailwind/react";
-import React from "react";
+import React, { useState } from "react";
 
-const AdditionalFeeAddRow = ({ item, i, removeAddtnlRow }) => {
+const AdditionalFeeAddRow = ({
+  academicYrDD,
+  setaddnlFeeType,
+  setaddnlAmount,
+  setselectedAddnlAccYr,
+}) => {
+  const [selectedAcademicYr, setselectedAcademicYr] = useState();
+  const [feeType, setfeeType] = useState();
+  const [amount, setamount] = useState();
+  const [othersType, setothersType] = useState();
+
+  //   const addfeestructure = async () => {
+  //     if (!amount || !feeType) return;
+  //     try {
+  //       const reqData = {
+  //         academicYear: selectedAcademicYr,
+  //         amount: Number(amount),
+  //         feeType: feeType,
+  //         othersType: "Additional fee",
+  //       };
+  //       // console.log(reqData);
+  //       const response = await axiosPrivate.post(
+  //         "accounts/feestructure",
+  //         reqData
+  //       );
+  //       getFeeStructures();
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+
   return (
     <>
       <div
         className="p-2 flex justify-evenly gap-3"
         // style={{ border: "1px solid black" }}
       >
-        <div
-          className="px-3 py-2 bg-blue-gray-100"
-          style={{ borderRadius: "10px" }}
-        >
-          {i}
-        </div>
-        <div className="w-52">
-          <Select label="Term">
-            <Option value="Ist midterm">Ist midterm</Option>
-            <Option value="Quarterly midterm">Quarterly midterm</Option>
-            <Option value="IInd midterm">IInd midterm</Option>
-            <Option value="Half midterm">Half midterm</Option>
-            <Option value="IIIrd midterm">IIIrd midterm</Option>
-            <Option value="Annual midterm">Annual midterm</Option>
+        <div className="w-60">
+          <Select
+            label="Academic Year"
+            onChange={(e) => setselectedAddnlAccYr(e)}
+          >
+            {/* <Option disabled>Select academic year</Option> */}
+            {academicYrDD &&
+              academicYrDD.map((item) => <Option value={item}>{item}</Option>)}
           </Select>
         </div>
+
         <div className="w-52">
-          <Input label="Amount" />
+          <Input
+            label="Fee name"
+            onChange={(e) => setaddnlFeeType(e.target.value)}
+          />
         </div>
-        <IconButton
-          variant="outlined"
-          onClick={() => removeAddtnlRow(item?.id)}
-        >
-          <FontAwesomeIcon icon={faMinus} size="2x" />
-        </IconButton>
+        <div className="w-52">
+          <Input
+            label="Amount"
+            type="number"
+            onChange={(e) => setaddnlAmount(e.target.value)}
+          />
+        </div>
       </div>
     </>
   );
