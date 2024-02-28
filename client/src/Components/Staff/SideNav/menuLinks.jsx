@@ -215,6 +215,11 @@ const menu = [
         icon: faCaretRight,
         href: RouteObjects.ShowClasswiseMarks,
       },
+      {
+        title: "Student wise reports",
+        icon: faCaretRight,
+        href: RouteObjects.ShowStudentwiseReports,
+      },
     ],
   },
 ];

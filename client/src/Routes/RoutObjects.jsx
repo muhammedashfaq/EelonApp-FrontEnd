@@ -60,6 +60,7 @@ export const RouteObjects = {
   ScholasticSubwiseMarks: "/staff/exam-module/add-scholastic-grade",
   ShowSubwiseMarks: "/staff/exam-module/subjectwise-marks",
   ShowClasswiseMarks: "/staff/exam-module/classwise-marks",
+  ShowStudentwiseReports: "/staff/exam-module/studentwise-report",
 
   AdminHome: "/adminhome",
   AdminAprovals: "/adminaprovals",

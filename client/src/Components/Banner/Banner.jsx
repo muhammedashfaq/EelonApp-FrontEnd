@@ -1,29 +1,25 @@
 import useAuth from "../../Hooks/useAuth";
 import NavBar from "../Staff/SideNav/navBar";
 import SideNavbar from "../Student/SideNav/SideNavbar";
-import logowhite from '../../assets/logowhite.svg'
+import logowhite from "../../assets/logowhite.svg";
 
 const Banner = () => {
   const { auth } = useAuth();
   return (
     <div className="bg-dark-purple text-gray-100 ">
       <section className="container mx-auto flex flex-wrap items-center justify-between py-4">
-        {auth.roles == 5151? (
+        {auth.roles == 5151 ? (
           <NavBar />
         ) : auth.roles == 999 ? (
           <SideNavbar />
-        ) : auth.roles == 2000 ?(
+        ) : auth.roles == 2000 ? (
           <NavBar />
-        ):""}
+        ) : (
+          ""
+        )}
 
         <div className="flex items-center space-x-4">
-          <img
-            src={logowhite}
-            alt="College Logo"
-            className="h-16 rounded-md"
-            
-            
-          />
+          <img src={logowhite} alt="College Logo" className="h-16 rounded-md" />
           {/* <h1 className="text-4xl font-bold leading-none sm:text-5xl Tablet:bg-blue-gray-300 Laptop:bg-red-400 mobile:bg-yellow-500 ipad:bg-brown-900">
             College Name
           </h1> */}
