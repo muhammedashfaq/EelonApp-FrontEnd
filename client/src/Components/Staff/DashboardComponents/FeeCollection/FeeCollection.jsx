@@ -8,6 +8,7 @@ import SearchbyRollno from "./SearchbyRollno";
 
 import { Oval } from "react-loader-spinner";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
+import FeeCollectionRow from "./FeeCollectionRow";
 const InformationRow = ({ label, value }) => (
   <div className="flex justify-evenly py-3 shadow-sm ">
     <span className="font-normal text-xl">{label} :</span>
@@ -18,6 +19,7 @@ const FeeCollection = () => {
   const [studentData, setStudentData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [acYr, setAcYr] = useState([]);
+  const [FeeType, setFeeType] = useState();
   const axiosPrivate = useAxiosPrivate();
 
   const getacYR = async () => {
@@ -84,7 +86,7 @@ const FeeCollection = () => {
             <TableHeaderName name="Fee Collection" year="2023-2024" />
           </div>
 
-          <div className="flex  justify-center w-72 mx-2 my-2">
+          {/* <div className="flex  justify-center w-72 mx-2 my-2">
             <label htmlFor="academicYear" className="text-sm">
               Academic Year
             </label>
@@ -96,16 +98,18 @@ const FeeCollection = () => {
                   </Option>
                 ))}
             </Select>
-          </div>
+          </div> */}
+
+          <FeeCollectionRow acYr={acYr} />
+
           <div className="flex justify-between items-center px-6 py-6">
-            <div className="">
+            {/* <div className="">
               <label htmlFor="academicYear" className="text-sm">
                 Fee Type
               </label>
 
-              <FeeType />
-            </div>
-            <div className="">
+            </div> */}
+            {/* <div className="">
               <Input
                 type="number"
                 placeholder="0.00"
@@ -115,7 +119,7 @@ const FeeCollection = () => {
                 }}
                 containerProps={{ className: "min-w-[100px]" }}
               />
-            </div>
+            </div> */}
 
             {/* 
             <div className="">
