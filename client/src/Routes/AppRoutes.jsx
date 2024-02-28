@@ -64,6 +64,7 @@ import FeeCollectionPage from "../Pages/Staff/Dashboard/FeeCollection/FeeCollect
 import AdmissionFeePage from "../Pages/Staff/Dashboard/FeeCollection/AdmissionFeePage";
 import AddNewStudentPage from "../Pages/Staff/Dashboard/Application/AddNewStudentPage";
 import AddFeeStructures from "../Pages/Staff/Dashboard/FeeCollection/AddFeeStructures";
+import StudentWiseReportCard from "../Components/Staff/DashboardComponents/ExamModule/StudentWiseReportCard";
 
 const AppRoutes = () => {
   return (
@@ -210,6 +211,10 @@ const AppRoutes = () => {
         <Route
           path={RouteObjects.ShowClasswiseMarks}
           element={<ShowClasswiseMarks />}
+        />
+        <Route
+          path={RouteObjects.ShowStudentwiseReports}
+          element={<StudentWiseReportCard />}
         />
         ////////////////// TimeTable //////////////////////
         <Route

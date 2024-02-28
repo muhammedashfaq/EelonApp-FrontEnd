@@ -8,9 +8,9 @@ import {
   Button,
   IconButton,
 } from "@material-tailwind/react";
-import useAxiosPrivate from "../Hooks/useAxiosPrivate";
+import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useEffect, useState } from "react";
-import Banner from "./Banner/Banner";
+import Banner from "../../../Banner/Banner";
 import {
   Menu,
   MenuHandler,
@@ -19,8 +19,8 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
-import GradeDistPieChart from "./Staff/DashboardComponents/ExamModule/GradeDistPieChart";
-import ClassAvgComparisonChart from "./Staff/DashboardComponents/ExamModule/ClassAvgComparisonChart";
+import GradeDistPieChart from "./GradeDistPieChart";
+import ClassAvgComparisonChart from "./ClassAvgComparisonChart";
 
 const TABLE_HEAD = [
   "Sl.no",
@@ -31,7 +31,7 @@ const TABLE_HEAD = [
   "Grade",
 ];
 
-export default function TestYk() {
+export default function StudentWiseReportCard() {
   const axiosPrivate = useAxiosPrivate();
   const [StudentId, setStudentId] = useState();
   const [studentMarklist, setstudentMarklist] = useState([]);
@@ -46,6 +46,7 @@ export default function TestYk() {
   const [sortedArray, setsortedArray] = useState();
   const [asc, setasc] = useState(false);
   const [classAvgData, setclassAvgData] = useState();
+  const [grandTotal, setgrandTotal] = useState();
 
   const getAcademicYear = async () => {
     try {
@@ -87,6 +88,7 @@ export default function TestYk() {
         }
       );
       setstudentMarklist(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -240,26 +242,26 @@ export default function TestYk() {
                   </Menu>
                 </form>
                 {/* <div className="flex w-full shrink-0 gap-2 md:w-max">
-                  <form
-                    className="w-full md:w-72"
-                    onSubmit={getStudentMarklist}
-                  >
-                    <Input
-                      label="Search"
-                      // icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-                      onChange={(e) => setStudentId(e.target.value)}
-                      value={StudentId}
-                    />
-                  </form>
-                  <Button
-                    className="flex items-center gap-3"
-                    size="sm"
-                    type="submit"
-                    onClick={getStudentMarklist}
-                  >
-                    Search
-                  </Button>
-                </div> */}
+                    <form
+                      className="w-full md:w-72"
+                      onSubmit={getStudentMarklist}
+                    >
+                      <Input
+                        label="Search"
+                        // icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+                        onChange={(e) => setStudentId(e.target.value)}
+                        value={StudentId}
+                      />
+                    </form>
+                    <Button
+                      className="flex items-center gap-3"
+                      size="sm"
+                      type="submit"
+                      onClick={getStudentMarklist}
+                    >
+                      Search
+                    </Button>
+                  </div> */}
               </div>
             </CardHeader>
             <CardBody className="overflow-scroll px-0">
@@ -337,10 +339,16 @@ export default function TestYk() {
             <CardFooter>
               {classAvgData && (
                 <div className="flex justify-evenly my-10">
-                  <GradeDistPieChart studentMarklist={studentMarklist} />
+                  <div className="flex flex-col">
+                    <Typography variant="h6" color="gray">
+                      Mark distribution
+                    </Typography>
+                    <GradeDistPieChart studentMarklist={studentMarklist} />
+                  </div>
                   <ClassAvgComparisonChart
                     classAvgData={classAvgData}
                     studentMarklist={studentMarklist}
+                    setgrandTotal={setgrandTotal}
                   />
                 </div>
               )}

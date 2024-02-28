@@ -6,11 +6,8 @@ import useAuth from "../../../Hooks/useAuth";
 import useLogout from "../../../Hooks/useLogout";
 import MobileNavBar from "./MobileNavBar";
 
-
 const StaffHeader = () => {
   const { auth } = useAuth();
-
-
 
   return (
     <div>
@@ -35,11 +32,15 @@ const StaffHeader = () => {
             </li>
           </div>
           <div className="flex justify-center items-center space-x-6">
-          <NavItem href="#" label="Home" />
+            <NavItem href="#" label="Home" />
             <NavItem href="#About" label="About" />
             <NavItem href="#academics" label="Academics" />
             <NavItem href="#contact" label="Contact" />
-            {!auth?.accessToken && <Link to={RouteObjects.Login}><Button className="bg-yellow-900">Login</Button></Link>}
+            {!auth?.accessToken && (
+              <Link to={RouteObjects.Login}>
+                <Button className="bg-yellow-900">Login</Button>
+              </Link>
+            )}
             {renderDashboardButton(auth?.roles)}
           </div>
         </ul>
@@ -67,7 +68,12 @@ const renderDashboardButton = (userRoles) => {
     return (
       <li className="block Laptop:block ipad:block Tablet:block hidden">
         <Link to={roleToDashboard[userRoles]}>
-          <Button className="hover:bg-dark-purple hover:text-white" variant="outlined">Dashboard</Button>
+          <Button
+            className="hover:bg-dark-purple hover:text-white"
+            variant="outlined"
+          >
+            Dashboard
+          </Button>
         </Link>
       </li>
     );
