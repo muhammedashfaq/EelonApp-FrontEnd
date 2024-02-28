@@ -1,6 +1,7 @@
 import useAuth from "../../Hooks/useAuth";
 import NavBar from "../Staff/SideNav/navBar";
 import SideNavbar from "../Student/SideNav/SideNavbar";
+import logowhite from '../../assets/logowhite.svg'
 
 const Banner = () => {
   const { auth } = useAuth();
@@ -17,13 +18,15 @@ const Banner = () => {
 
         <div className="flex items-center space-x-4">
           <img
-            src="./images/librarybooks.png"
+            src={logowhite}
             alt="College Logo"
-            className="h-12"
+            className="h-16 rounded-md"
+            
+            
           />
-          <h1 className="text-4xl font-bold leading-none sm:text-5xl Tablet:bg-blue-gray-300 Laptop:bg-red-400 mobile:bg-yellow-500 ipad:bg-brown-900">
+          {/* <h1 className="text-4xl font-bold leading-none sm:text-5xl Tablet:bg-blue-gray-300 Laptop:bg-red-400 mobile:bg-yellow-500 ipad:bg-brown-900">
             College Name
-          </h1>
+          </h1> */}
         </div>
 
         <div className="flex flex-wrap items-center space-x-4">

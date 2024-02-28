@@ -373,11 +373,42 @@ const StudentsList = () => {
                           </Link>
                         </td>
                         <td className={classes}>
-                          <Link to={`${RouteObjects.StudentProfile}/${data}`}>
-                            <Button className="rounded-r-lg " color="green">
-                              Edit
-                            </Button>
-                          </Link>{" "}
+                          <Link
+                            to={`${RouteObjects.EditStudent}/${data._id}/${data.studentName}/${page}`}
+                          >
+                            <Tooltip
+                              content="Edit Student Data"
+                              animate={{
+                                mount: { scale: 1, y: 0 },
+                                unmount: { scale: 0, y: 25 },
+                              }}
+                            >
+                              <FontAwesomeIcon
+                                icon={faEdit}
+                                color="green"
+                                size="xl"
+                                className="cursor-pointer hover:bg-blue-gray-100 rounded-md p-2"
+                              />
+                            </Tooltip>
+                          </Link>
+
+                          <Tooltip
+                            content="Delete Student"
+                            animate={{
+                              mount: { scale: 1, y: 0 },
+                              unmount: { scale: 0, y: 25 },
+                            }}
+                          >
+                            <FontAwesomeIcon
+                              color="red"
+                              icon={faTrash}
+                              size="xl"
+                              className="cursor-pointer hover:bg-blue-gray-100 rounded-md p-2"
+                              onClick={() =>
+                                deleteStudent(data._id, data.studentName)
+                              }
+                            />
+                          </Tooltip>
                         </td>
                       </tr>
                     );

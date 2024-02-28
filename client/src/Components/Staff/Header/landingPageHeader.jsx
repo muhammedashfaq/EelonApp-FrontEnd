@@ -1,5 +1,5 @@
 import { RouteObjects } from "../../../Routes/RoutObjects";
-import logoimage from "../../../assets/EelonLogo.png";
+import logoimage from "../../../assets/loblack.svg";
 import { Button } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
@@ -19,7 +19,7 @@ const StaffHeader = () => {
           <div className="flex">
             <li className="mr-auto flex justify-center items-center">
               <Link to="/">
-                <img src={logoimage} className="w-16 block" alt="Logo" />
+                <img src={logoimage} className="" alt="Logo" />
               </Link>
               <MobileNavBar />
             </li>
@@ -30,7 +30,7 @@ const StaffHeader = () => {
           <div className="hidden Laptop:block ipad:block Tablet:block">
             <li className="mr-auto flex justify-center items-center">
               <Link to="/">
-                <img src={logoimage} className="w-16" alt="Logo" />
+                <img src={logoimage} className="" alt="Logo" />
               </Link>
             </li>
           </div>

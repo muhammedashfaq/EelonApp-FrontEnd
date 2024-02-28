@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "../../../spinner/SpinningLoader";
 import { RouteObjects } from "../../../../Routes/RoutObjects";
+import Swal from "sweetalert2";
 
 const useDropdownState = (initialValue, fetchedValue) => {
   const [value, setValue] = useState(initialValue);
@@ -23,7 +24,7 @@ const useDropdownState = (initialValue, fetchedValue) => {
 
   return [value, setValue];
 };
-const EditStudentComponent = ({classDetails,name,page}) => {
+const EditStudentComponent = ({ acYr, name }) => {
   const [fetData, setFetchData] = useState("");
   const classSectionState = useDropdownState("", fetData?.classSection);
   const bloodGpState = useDropdownState("", fetData?.bloodGp);
@@ -43,6 +44,7 @@ const EditStudentComponent = ({classDetails,name,page}) => {
   const studentCategoryState = useDropdownState("", fetData?.studentCategory);
   const studentGpState = useDropdownState("", fetData?.studentGp);
   const genderState = useDropdownState("", fetData?.gender);
+  const [DOB, setDOB] = useState("");
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -53,7 +55,6 @@ const EditStudentComponent = ({classDetails,name,page}) => {
     admnNo: "",
     studentName: "",
     nameTamil: "",
-    DOB: "",
     studentPhoto: "",
     AadharNo: "",
     ContactNo: "",
@@ -107,7 +108,6 @@ const EditStudentComponent = ({classDetails,name,page}) => {
     const reqData = {
       ...formData,
       gender: genderState[0],
-      section: classSectionState[0],
       bloodGp: bloodGpState[0],
       motherTongue: motherTongueState[0],
       religion: religionState[0],
@@ -115,17 +115,33 @@ const EditStudentComponent = ({classDetails,name,page}) => {
       classOfJoin: classOfJoinState[0],
       mediumOfInstruction: mediumOfInstructionState[0],
       concessionStudent: concessionStudentState[0],
-      academicYear: academicYearState[0],
       studentCategory: studentCategoryState[0],
       studentGp: studentGpState[0],
       classId: classSectionState[0],
+      academicYear:fetData?.academicYear,
+      DOB,
     };
     try {
       console.log(reqData, "dfgkhfs");
       setIsLoading(true);
       const response = await axios.put(`/users/student/${id}`, reqData);
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        },
+      });
+      Toast.fire({
+        icon: "success",
+        title: "Added successfully",
+      });
       console.log(response, "respo");
-      navigate(`${RouteObjects.StudentsList}/${1}`)
+      navigate(`${RouteObjects.StudentsList}/${1}`);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -149,6 +165,7 @@ const EditStudentComponent = ({classDetails,name,page}) => {
       console.log(error);
     }
   };
+
   useEffect(() => {
     getData();
   }, []);
@@ -160,11 +177,11 @@ const EditStudentComponent = ({classDetails,name,page}) => {
       <div className="flex justify-center">
         <div className=" border-2 rounded-lg shadow-lg  mt-2 ">
           <div className="bg-blue-900 rounded-t-lg flex justify-center items-center h-10 text-white ">
-            <h1 className="text-2xl">Edit <span className="font-semibold m-1 ">
-              
-              {name?name:""}
-              </span>
-               Details </h1>
+            <h1 className="text-2xl">
+              Edit{" "}
+              <span className="font-semibold m-1 ">{name ? name : ""}</span>
+              Details{" "}
+            </h1>
           </div>
           <form onSubmit={handleSubmitForm}>
             <div className="px-6 pt-6">
@@ -206,10 +223,8 @@ const EditStudentComponent = ({classDetails,name,page}) => {
                 variant="outlined"
                 label="DOB"
                 placeholder="DOB"
-                onChange={handleInputChange}
+                onChange={(e) => setDOB(e.target.value)}
                 defaultValue={fetData?.DOB}
-
-
               />
               <Input
                 name="AadharNo"
@@ -310,7 +325,6 @@ const EditStudentComponent = ({classDetails,name,page}) => {
                 <Option value="Muslim">Muslim</Option>
                 <Option value="Christian">Christian</Option>
                 <Option value="Other">Other</Option>
-
               </Select>
               <Input
                 name="caste"
@@ -341,7 +355,6 @@ const EditStudentComponent = ({classDetails,name,page}) => {
                 <Option value="SC">SC</Option>
                 <Option value="ST">ST</Option>
                 <Option value="Other">Other</Option>
-
               </Select>
 
               <Input
@@ -362,8 +375,6 @@ const EditStudentComponent = ({classDetails,name,page}) => {
                 defaultValue={fetData?.height}
                 onChange={handleInputChange}
               />
-
-             
 
               <Textarea
                 variant="outlined"
@@ -488,21 +499,13 @@ const EditStudentComponent = ({classDetails,name,page}) => {
                 defaultValue={fetData?.admnNo}
                 onChange={handleInputChange}
               />
-              <Select
+              <Input
+               
                 variant="outlined"
-                value={academicYearState[0]}
-                onChange={(e) => academicYearState[1](e)}
                 label="Academic Year"
-              >
-                <Option value="2016-2017">2016-2017</Option>
-                <Option value="2017-2018">2017-2018</Option>
-                <Option value="2018-2019">2018-2019</Option>
-                <Option value="2019-2020">2019-2020</Option>
-                <Option value="2020-2021">2020-2021</Option>
-                <Option value="2021-2022">2021-2022</Option>
-                <Option value="2022-2023">2022-2023</Option>
-                <Option value="2023-2024">2023-2024</Option>
-              </Select>
+                placeholder="Admission Number*"
+                value={fetData?.academicYear}
+              />
 
               <Input
                 name="email"
@@ -551,21 +554,6 @@ const EditStudentComponent = ({classDetails,name,page}) => {
                 defaultValue={fetData?.EMSno}
                 onChange={handleInputChange}
               />
-       
-              <Select
-                variant="outlined"
-                // value={classSectionState[0]}
-                onChange={(e) => classSectionState[1](e)}
-                label="Section"
-              >
-                {
-                  classDetails&&classDetails.map((data,i)=>(
-
-                    <Option key={i} value={data}>{data}</Option>
-                  ))
-                }
-                
-              </Select>
 
               <Select
                 variant="outlined"
