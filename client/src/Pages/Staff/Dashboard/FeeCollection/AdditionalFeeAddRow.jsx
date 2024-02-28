@@ -9,7 +9,12 @@ import {
 } from "@material-tailwind/react";
 import React, { useState } from "react";
 
-const AdditionalFeeAddRow = ({ academicYrDD }) => {
+const AdditionalFeeAddRow = ({
+  academicYrDD,
+  setaddnlFeeType,
+  setaddnlAmount,
+  setselectedAddnlAccYr,
+}) => {
   const [selectedAcademicYr, setselectedAcademicYr] = useState();
   const [feeType, setfeeType] = useState();
   const [amount, setamount] = useState();
@@ -44,7 +49,7 @@ const AdditionalFeeAddRow = ({ academicYrDD }) => {
         <div className="w-60">
           <Select
             label="Academic Year"
-            onChange={(e) => setselectedAcademicYr(e)}
+            onChange={(e) => setselectedAddnlAccYr(e)}
           >
             {/* <Option disabled>Select academic year</Option> */}
             {academicYrDD &&
@@ -55,14 +60,14 @@ const AdditionalFeeAddRow = ({ academicYrDD }) => {
         <div className="w-52">
           <Input
             label="Fee name"
-            onChange={(e) => setfeeType(e.target.value)}
+            onChange={(e) => setaddnlFeeType(e.target.value)}
           />
         </div>
         <div className="w-52">
           <Input
             label="Amount"
             type="number"
-            onChange={(e) => setamount(e.target)}
+            onChange={(e) => setaddnlAmount(e.target.value)}
           />
         </div>
       </div>

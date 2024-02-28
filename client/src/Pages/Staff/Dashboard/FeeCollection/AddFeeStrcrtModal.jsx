@@ -14,6 +14,7 @@ import {
   TabsBody,
   Tab,
   TabPanel,
+  Tooltip,
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -21,7 +22,7 @@ import { useState, useEffect } from "react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import AcademicFeeAdditionRow from "./AcademicFeeAdditionRow";
 import { v4 as uuidv4 } from "uuid";
-// import AdditionalFeeAddRow from "./AdditionalFeeAddRow";
+import AdditionalFeeAddRow from "./AdditionalFeeAddRow";
 
 export default function AddFeeStrcrtModal({
   academicYrDD,
@@ -38,6 +39,10 @@ export default function AddFeeStrcrtModal({
   const [feeType, setfeeType] = useState();
   const [othersType, setothersType] = useState();
   const [installmentType, setinstallmentType] = useState("termWise");
+
+  const [addnlFeeType, setaddnlFeeType] = useState();
+  const [addnlAmount, setaddnlAmount] = useState();
+  const [selectedAddnlAccYr, setselectedAddnlAccYr] = useState();
 
   const [dataArray, setDataArray] = useState([]);
 
@@ -71,6 +76,48 @@ export default function AddFeeStrcrtModal({
     }
   };
 
+  const addAdditionalfeestructure = async () => {
+    if (!addnlAmount || !selectedAddnlAccYr || !addnlFeeType) return;
+    try {
+      const reqData = {
+        academicYear: selectedAddnlAccYr,
+        amount: Number(addnlAmount),
+        feeType: addnlFeeType,
+        othersType: "Additional fee",
+      };
+      // console.log(reqData);
+      const response = await axiosPrivate.post(
+        "accounts/feestructure",
+        reqData
+      );
+      getFeeStructures();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const addAcademicfeestructure = async () => {
+    if (!selectedAcademicYr || !installmentType || !selectedClass) return;
+    try {
+      const reqData = {
+        academicYear: selectedAddnlAccYr,
+        amount: Number(addnlAmount),
+        feeType: "Academic fee",
+        installmentArray: dataArray,
+      };
+      console.log(reqData, "reqData");
+      const response = await axiosPrivate.post(
+        "accounts/feestructure",
+        reqData
+      );
+      console.log(response);
+      getFeeStructures();
+      handleClose();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleData = (data) => {
     const { id } = data;
     const existingIndex = dataArray.findIndex((item) => item.id === id);
@@ -87,6 +134,9 @@ export default function AddFeeStrcrtModal({
   };
 
   const addDiv = () => {
+    if (installmentType === "singlePay" && dataArray.length >= 1) return;
+    if (installmentType === "monthWise" && dataArray.length >= 12) return;
+    if (installmentType === "termWise" && dataArray.length >= 3) return;
     const newId = uuidv4();
     const newObj = { id: newId };
     setDataArray([...dataArray, newObj]);
@@ -101,9 +151,13 @@ export default function AddFeeStrcrtModal({
   //   console.log(selectedAcademicYr);
   // }, [selectedAcademicYr]);
 
-  // useEffect(() => {
-  //   console.log(dataArray);
-  // }, [dataArray]);
+  useEffect(() => {
+    console.log(dataArray);
+  }, [dataArray]);
+
+  useEffect(() => {
+    setDataArray([]);
+  }, [installmentType]);
 
   return (
     <>
@@ -153,7 +207,7 @@ export default function AddFeeStrcrtModal({
             <TabPanel value="Academic fees">
               <DialogBody className="flex justify-center">
                 <div>
-                  <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
+                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
                     <div className="w-60">
                       <Select
                         label="Academic year"
@@ -178,42 +232,38 @@ export default function AddFeeStrcrtModal({
                           ))}
                       </Select>
                     </div>
-
-                    <div className="w-60">
-                      <Select label="Term" onChange={(e) => setterm(e)}>
-                        <Option value="Ist midterm">Ist midterm</Option>
-                        <Option value="Quarterly midterm">
-                          Quarterly midterm
-                        </Option>
-                        <Option value="IInd midterm">IInd midterm</Option>
-                        <Option value="Half midterm">Half midterm</Option>
-                        <Option value="IIIrd midterm">IIIrd midterm</Option>
-                        <Option value="Annual midterm">Annual midterm</Option>
-                      </Select>
+                    <div className="flex gap-3">
+                      <div className="w-52">
+                        <Select
+                          label="Select installment type"
+                          onChange={(e) => setinstallmentType(e)}
+                        >
+                          <Option value="termWise">Term wise</Option>
+                          <Option value="monthWise">Month wise</Option>
+                          <Option value="singlePay">Single payment</Option>
+                        </Select>
+                      </div>
+                      <Tooltip content="Add fields">
+                        <IconButton variant="outlined" onClick={addDiv}>
+                          <FontAwesomeIcon icon={faPlus} size="xl" />
+                        </IconButton>
+                      </Tooltip>
                     </div>
-                  </div>
-                  <div className="my-5 flex justify-evenly">
-                    <div className="w-52">
-                      <Select label="Select installment">
-                        <Option value="termWise">Term wise</Option>
-                        <Option value="monthWise">Month wise</Option>
-                        <Option value="singlePay">Single payment</Option>
-                      </Select>
-                    </div>
-                    <IconButton variant="outlined" onClick={addDiv}>
-                      <FontAwesomeIcon icon={faPlus} size="2xl" />
-                    </IconButton>
                   </div>
                   <hr className="my-3 text-black" />
-                  {dataArray &&
-                    dataArray.map((item, i) => (
-                      <AcademicFeeAdditionRow
-                        i={i + 1}
-                        key={item?.id}
-                        item={item}
-                        removeDiv={removeDiv}
-                      />
-                    ))}
+                  <div className="overflow-y-auto max-h-96">
+                    {dataArray &&
+                      dataArray.map((item, i) => (
+                        <AcademicFeeAdditionRow
+                          key={item?.id}
+                          i={i + 1}
+                          item={item}
+                          removeDiv={removeDiv}
+                          handleData={handleData}
+                          installmentType={installmentType}
+                        />
+                      ))}
+                  </div>
                 </div>
               </DialogBody>
               <DialogFooter>
@@ -229,7 +279,7 @@ export default function AddFeeStrcrtModal({
                   variant="gradient"
                   color="green"
                   onClick={() => {
-                    handleClose();
+                    addAcademicfeestructure();
                   }}
                 >
                   <span>Add</span>
@@ -260,7 +310,7 @@ export default function AddFeeStrcrtModal({
                         ))}
                     </Select>
                   </div>
-                  <div className="w-60">
+                  {/* <div className="w-60">
                     <Select label="Fee type" onChange={(e) => setfeeType(e)}>
                       <Option value="Admission fee">Admission fee</Option>
                       <Option value="Academic fee">Academic fee</Option>
@@ -280,17 +330,12 @@ export default function AddFeeStrcrtModal({
                       onChange={(e) => setothersType(e.target.value)}
                     />
                   </div>
-
+ */}
                   <div className="w-60">
                     <Select label="Term" onChange={(e) => setterm(e)}>
-                      <Option value="Ist midterm">Ist midterm</Option>
-                      <Option value="Quarterly midterm">
-                        Quarterly midterm
-                      </Option>
-                      <Option value="IInd midterm">IInd midterm</Option>
-                      <Option value="Half midterm">Half midterm</Option>
-                      <Option value="IIIrd midterm">IIIrd midterm</Option>
-                      <Option value="Annual midterm">Annual midterm</Option>
+                      <Option value="Term I">Term I</Option>
+                      <Option value="Term II">Term II</Option>
+                      <Option value="Term III">Term III</Option>
                     </Select>
                   </div>
                   <div className="w-60">
@@ -325,11 +370,12 @@ export default function AddFeeStrcrtModal({
             </TabPanel>
             <TabPanel value="Additional fees">
               <DialogBody>
-                {/* <AdditionalFeeAddRow
+                <AdditionalFeeAddRow
                   academicYrDD={academicYrDD}
-                  getFeeStructures={getFeeStructures}
-                  handleClose={handleClose}
-                /> */}
+                  setselectedAddnlAccYr={setselectedAddnlAccYr}
+                  setaddnlAmount={setaddnlAmount}
+                  setaddnlFeeType={setaddnlFeeType}
+                />
               </DialogBody>
               <DialogFooter>
                 <Button
@@ -344,7 +390,7 @@ export default function AddFeeStrcrtModal({
                   variant="gradient"
                   color="green"
                   onClick={() => {
-                    addfeestructure();
+                    addAdditionalfeestructure();
                     handleClose();
                   }}
                 >
