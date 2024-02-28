@@ -4,14 +4,14 @@ export function FeeType({ setFeeType }) {
   return (
     <div>
       <Select label="Select fee type" onChange={(e) => setFeeType(e)}>
-        <Option value="admission fee">Admission Fee</Option>
+        <Option value="Admission fee">Admission Fee</Option>
         <Option value="Academic fee">Academic Fee</Option>
         <Option value="Exam fee">Exam Fee</Option>
         <Option value="Transport fee">Transport Fee</Option>
         <Option value="Hostel fee">Hostel Fee</Option>
         <Option value="Competition fee">Competition Fee</Option>
         <Option value="Event fee">Event Fee</Option>
-        <Option value="Annual Day fee">Annual Day Fee</Option>
+        <Option value="Annual day fee">Annual Day Fee</Option>
         <Option value="Tour fee">Tour Fee</Option>
         <Option value="Fine">Fine</Option>
       </Select>

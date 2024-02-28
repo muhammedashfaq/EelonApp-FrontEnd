@@ -5,6 +5,7 @@ import {
   Select,
   Typography,
   Spinner,
+  Tooltip,
 } from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
 import { FeeType as FeeDropdown } from "../../../DropDowns/DropDowns";
@@ -130,21 +131,25 @@ const FeeCollectionRow = ({ acYr, removeDiv, item, handleData, index }) => {
               {isLoading ? (
                 <Spinner className="h-5 w-5" />
               ) : (
-                <IconButton variant="text" onClick={getFeeStructure}>
-                  <FontAwesomeIcon
-                    icon={faArrowsRotate}
-                    size="xl"
-                    style={{ color: "GrayText" }}
-                  />
-                </IconButton>
+                <Tooltip content="Re-fetch fee">
+                  <IconButton variant="text" onClick={getFeeStructure}>
+                    <FontAwesomeIcon
+                      icon={faArrowsRotate}
+                      size="xl"
+                      style={{ color: "GrayText" }}
+                    />
+                  </IconButton>
+                </Tooltip>
               )}
             </div>
           </div>
         </div>
         <div className="flex flex-col justify-center">
-          <IconButton variant="outlined" onClick={() => removeDiv(item.id)}>
-            <FontAwesomeIcon icon={faMinus} />
-          </IconButton>
+          <Tooltip content="Remove field">
+            <IconButton variant="outlined" onClick={() => removeDiv(item.id)}>
+              <FontAwesomeIcon icon={faMinus} />
+            </IconButton>
+          </Tooltip>
         </div>
       </div>
     </>
