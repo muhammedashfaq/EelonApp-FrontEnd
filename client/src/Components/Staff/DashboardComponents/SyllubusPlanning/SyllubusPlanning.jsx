@@ -197,10 +197,10 @@ const SyllubusPlanning = () => {
                           {item?.termName}
                         </td>
                         <td className="p-4 border-b border-blue-gray-50 flex justify-center">
-                          <a href={item?.syllabusPdf?.url} target="_blank">
+                          <a href={item?.pdf?.url} target="_blank">
                             <Tooltip
                               content={
-                                item?.syllabusPdf?.url
+                                item?.pdf?.url
                                   ? "View document"
                                   : "No document uploaded"
                               }
@@ -209,9 +209,7 @@ const SyllubusPlanning = () => {
                                 icon={faFilePdf}
                                 size="xl"
                                 style={{
-                                  color: item?.syllabusPdf?.url
-                                    ? "black"
-                                    : "GrayText",
+                                  color: item?.pdf?.url ? "black" : "GrayText",
                                 }}
                               />
                             </Tooltip>
@@ -284,7 +282,7 @@ const SyllubusPlanning = () => {
                             icon={faTrashCan}
                             color="red"
                             onClick={() =>
-                              deletefile(item._id, item?.syllabusPdf?.public_id)
+                              deletefile(item._id, item?.pdf?.public_id)
                             }
                             className="cursor-pointer   hover:scale-150  transition-all duration-300 rounded-md"
                           />

@@ -21,7 +21,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
 import GradeDistPieChart from "./GradeDistPieChart";
 import ClassAvgComparisonChart from "./ClassAvgComparisonChart";
-import useAuth from "../../../../Hooks/useAuth";
 
 const TABLE_HEAD = [
   "Sl.no",
@@ -31,6 +30,8 @@ const TABLE_HEAD = [
   "Total",
   "Grade",
 ];
+
+const SCHOLASTIC_TABLE_HEAD = ["Sl.no", "Aspect", "Grade"];
 
 export default function StudentWiseReportCard() {
   const axiosPrivate = useAxiosPrivate();
@@ -48,11 +49,7 @@ export default function StudentWiseReportCard() {
   const [asc, setasc] = useState(false);
   const [classAvgData, setclassAvgData] = useState();
   const [grandTotal, setgrandTotal] = useState();
-
-  const { auth } = useAuth();
-  useEffect(() => {
-    console.log(auth);
-  }, [auth]);
+  const [scholasticDataArr, setscholasticDataArr] = useState();
 
   const getAcademicYear = async () => {
     try {
@@ -153,6 +150,24 @@ export default function StudentWiseReportCard() {
     }
   };
 
+  const getScholasticData = async (value) => {
+    try {
+      const id = value || StudentId;
+
+      const response = await axiosPrivate.put(
+        `marks/scholastic/filter/studentwise/${id}`,
+        {
+          academicYear: academicYr,
+          classSection: selectedClass,
+        }
+      );
+      console.log(response);
+      setscholasticDataArr(response.data[0]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     getAcademicYear();
     getClasssections();
@@ -236,6 +251,7 @@ export default function StudentWiseReportCard() {
                             onClick={() => {
                               setStudentId(item?._id);
                               getStudentMarklist(item?._id);
+                              getScholasticData(item?._id);
                               getClassAvg();
                               setmenuOpen(false);
                               setstudName(item?.studentName);
@@ -342,6 +358,221 @@ export default function StudentWiseReportCard() {
                 </tbody>
               </table>
             </CardBody>
+            <div className=" mt-14 p-3 flex justify-center">
+              <Typography variant="h5">Co-Scholastic grades</Typography>
+            </div>
+            <CardBody className="overflow-scroll px-0">
+              <table className=" w-full min-w-max table-auto text-left">
+                <thead>
+                  <tr>
+                    {SCHOLASTIC_TABLE_HEAD.map((head, index) => (
+                      <th
+                        key={head}
+                        className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 py-4 transition-colors hover:bg-blue-gray-50"
+                      >
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="flex items-center justify-center gap-2 font-normal leading-none opacity-70 max-w-36"
+                        >
+                          {head}
+                          {/* {index !== TABLE_HEAD.length - 1 && (
+                            <IconButton variant="text" size="sm">
+                              <FontAwesomeIcon icon={faSort} />
+                            </IconButton>
+                          )} */}
+                        </Typography>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  <>
+                    <tr>
+                      <td className="p-4 border-b border-blue-gray-50">
+                        <div className="flex items-center gap-3 justify-center">
+                          <Typography variant="small" color="blue-gray">
+                            1
+                          </Typography>
+                        </div>
+                      </td>
+                      <td className="p-4 border-b border-blue-gray-50">
+                        <div className="flex items-center gap-3 justify-center">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-bold"
+                          >
+                            Art & craft
+                          </Typography>
+                        </div>
+                      </td>
+                      <td className="p-4 border-b border-blue-gray-50">
+                        <div className="flex items-center gap-3 justify-center">
+                          <Typography
+                            variant="h6"
+                            color={
+                              scholasticDataArr?.art_craft === "A"
+                                ? "light-green"
+                                : scholasticDataArr?.art_craft === "B"
+                                ? "blue-gray"
+                                : "red"
+                            }
+                          >
+                            {scholasticDataArr?.art_craft}
+                          </Typography>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-4 border-b border-blue-gray-50">
+                        <div className="flex items-center gap-3 justify-center">
+                          <Typography variant="small" color="blue-gray">
+                            2
+                          </Typography>
+                        </div>
+                      </td>
+                      <td className="p-4 border-b border-blue-gray-50">
+                        <div className="flex items-center gap-3 justify-center">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-bold"
+                          >
+                            Mental attitudes & values
+                          </Typography>
+                        </div>
+                      </td>
+                      <td className="p-4 border-b border-blue-gray-50">
+                        <div className="flex items-center gap-3 justify-center">
+                          <Typography
+                            variant="h6"
+                            color={
+                              scholasticDataArr?.mentalAttitudes === "A"
+                                ? "light-green"
+                                : scholasticDataArr?.mentalAttitudes === "B"
+                                ? "blue-gray"
+                                : "red"
+                            }
+                          >
+                            {scholasticDataArr?.mentalAttitudes}
+                          </Typography>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-4 border-b border-blue-gray-50">
+                        <div className="flex items-center gap-3 justify-center">
+                          <Typography variant="small" color="blue-gray">
+                            3
+                          </Typography>
+                        </div>
+                      </td>
+                      <td className="p-4 border-b border-blue-gray-50">
+                        <div className="flex items-center gap-3 justify-center">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-bold"
+                          >
+                            Activities in Lessons
+                          </Typography>
+                        </div>
+                      </td>
+                      <td className="p-4 border-b border-blue-gray-50">
+                        <div className="flex items-center gap-3 justify-center">
+                          <Typography
+                            variant="h6"
+                            color={
+                              scholasticDataArr?.activitiesLs === "A"
+                                ? "light-green"
+                                : scholasticDataArr?.activitiesLs === "B"
+                                ? "blue-gray"
+                                : "red"
+                            }
+                          >
+                            {scholasticDataArr?.activitiesLs}
+                          </Typography>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-4 border-b border-blue-gray-50">
+                        <div className="flex items-center gap-3 justify-center">
+                          <Typography variant="small" color="blue-gray">
+                            4
+                          </Typography>
+                        </div>
+                      </td>
+                      <td className="p-4 border-b border-blue-gray-50">
+                        <div className="flex items-center gap-3 justify-center">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-bold"
+                          >
+                            Good Act, Yoga & physical exercise
+                          </Typography>
+                        </div>
+                      </td>
+                      <td className="p-4 border-b border-blue-gray-50">
+                        <div className="flex items-center gap-3 justify-center">
+                          <Typography
+                            variant="h6"
+                            color={
+                              scholasticDataArr?.physicalExcs === "A"
+                                ? "light-green"
+                                : scholasticDataArr?.physicalExcs === "B"
+                                ? "blue-gray"
+                                : "red"
+                            }
+                          >
+                            {scholasticDataArr?.physicalExcs}
+                          </Typography>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-4 border-b border-blue-gray-50">
+                        <div className="flex items-center gap-3 justify-center">
+                          <Typography variant="small" color="blue-gray">
+                            5
+                          </Typography>
+                        </div>
+                      </td>
+                      <td className="p-4 border-b border-blue-gray-50">
+                        <div className="flex items-center gap-3 justify-center">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-bold"
+                          >
+                            Life skills
+                          </Typography>
+                        </div>
+                      </td>
+                      <td className="p-4 border-b border-blue-gray-50">
+                        <div className="flex items-center gap-3 justify-center">
+                          <Typography
+                            variant="h6"
+                            color={
+                              scholasticDataArr?.lifeSkills === "A"
+                                ? "light-green"
+                                : scholasticDataArr?.lifeSkills === "B"
+                                ? "blue-gray"
+                                : "red"
+                            }
+                          >
+                            {scholasticDataArr?.lifeSkills}
+                          </Typography>
+                        </div>
+                      </td>
+                    </tr>
+                  </>
+                </tbody>
+              </table>
+            </CardBody>
+
             <CardFooter>
               {classAvgData && (
                 <div className="flex justify-evenly my-10">
