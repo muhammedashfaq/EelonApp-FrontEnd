@@ -68,6 +68,7 @@ import UserProfileStudent from "../Pages/Student/Dashboard/UserProfileStudentPag
 import UserProfileStudentPage from "../Pages/Student/Dashboard/UserProfileStudentPage";
 import UserProfileSfaffPage from "../Pages/Staff/UserProfile/UserProfileSfaffPage";
 import UserProfileadminPage from "../Pages/Admin/UserProfile/UserProfileadminPage";
+import StudentWiseReportCard from "../Components/Staff/DashboardComponents/ExamModule/StudentWiseReportCard";
 
 const AppRoutes = () => {
   return (
@@ -226,6 +227,10 @@ const AppRoutes = () => {
         <Route
           path={RouteObjects.ShowClasswiseMarks}
           element={<ShowClasswiseMarks />}
+        />
+        <Route
+          path={RouteObjects.ShowStudentwiseReports}
+          element={<StudentWiseReportCard />}
         />
         ////////////////// TimeTable //////////////////////
         <Route

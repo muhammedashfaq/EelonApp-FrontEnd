@@ -1,6 +1,7 @@
 import {
   faChevronDown,
   faEdit,
+  faFilePdf,
   faMagnifyingGlass,
   faTrash,
   faTrashCan,
@@ -21,6 +22,7 @@ import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import Swal from "sweetalert2";
 import useAuth from "../../../../Hooks/useAuth";
+import { Link } from "react-router-dom";
 const TABLE_HEAD = [
   "#NO",
   "Ac-Year",
@@ -41,7 +43,8 @@ const SyllubusPlanning = () => {
 
   const axiosPrivate = useAxiosPrivate();
 
-  const deletefile = async (id) => {
+  const deletefile = async (id, publicId) => {
+    if (!id) return;
     try {
       const response = await Swal.fire({
         title: "Are you sure?",
@@ -53,7 +56,11 @@ const SyllubusPlanning = () => {
         confirmButtonText: "Yes, delete it!",
       });
       if (response.isConfirmed) {
-        await axiosPrivate.delete(`lessonplanning/syllabus/${id}`);
+        await axiosPrivate.delete(`lessonplanning/syllabus/${id}`, {
+          data: {
+            publicId: publicId,
+          },
+        });
         getDetails();
         const Toast = Swal.mixin({
           toast: true,
@@ -189,8 +196,27 @@ const SyllubusPlanning = () => {
                         <td className="p-4 border-b border-blue-gray-50">
                           {item?.termName}
                         </td>
-                        <td className="p-4 border-b border-blue-gray-50">
-                          .pdf
+                        <td className="p-4 border-b border-blue-gray-50 flex justify-center">
+                          <a href={item?.syllabusPdf?.url} target="_blank">
+                            <Tooltip
+                              content={
+                                item?.syllabusPdf?.url
+                                  ? "View document"
+                                  : "No document uploaded"
+                              }
+                            >
+                              <FontAwesomeIcon
+                                icon={faFilePdf}
+                                size="xl"
+                                style={{
+                                  color: item?.syllabusPdf?.url
+                                    ? "black"
+                                    : "GrayText",
+                                }}
+                              />
+                            </Tooltip>
+                          </a>
+                          {/* {item?.syllabusPdf?.url} */}
                         </td>
                         <td className="p-4 border-b border-blue-gray-50">
                           {item?.std}
@@ -257,7 +283,9 @@ const SyllubusPlanning = () => {
                           <FontAwesomeIcon
                             icon={faTrashCan}
                             color="red"
-                            onClick={() => deletefile(item._id)}
+                            onClick={() =>
+                              deletefile(item._id, item?.syllabusPdf?.public_id)
+                            }
                             className="cursor-pointer   hover:scale-150  transition-all duration-300 rounded-md"
                           />
                         </td>

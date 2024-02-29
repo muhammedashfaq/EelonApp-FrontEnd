@@ -9,6 +9,7 @@ const useLogout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("roles");
     localStorage.removeItem("email");
+    localStorage.removeItem("userId");
     setAuth({});
     navigate("/");
     location.reload();

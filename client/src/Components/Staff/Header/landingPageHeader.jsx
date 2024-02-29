@@ -7,11 +7,8 @@ import useLogout from "../../../Hooks/useLogout";
 import MobileNavBar from "./MobileNavBar";
 import UserAvatar from "./UserAvatar";
 
-
 const StaffHeader = () => {
   const { auth } = useAuth();
-
-
 
   return (
     <div>
@@ -36,10 +33,11 @@ const StaffHeader = () => {
             </li>
           </div>
           <div className="flex justify-center items-center space-x-6">
-          <NavItem href="#" label="Home" />
+            <NavItem href="#" label="Home" />
             <NavItem href="#About" label="About" />
             <NavItem href="#academics" label="Academics" />
             <NavItem href="#contact" label="Contact" />
+
             {!auth?.accessToken && <Link to={RouteObjects.Login}><Button className="bg-yellow-900">Login</Button></Link>}
             {renderAvatar(auth?.roles)} 
           </div>
@@ -72,8 +70,10 @@ const renderAvatar = (userRoles) => {
 
   if (userRoles in roleToDashboard && userRoles in roleToProfile) {
     return (
+
       <li className="block Laptop:block ipad:block Tablet:block ">
         <UserAvatar dash={roleToDashboard[userRoles]} profile={roleToProfile[userRoles]} />
+
       </li>
     );
   }
