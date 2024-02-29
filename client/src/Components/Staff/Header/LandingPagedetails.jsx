@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 // import Footertest from "./Footertest"
-import { faAward, faFingerprint, faPaperPlane, faRetweet, faRocket, faUserFriends } from "@fortawesome/free-solid-svg-icons"
+import { faAward, faFingerprint, faPaperPlane, faRetweet, faRocket, faSchool, faUserFriends } from "@fortawesome/free-solid-svg-icons"
 import Footer from "./Footer"
 import { faDribbble, faFacebook, faHtml5, faRocketchat, faTwitter } from "@fortawesome/free-brands-svg-icons"
-
+import ayya from '../../../assets/ayya.jpg'
 const LandingPagedetails = () => {
   return (
 
@@ -202,23 +202,23 @@ const LandingPagedetails = () => {
                 <img
                   alt="..."
                   className="max-w-full rounded-lg shadow-lg"
-                  src="https://images.unsplash.com/photo-1555212697-194d092e3b8f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                  src={ayya}
+                  // src="https://images.unsplash.com/photo-1555212697-194d092e3b8f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
                 />
               </div>
               <div className="w-full md:w-5/12 ml-auto mr-auto px-4">
                 <div className="md:pr-12">
-                  <div className="text-pink-600 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-pink-300">
-                  <FontAwesomeIcon icon={faRocketchat}/>
+                  <div className=" p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-pink-300">
+                  <FontAwesomeIcon icon={faSchool}/>
                   </div>
                   <h3 className="text-3xl font-semibold">
-                    A growing company
+                    JKKM
                   </h3>
                   <p className="mt-4 text-lg leading-relaxed text-gray-600">
-                    The extension comes with three pre-built pages to help you
-                    get started faster. You can change the text and images and
-                    you're good to go.
+                  Dr. J.K.K.Munirajahh, a leading Industrialist of Komarapalayam town, Namakkal Dt, Tamil Nadu, India is the Chairman and Managing Trustee of Annai J.K.K.Sampoorani Ammal Charitable Trust. He had his Post Graduate Studies in "Textile Management" renounced Bolton Institute of Technology, Bolton, United Kingtom.
+                  He is the Managing Director of Two Textile Spinning Mills, one at Komarapalayam, and another at Tiruchengode
                   </p>
-                  <ul className="list-none mt-6">
+                  {/* <ul className="list-none mt-6">
                     <li className="py-2">
                       <div className="flex items-center">
                         <div>
@@ -257,7 +257,7 @@ const LandingPagedetails = () => {
                         </div>
                       </div>
                     </li>
-                  </ul>
+                  </ul> */}
                 </div>
               </div>
             </div>

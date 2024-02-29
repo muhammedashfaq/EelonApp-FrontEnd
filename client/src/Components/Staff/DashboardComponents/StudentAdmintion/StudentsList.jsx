@@ -30,17 +30,23 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
+import { TableHeaderName } from "../../../Table Header/TableHeader";
 
-const TABLE_ROWS = [
-  {
-    name: "John Michael",
-    email: "john@creative-tim.com",
-    doj: "Manager",
-    clss: "Organization",
-    number: 123,
-    admtionno: "23/04/18",
-  },
+const TABLE_HEAD = [
+  "#NO",
+  "Roll NO",
+  "Student name",
+  "Admission no.",
+  "Gender",
+  "ClassSection",
+  "Father Name",
+  "Contact Number",
+  "DOB",
+  "Email",
+  "pincode",
+  "Action",
 ];
+
 
 const StudentsList = () => {
   const { page } = useParams();
@@ -117,7 +123,9 @@ const StudentsList = () => {
 
   return (
     <div>
-      <Card className="  m-8">
+      <Card className="  m-8">   
+         <TableHeaderName name="Students List" year="2024"/>  
+
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="flex flex-col items-center justify-evenly gap-4 md:flex-row">
             <div className="w-full md:w-80">
@@ -181,230 +189,191 @@ const StudentsList = () => {
           </div>
         </CardHeader>
         <CardBody className="overflow-scroll px-0">
-          <table className="mt-4 w-full min-w-max table-auto text-left">
-            <thead>
-              <tr>
-                <th className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4">
+          <table className=" w-full min-w-max table-auto text-left">
+
+          <thead>
+            <tr>
+              {TABLE_HEAD.map((head) => (
+                <th
+                  key={head}
+                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 px-2 py-2"
+                >
                   <Typography
                     variant="small"
                     color="blue-gray"
                     className="font-normal leading-none opacity-70"
                   >
-                    No.
+                    {head}
                   </Typography>
                 </th>
-                <th className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    Student name
-                  </Typography>
-                </th>
-                <th className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    Admission no.
-                  </Typography>
-                </th>
-                <th className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    Gender
-                  </Typography>
-                </th>
-                <th className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    Phone number
-                  </Typography>
-                </th>
-                <th className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    Email
-                  </Typography>
-                </th>
-                <th className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    Address
-                  </Typography>
-                </th>
-                <th className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    Pincode
-                  </Typography>
-                </th>
-                <th className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    View details
-                  </Typography>
-                </th>
-                <th className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    Action
-                  </Typography>
-                </th>
-              </tr>
-            </thead>
+              ))}
+            </tr>
+          </thead>
             <tbody>
               {searchData
                 ? searchData.map((data, index) => {
-                  const classes = "px-1  py-1 border-b border-blue-gray-50";
+                    const classes = "px-2  border-b border-blue-gray-50";
 
                     return (
                       <tr key={index}>
-                        <td className={classes}>
-                          <div className="flex flex-col">
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal opacity-70"
-                            >
-                              {index + 1}
-                            </Typography>
-                          </div>
-                        </td>
-                        <td className={classes}>
-                          <div className="flex flex-col">
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal opacity-70"
-                            >
-                              {data?.studentName}
-                            </Typography>
-                          </div>
-                        </td>
-
-                        <td className={classes}>
+                      <td className={classes}>
+                        <div className="flex flex-col">
                           <Typography
                             variant="small"
                             color="blue-gray"
-                            className="font-normal"
+                            className="font-normal opacity-70"
+                          >
+                            {index + 1}
+                          </Typography>
+                        </div>
+                      </td>
+                      <td className={classes}>
+                        <div className="flex flex-col">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal opacity-70"
+                          >
+                            {index + 1}
+                          </Typography>
+                        </div>
+                      </td>
+                      <td className={classes}>
+                        <div className="flex flex-col">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal opacity-70"
+                          >
+                             {data?.studentName}
+                          </Typography>
+                        </div>
+                      </td>
+                      <td className={classes}>
+                        <div className="flex flex-col">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal opacity-70"
                           >
                             {data?.admnNo}
                           </Typography>
-                        </td>
-                        <td className={classes}>
+                        </div>
+                      </td>
+                      <td className={classes}>
+                        <div className="flex flex-col">
                           <Typography
                             variant="small"
                             color="blue-gray"
-                            className="font-normal"
+                            className="font-normal opacity-70"
                           >
                             {data?.gender}
                           </Typography>
-                        </td>
-
-                        <td className={classes}>
+                        </div>
+                      </td>
+                      <td className={classes}>
+                        <div className="flex flex-col">
                           <Typography
                             variant="small"
                             color="blue-gray"
-                            className="font-normal"
+                            className="font-normal opacity-70"
                           >
-                            {`${data?.ContactNo}, ${data?.AltCnctNo}`}
+                            {data?.classId}
                           </Typography>
-                        </td>
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {data?.email}
-                          </Typography>
-                        </td>
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {data?.address}
-                          </Typography>
-                        </td>
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {data?.pincode}
-                          </Typography>
-                        </td>
+                        </div>
+                      </td>
 
-                        <td className={classes}>
-                          <Link to={RouteObjects.StudentProfile}>
-                            <IconButton variant="text">
-                              <FontAwesomeIcon
-                                icon={faEye}
-                                size="xl"
-                                color="green"
-                              />
-                            </IconButton>
-                          </Link>
-                        </td>
-                        <td className={classes}>
-                          <Link
-                            to={`${RouteObjects.EditStudent}/${data._id}/${data.studentName}/${page}`}
-                          >
-                            <Tooltip
-                              content="Edit Student Data"
-                              animate={{
-                                mount: { scale: 1, y: 0 },
-                                unmount: { scale: 0, y: 25 },
-                              }}
-                            >
-                              <IconButton variant="text">
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {data?.FathersName}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {`${data?.ContactNo}, ${data?.AltCnctNo}`}
+                        </Typography>
+                      </td>
 
-                              <FontAwesomeIcon
-                                icon={faEdit}
-                                color="green"
-                                size="xl"
-                                />
-                                </IconButton>
-                            </Tooltip>
-                          </Link>
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                           {data?.DOB}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {data?.email}
+                        </Typography>
+                      </td>
+                 
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {data?.pincode}
+                        </Typography>
+                      </td>
 
+                      <td className={classes}>
+
+                        <div>
+                        <Link
+                          to={`${RouteObjects.StudentProfile}/${data._id}`}
+                        >
+                          <IconButton variant="text">
+                            <FontAwesomeIcon
+                              icon={faEye}
+                              size="xl"
+                              color="green"
+                            />
+                          </IconButton>
+                        </Link>
+                 
+                        <Link
+                          to={`${RouteObjects.EditStudent}/${data._id}/${data.studentName}/${page}`}
+                        >
                           <Tooltip
-                            content="Delete Student"
+                            content="Edit Student Data"
                             animate={{
                               mount: { scale: 1, y: 0 },
                               unmount: { scale: 0, y: 25 },
                             }}
                           >
-                                                          <IconButton variant="text">
+                            <IconButton variant="text">
+                              <FontAwesomeIcon
+                                icon={faEdit}
+                                color="green"
+                                size="xl"
+                              />
+                            </IconButton>
+                          </Tooltip>
+                        </Link>
 
-
+                        <Tooltip
+                          content="Delete Student"
+                          animate={{
+                            mount: { scale: 1, y: 0 },
+                            unmount: { scale: 0, y: 25 },
+                          }}
+                        >
+                          <IconButton variant="text">
                             <FontAwesomeIcon
                               color="red"
                               icon={faTrash}
@@ -412,16 +381,17 @@ const StudentsList = () => {
                               onClick={() =>
                                 deleteStudent(data._id, data.studentName)
                               }
-                              />
-                              </IconButton>
-                          </Tooltip>
-                        </td>
-                      </tr>
+                            />
+                          </IconButton>
+                        </Tooltip>
+                          </div>  
+                      </td>
+                    </tr>
                     );
                   })
                 : studentData &&
                   studentData.map((data, index) => {
-                    const classes = "px-1  py-1 border-b border-blue-gray-50";
+                    const classes = "px-2 border-b border-blue-gray-50";
 
                     return (
                       <tr key={index}>
@@ -443,7 +413,51 @@ const StudentsList = () => {
                               color="blue-gray"
                               className="font-normal opacity-70"
                             >
-                              {data?.studentName}
+                              {index + 1}
+                            </Typography>
+                          </div>
+                        </td>
+                        <td className={classes}>
+                          <div className="flex flex-col">
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal opacity-70"
+                            >
+                               {data?.studentName}
+                            </Typography>
+                          </div>
+                        </td>
+                        <td className={classes}>
+                          <div className="flex flex-col">
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal opacity-70"
+                            >
+                              {data?.admnNo}
+                            </Typography>
+                          </div>
+                        </td>
+                        <td className={classes}>
+                          <div className="flex flex-col">
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal opacity-70"
+                            >
+                              {data?.gender}
+                            </Typography>
+                          </div>
+                        </td>
+                        <td className={classes}>
+                          <div className="flex flex-col">
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal opacity-70"
+                            >
+                              {data?.classId}
                             </Typography>
                           </div>
                         </td>
@@ -454,7 +468,7 @@ const StudentsList = () => {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {data?.admnNo}
+                            {data?.FathersName}
                           </Typography>
                         </td>
                         <td className={classes}>
@@ -463,7 +477,7 @@ const StudentsList = () => {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {data?.gender}
+                            {`${data?.ContactNo}, ${data?.AltCnctNo}`}
                           </Typography>
                         </td>
 
@@ -473,7 +487,7 @@ const StudentsList = () => {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {`${data?.ContactNo}, ${data?.AltCnctNo}`}
+                             {data?.DOB}
                           </Typography>
                         </td>
                         <td className={classes}>
@@ -485,15 +499,7 @@ const StudentsList = () => {
                             {data?.email}
                           </Typography>
                         </td>
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {data?.address}
-                          </Typography>
-                        </td>
+                   
                         <td className={classes}>
                           <Typography
                             variant="small"
@@ -505,6 +511,8 @@ const StudentsList = () => {
                         </td>
 
                         <td className={classes}>
+
+                          <div>
                           <Link
                             to={`${RouteObjects.StudentProfile}/${data._id}`}
                           >
@@ -516,8 +524,7 @@ const StudentsList = () => {
                               />
                             </IconButton>
                           </Link>
-                        </td>
-                        <td className={classes}>
+                   
                           <Link
                             to={`${RouteObjects.EditStudent}/${data._id}/${data.studentName}/${page}`}
                           >
@@ -528,15 +535,13 @@ const StudentsList = () => {
                                 unmount: { scale: 0, y: 25 },
                               }}
                             >
-                                                            <IconButton variant="text">
-
-
-                              <FontAwesomeIcon
-                                icon={faEdit}
-                                color="green"
-                                size="xl"
+                              <IconButton variant="text">
+                                <FontAwesomeIcon
+                                  icon={faEdit}
+                                  color="green"
+                                  size="xl"
                                 />
-                                </IconButton>
+                              </IconButton>
                             </Tooltip>
                           </Link>
 
@@ -547,19 +552,18 @@ const StudentsList = () => {
                               unmount: { scale: 0, y: 25 },
                             }}
                           >
-                                                          <IconButton variant="text">
-
-
-                            <FontAwesomeIcon
-                              color="red"
-                              icon={faTrash}
-                              size="xl"
-                              onClick={() =>
-                                deleteStudent(data._id, data.studentName)
-                              }
+                            <IconButton variant="text">
+                              <FontAwesomeIcon
+                                color="red"
+                                icon={faTrash}
+                                size="xl"
+                                onClick={() =>
+                                  deleteStudent(data._id, data.studentName)
+                                }
                               />
-                              </IconButton>
+                            </IconButton>
                           </Tooltip>
+                            </div>  
                         </td>
                       </tr>
                     );

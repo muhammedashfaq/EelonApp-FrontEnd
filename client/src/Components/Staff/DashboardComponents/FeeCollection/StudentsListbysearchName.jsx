@@ -21,7 +21,7 @@ const StudentsListbysearchName = ({setStudentDatabyName, studentDatabyName ,setS
       <Menu>
         <Badge content={studentDatabyName.length} color="green">
           <MenuHandler>
-            <Button className="w-96">Menu </Button>
+            <Button className="w-96">Students </Button>
           </MenuHandler>
         </Badge>
 

@@ -9,20 +9,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const menu = [
-  {
-    title: "Home",
-    icon: faHome,
-    href: RouteObjects.root,
-  },
-  {
-    title: "Dashboard",
-    icon: faBars,
-  },
+
   {
     title: "Library",
     icon: faBook,
     href: RouteObjects.Stafflibrary,
   },
+  
   {
     title: "Accounts",
     icon: faUserPlus,

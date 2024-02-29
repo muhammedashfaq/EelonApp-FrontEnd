@@ -10,29 +10,31 @@ import Swal from "sweetalert2";
 import { Oval } from "react-loader-spinner";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
-const MotherImageCard = ({ userData }) => {
+const MotherImageCard = ({ userData, getData }) => {
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
   const [isLoading, setIsLoading] = useState(false);
 
   const [motherImage, setMotherImage] = useState(notFoundImg);
-  const [profileImageMother, setProfileImageMother] = useState("");
 
-  // Generic image change function
-  const ImageChange = (event, setImage, setProfileImage) => {
-    event.stopPropagation();
-    const file = event.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setImage(imageUrl);
-      setProfileImage(imageUrl);
-    }
+
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    setFileToBase(file);
+    console.log(file);
   };
-  // Submit image function
+
+  const setFileToBase = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setMotherImage(reader.result);
+    };
+  };
   const submitImage = async (e) => {
     try {
       e.preventDefault();
-      if (!profileImageMother) {
+      if (!motherImage) {
         Swal.fire({
           icon: "error",
           title: "Oops...",
@@ -42,14 +44,15 @@ const MotherImageCard = ({ userData }) => {
       }
       setIsLoading(true);
 
-
+      console.log(userData?._id,"id");
       const response = await axiosPrivate.post(`images/student/mother/${userData?._id}`,
-      { Image:profileImageMother }
+      { Image:motherImage }
     )
+    setIsLoading(false);
+    getData()
 
       console.log(response,"res")
 
-      setIsLoading(false);
       const Toast = Swal.mixin({
         toast: true,
         position: "top-end",
@@ -73,14 +76,29 @@ const MotherImageCard = ({ userData }) => {
   };
 
   const deleteImage = async () => {
-    if (!userData?.studentProfilePic) return;
+    if (!userData?.MothersPhoto) return;
     try {
       setIsLoading(true);
-        //  await axiosPrivate.delete(
-        //   `images/studentprofile/${userData?._id}`
-        // );
+         const response = await axiosPrivate.delete(
+          `images/student/mother/${userData?._id}`,{data:{public_id: userData?.MothersPhoto?.public_id}}
+        );
       setIsLoading(false);
-    } catch (error) {
+      getData()
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        },
+      });
+      Toast.fire({
+        icon: "success",
+        title: "Deleted successfully",
+      });    } catch (error) {
       setIsLoading(false);
       console.error(error);
     }
@@ -103,7 +121,7 @@ const MotherImageCard = ({ userData }) => {
             </>
           ) : (
             <img
-              src={motherImage}
+              src={userData?.MothersPhoto?.url || motherImage}
               alt="card-image"
               className=" w-auto h-auto object-cover m-1 rounded-lg"
             />
@@ -123,9 +141,7 @@ const MotherImageCard = ({ userData }) => {
                   id="imageUploadMother"
                   name="profileimage"
                   className="hidden"
-                  onChange={(event) =>
-                    ImageChange(event, setMotherImage, setProfileImageMother)
-                  }
+                  onChange={handleImage}
                 />
               </Button>
 
@@ -136,7 +152,7 @@ const MotherImageCard = ({ userData }) => {
                 color="red"
                 className=""
                 onClick={deleteImage}
-                disabled={userData?.studentProfilePic ? false : true}
+                disabled={userData?.MothersPhoto ? false : true}
               >
                 <FontAwesomeIcon icon={faTrash} size="2xl" />
               </Button>

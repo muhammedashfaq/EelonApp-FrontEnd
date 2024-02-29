@@ -13,7 +13,7 @@ const Profile = ({ userData, getData }) => {
         </div>
       </div>
       <div className=" m-10">
-        <DetailImagePage userData={userData} />
+        <DetailImagePage userData={userData} getData={getData}/>
       </div>
     </div>
   );
