@@ -287,7 +287,7 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
                 name="ContactNo"
                 type="tel"
                 variant="outlined"
-                label={frntentErors && frntentErors.ContactNo ? frntentErors.ContactNo : "Email"}
+                label={frntentErors && frntentErors.ContactNo ? frntentErors.ContactNo : "Contact Number"}
                 placeholder="Contact Number
             "    error={frntentErors && frntentErors.ContactNo ? true : false}
                 onChange={handleInputChange}
@@ -588,7 +588,7 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
                 onChange={handleInputChange}
               />
 
-              <Select
+              {/* <Select
                 variant="outlined"
                 onChange={(e) => setClassSection(e)}
                 label="Class&Section"
@@ -599,11 +599,10 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
                       {data}
                     </Option>
                   ))}
-              </Select>
+              </Select> */}
 
               <Select
                 variant="outlined"
-                value={mediumOfInstruction}
                 onChange={(e) => setmediumOfInstruction(e)}
                 label="Medium of Instruction"
               >
@@ -613,7 +612,6 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
 
               <Select
                 variant="outlined"
-                value={concessionStudent}
                 onChange={(e) => setconcessionStudent(e)}
                 label="Concession Student"
               >
@@ -625,18 +623,16 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
                 variant="outlined"
                 label="Category"
                 placeholder="Student Category"
-                value={studentCategory}
                 onChange={(e) => setstudentCategory(e)}
               >
                 <Option value="daySchool">Day School</Option>
-                <Option value="daySchool">Hostel</Option>
+                <Option value="hostel">Hostel</Option>
               </Select>
 
               <Select
                 variant="outlined"
                 label="Student Group"
                 placeholder="Student Group"
-                value={studentGp}
                 onChange={(e) => setstudentGp(e)}
               >
                 <Option value="Blue">Blue</Option>

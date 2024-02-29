@@ -2,6 +2,7 @@ export const RouteObjects = {
   root: "/",
   Login: "/login",
   StudentDashboard: "/studentdash",
+  UserProfileStudent:"/profile/student",
   FeeInvoice: "/feeinvoice",
   FeeStructure: "/feestructre",
   HomeWorks: "/homeworks",
@@ -9,6 +10,7 @@ export const RouteObjects = {
   StudyMaterials: "/studymaterials",
   StudentLibrary: "/studentlibrary",
 
+  UserProfileStaff:"/profile/staff",
   NewApplication: "/newapplication",
   NewApplicationFee: "/applicationfee",
   NewApplicants: "/newapplicats",
@@ -60,7 +62,7 @@ export const RouteObjects = {
   ScholasticSubwiseMarks: "/staff/exam-module/add-scholastic-grade",
   ShowSubwiseMarks: "/staff/exam-module/subjectwise-marks",
   ShowClasswiseMarks: "/staff/exam-module/classwise-marks",
-
+  UserProfileadmin:"/profile/admin",
   AdminHome: "/adminhome",
   AdminAprovals: "/adminaprovals",
 

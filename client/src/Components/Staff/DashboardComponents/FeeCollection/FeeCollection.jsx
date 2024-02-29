@@ -148,7 +148,7 @@ const FeeCollection = () => {
               </div>
 
               <Button fullWidth className="bg-dark-purple">
-                <FontAwesomeIcon icon={faIndianRupee} />
+                <FontAwesomeIcon icon={faIndianRupee}  />
                 <p className="font-normal">Pay</p>
               </Button>
             </div>

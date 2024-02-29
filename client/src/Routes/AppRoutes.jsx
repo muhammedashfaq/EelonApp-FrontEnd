@@ -64,6 +64,10 @@ import FeeCollectionPage from "../Pages/Staff/Dashboard/FeeCollection/FeeCollect
 import AdmissionFeePage from "../Pages/Staff/Dashboard/FeeCollection/AdmissionFeePage";
 import AddNewStudentPage from "../Pages/Staff/Dashboard/Application/AddNewStudentPage";
 import AddFeeStructures from "../Pages/Staff/Dashboard/FeeCollection/AddFeeStructures";
+import UserProfileStudent from "../Pages/Student/Dashboard/UserProfileStudentPage";
+import UserProfileStudentPage from "../Pages/Student/Dashboard/UserProfileStudentPage";
+import UserProfileSfaffPage from "../Pages/Staff/UserProfile/UserProfileSfaffPage";
+import UserProfileadminPage from "../Pages/Admin/UserProfile/UserProfileadminPage";
 
 const AppRoutes = () => {
   return (
@@ -86,6 +90,10 @@ const AppRoutes = () => {
           element={<ApplicationFeePage />}
         />
         {/* Admin ROUTS */}
+        <Route
+          path={RouteObjects.UserProfileadmin}
+          element={<UserProfileadminPage />}
+        />
         <Route path={RouteObjects.AdminHome} element={<AdminHome />} />
         <Route path={RouteObjects.AdminAprovals} element={<AdminAprovals />} />
         <Route
@@ -107,6 +115,10 @@ const AppRoutes = () => {
           path={RouteObjects.StudentDashboard}
           element={<StudentDashBoard />}
         />
+        <Route
+          path={RouteObjects.UserProfileStudent}
+          element={<UserProfileStudentPage />}
+        />
         <Route path={RouteObjects.FeeInvoice} element={<StudentFeeInvoice />} />
         <Route
           path={RouteObjects.FeeStructure}
@@ -127,6 +139,10 @@ const AppRoutes = () => {
           element={<StudentLibrary />}
         />
         {/* STAFF ROUTS */}
+        <Route
+          path={RouteObjects.UserProfileStaff}
+          element={<UserProfileSfaffPage />}
+        />
         {/* application  */}
         <Route
           path={RouteObjects.NewApplication}

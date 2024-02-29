@@ -41,7 +41,14 @@ const MotherImageCard = ({ userData }) => {
         return;
       }
       setIsLoading(true);
-      const response = null;
+
+
+      const response = await axiosPrivate.post(`images/student/mother/${userData?._id}`,
+      { Image:profileImageMother }
+    )
+
+      console.log(response,"res")
+
       setIsLoading(false);
       const Toast = Swal.mixin({
         toast: true,
@@ -69,9 +76,9 @@ const MotherImageCard = ({ userData }) => {
     if (!userData?.studentProfilePic) return;
     try {
       setIsLoading(true);
-      //    await axiosPrivate.delete(
-      //     `images/studentprofile/${userData?._id}`
-      //   );
+        //  await axiosPrivate.delete(
+        //   `images/studentprofile/${userData?._id}`
+        // );
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
