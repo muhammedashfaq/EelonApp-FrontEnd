@@ -150,7 +150,6 @@ const AddSubwiseMarks = () => {
   }, []);
   return (
     <>
-      <StaffHeader />
       <Banner />
       <div className="flex justify-center">
         <div className="container xl">

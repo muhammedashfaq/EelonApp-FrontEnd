@@ -314,6 +314,7 @@ const ClassDetails = () => {
                             <AddStudentModal
                               classObjId={data._id}
                               studentList={data?.students}
+                              classId={`${data?.std}-${data?.section}`}
                             />
                           </Typography>
                         </td>

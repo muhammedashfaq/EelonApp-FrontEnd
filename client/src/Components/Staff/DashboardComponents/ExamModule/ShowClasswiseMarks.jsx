@@ -16,7 +16,6 @@ import {
   faSortDown,
   faSortUp,
 } from "@fortawesome/free-solid-svg-icons";
-import StaffHeader from "../../Header/landingPageHeader";
 import Banner from "../../../Banner/Banner";
 import StudentClasswiseMarkDispRow from "./StudentClasswiseMarkDispRow";
 
@@ -156,7 +155,6 @@ const ShowClasswiseMarks = () => {
 
   return (
     <>
-      <StaffHeader />
       <Banner />
       {/* <Button onClick={sortMarksByChemistry}>Sort</Button> */}
       <div className="flex justify-center">
@@ -178,7 +176,6 @@ const ShowClasswiseMarks = () => {
                     <select
                       label="Select class"
                       className="rounded-md list-none"
-                      
                       onChange={(e) => setselectedClass(e.target.value)}
                     >
                       <option selected disabled>
@@ -186,7 +183,7 @@ const ShowClasswiseMarks = () => {
                       </option>
 
                       {classSectionDropdowns &&
-                        classSectionDropdowns.map((item,i) => (
+                        classSectionDropdowns.map((item, i) => (
                           <option key={i}>{item}</option>
                         ))}
                     </select>

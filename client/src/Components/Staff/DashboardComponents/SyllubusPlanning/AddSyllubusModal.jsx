@@ -28,12 +28,24 @@ const AddSyllubusModal = ({ acYr, subjects, classes, getDetails }) => {
   const [std, setStd] = useState("");
   const [error, setError] = useState();
   const axiosPrivate = useAxiosPrivate();
+  const [base64String, setBase64String] = useState("");
 
   const handleOpen = () => setOpen(!open);
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setSelectedFile(file);
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const base64 = event.target.result;
+      setBase64String(base64);
+    };
+    reader.readAsDataURL(file);
   };
+
+  // useEffect(() => {
+  //   console.log(base64String, "b64");
+  // }, [base64String]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,7 +57,7 @@ const AddSyllubusModal = ({ acYr, subjects, classes, getDetails }) => {
         termName,
         std,
         teacherId: auth?.userId,
-
+        pdfB64: base64String,
       };
       if (
         !formData.year ||
@@ -60,10 +72,7 @@ const AddSyllubusModal = ({ acYr, subjects, classes, getDetails }) => {
       setError(null);
 
       setIsLoading(true);
-    await axiosPrivate.post(
-        "/lessonplanning/syllabus",
-        formData
-      );
+      await axiosPrivate.post("/lessonplanning/syllabus", formData);
       setIsLoading(false);
       handleOpen();
       getDetails();
@@ -71,12 +80,12 @@ const AddSyllubusModal = ({ acYr, subjects, classes, getDetails }) => {
     } catch (error) {
       setIsLoading(false);
       console.error(error);
-    
+
       let errorMessage = "An error occurred";
-    
+
       if (error.response) {
         const responseData = error.response.data;
-        
+
         // Check if there is a specific error message in the response data
         if (responseData && responseData.message) {
           errorMessage = responseData.message;
@@ -84,7 +93,7 @@ const AddSyllubusModal = ({ acYr, subjects, classes, getDetails }) => {
           errorMessage = "Something went wrong with the server";
         }
       }
-    
+
       setError(errorMessage);
       toast.error(errorMessage);
     }

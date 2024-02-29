@@ -10,7 +10,6 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
-import StaffHeader from "../../Header/landingPageHeader";
 import Banner from "../../../Banner/Banner";
 import StudentmarkDispRow from "./StudentmarkDispRow";
 
@@ -103,7 +102,6 @@ const ShowSubwiseMarklist = () => {
 
   return (
     <>
-      <StaffHeader />
       <Banner />
       <div className="flex justify-center">
         <div className="container xl">

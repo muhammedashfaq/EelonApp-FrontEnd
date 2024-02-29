@@ -23,7 +23,6 @@ import {
   faPencilSquare,
   faSort,
 } from "@fortawesome/free-solid-svg-icons";
-import StaffHeader from "../../Header/landingPageHeader";
 import Banner from "../../../Banner/Banner";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useEffect, useState } from "react";
@@ -143,7 +142,6 @@ const AddScholasticGrades = () => {
   }, []);
   return (
     <>
-      <StaffHeader />
       <Banner />
       <div className="flex justify-center">
         <div className="container 2xl">
