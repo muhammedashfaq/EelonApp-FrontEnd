@@ -152,7 +152,7 @@ const EditStudentComponent = ({ acYr, name }) => {
 
   const handleSubmitForm = async (event) => {
     event.preventDefault();
-    const reqData = {
+    const reqData = { 
       ...formData,
       gender: genderState[0],
       bloodGp: bloodGpState[0],
