@@ -20,7 +20,6 @@ const Strems = ({ classRoomData }) => {
   const axiosPrivate = useAxiosPrivate();
   const { classroomId } = useParams();
 
-
   const getAnnouncements = async () => {
     try {
       const response = await axiosPrivate.get(
@@ -33,7 +32,7 @@ const Strems = ({ classRoomData }) => {
   };
   useEffect(() => {
     getAnnouncements();
-  }, [classroomId, announcement]);
+  }, [classroomId]);
   return (
     <div>
       <div>
@@ -41,7 +40,7 @@ const Strems = ({ classRoomData }) => {
       </div>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-2  mt-4">
         <div className="  p-10 ">
-        announcement
+          announcement
           <div className=" h-96 overflow-y-scroll ">
             <div className="   grid grid-cols-2 gap-3 p-4  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-1">
               {announcement &&
@@ -49,7 +48,6 @@ const Strems = ({ classRoomData }) => {
                   <Popover key={i}>
                     <PopoverHandler>
                       <Card className=" bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl ">
-                      
                         <CardBody className="">
                           <div className="justify-between items-center bg-gray-200">
                             <div className="flex justify-center items-center">
@@ -72,7 +70,7 @@ const Strems = ({ classRoomData }) => {
         </div>
 
         <div className="  p-10 ">
-        Events
+          Events
           <div className="h-96 overflow-y-scroll">
             <div className="   grid grid-cols-2 gap-3 p-4  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 ">
               <Popover>

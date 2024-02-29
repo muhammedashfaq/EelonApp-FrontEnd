@@ -17,9 +17,9 @@ import React, { useState } from "react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import toast from "react-hot-toast";
 import useAuth from "../../../../Hooks/useAuth";
-const AddQpatternModal = ({ acYr, classes, subjects,getDetails }) => {
+const AddQpatternModal = ({ acYr, classes, subjects, getDetails }) => {
   const { auth } = useAuth();
-  const [isLoading,setIsLoading]=useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const axiosPrivate = useAxiosPrivate();
   const [open, setOpen] = React.useState(false);
@@ -31,9 +31,18 @@ const AddQpatternModal = ({ acYr, classes, subjects,getDetails }) => {
   const [std, setStd] = useState("");
   const [error, setError] = useState();
   const handleOpen = () => setOpen(!open);
+  const [base64String, setBase64String] = useState("");
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setSelectedFile(file);
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const base64 = event.target.result;
+      setBase64String(base64);
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSubmit = async (e) => {
@@ -46,6 +55,7 @@ const AddQpatternModal = ({ acYr, classes, subjects,getDetails }) => {
         termName,
         std,
         teacherId: auth?.userId,
+        pdfB64: base64String,
       };
       if (
         !formData.year ||
@@ -58,17 +68,17 @@ const AddQpatternModal = ({ acYr, classes, subjects,getDetails }) => {
         return;
       }
       setError(null);
-      setIsLoading(true)
+      setIsLoading(true);
       const response = await axiosPrivate.post(
         "/lessonplanning/qpattern",
         formData
       );
-      setIsLoading(false)
+      setIsLoading(false);
       handleOpen();
-      getDetails()
+      getDetails();
       toast.success("success");
     } catch (error) {
-      setIsLoading(false)
+      setIsLoading(false);
       console.log(error);
     }
   };
@@ -79,20 +89,19 @@ const AddQpatternModal = ({ acYr, classes, subjects,getDetails }) => {
         size="sm"
         onClick={handleOpen}
       >
-        <FontAwesomeIcon
-          icon={faPlus}
-          strokeWidth={2}
-          className="h-4 w-4"
-        />{" "}
+        <FontAwesomeIcon icon={faPlus} strokeWidth={2} className="h-4 w-4" />{" "}
         Add Question Pattern
       </Button>
-      <Dialog size="md" open={open}  className="w-full">
+      <Dialog size="md" open={open} className="w-full">
         <div className="flex flex-row justify-between p-6 bg-white border-b border-gray-200 rounded-tl-lg rounded-tr-lg">
           <p className="font-semibold text-gray-800">
             Add {error && <p className="text-red-600">{error}</p>}
           </p>
-          <FontAwesomeIcon icon={faClose}    onClick={handleOpen}
-            className="w-6 h-6 cursor-pointer bg-gray-400 text-black p-1 rounded-md"/>
+          <FontAwesomeIcon
+            icon={faClose}
+            onClick={handleOpen}
+            className="w-6 h-6 cursor-pointer bg-gray-400 text-black p-1 rounded-md"
+          />
         </div>
         <div className="flex flex-col px-6 py-5 bg-gray-50">
           <div className="flex flex-col sm:flex-row items-center mb-5 sm:space-x-5">
@@ -176,13 +185,13 @@ const AddQpatternModal = ({ acYr, classes, subjects,getDetails }) => {
           </p>
         </div>
         <div className="flex flex-row items-center justify-between p-5 bg-white border-t border-gray-200 rounded-bl-lg rounded-br-lg">
-        <Button
-          loading={isLoading}
+          <Button
+            loading={isLoading}
             type="submit"
             className="px-4 py-2 text-white font-semibold bg-blue-500 rounded"
             onClick={handleSubmit}
           >
-            {isLoading?"Sending...":"Send"}
+            {isLoading ? "Sending..." : "Send"}
           </Button>
         </div>
       </Dialog>
