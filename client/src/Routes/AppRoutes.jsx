@@ -69,6 +69,8 @@ import UserProfileStudentPage from "../Pages/Student/Dashboard/UserProfileStuden
 import UserProfileSfaffPage from "../Pages/Staff/UserProfile/UserProfileSfaffPage";
 import UserProfileadminPage from "../Pages/Admin/UserProfile/UserProfileadminPage";
 import StudentWiseReportCard from "../Components/Staff/DashboardComponents/ExamModule/StudentWiseReportCard";
+import Footer from "../Components/Staff/Header/Footer";
+import Footersmall from "../Components/Staff/Header/Footersmall";
 
 const AppRoutes = () => {
   return (
@@ -296,6 +298,7 @@ const AppRoutes = () => {
         <Route path="/testyk" element={<TestYk />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
+
     </div>
   );
 };

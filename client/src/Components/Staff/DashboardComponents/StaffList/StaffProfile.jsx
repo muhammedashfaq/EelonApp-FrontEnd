@@ -31,9 +31,14 @@ const StaffProfile = ({ userData }) => {
     }
   };
   return (
-    <div className="bg-gray-100 flex m-9">
-      <div className="w-full md:w-3/12 md:mx-2">
-        <div className="bg-white p-3 border-t-4 border-green-400">
+    <div class="container mx-auto my-5 p-5">
+    <div class="md:flex no-wrap md:-mx-2 ">
+        <div class="w-full md:w-3/12 md:mx-2">
+
+
+
+
+
           <div className="image overflow-hidden">
             <img
               className="h-auto w-full mx-auto"
@@ -93,8 +98,9 @@ const StaffProfile = ({ userData }) => {
               <span className="ml-auto">{userData?.DOJ}</span>
             </li>
           </ul>
-        </div>
-      
+
+
+
       </div>
 
       <div className="w-full md:w-9/12 mx-2 h-64">
@@ -163,8 +169,7 @@ const StaffProfile = ({ userData }) => {
                 <FontAwesomeIcon icon={faBook} />
                 <div className="flex space-x-5 w-full">
                   <span className="tracking-wide">Experience</span>
-                  <AddStaffExperianceDocuModal/>
-
+                  <AddStaffExperianceDocuModal />
                 </div>
               </div>
 
@@ -195,8 +200,8 @@ const StaffProfile = ({ userData }) => {
 
                 <div className="flex space-x-5 w-full">
                   <span className="tracking-wide">Education</span>
-                  
-                  <AddStaffEducationalModal/>
+
+                  <AddStaffEducationalModal />
                 </div>
               </div>
               <ul className="list-inside space-y-2">
@@ -213,6 +218,7 @@ const StaffProfile = ({ userData }) => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

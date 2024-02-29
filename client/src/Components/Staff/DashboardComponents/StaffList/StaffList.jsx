@@ -29,17 +29,20 @@ import { RouteObjects } from "../../../../Routes/RoutObjects";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { TableHeaderName } from "../../../Table Header/TableHeader";
 
 
 const TABLE_HEAD = [
   "#NO",
+  'ID',
   "Name",
+  "Gender",
   "Category",
   "Contact Number",
   "Email ID",
-  "City",
-  "Base salary",
-  "Status",
+  "DOB",
+  "Alocated Class",
+  "Current Status",
   "Action",
 ];
 
@@ -83,6 +86,7 @@ const StaffList = () => {
     try {
       const response = await axiosPrivate.get("users/staff");
       setStaffData(response.data);
+      console.log(response);
     } catch (error) {
       console.error(error);
     }
@@ -90,41 +94,85 @@ const StaffList = () => {
 
   useEffect(() => {
     getStaffs();
-  }, [StaffData]);
+  }, []);
   return (
+    <div className="m-10">
+
+        
     <Card className="h-full w-full">
+      <TableHeaderName name="Staff List" year="2024"/>  
       <CardHeader floated={false} shadow={false} className="rounded-none">
-        <div className="mb-8 flex items-center justify-between gap-8">
-          <div>
-            <Typography variant="h5" color="blue-gray">
-              Members list
-            </Typography>
-            <Typography color="gray" className="mt-1 font-normal">
-              See information about all members
-            </Typography>
+          <div className="flex flex-col items-center justify-evenly gap-4 md:flex-row">
+            <div className="w-full md:w-80 mt-1">
+              <form 
+              // onSubmit={searchStudent}
+               className="flex gap-1">
+                <Input
+                  label="Search"
+                  icon={
+                    <FontAwesomeIcon
+                      icon={faMagnifyingGlass}
+                      className="h-5 w-5"
+                    />
+                  }
+                  // value={searchQuery}
+                  // onChange={(e) => setsearchQuery(e.target.value)}
+                />
+                <Button
+                  variant="outlined"
+                  color="gray"
+                  size="sm"
+                  type="submit"
+                  // onClick={searchData}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-4 h-4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                    />
+                  </svg>
+                </Button>
+                <Button
+                  // onClick={() => setsearchData()}
+                  size="sm"
+                  variant="text"
+                  style={{ textTransform: "none" }}
+                >
+                  Reset
+                </Button>
+              </form>
+            </div>
+
+            <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+              <Link to={RouteObjects.AddStaffList}>
+                <Button className="flex items-center gap-3" size="sm">
+                  <FontAwesomeIcon
+                    icon={faUserPlus}
+                    strokeWidth={2}
+                    className="h-4 w-4"
+                  />
+                  Add Staff
+                </Button>
+              </Link>
+            </div>
           </div>
-          <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Link to={RouteObjects.AddStaffList}>
-              <Button className="flex items-center gap-3" size="sm">
-                <FontAwesomeIcon
-                  icon={faUserPlus}
-                  strokeWidth={2}
-                  className="h-4 w-4"
-                />{" "}
-                Add
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </CardHeader>
+        </CardHeader>
       <CardBody className="overflow-scroll px-0">
-        <table className="mt-4 w-full min-w-max table-auto text-left">
+        <table className=" w-full min-w-max table-auto text-left">
           <thead>
             <tr>
               {TABLE_HEAD.map((head) => (
                 <th
                   key={head}
-                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 px-2 py-2"
                 >
                   <Typography
                     variant="small"
@@ -140,14 +188,13 @@ const StaffList = () => {
           <tbody>
             {StaffData &&
               StaffData.map((data, index) => {
-                const isLast = index === StaffData.length - 1;
-                const classes = isLast
-                  ? "p-4"
-                  : "p-4 border-b border-blue-gray-50";
+                const classes =  "px-2 border-b border-blue-gray-50";
 
                 return (
                   <tr key={index}>
                     <td className={classes}>{index + 1}</td>
+                    <td className={classes}>{index + 1}</td>
+
                     <td className={classes}>
                       <Typography
                         variant="small"
@@ -155,6 +202,15 @@ const StaffList = () => {
                         className="font-normal"
                       >
                         {data?.name}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {data?.gender}
                       </Typography>
                     </td>
                     <td className={classes}>
@@ -189,7 +245,7 @@ const StaffList = () => {
                         variant="small"
                         color="blue-gray"
                         className="font-normal"
-                      >
+                        >
                         {data?.email}
                       </Typography>
                     </td>
@@ -198,8 +254,8 @@ const StaffList = () => {
                         variant="small"
                         color="blue-gray"
                         className="font-normal"
-                      >
-                        {data?.city}
+                        >
+                        {data?.DOB}
                       </Typography>
                     </td>
                     <td className={classes}>
@@ -217,7 +273,7 @@ const StaffList = () => {
                         variant="small"
                         color="blue-gray"
                         className="font-normal"
-                      >
+                        >
                         nil
                       </Typography>
                     </td>
@@ -227,6 +283,7 @@ const StaffList = () => {
                           <Link to={`${RouteObjects.StaffProfile}/${data._id}`}>
                             <IconButton variant="text">
                               <FontAwesomeIcon
+                              color="green"
                                 icon={faEye}
                                 className="h-4 w-4"
                               />
@@ -277,6 +334,7 @@ const StaffList = () => {
         </div>
       </CardFooter>
     </Card>
+                            </div>
   );
 };
 

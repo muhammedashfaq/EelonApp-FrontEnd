@@ -8,29 +8,29 @@ import Swal from "sweetalert2";
 import { Oval } from "react-loader-spinner";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import notFoundImg from "../../assets/placeholderImg.jpg";
-const FatherImageCard = ({ userData }) => {
+const FatherImageCard = ({ userData,getData }) => {
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
   const [isLoading, setIsLoading] = useState(false);
   const [fatherImage, setFatherImage] = useState(notFoundImg);
-  const [profileImageFather, setProfileImageFather] = useState("");
 
-  // Generic image change function
-  const ImageChange = (event, setImage, setProfileImage) => {
-    event.stopPropagation();
-    const file = event.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setImage(imageUrl);
-      setProfileImage(imageUrl);
-    }
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    setFileToBase(file);
+    console.log(file);
   };
 
-  // Submit image function
+  const setFileToBase = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setFatherImage(reader.result);
+    };
+  };
   const submitImage = async (e) => {
     try {
       e.preventDefault();
-      if (!profileImageFather) {
+      if (!fatherImage) {
         Swal.fire({
           icon: "error",
           title: "Oops...",
@@ -39,8 +39,12 @@ const FatherImageCard = ({ userData }) => {
         return;
       }
       setIsLoading(true);
-      const response = null;
+      await axiosPrivate.post(`images/student/father/${userData?._id}`, {
+        Image: fatherImage,
+      });
       setIsLoading(false);
+      getData()
+      console.log(Response, "res");
       const Toast = Swal.mixin({
         toast: true,
         position: "top-end",
@@ -62,11 +66,29 @@ const FatherImageCard = ({ userData }) => {
     }
   };
   const deleteImage = async () => {
-    if (!userData?.studentProfilePic) return;
+    if (!userData?.FathersPhoto) return;
     try {
       setIsLoading(true);
-    //   await axiosPrivate.delete(`images/studentprofile/${userData?._id}`);
+      await axiosPrivate.delete(`images/student/father/${userData?._id}`, {
+        data: { public_id: userData?.FathersPhoto?.public_id },
+      });
       setIsLoading(false);
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        },
+      });
+      Toast.fire({
+        icon: "success",
+        title: "Deleted successfully",
+      });
+      getData()
     } catch (error) {
       setIsLoading(false);
       console.error(error);
@@ -89,7 +111,7 @@ const FatherImageCard = ({ userData }) => {
             </>
           ) : (
             <img
-              src={fatherImage}
+              src={userData?.FathersPhoto?.url || fatherImage}
               alt="card-image"
               className=" w-auto h-auto object-cover m-1 rounded-lg"
             />
@@ -108,9 +130,7 @@ const FatherImageCard = ({ userData }) => {
                   id="imageUploadfather"
                   name="profileimage"
                   className="hidden"
-                  onChange={(event) =>
-                    ImageChange(event, setFatherImage, setProfileImageFather)
-                  }
+                  onChange={handleImage}
                 />
               </Button>
 
@@ -121,7 +141,7 @@ const FatherImageCard = ({ userData }) => {
                 color="red"
                 className=""
                 onClick={deleteImage}
-                disabled={userData?.studentProfilePic ? false : true}
+                disabled={userData?.FathersPhoto ? false : true}
               >
                 <FontAwesomeIcon icon={faTrash} size="2xl" />
               </Button>

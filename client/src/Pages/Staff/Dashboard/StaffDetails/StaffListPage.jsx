@@ -7,7 +7,8 @@ const StaffListPage = () => {
     <div>
         <Banner/>
         
-        <StaffList/></div>
+        <StaffList/>
+        </div>
   )
 }
 

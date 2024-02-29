@@ -21,19 +21,20 @@ import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import Swal from "sweetalert2";
 import {useNavigate} from 'react-router-dom'
 import { RouteObjects } from "../../../../Routes/RoutObjects";
+import { addStaffValidation } from "../../../../Helper/Validations/validations";
+const useDropdownState = (initialValue, fetchedValue) => {
+  const [value, setValue] = useState(initialValue);
+
+
+  useEffect(() => {
+    if (fetchedValue !== undefined) {
+      setValue(fetchedValue);
+    }
+  }, [fetchedValue]);
+
+  return [value, setValue];
+};
 const EditSraffDetails = ({fetchData}) => {
-  const useDropdownState = (initialValue, fetchedValue) => {
-    const [value, setValue] = useState(initialValue);
-  
-  
-    useEffect(() => {
-      if (fetchedValue !== undefined) {
-        setValue(fetchedValue);
-      }
-    }, [fetchedValue]);
-  
-    return [value, setValue];
-  };
   const navigate=useNavigate()
     const axiosPrivate = useAxiosPrivate();
   const genderState = useDropdownState("", fetchData?.gender);
@@ -44,11 +45,10 @@ const EditSraffDetails = ({fetchData}) => {
   const religionState = useDropdownState("", fetchData?.religion);
   const jobTypeState = useDropdownState("", fetchData?.jobType);
   const jobRoleState = useDropdownState("", fetchData?.jobRole);
-  const acTypeState = useDropdownState("", fetchData?.acType);
+  const acTypeState = useDropdownState("", fetchData?.accType);
   const userTypeState = useDropdownState("", fetchData?.userType);
   const bloodGpState=useDropdownState("",fetchData?.bloodGp)
-
-  const [formData, setFormData] = useState({
+  const [frntentErors, setFrntentErors] = useState({
     staffId: "",
     name: "",
     DOB: "",
@@ -68,7 +68,45 @@ const EditSraffDetails = ({fetchData}) => {
     bankAccountName: "",
     bankName: "",
     bankBranchName: "",
-    bankIFSCCode: "",
+    bankIFSCcode: "",
+    otherBankdetails: "",
+    basicSalary: "",
+    pf: "",
+    epfno: "",
+    esi: null,
+    esiip: null,
+    otherAllowance: "",
+    password: "",
+    email: "",
+    gender:"",
+    maritalStatus:"",
+    religion:"",
+    jobType:"",
+    jobRole:"",
+    accType:"",
+    userType:"",
+    bloodGp:""
+  })
+  const [formData, setFormData] = useState({
+    staffId: "",
+    name: "",
+    DOB: "",
+    mob: "",
+    mob2: "",
+    wamob: "",
+    contactEmail: "",
+    DOJ: "",
+    aadharNo: "",
+    pan: "",
+    nationality: "",
+    state: "",
+    city: "",
+    address: "",
+    bankAccountNumber: "",
+    bankAccountName: "",
+    bankName: "",
+    bankBranchName: "",
+    bankIFSCcode: "",
     otherBankdetails: "",
     basicSalary: "",
     pf: "",
@@ -95,36 +133,47 @@ const EditSraffDetails = ({fetchData}) => {
       [name]: inputValue,
     }));
   };
+  const allData = {
+    ...formData,
+    gender: genderState[0],
+    maritalStatus: maritalstatusState[0],
+    religion: religionState[0],
+    jobType: jobTypeState[0],
+    jobRole: jobRoleState[0],
+    acType: acTypeState[0],
+    userType: userTypeState[0],
+    bloodGp:bloodGpState[0]
+  };
   const handleSubmitForm = async (e) => {
     e.preventDefault()
-    const allData = {
-      ...formData,
-      gender: genderState[0],
-      maritalStatus: maritalstatusState[0],
-      religion: religionState[0],
-      jobType: jobTypeState[0],
-      jobRole: jobRoleState[0],
-      acType: acTypeState[0],
-      userType: userTypeState[0],
-      bloodGp:bloodGpState[0]
-    };
 
     try {
-      const response = await axiosPrivate(`users/staff/${fetchData._id}`,allData)
-      Swal.fire({
-        title: "Good job!",
-        text: "You clicked the button!",
-        icon: "success"
-      });
-      navigate(RouteObjects.StaffList)
-      console.log(response,"res");
-    } catch (error) {
+      const addstudentErrors = addStaffValidation(allData);
+      console.log(addstudentErrors,"outside");
+
+      if (!Object.values(addstudentErrors).some((error) => error === "")) {
+        console.log(addstudentErrors);
+        // There are validation errors
+        setFrntentErors(addstudentErrors)
+        return;
+      } else {
+
+        const response = await axiosPrivate.put(`users/staff/${fetchData._id}`,allData)
+        console.log(response,"fsf")
+        Swal.fire({
+          title: "Good job!",
+          text: "You clicked the button!",
+          icon: "success"
+        });
+        navigate(RouteObjects.StaffList)
+        console.log(response,"res");
+      }
+      } catch (error) {
       console.log(error);
       Swal.fire({
         icon: "error",
         title: "Oops...",
         text: error.response?error.response:"Something went wrong!",
-        footer: '<a href="#">Why do I have this issue?</a>'
       });
     }
   };
@@ -162,7 +211,7 @@ const EditSraffDetails = ({fetchData}) => {
                 variant="outlined"
                 label="Name"
                 placeholder="Enter Name"
-                required
+                
                 defaultValue={fetchData?.name}
                 onChange={handleInputChange}
               />
@@ -182,7 +231,7 @@ const EditSraffDetails = ({fetchData}) => {
                 type="date"
                 variant="outlined"
                 label="DOB"
-                required
+                
                 defaultValue={fetchData?.DOB}
                 onChange={handleInputChange}
 
@@ -211,7 +260,7 @@ const EditSraffDetails = ({fetchData}) => {
                 variant="outlined"
                 label="Contact Number"
                 placeholder="Enter Number"
-                required
+                
                 defaultValue={fetchData?.mob}
                 onChange={handleInputChange}
               />
@@ -230,7 +279,7 @@ const EditSraffDetails = ({fetchData}) => {
                 variant="outlined"
                 label="Whatsapp Number"
                 placeholder="Enter Number"
-                required
+                
                 onChange={handleInputChange}
                 defaultValue={fetchData?.wamob}
               />
@@ -249,7 +298,7 @@ const EditSraffDetails = ({fetchData}) => {
                 type="date"
                 variant="outlined"
                 label="DOJ"
-                required
+                
                 defaultValue={fetchData?.DOJ}
               />
               <Input
@@ -258,7 +307,7 @@ const EditSraffDetails = ({fetchData}) => {
                 variant="outlined"
                 label="Adhar Number"
                 placeholder="Adhar NO"
-                required
+                
                 onChange={handleInputChange}
                 defaultValue={fetchData?.adharno}
               />
@@ -287,7 +336,7 @@ const EditSraffDetails = ({fetchData}) => {
                 variant="outlined"
                 label="Nationality"
                 placeholder="Nationality"
-                required
+                
                 onChange={handleInputChange}
                 defaultValue={fetchData?.nationality}
               />
@@ -297,7 +346,7 @@ const EditSraffDetails = ({fetchData}) => {
                 variant="outlined"
                 label="State"
                 placeholder="Enter State"
-                required
+                
                 onChange={handleInputChange}
                 defaultValue={fetchData?.state}
               />
@@ -308,7 +357,7 @@ const EditSraffDetails = ({fetchData}) => {
                 variant="outlined"
                 label="City"
                 placeholder="Enter City"
-                required
+                
                 onChange={handleInputChange}
                 defaultValue={fetchData?.city}
               />
@@ -319,7 +368,7 @@ const EditSraffDetails = ({fetchData}) => {
                 variant="outlined"
                 label="PIN"
                 placeholder="Enter PIN"
-                required
+                
                 onChange={handleInputChange}
                 defaultValue={fetchData?.pin}
               />
@@ -362,7 +411,7 @@ const EditSraffDetails = ({fetchData}) => {
                 className="bg-gray-50"
                 variant="outlined"
                 placeholder="Enter Address"
-                required
+                
                 onChange={handleInputChange}
                 defaultValue={fetchData?.address}
               />
@@ -377,7 +426,7 @@ const EditSraffDetails = ({fetchData}) => {
             <div className=" mt-6">
               <span className="ml-10  opacity-70 ">
                 <FontAwesomeIcon icon={faInfoCircle} className="opacity-30" />{" "}
-                Please complete all required fields.
+                Please complete all  fields.
               </span>
             </div>
 
@@ -402,7 +451,7 @@ const EditSraffDetails = ({fetchData}) => {
                 variant="outlined"
                 label="Account Number"
                 placeholder="Enter Number"
-                required
+                
                 onChange={handleInputChange}
                 defaultValue={fetchData?.bankAccountNumber}
               />
@@ -411,7 +460,7 @@ const EditSraffDetails = ({fetchData}) => {
                 variant="outlined"
                 label="Account Name"
                 placeholder="Enter Name"
-                required
+                
                 onChange={handleInputChange}
                 defaultValue={fetchData?.bankAccountName}
               />
@@ -420,7 +469,7 @@ const EditSraffDetails = ({fetchData}) => {
                 variant="outlined"
                 label="Bank Name"
                 placeholder="Enter Name"
-                required
+                
                 onChange={handleInputChange}
                 defaultValue={fetchData?.bankName}
               />
@@ -429,7 +478,7 @@ const EditSraffDetails = ({fetchData}) => {
                 variant="outlined"
                 label="Branch"
                 placeholder="Enter Branch Name"
-                required
+                
                 onChange={handleInputChange}
                 defaultValue={fetchData?.bankBranchName}
               />
@@ -438,17 +487,17 @@ const EditSraffDetails = ({fetchData}) => {
                 variant="outlined"
                 label="IFSE Code"
                 placeholder="Enter IFSE Code"
-                required
+                
                 onChange={handleInputChange}
                 defaultValue={fetchData?.bankIFSECode}
               />
 
               <Textarea
-                name="bankMoredetails"
+                name="otherBankdetails"
                 variant="outlined"
                 placeholder="Enter here More Details"
                 onChange={handleInputChange}
-                defaultValue={fetchData?.bankMoredetails}
+                defaultValue={fetchData?.otherBankdetails}
               />
 
               <div className="flex w-full  items-center  bg-gray-100 rounded-md p-2 border-b-2">
@@ -462,7 +511,7 @@ const EditSraffDetails = ({fetchData}) => {
                 variant="outlined"
                 label="Basic Salary"
                 placeholder="Enter Here"
-                required
+                
                 onChange={handleInputChange}
                 defaultValue={fetchData?.basicSalary}
               />

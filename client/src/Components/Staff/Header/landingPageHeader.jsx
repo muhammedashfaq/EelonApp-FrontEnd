@@ -13,7 +13,7 @@ const StaffHeader = () => {
   return (
     <div>
       <div className="w-full p-4 shadow-md">
-        <ul className="mobile:block Laptop:hidden ipad:hidden Tablet:hidden">
+        {/* <ul className="mobile:block Laptop:hidden ipad:hidden Tablet:hidden">
           <div className="flex">
             <li className="mr-auto flex justify-center items-center">
               <Link to="/">
@@ -23,9 +23,11 @@ const StaffHeader = () => {
             </li>
             <li className="hidden"></li>
           </div>
-        </ul>
+        </ul> */}
+
+
         <ul className="flex justify-between items-start space-x-6 pr-8">
-          <div className="hidden Laptop:block ipad:block Tablet:block">
+          <div className="">
             <li className="mr-auto flex justify-center items-center">
               <Link to="/">
                 <img src={logoimage} className="" alt="Logo" />
@@ -48,7 +50,7 @@ const StaffHeader = () => {
 };
 
 const NavItem = ({ href, label }) => (
-  <li className="block Laptop:block ipad:block Tablet:block hidden">
+  <li className=" Laptop:block ipad:block Tablet:block hidden">
     <a className="hover:text-blue-400" href={href}>
       {label}
     </a>

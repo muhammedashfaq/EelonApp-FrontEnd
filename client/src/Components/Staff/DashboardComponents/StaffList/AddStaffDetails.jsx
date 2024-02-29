@@ -18,12 +18,13 @@ import {
 } from "@material-tailwind/react";
 import React, { useState } from "react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
-import Swal from "sweetalert2"
+import Swal from "sweetalert2";
 import { RouteObjects } from "../../../../Routes/RoutObjects";
 import { useNavigate } from "react-router-dom";
+import { addStaffValidation } from "../../../../Helper/Validations/validations";
 
 const AddStaffDetails = () => {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
   const [gender, setgender] = useState("");
   const [maritalStatus, setMaritalStatus] = useState();
@@ -33,7 +34,7 @@ const AddStaffDetails = () => {
   const [accType, setAccType] = useState("");
   const [userType, setUserType] = useState("");
   const [bloodGp, setbloodGp] = useState("");
-  const [formData, setFormData] = useState({
+  const [frntentErors, setFrntentErors] = useState({
     staffId: "",
     name: "",
     DOB: "",
@@ -53,7 +54,7 @@ const AddStaffDetails = () => {
     bankAccountName: "",
     bankName: "",
     bankBranchName: "",
-    bankIFSCCode: "",
+    bankIFSCcode: "",
     otherBankdetails: "",
     basicSalary: "",
     pf: "",
@@ -63,6 +64,45 @@ const AddStaffDetails = () => {
     otherAllowance: "",
     password: "",
     email: "",
+    gender:"",
+    maritalStatus:"",
+    religion:"",
+    jobType:"",
+    jobRole:"",
+    accType:"",
+    userType:"",
+    bloodGp:""
+  })
+  const [formData, setFormData] = useState({
+    staffId: "",
+    name: "",
+    DOB: "",
+    mob: "",
+    mob2: "",
+    wamob: "",
+    contactEmail: "",
+    DOJ: "",
+    aadharNo: "",
+    pan: "",
+    nationality: "",
+    state: "",
+    city: "",
+    address: "",
+    bankAccountNumber: "",
+    bankAccountName: "",
+    bankName: "",
+    bankBranchName: "",
+    bankIFSCcode: "",
+    otherBankdetails: "",
+    basicSalary: "",
+    pf: "",
+    epfno: "",
+    esi: null,
+    esiip: null,
+    otherAllowance: "",
+    password: "",
+    email: "",
+    
   });
 
   const handleInputChange = (event) => {
@@ -80,35 +120,48 @@ const AddStaffDetails = () => {
       [name]: inputValue,
     }));
   };
+  const allData = {
+    ...formData,
+    gender,
+    maritalStatus,
+    religion,
+    jobType,
+    jobRole,
+    accType,
+    userType,
+    bloodGp
+  };
   const handleSubmitForm = async (e) => {
-    e.preventDefault();
-    const allData = {
-      ...formData,
-      gender,
-      maritalStatus,
-      religion,
-      jobType,
-      jobRole,
-      accType,
-      userType,
-    };
-
+    
     try {
-      const response = await axiosPrivate.post("users/staff", allData);
-      Swal.fire({
-        title: "Good job!",
-        text: "You clicked the button!",
-        icon: "success"
-      });
-      navigate(RouteObjects.StaffList)
+      e.preventDefault();
+      const addstudentErrors = addStaffValidation(allData);
+      
+      if (!Object.values(addstudentErrors).some((error) => error === "")) {
+        console.log(addstudentErrors);
+        // There are validation errors
+        setFrntentErors(addstudentErrors)
+        return;
+      } else {
+        console.log(addstudentErrors,"error out");
 
-      console.log(response);
+        const response = await axiosPrivate.post("users/staff", allData);
+        console.log(response,"res")
+        Swal.fire({
+          title: "Good job!",
+          text: "You clicked the button!",
+          icon: "success",
+        });
+        navigate(RouteObjects.StaffList);
+        
+        console.log(response);
+      }
     } catch (error) {
       console.log(error);
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: error.response ? error.response:"Something went wrong!",
+        text: error.response ? error.response : "Something went wrong!",
       });
     }
   };
@@ -143,7 +196,7 @@ const AddStaffDetails = () => {
                 variant="outlined"
                 label="Name"
                 placeholder="Enter Name"
-                required
+                
                 onChange={handleInputChange}
               />
               <Select
@@ -161,7 +214,7 @@ const AddStaffDetails = () => {
                 type="date"
                 variant="outlined"
                 label="DOB"
-                required
+                
                 onChange={handleInputChange}
               />
 
@@ -187,7 +240,7 @@ const AddStaffDetails = () => {
                 variant="outlined"
                 label="Contact Number"
                 placeholder="Enter Number"
-                required
+                
                 onChange={handleInputChange}
               />
               <Input
@@ -204,7 +257,7 @@ const AddStaffDetails = () => {
                 variant="outlined"
                 label="Whatsapp Number"
                 placeholder="Enter Number"
-                required
+                
                 onChange={handleInputChange}
               />
               <Input
@@ -221,16 +274,16 @@ const AddStaffDetails = () => {
                 type="date"
                 variant="outlined"
                 label="DOJ"
-                required
+                
                 onChange={handleInputChange}
               />
               <Input
-                name="adharno"
+                name="aadharno"
                 className="bg-gray-50"
                 variant="outlined"
                 label="Adhar Number"
                 placeholder="Adhar NO"
-                required
+                
                 onChange={handleInputChange}
               />
               <Input
@@ -256,7 +309,7 @@ const AddStaffDetails = () => {
                 variant="outlined"
                 label="Nationality"
                 placeholder="Nationality"
-                required
+                
                 onChange={handleInputChange}
               />
               <Input
@@ -265,7 +318,7 @@ const AddStaffDetails = () => {
                 variant="outlined"
                 label="State"
                 placeholder="Enter State"
-                required
+                
                 onChange={handleInputChange}
               />
 
@@ -275,7 +328,7 @@ const AddStaffDetails = () => {
                 variant="outlined"
                 label="City"
                 placeholder="Enter City"
-                required
+                
                 onChange={handleInputChange}
               />
 
@@ -285,7 +338,7 @@ const AddStaffDetails = () => {
                 variant="outlined"
                 label="PIN"
                 placeholder="Enter PIN"
-                required
+                
                 onChange={handleInputChange}
               />
 
@@ -312,7 +365,7 @@ const AddStaffDetails = () => {
                 label="Job Role"
                 onChange={(e) => setJobRole(e)}
               >
-                 <Option value="Teacher">Teacher</Option>
+                <Option value="Teacher">Teacher</Option>
                 <Option value="Guest Teacher">Guest Teacher</Option>
                 <Option value="Accountant">Accountant</Option>
                 <Option value="Clerk">Clerk</Option>
@@ -324,7 +377,7 @@ const AddStaffDetails = () => {
                 className="bg-gray-50"
                 variant="outlined"
                 placeholder="Enter Address"
-                required
+                
                 onChange={handleInputChange}
               />
             </div>
@@ -338,7 +391,7 @@ const AddStaffDetails = () => {
             <div className=" mt-6">
               <span className="ml-10  opacity-70 ">
                 <FontAwesomeIcon icon={faInfoCircle} className="opacity-30" />{" "}
-                Please complete all required fields.
+                Please complete all  fields.
               </span>
             </div>
 
@@ -348,7 +401,7 @@ const AddStaffDetails = () => {
                   BANK Details :-
                 </Typography>
               </div>
-              <Select label="Account Type " onChange={(e) => setAccType(e)}>
+              <Select name="accType" label="Account Type " onChange={(e) => setAccType(e)}>
                 <Option value="Self">Self</Option>
                 <Option value="Joint">Joint</Option>
                 <Option value="Other">Other</Option>
@@ -359,7 +412,7 @@ const AddStaffDetails = () => {
                 variant="outlined"
                 label="Account Number"
                 placeholder="Enter Number"
-                required
+                
                 onChange={handleInputChange}
               />
               <Input
@@ -367,7 +420,7 @@ const AddStaffDetails = () => {
                 variant="outlined"
                 label="Account Name"
                 placeholder="Enter Name"
-                required
+                
                 onChange={handleInputChange}
               />
               <Input
@@ -375,7 +428,7 @@ const AddStaffDetails = () => {
                 variant="outlined"
                 label="Bank Name"
                 placeholder="Enter Name"
-                required
+                
                 onChange={handleInputChange}
               />
               <Input
@@ -383,20 +436,20 @@ const AddStaffDetails = () => {
                 variant="outlined"
                 label="Branch"
                 placeholder="Enter Branch Name"
-                required
+                
                 onChange={handleInputChange}
               />
               <Input
-                name="bankIFSCCode"
+                name="bankIFSCcode"
                 variant="outlined"
                 label="IFSE Code"
                 placeholder="Enter IFSE Code"
-                required
+                
                 onChange={handleInputChange}
               />
 
               <Textarea
-                name="bankMoredetails"
+                name="otherBankdetails"
                 variant="outlined"
                 placeholder="Enter here More Details"
                 onChange={handleInputChange}
@@ -413,7 +466,7 @@ const AddStaffDetails = () => {
                 variant="outlined"
                 label="Basic Salary"
                 placeholder="Enter Here"
-                required
+                
                 onChange={handleInputChange}
               />
               <Input
@@ -463,13 +516,13 @@ const AddStaffDetails = () => {
             <div className=" mt-6">
               <span className="ml-10  opacity-70 ">
                 <FontAwesomeIcon icon={faInfoCircle} className="opacity-30" />{" "}
-                Please complete all required fields.
+                Please complete all  fields.
               </span>
             </div>
 
             <div className="Laptop:grid Laptop:grid-cols-4 ipad:grid ipad:grid-cols-3 Tablet:grid Tablet:grid-cols-3 mobile:grid mobile:grid-cols-1 gap-4 p-8  ">
               <Select label="User Type " onChange={(e) => setUserType(e)}>
-              <Option value="Teacher">Teacher</Option>
+                <Option value="Teacher">Teacher</Option>
                 <Option value="Guest Teacher">Guest Teacher</Option>
                 <Option value="Accountant">Accountant</Option>
                 <Option value="Clerk">Clerk</Option>
@@ -481,7 +534,7 @@ const AddStaffDetails = () => {
                 variant="outlined"
                 label="Email ID"
                 placeholder="Enter Here"
-                required
+                
                 onChange={handleInputChange}
               />
               <Input
@@ -489,7 +542,7 @@ const AddStaffDetails = () => {
                 variant="outlined"
                 label="Password"
                 placeholder="Enter Here"
-                required
+                
                 onChange={handleInputChange}
               />
             </div>

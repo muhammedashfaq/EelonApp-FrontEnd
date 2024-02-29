@@ -44,7 +44,7 @@ const cardsData = [
   { title: "Adhar", filename: "name_of_file_4.pdf", api: "" },
 ];
 
-const DetailImagePage = ({ userData }) => {
+const DetailImagePage = ({ userData , getData }) => {
   const axiosPrivate = useAxiosPrivate();
   const { auth } = useAuth();
 
@@ -103,9 +103,9 @@ const DetailImagePage = ({ userData }) => {
                         </div>
                         <div className="grid grid-cols-2 grid-flow-col gap-4">
                           
-                         <FatherImageCard userData={userData}/>
+                         <FatherImageCard userData={userData} getData={getData}/>
 
-                       <MotherImageCard userData={userData}/>
+                       <MotherImageCard userData={userData} getData={getData}/>
                         </div>
                       </div>
                     </div>
