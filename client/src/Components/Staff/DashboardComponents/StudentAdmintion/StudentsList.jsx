@@ -279,10 +279,7 @@ const StudentsList = () => {
             <tbody>
               {searchData
                 ? searchData.map((data, index) => {
-                    const isLast = index === TABLE_ROWS.length - 1;
-                    const classes = isLast
-                      ? "p-4"
-                      : "p-4 border-b border-blue-gray-50";
+                  const classes = "px-1  py-1 border-b border-blue-gray-50";
 
                     return (
                       <tr key={index}>
@@ -367,9 +364,13 @@ const StudentsList = () => {
 
                         <td className={classes}>
                           <Link to={RouteObjects.StudentProfile}>
-                            <Button className="rounded-r-lg " color="green">
-                              View
-                            </Button>
+                            <IconButton variant="text">
+                              <FontAwesomeIcon
+                                icon={faEye}
+                                size="xl"
+                                color="green"
+                              />
+                            </IconButton>
                           </Link>
                         </td>
                         <td className={classes}>
@@ -383,12 +384,14 @@ const StudentsList = () => {
                                 unmount: { scale: 0, y: 25 },
                               }}
                             >
+                              <IconButton variant="text">
+
                               <FontAwesomeIcon
                                 icon={faEdit}
                                 color="green"
                                 size="xl"
-                                className="cursor-pointer hover:bg-blue-gray-100 rounded-md p-2"
-                              />
+                                />
+                                </IconButton>
                             </Tooltip>
                           </Link>
 
@@ -399,15 +402,18 @@ const StudentsList = () => {
                               unmount: { scale: 0, y: 25 },
                             }}
                           >
+                                                          <IconButton variant="text">
+
+
                             <FontAwesomeIcon
                               color="red"
                               icon={faTrash}
                               size="xl"
-                              className="cursor-pointer hover:bg-blue-gray-100 rounded-md p-2"
                               onClick={() =>
                                 deleteStudent(data._id, data.studentName)
                               }
-                            />
+                              />
+                              </IconButton>
                           </Tooltip>
                         </td>
                       </tr>
@@ -415,10 +421,7 @@ const StudentsList = () => {
                   })
                 : studentData &&
                   studentData.map((data, index) => {
-                    const isLast = index === TABLE_ROWS.length - 1;
-                    const classes = isLast
-                      ? "p-4"
-                      : "p-4 border-b border-blue-gray-50";
+                    const classes = "px-1  py-1 border-b border-blue-gray-50";
 
                     return (
                       <tr key={index}>
@@ -505,9 +508,13 @@ const StudentsList = () => {
                           <Link
                             to={`${RouteObjects.StudentProfile}/${data._id}`}
                           >
-                            <Button className="rounded-r-lg " color="green">
-                              View
-                            </Button>
+                            <IconButton variant="text">
+                              <FontAwesomeIcon
+                                icon={faEye}
+                                size="xl"
+                                color="green"
+                              />
+                            </IconButton>
                           </Link>
                         </td>
                         <td className={classes}>
@@ -521,12 +528,15 @@ const StudentsList = () => {
                                 unmount: { scale: 0, y: 25 },
                               }}
                             >
+                                                            <IconButton variant="text">
+
+
                               <FontAwesomeIcon
                                 icon={faEdit}
                                 color="green"
                                 size="xl"
-                                className="cursor-pointer hover:bg-blue-gray-100 rounded-md p-2"
-                              />
+                                />
+                                </IconButton>
                             </Tooltip>
                           </Link>
 
@@ -537,15 +547,18 @@ const StudentsList = () => {
                               unmount: { scale: 0, y: 25 },
                             }}
                           >
+                                                          <IconButton variant="text">
+
+
                             <FontAwesomeIcon
                               color="red"
                               icon={faTrash}
                               size="xl"
-                              className="cursor-pointer hover:bg-blue-gray-100 rounded-md p-2"
                               onClick={() =>
                                 deleteStudent(data._id, data.studentName)
                               }
-                            />
+                              />
+                              </IconButton>
                           </Tooltip>
                         </td>
                       </tr>

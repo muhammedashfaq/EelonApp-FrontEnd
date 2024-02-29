@@ -32,15 +32,32 @@ export function PaymentMode({ setPaymentMode }) {
   );
 }
 
-export function PaymentStatus({ setPaymentStatus }) {
-  return (
-    <div>
-      <Select label="Select Version" onChange={(e) => setPaymentStatus(e)}>
-        <Option value="Paid">Paid</Option>
-        <Option value="NotPaid">Not Paid</Option>
-        <Option value="PartialyPaid">Partially Paid</Option>
-        <Option value="Pending">Pending</Option>
+    export function PaymentStatus({setPaymentStatus}) {
+      return (
+        <div >
+        <Select label="Select Version" onChange={(e)=>setPaymentStatus(e)}>
+            <Option value="Paid">Paid</Option>
+            <Option value="NotPaid">Not Paid</Option>
+            <Option value="PartialyPaid">Partially Paid</Option>
+            <Option value="Pending">Pending</Option>
+          </Select>
+        </div>
+      )
+      }
+
+      export function TermName({setTermName}) {
+        return (
+
+          <div >
+
+      <Select label=" Exam" className=""  onChange={(e)=>setTermName(e)}>
+        <Option value="1st Mid Term Exam">1. 1st Mid Term Exam</Option>
+        <Option value="Quarterly Exam">2. Quarterly Exam</Option>
+        <Option value="2nd Mid Term Exam">3. 2nd Mid Term Exam</Option>
+        <Option value="Half Yearly Exam">4. Half Yearly Exam</Option>
+        <Option value="3rd Mid Term Exam">5. 3rd Mid Term Exam</Option>
+        <Option value="Annual Exam">6. Annual Exam</Option>
       </Select>
-    </div>
-  );
-}
+          </div>
+        )}
+

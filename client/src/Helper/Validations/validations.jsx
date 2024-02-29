@@ -38,7 +38,7 @@ export const loginValidate = (email, password) => {
   
     // Validate dropdowns
     errors.gender = !formData.gender ? "Please select a gender" : "";
-    errors.classSection = !formData.classSection ? "Please select a class section" : "";
+    // errors.classSection = !formData.classSection ? "Please select a class section" : "";
     errors.bloodGp = !formData.bloodGp ? "Please select a blood group" : "";
     errors.motherTongue = !formData.motherTongue ? "Please select a mother tongue" : "";
     errors.religion = !formData.religion ? "Please select a religion" : "";

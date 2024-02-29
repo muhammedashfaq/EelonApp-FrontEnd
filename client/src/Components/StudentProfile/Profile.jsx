@@ -1,9 +1,9 @@
 import ImageCard from "./ImageCard";
 import DetailsPage from "./DetailsPage";
 import DetailImagePage from "./DetailImagePage";
-import image from "../../assets/book.png";
 
 const Profile = ({ userData, getData }) => {
+  console.log(userData)
   return (
     <div>
       <div className=" flex justify-center  p-2  items-center mt-8">

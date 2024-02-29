@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
 import useLogout from "../../../Hooks/useLogout";
 import MobileNavBar from "./MobileNavBar";
+import UserAvatar from "./UserAvatar";
 
 const StaffHeader = () => {
   const { auth } = useAuth();
@@ -36,12 +37,9 @@ const StaffHeader = () => {
             <NavItem href="#About" label="About" />
             <NavItem href="#academics" label="Academics" />
             <NavItem href="#contact" label="Contact" />
-            {!auth?.accessToken && (
-              <Link to={RouteObjects.Login}>
-                <Button className="bg-yellow-900">Login</Button>
-              </Link>
-            )}
-            {renderDashboardButton(auth?.roles)}
+
+            {!auth?.accessToken && <Link to={RouteObjects.Login}><Button className="bg-yellow-900">Login</Button></Link>}
+            {renderAvatar(auth?.roles)} 
           </div>
         </ul>
       </div>
@@ -57,29 +55,31 @@ const NavItem = ({ href, label }) => (
   </li>
 );
 
-const renderDashboardButton = (userRoles) => {
+const renderAvatar = (userRoles) => {
   const roleToDashboard = {
     5151: RouteObjects.StaffDashboard,
     999: RouteObjects.StudentDashboard,
     2000: RouteObjects.AdminHome,
   };
 
-  if (roleToDashboard.hasOwnProperty(userRoles)) {
+  const roleToProfile = {
+    5151: RouteObjects.UserProfileStaff,
+    999: RouteObjects.UserProfileStudent,
+    2000: RouteObjects.UserProfileadmin,
+  };
+
+  if (userRoles in roleToDashboard && userRoles in roleToProfile) {
     return (
-      <li className="block Laptop:block ipad:block Tablet:block hidden">
-        <Link to={roleToDashboard[userRoles]}>
-          <Button
-            className="hover:bg-dark-purple hover:text-white"
-            variant="outlined"
-          >
-            Dashboard
-          </Button>
-        </Link>
+
+      <li className="block Laptop:block ipad:block Tablet:block ">
+        <UserAvatar dash={roleToDashboard[userRoles]} profile={roleToProfile[userRoles]} />
+
       </li>
     );
   }
 
   return null;
 };
+
 
 export default StaffHeader;

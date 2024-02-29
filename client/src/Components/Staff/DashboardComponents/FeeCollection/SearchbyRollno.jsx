@@ -7,23 +7,40 @@ import {
   Input,
   Checkbox,
   Button,
+  Select,
+  Option,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import Swal from "sweetalert2";
+import StudentsListbysearchName from "./StudentsListbysearchName";
 
 const SearchbyRollno = ({ setStudentData, setIsLoading, isLoading }) => {
-  const [rollNumber, setRollNumber] = useState("");
+  const [inputValue, setInputValue] = useState("");
   const [isValidate, setIsValidate] = useState(false);
   const axiosPrivate = useAxiosPrivate();
+  const [searchName, setSearchName] = useState("");
+  const [studentDatabyName,setStudentDatabyName] =useState([])
+
 
   const findStudent = async () => {
-    setRollNumber(null);
+    setInputValue(null);
     try {
-      setIsLoading(true);
+
+      let formattedInputValue;
+      let formattedInputValue2
+      if (searchName === "admnNo") {
+        formattedInputValue = Number(inputValue);
+      } else {
+         formattedInputValue2 = inputValue;
+      }
+
+      const admnNo = formattedInputValue || "";
+      const studentName = formattedInputValue2 || "";
+      console.log(admnNo,studentName);
       const response = await axiosPrivate.put("/users/student/filterbydata", {
-        admnNo: Number(rollNumber),
-      });
+        admnNo,studentName });
+      console.log(response);
       if (response.data.length === 0) {
         Swal.fire({
           icon: "error",
@@ -31,7 +48,7 @@ const SearchbyRollno = ({ setStudentData, setIsLoading, isLoading }) => {
           text: "Something did not go right! Error Roll No.",
         });
       }
-      setStudentData(response.data[0]);
+      searchName ==="admnNo"? setStudentData(response.data[0]):setStudentDatabyName(response.data);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -39,19 +56,33 @@ const SearchbyRollno = ({ setStudentData, setIsLoading, isLoading }) => {
     }
   };
   useEffect(() => {
-    const isValidate = rollNumber;
+    const isValidate = inputValue && searchName;
     setIsValidate(isValidate);
-  }, [rollNumber]);
+  }, [inputValue,searchName]);
   return (
     <div>
       <Card className="w-96">
         <CardBody className="flex flex-col gap-4">
-          <Input
-            type="number"
+          <Select
+            label="Select   "
             variant="standard"
-            label="Admission No."
-            placeholder="Enter admission number"
-            onChange={(e) => setRollNumber(e.target.value)}
+            onChange={(e) => setSearchName(e)}
+          >
+            <Option value="admnNo">Admission Number</Option>
+            <Option value="studentName">Student Name</Option>
+          </Select>
+          <Input
+            type="text"
+            variant="standard"
+            label={
+              searchName === "admnNo"
+                ? "Adminssion Number"
+                : "" || searchName === "studentName"
+                ? "Student Name"
+                : ""
+            }
+            placeholder="Enter Here"
+            onChange={(e) => setInputValue(e.target.value)}
           />
         </CardBody>
         <CardFooter className="pt-0">
@@ -66,6 +97,11 @@ const SearchbyRollno = ({ setStudentData, setIsLoading, isLoading }) => {
           </Button>
         </CardFooter>
       </Card>
+
+      <div className=" mt-4">
+       <StudentsListbysearchName setStudentDatabyName={setStudentDatabyName} studentDatabyName={studentDatabyName} setStudentData={setStudentData} />
+      </div>
+
     </div>
   );
 };
