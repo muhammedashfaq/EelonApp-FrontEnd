@@ -2,21 +2,18 @@ import {
   faBank,
   faInfoCircle,
   faKey,
-  faPerson,
-  faStaffSnake,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Button,
-  Card,
   Input,
   Option,
   Select,
   Textarea,
   Typography,
 } from "@material-tailwind/react";
-import React, { useState } from "react";
+import  { useState } from "react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import Swal from "sweetalert2";
 import { RouteObjects } from "../../../../Routes/RoutObjects";
@@ -34,6 +31,8 @@ const AddStaffDetails = () => {
   const [accType, setAccType] = useState("");
   const [userType, setUserType] = useState("");
   const [bloodGp, setbloodGp] = useState("");
+  const [DOB,setDOB]=useState("")
+  const [DOJ,setDOJ]=useState("")
   const [frntentErors, setFrntentErors] = useState({
     staffId: "",
     name: "",
@@ -76,12 +75,10 @@ const AddStaffDetails = () => {
   const [formData, setFormData] = useState({
     staffId: "",
     name: "",
-    DOB: "",
     mob: "",
     mob2: "",
     wamob: "",
     contactEmail: "",
-    DOJ: "",
     aadharNo: "",
     pan: "",
     nationality: "",
@@ -123,6 +120,8 @@ const AddStaffDetails = () => {
   const allData = {
     ...formData,
     gender,
+    DOB,
+    DOJ,
     maritalStatus,
     religion,
     jobType,
@@ -215,7 +214,8 @@ const AddStaffDetails = () => {
                 variant="outlined"
                 label="DOB"
                 
-                onChange={handleInputChange}
+                onChange={(e) => setDOB(e.target.value)}
+
               />
 
               <Select
@@ -274,8 +274,8 @@ const AddStaffDetails = () => {
                 type="date"
                 variant="outlined"
                 label="DOJ"
-                
-                onChange={handleInputChange}
+                onChange={(e) => setDOJ(e.target.value)}
+
               />
               <Input
                 name="aadharno"

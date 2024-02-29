@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "../../../spinner/SpinningLoader";
 import { RouteObjects } from "../../../../Routes/RoutObjects";
 import Swal from "sweetalert2";
+import { addStudentsValidation } from "../../../../Helper/Validations/validations";
 
 const useDropdownState = (initialValue, fetchedValue) => {
   const [value, setValue] = useState(initialValue);
@@ -50,7 +51,53 @@ const EditStudentComponent = ({ acYr, name }) => {
   const { id } = useParams();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [frntentErors, setFrntentErors] = useState({
+    admnNo: "",
+    studentName: "",
+    nameTamil: "",
+    studentPhoto: "",
+    AadharNo: "",
+    ContactNo: "",
+    AltCnctNo: "",
+    address: "",
+    weight: "",
+    height: "",
+    email: "",
+    password: "",
+    nationality: "",
+    mediumOfInstruction: "",
+    academicYear: "",
+    studentGp: "",
+    caste: "",
+    subCaste: "",
+    state: "",
+    city: "",
+    pincode: "",
+    dateOfJoin: "",
+    classOfJoin: "",
+    EMSno: "",
+    FathersName: "",
+    FathersNameTamil: "",
+    FathersJob: "",
+    MothersName: "",
+    MothersNameTamil: "",
+    MothersJob: "",
+    guardianName: "",
+    guardianNameTamil: "",
+    guardiansJob: "",
+    annualIncome: "",
+    gender:"",
+    classSection:"",
+    bloodGp:"",
+    motherTongue:"",
+    religion:"",
+    community:"",
+    concessionStudent:"",
+    studentCategory:"",
+    board:"",
+    DOB:"",
 
+  });
   const [formData, setFormdata] = useState({
     admnNo: "",
     studentName: "",
@@ -123,27 +170,41 @@ const EditStudentComponent = ({ acYr, name }) => {
     };
     try {
       console.log(reqData, "dfgkhfs");
-      setIsLoading(true);
-      const response = await axios.put(`/users/student/${id}`, reqData);
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        },
-      });
-      Toast.fire({
-        icon: "success",
-        title: "Added successfully",
-      });
-      console.log(response, "respo");
-      navigate(`${RouteObjects.StudentsList}/${1}`);
-      setIsLoading(false);
-    } catch (error) {
+      const addstudentErrors = addStudentsValidation(reqData);
+      if (!Object.values(addstudentErrors).some((error) => error === "")) {
+        // There are validation errors
+        console.log(addstudentErrors,"inside");
+
+        setFrntentErors(addstudentErrors)
+        return;
+      } else {
+        
+        console.log(addstudentErrors,"after");
+        setIsLoading(true);
+        
+        
+        const response = await axios.put(`/users/student/${id}`, reqData);
+        
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Added successfully",
+        });
+        console.log(response, "respo");
+        navigate(`${RouteObjects.StudentsList}/${1}`);
+        setIsLoading(false);
+      }
+      } catch (error) {
       setIsLoading(false);
 
       console.log(error);
