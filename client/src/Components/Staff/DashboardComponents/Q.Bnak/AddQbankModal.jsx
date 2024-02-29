@@ -15,7 +15,7 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 const AddQbankModal = ({ acYr, classes, subjects, teacherId, getDetails }) => {
-  const [isLoading,setIsLoading]=useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const axiosPrivate = useAxiosPrivate();
   const [open, setOpen] = React.useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -26,9 +26,18 @@ const AddQbankModal = ({ acYr, classes, subjects, teacherId, getDetails }) => {
   const [std, setStd] = useState("");
   const [error, setError] = useState();
   const handleOpen = () => setOpen(!open);
+  const [base64String, setBase64String] = useState("");
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setSelectedFile(file);
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const base64 = event.target.result;
+      setBase64String(base64);
+    };
+    reader.readAsDataURL(file);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,6 +49,7 @@ const AddQbankModal = ({ acYr, classes, subjects, teacherId, getDetails }) => {
         termName,
         std,
         teacherId,
+        pdfB64: base64String,
       };
       if (
         !formData.year ||
@@ -52,19 +62,19 @@ const AddQbankModal = ({ acYr, classes, subjects, teacherId, getDetails }) => {
         return;
       }
       setError(null);
-      setIsLoading(true)
+      setIsLoading(true);
       const response = await axiosPrivate.post(
         "/lessonplanning/qbank",
         formData
       );
-      setIsLoading(false)
+      setIsLoading(false);
 
       handleOpen();
       getDetails();
 
       toast.success("success");
     } catch (error) {
-      setIsLoading(false)
+      setIsLoading(false);
 
       console.log(error);
     }
@@ -83,7 +93,7 @@ const AddQbankModal = ({ acYr, classes, subjects, teacherId, getDetails }) => {
         />{" "}
         Add Question Bank
       </Button>
-      <Dialog size="md" open={open}  className="w-full">
+      <Dialog size="md" open={open} className="w-full">
         <div className="flex flex-row justify-between p-6 bg-white border-b border-gray-200 rounded-tl-lg rounded-tr-lg">
           <p className="font-semibold text-gray-800">
             Add {error && <p className="text-red-600">{error}</p>}
@@ -186,14 +196,13 @@ const AddQbankModal = ({ acYr, classes, subjects, teacherId, getDetails }) => {
           </p>
         </div>
         <div className="flex flex-row items-center justify-between p-5 bg-white border-t border-gray-200 rounded-bl-lg rounded-br-lg">
-         
           <Button
-          loading={isLoading}
+            loading={isLoading}
             type="submit"
             className="px-4 py-2 text-white font-semibold bg-blue-500 rounded"
             onClick={handleSubmit}
           >
-            {isLoading?"Sending...":"Send"}
+            {isLoading ? "Sending..." : "Send"}
           </Button>
         </div>
       </Dialog>
