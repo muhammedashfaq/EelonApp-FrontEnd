@@ -1,6 +1,7 @@
 import {
   faChevronDown,
   faEdit,
+  faFilePdf,
   faMagnifyingGlass,
   faTrashCan,
   faUserPlus,
@@ -15,7 +16,6 @@ import {
   CardBody,
   Chip,
   Tooltip,
-
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
@@ -31,8 +31,9 @@ const TABLE_HEAD = [
   "calss",
   "Status",
   " Remarks",
-  "Remove"
-];const QPaper = () => {
+  "Remove",
+];
+const QPaper = () => {
   const [acYr, setAcYr] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [classes, setClasses] = useState([]);
@@ -40,7 +41,7 @@ const TABLE_HEAD = [
   const [qpapperdata, setQpapperdata] = useState([]);
   const { auth } = useAuth();
 
-  const deletefile =async(id)=>{
+  const deletefile = async (id, publicId) => {
     try {
       const response = await Swal.fire({
         title: "Are you sure?",
@@ -49,37 +50,40 @@ const TABLE_HEAD = [
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-      })
-        if (response.isConfirmed) {
-           await axiosPrivate.delete(`lessonplanning/qpaper/${id}`)
-          getDetails()
-          const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.onmouseenter = Swal.stopTimer;
-              toast.onmouseleave = Swal.resumeTimer;
-            }
-          });
-          Toast.fire({
-            icon: "success",
-            title: "Removed successfully"
-          });
-        }
-     
+        confirmButtonText: "Yes, delete it!",
+      });
+      if (response.isConfirmed) {
+        await axiosPrivate.delete(`lessonplanning/qpaper/${id}`, {
+          data: {
+            publicId: publicId,
+          },
+        });
+        getDetails();
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Removed successfully",
+        });
+      }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       Swal.fire({
         icon: "error",
         title: "Oops...",
         text: "Something went wrong!",
       });
     }
-  }
+  };
   const getAcYrndubjects = async () => {
     try {
       const response = await axiosPrivate.get(
@@ -120,10 +124,9 @@ const TABLE_HEAD = [
 
   const getDetails = async () => {
     try {
-      const response = await axiosPrivate.put(
-        "/lessonplanning/qpaper/filter",
-        { teacherId: auth?.userId }
-      );
+      const response = await axiosPrivate.put("/lessonplanning/qpaper/filter", {
+        teacherId: auth?.userId,
+      });
       setQpapperdata(response.data);
     } catch (error) {
       console.log(error);
@@ -135,81 +138,102 @@ const TABLE_HEAD = [
   return (
     <div className="mx-5 my-5 ">
       <Card className="h-full w-full ">
-      
-            <div className="flex shrink-0 flex-col gap-2 sm:flex-row p-2">
-              <AddQpaperModal
-                acYr={acYr}
-                classes={classes}
-                subjects={subjects}
-                getDetails={getDetails}
-                teacherId={auth?.userId}
-              />
-            </div>
-       
-        
+        <div className="flex shrink-0 flex-col gap-2 sm:flex-row p-2">
+          <AddQpaperModal
+            acYr={acYr}
+            classes={classes}
+            subjects={subjects}
+            getDetails={getDetails}
+            teacherId={auth?.userId}
+          />
+        </div>
+
         <CardBody className=" px-0">
-        <div className="table-container overflow-y-auto max-h-96">
+          <div className="table-container overflow-y-auto max-h-96">
             <table className="w-full min-w-max text-left table-fixed">
-            <thead>
-              <tr>
-                {TABLE_HEAD.map((head, index) => (
-                  <th
-                    key={head}
-                    className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
-                  >
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
+              <thead>
+                <tr>
+                  {TABLE_HEAD.map((head, index) => (
+                    <th
+                      key={head}
+                      className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
                     >
-                      {head}{" "}
-                      
-                    </Typography>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {qpapperdata &&
-                qpapperdata.map((item, index) => (
-                  <>
-                    <tr key={index} className={item.status== "Rejected" ? "bg-red-200":""}>
-                      <td className="p-4 border-b border-blue-gray-50">
-                        {index + 1}
-                      </td>
-                      <td className="p-4 border-b border-blue-gray-50">
-                        {item?.year}
-                      </td>
-                      <td className="p-4 border-b border-blue-gray-50">
-                        {item?.subject}
-                      </td>
-                      <td className="p-4 border-b border-blue-gray-50">
-                        {item?.termName}
-                      </td>
-                      <td className="p-4 border-b border-blue-gray-50">.pdf</td>
-                      <td className="p-4 border-b border-blue-gray-50">
-                        {item?.std}
-                      </td>
-                      <td className="p-4 border-b border-blue-gray-50">
-                        <div className="w-max">
-                          {/* Assuming 'online' is a property in your data */}
-                          <Chip
-                            variant="ghost"
-                            size="sm"
-                            value={item.status}
-                            color={
-                              item.status === "Rejected"
-                                ? "red"
-                                : item.status === "Approved"
-                                ? "green"
-                                : item.status === "Pending"
-                                ? "blue-gray"
-                                : ""
-                            }
-                          />
-                        </div>
-                      </td>
-                      <td className="p-4 border-b border-blue-gray-50">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
+                      >
+                        {head}{" "}
+                      </Typography>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {qpapperdata &&
+                  qpapperdata.map((item, index) => (
+                    <>
+                      <tr
+                        key={index}
+                        className={
+                          item.status == "Rejected" ? "bg-red-200" : ""
+                        }
+                      >
+                        <td className="p-4 border-b border-blue-gray-50">
+                          {index + 1}
+                        </td>
+                        <td className="p-4 border-b border-blue-gray-50">
+                          {item?.year}
+                        </td>
+                        <td className="p-4 border-b border-blue-gray-50">
+                          {item?.subject}
+                        </td>
+                        <td className="p-4 border-b border-blue-gray-50">
+                          {item?.termName}
+                        </td>
+                        <td className="p-4 border-b border-blue-gray-50 flex justify-center">
+                          <a href={item?.pdf?.url} target="_blank">
+                            <Tooltip
+                              content={
+                                item?.pdf?.url
+                                  ? "View document"
+                                  : "No document uploaded"
+                              }
+                            >
+                              <FontAwesomeIcon
+                                icon={faFilePdf}
+                                size="xl"
+                                style={{
+                                  color: item?.pdf?.url ? "black" : "GrayText",
+                                }}
+                              />
+                            </Tooltip>
+                          </a>
+                          {/* {item?.syllabusPdf?.url} */}
+                        </td>
+                        <td className="p-4 border-b border-blue-gray-50">
+                          {item?.std}
+                        </td>
+                        <td className="p-4 border-b border-blue-gray-50">
+                          <div className="w-max">
+                            {/* Assuming 'online' is a property in your data */}
+                            <Chip
+                              variant="ghost"
+                              size="sm"
+                              value={item.status}
+                              color={
+                                item.status === "Rejected"
+                                  ? "red"
+                                  : item.status === "Approved"
+                                  ? "green"
+                                  : item.status === "Pending"
+                                  ? "blue-gray"
+                                  : ""
+                              }
+                            />
+                          </div>
+                        </td>
+                        <td className="p-4 border-b border-blue-gray-50">
                           {item.remarks && (
                             <Tooltip
                               content={
@@ -249,15 +273,20 @@ const TABLE_HEAD = [
                           )}
                         </td>
                         <td className="p-4 border-b border-blue-gray-50">
-
-<FontAwesomeIcon icon={faTrashCan} color="red" onClick={()=>deletefile(item._id)} className="cursor-pointer   hover:scale-150  transition-all duration-300 rounded-md"/>
-</td>
-
-                    </tr>
-                  </>
-                ))}
-            </tbody>
-          </table>
+                          <FontAwesomeIcon
+                            icon={faTrashCan}
+                            color="red"
+                            onClick={() =>
+                              deletefile(item._id, item?.pdf?.public_id)
+                            }
+                            className="cursor-pointer   hover:scale-150  transition-all duration-300 rounded-md"
+                          />
+                        </td>
+                      </tr>
+                    </>
+                  ))}
+              </tbody>
+            </table>
           </div>
         </CardBody>
       </Card>

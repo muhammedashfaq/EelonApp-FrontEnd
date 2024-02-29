@@ -1,6 +1,7 @@
 import {
   faChevronDown,
   faEdit,
+  faFilePdf,
   faMagnifyingGlass,
   faTrashCan,
   faUserPlus,
@@ -12,7 +13,6 @@ import {
   Typography,
   CardBody,
   Chip,
-
   Tooltip,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
@@ -20,7 +20,6 @@ import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import Swal from "sweetalert2";
 import AddQpatternModal from "./AddQpatternModal";
 import useAuth from "../../../../Hooks/useAuth";
-
 
 const TABLE_HEAD = [
   "#NO",
@@ -31,7 +30,7 @@ const TABLE_HEAD = [
   "calss",
   "Status",
   " Remarks",
-  "Remove"
+  "Remove",
 ];
 const Qpattern = () => {
   const { auth } = useAuth();
@@ -42,7 +41,7 @@ const Qpattern = () => {
   const axiosPrivate = useAxiosPrivate();
   const [qpatterndata, setQpatterndata] = useState([]);
 
-  const deletefile =async(id)=>{
+  const deletefile = async (id, publicId) => {
     try {
       const response = await Swal.fire({
         title: "Are you sure?",
@@ -51,37 +50,40 @@ const Qpattern = () => {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-      })
-        if (response.isConfirmed) {
-           await axiosPrivate.delete(`lessonplanning/qpattern/${id}`)
-          getDetails()
-          const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.onmouseenter = Swal.stopTimer;
-              toast.onmouseleave = Swal.resumeTimer;
-            }
-          });
-          Toast.fire({
-            icon: "success",
-            title: "Removed successfully"
-          });
-        }
-     
+        confirmButtonText: "Yes, delete it!",
+      });
+      if (response.isConfirmed) {
+        await axiosPrivate.delete(`lessonplanning/qpattern/${id}`, {
+          data: {
+            publicId: publicId,
+          },
+        });
+        getDetails();
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Removed successfully",
+        });
+      }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       Swal.fire({
         icon: "error",
         title: "Oops...",
         text: "Something went wrong!",
       });
     }
-  }
+  };
   const getAcYrndubjects = async () => {
     try {
       const response = await axiosPrivate.get(
@@ -141,16 +143,15 @@ const Qpattern = () => {
   return (
     <div className="mx-5 my-5 ">
       <Card className="h-full w-full ">
-      
-            <div className="flex shrink-0 flex-col gap-2 sm:flex-row p-2">
-              <AddQpatternModal
-                acYr={acYr}
-                subjects={subjects}
-                classes={classes}
-                getDetails={getDetails}
-              />
-            </div>
-       
+        <div className="flex shrink-0 flex-col gap-2 sm:flex-row p-2">
+          <AddQpatternModal
+            acYr={acYr}
+            subjects={subjects}
+            classes={classes}
+            getDetails={getDetails}
+          />
+        </div>
+
         <CardBody className=" px-0">
           <div className="table-container overflow-y-auto max-h-96">
             <table className="w-full min-w-max text-left table-fixed">
@@ -167,7 +168,6 @@ const Qpattern = () => {
                         className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
                       >
                         {head}{" "}
-                       
                       </Typography>
                     </th>
                   ))}
@@ -177,7 +177,12 @@ const Qpattern = () => {
                 {qpatterndata &&
                   qpatterndata.map((item, index) => (
                     <>
-                      <tr key={index} className={item.status== "Rejected" ? "bg-red-200":""}>
+                      <tr
+                        key={index}
+                        className={
+                          item.status == "Rejected" ? "bg-red-200" : ""
+                        }
+                      >
                         <td className="p-4 border-b border-blue-gray-50">
                           {index + 1}
                         </td>
@@ -190,8 +195,25 @@ const Qpattern = () => {
                         <td className="p-4 border-b border-blue-gray-50">
                           {item?.termName}
                         </td>
-                        <td className="p-4 border-b border-blue-gray-50">
-                          .pdf
+                        <td className="p-4 border-b border-blue-gray-50 flex justify-center">
+                          <a href={item?.pdf?.url} target="_blank">
+                            <Tooltip
+                              content={
+                                item?.pdf?.url
+                                  ? "View document"
+                                  : "No document uploaded"
+                              }
+                            >
+                              <FontAwesomeIcon
+                                icon={faFilePdf}
+                                size="xl"
+                                style={{
+                                  color: item?.pdf?.url ? "black" : "GrayText",
+                                }}
+                              />
+                            </Tooltip>
+                          </a>
+                          {/* {item?.syllabusPdf?.url} */}
                         </td>
                         <td className="p-4 border-b border-blue-gray-50">
                           {item?.std}
@@ -255,10 +277,15 @@ const Qpattern = () => {
                           )}
                         </td>
                         <td className="p-4 border-b border-blue-gray-50">
-
-<FontAwesomeIcon icon={faTrashCan} color="red" onClick={()=>deletefile(item._id)} className="cursor-pointer   hover:scale-150  transition-all duration-300 rounded-md"/>
-</td>
-
+                          <FontAwesomeIcon
+                            icon={faTrashCan}
+                            color="red"
+                            onClick={() =>
+                              deletefile(item._id, item?.pdf?.public_id)
+                            }
+                            className="cursor-pointer   hover:scale-150  transition-all duration-300 rounded-md"
+                          />
+                        </td>
                       </tr>
                     </>
                   ))}
