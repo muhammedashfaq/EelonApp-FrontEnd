@@ -8,9 +8,9 @@ const AddStaffExperianceDocuModal = () => {
   const handleOpen = () => setOpen((cur) => !cur);
   const [files, setFiles] = useState({});
   const [isOverlayDraggedOver, setIsOverlayDraggedOver] = useState(false);
-  const[jobRole,setJobRole]=useState()
-  const[toDate,setToDate]=useState()
-  const [fromdate,setFromDate]=useState()
+  const [jobRole, setJobRole] = useState();
+  const [toDate, setToDate] = useState();
+  const [fromdate, setFromDate] = useState();
 
   const addFile = (file) => {
     const isImage = file.type.match("image.*");
@@ -61,13 +61,13 @@ const AddStaffExperianceDocuModal = () => {
 
   const handleSubmit = () => {
     try {
-      const formData={
+      const formData = {
         jobRole,
         fromdate,
         toDate,
-        files
-      }
-      console.log(formData,'check data')
+        files,
+      };
+      console.log(formData, "check data");
     } catch (error) {
       console.log(error);
     }
@@ -82,8 +82,6 @@ const AddStaffExperianceDocuModal = () => {
   const hasFiles = ({ dataTransfer: { types = [] } }) =>
     types.indexOf("Files") > -1;
 
-
-    
   return (
     <>
       <Tooltip content="Add New">
@@ -97,7 +95,12 @@ const AddStaffExperianceDocuModal = () => {
           />
         </span>
       </Tooltip>
-      <Dialog size="xl" open={open} handler={handleOpen} className="bg-transparent shadow-none">
+      <Dialog
+        size="xl"
+        open={open}
+        handler={handleOpen}
+        className="bg-transparent shadow-none"
+      >
         <main className="container mx-auto max-w-screen-lg h-full">
           {/* file upload modal */}
           <article
@@ -119,7 +122,11 @@ const AddStaffExperianceDocuModal = () => {
                     <label htmlFor="jobRole" className="mr-2">
                       Job Role:
                     </label>
-                    <Input id="jobRole" className="border rounded-md p-2" onChange={(e)=>setJobRole(e.target.value)} />
+                    <Input
+                      id="jobRole"
+                      className="border rounded-md p-2"
+                      onChange={(e) => setJobRole(e.target.value)}
+                    />
                   </div>
                   <div className="flex items-center">
                     <label htmlFor="experienceFrom" className="mr-2">
@@ -129,7 +136,7 @@ const AddStaffExperianceDocuModal = () => {
                       type="date"
                       id="experienceFrom"
                       className="border rounded-md p-2"
-                      onChange={(e)=>setFromDate(e.target.value)}
+                      onChange={(e) => setFromDate(e.target.value)}
                     />
                     <label htmlFor="experienceTo" className="mr-2">
                       Experience To:
@@ -138,7 +145,7 @@ const AddStaffExperianceDocuModal = () => {
                       type="date"
                       id="experienceTo"
                       className="border rounded-md p-2"
-                      onChange={(e)=>setToDate(e.target.value)}
+                      onChange={(e) => setToDate(e.target.value)}
                     />
                   </div>
                 </div>
@@ -162,7 +169,8 @@ const AddStaffExperianceDocuModal = () => {
                   className="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none"
                   onClick={() =>
                     document.getElementById("hidden-input").click()
-                  }                >
+                  }
+                >
                   Upload a file
                 </button>
               </header>

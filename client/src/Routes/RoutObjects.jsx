@@ -2,7 +2,7 @@ export const RouteObjects = {
   root: "/",
   Login: "/login",
   StudentDashboard: "/studentdash",
-  UserProfileStudent:"/profile/student",
+  UserProfileStudent: "/profile/student",
   FeeInvoice: "/feeinvoice",
   FeeStructure: "/feestructre",
   HomeWorks: "/homeworks",
@@ -10,7 +10,7 @@ export const RouteObjects = {
   StudyMaterials: "/studymaterials",
   StudentLibrary: "/studentlibrary",
 
-  UserProfileStaff:"/profile/staff",
+  UserProfileStaff: "/profile/staff",
   NewApplication: "/newapplication",
   NewApplicationFee: "/applicationfee",
   NewApplicants: "/newapplicats",
@@ -62,9 +62,8 @@ export const RouteObjects = {
   ScholasticSubwiseMarks: "/staff/exam-module/add-scholastic-grade",
   ShowSubwiseMarks: "/staff/exam-module/subjectwise-marks",
   ShowClasswiseMarks: "/staff/exam-module/classwise-marks",
-  UserProfileadmin:"/profile/admin",
+  UserProfileadmin: "/profile/admin",
   ShowStudentwiseReports: "/staff/exam-module/studentwise-report",
-
 
   AdminHome: "/adminhome",
   AdminAprovals: "/adminaprovals",
@@ -78,4 +77,5 @@ export const RouteObjects = {
   FeeCollection: "/feecollection",
   AdminssionFee: "/admissionfee",
   AddFeeStructure: "/addfeestructure",
+  AddConcessionStructure: "/addconcessionstructure",
 };

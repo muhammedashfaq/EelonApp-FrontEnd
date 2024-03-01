@@ -71,7 +71,11 @@ import UserProfileadminPage from "../Pages/Admin/UserProfile/UserProfileadminPag
 import StudentWiseReportCard from "../Components/Staff/DashboardComponents/ExamModule/StudentWiseReportCard";
 import Footer from "../Components/Staff/Header/Footer";
 import Footersmall from "../Components/Staff/Header/Footersmall";
+
 import FeeInvoiceBillPage from "../Pages/Staff/Dashboard/FeeCollection/FeeInvoiceBillPage";
+
+import AddConcessionStructure from "../Pages/Staff/Dashboard/FeeCollection/AddConcessionStructure";
+
 
 const AppRoutes = () => {
   return (
@@ -135,6 +139,10 @@ const AppRoutes = () => {
         <Route
           path={RouteObjects.AddFeeStructure}
           element={<AddFeeStructures />}
+        />
+        <Route
+          path={RouteObjects.AddConcessionStructure}
+          element={<AddConcessionStructure />}
         />
         <Route path={RouteObjects.HomeWorks} element={<StudentHomeWorks />} />
         <Route path={RouteObjects.Payment} element={<PaymentHistory />} />
@@ -303,7 +311,6 @@ const AppRoutes = () => {
         <Route path="/testyk" element={<TestYk />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
-
     </div>
   );
 };
