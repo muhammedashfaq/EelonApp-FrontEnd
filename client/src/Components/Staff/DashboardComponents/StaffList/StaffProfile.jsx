@@ -16,7 +16,6 @@ import React, { useState } from "react";
 import { faSquarePlus } from "@fortawesome/free-regular-svg-icons";
 import AddStaffExperianceDocuModal from "./AddStaffExperianceDocuModal";
 import AddStaffEducationalModal from "./AddStaffEducationalModal";
-import CropImageModal from "../../../Admin/CropImageModal";
 import StaffUploadImgModal from "./StaffUploadImgModal";
 
 const StaffProfile = ({ userData, getData }) => {

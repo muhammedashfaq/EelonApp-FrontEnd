@@ -9,13 +9,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const menu = [
-
   {
     title: "Library",
     icon: faBook,
     href: RouteObjects.Stafflibrary,
   },
-  
+
   {
     title: "Accounts",
     icon: faUserPlus,
@@ -34,6 +33,11 @@ const menu = [
       {
         title: "Add Fee structure ",
         href: RouteObjects.AddFeeStructure,
+        icon: faCaretRight,
+      },
+      {
+        title: "Add Concession fee structure ",
+        href: RouteObjects.AddConcessionStructure,
         icon: faCaretRight,
       },
     ],
