@@ -7,7 +7,7 @@ const DetailsCardUp = () => {
                     
                     <div className="bg-gradient-to-r from-indigo-600 to-cyan-400 shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
                        <div className="flex items-center">
-                          <div className="flex-shrink-0">
+                          <div className="flex-shrink-0 border-r-2 w-2/3">
                              <span className="text-2xl sm:text-3xl leading-none font-bold text-gray-900">2,340</span>
                              <h3 className="text-base font-normal text-gray-500">New products this week</h3>
                           </div>
@@ -21,7 +21,7 @@ const DetailsCardUp = () => {
                     </div>
                     <div className="bg-gradient-to-r from-teal-200 to-cyan-300 shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
                        <div className="flex items-center">
-                          <div className="flex-shrink-0">
+                       <div className="flex-shrink-0 border-r-2 w-2/3">
                              <span className="text-2xl sm:text-3xl leading-none font-bold text-gray-900">5,355</span>
                              <h3 className="text-base font-normal text-gray-500">Visitors this week</h3>
                           </div>
@@ -35,7 +35,7 @@ const DetailsCardUp = () => {
                     </div>
                     <div className="bg-gradient-to-r from-amber-200 to-yellow-400 shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
                        <div className="flex items-center">
-                          <div className="flex-shrink-0">
+                       <div className="flex-shrink-0 border-r-2 w-2/3">
                              <span className="text-2xl sm:text-3xl leading-none font-bold text-gray-900">385</span>
                              <h3 className="text-base font-normal text-gray-500">User signups this week</h3>
                           </div>

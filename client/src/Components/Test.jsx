@@ -1,143 +1,144 @@
 import React from 'react'
-
+import logo  from '../assets/loblack.svg'
 const Test = () => {
+    
   return (
-    <div>
-      <div class="container mx-auto my-5 p-5">
-        <div class="md:flex no-wrap md:-mx-2 ">
-            <div class="w-full md:w-3/12 md:mx-2">
 
+  <div class="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto my-4 sm:my-10">
+    <div class="sm:w-11/12 lg:w-3/4 mx-auto">
+      <div class="flex flex-col p-4 sm:p-10 bg-white shadow-md rounded-xl dark:bg-gray-800">
+        <div class="flex justify-between">
+          <div>
+                <img src={logo}/>
 
+          </div>
 
-            
-             
+          <div class="text-end">
+            <h2 class="text-2xl md:text-3xl font-semibold text-gray-800 dark:text-gray-200">Invoice #</h2>
+            <span class="mt-1 block text-gray-500">3682303</span>
+
+            <div class="mt-4 not-italic text-gray-800 dark:text-gray-200">
+              45 Roker Terrace<br/>
+              Latheronwheel<br/>
+              KW5 8NW, London<br/>
+              United Kingdom<br/>
             </div>
-
-
-
-
-
-            <div class="w-full md:w-9/12 mx-2 h-64">
-                <div class="bg-white p-3 shadow-sm rounded-sm">
-                    <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
-                        <span clas="text-green-500">
-                            <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
-                        </span>
-                        <span class="tracking-wide">About</span>
-                    </div>
-                    <div class="text-gray-700">
-                        <div class="grid md:grid-cols-2 text-sm">
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">First Name</div>
-                                <div class="px-4 py-2">Jane</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Last Name</div>
-                                <div class="px-4 py-2">Doe</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Gender</div>
-                                <div class="px-4 py-2">Female</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Contact No.</div>
-                                <div class="px-4 py-2">+11 998001001</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Current Address</div>
-                                <div class="px-4 py-2">Beech Creek, PA, Pennsylvania</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Permanant Address</div>
-                                <div class="px-4 py-2">Arlington Heights, IL, Illinois</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Email.</div>
-                                <div class="px-4 py-2">
-                                    <a class="text-blue-800" href="mailto:jane@example.com">jane@example.com</a>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Birthday</div>
-                                <div class="px-4 py-2">Feb 06, 1998</div>
-                            </div>
-                        </div>
-                    </div>
-                    <button
-                        class="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">Show
-                        Full Information</button>
-                </div>
-
-                <div class="my-4"></div>
-
-                <div class="bg-white p-3 shadow-sm rounded-sm">
-
-                    <div class="grid grid-cols-2">
-                        <div>
-                            <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
-                                <span clas="text-green-500">
-                                    <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                    </svg>
-                                </span>
-                                <span class="tracking-wide">Experience</span>
-                            </div>
-                            <ul class="list-inside space-y-2">
-                                <li>
-                                    <div class="text-teal-600">Owner at Her Company Inc.</div>
-                                    <div class="text-gray-500 text-xs">March 2020 - Now</div>
-                                </li>
-                                <li>
-                                    <div class="text-teal-600">Owner at Her Company Inc.</div>
-                                    <div class="text-gray-500 text-xs">March 2020 - Now</div>
-                                </li>
-                                <li>
-                                    <div class="text-teal-600">Owner at Her Company Inc.</div>
-                                    <div class="text-gray-500 text-xs">March 2020 - Now</div>
-                                </li>
-                                <li>
-                                    <div class="text-teal-600">Owner at Her Company Inc.</div>
-                                    <div class="text-gray-500 text-xs">March 2020 - Now</div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
-                                <span clas="text-green-500">
-                                    <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor">
-                                        <path fill="#fff" d="M12 14l9-5-9-5-9 5 9 5z" />
-                                        <path fill="#fff"
-                                            d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
-                                    </svg>
-                                </span>
-                                <span class="tracking-wide">Education</span>
-                            </div>
-                            <ul class="list-inside space-y-2">
-                                <li>
-                                    <div class="text-teal-600">Masters Degree in Oxford</div>
-                                    <div class="text-gray-500 text-xs">March 2020 - Now</div>
-                                </li>
-                                <li>
-                                    <div class="text-teal-600">Bachelors Degreen in LPU</div>
-                                    <div class="text-gray-500 text-xs">March 2020 - Now</div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+
+        <div class="mt-8 grid sm:grid-cols-2 gap-3">
+          <div>
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Bill to:</h3>
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Sara Williams</h3>
+            <div class="mt-2 not-italic text-gray-500">
+              280 Suzanne Throughway,<br/>
+              Breannabury, OR 45801,<br/>
+              United States<br/>
+            </div>
+          </div>
+
+          <div class="sm:text-end space-y-2">
+            <div class="grid grid-cols-2 sm:grid-cols-1 gap-3 sm:gap-2">
+              <dl class="grid sm:grid-cols-5 gap-x-3">
+                <dt class="col-span-3 font-semibold text-gray-800 dark:text-gray-200">Invoice date:</dt>
+                <dd class="col-span-2 text-gray-500">03/10/2018</dd>
+              </dl>
+            
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6">
+          <div class="border border-gray-200 p-4 rounded-lg space-y-4 dark:border-gray-700">
+            <div class="hidden sm:grid sm:grid-cols-5">
+              <div class="sm:col-span-2 text-xs font-medium text-gray-500 uppercase">Fee</div>
+             
+              <div class="text-end text-xs font-medium text-gray-500 uppercase">Amount</div>
+            </div>
+
+            <div class="hidden sm:block border-b border-gray-200 dark:border-gray-700"></div>
+
+            <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">
+              <div class="col-span-full sm:col-span-2">
+                <p class="font-medium text-gray-800 dark:text-gray-200">Design UX and UI</p>
+              </div>
+ 
+              <div>
+                <p class="sm:text-end text-gray-800 dark:text-gray-200">$500</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">
+              <div class="col-span-full sm:col-span-2">
+                <p class="font-medium text-gray-800 dark:text-gray-200">Design UX and UI</p>
+              </div>
+ 
+              <div>
+                <p class="sm:text-end text-gray-800 dark:text-gray-200">$500</p>
+              </div>
+            </div>
+         
+
+          </div>
+        </div>
+
+        <div class="mt-8 flex sm:justify-end">
+          <div class="w-full max-w-2xl sm:text-end space-y-2">
+            <div class="grid grid-cols-2 sm:grid-cols-1 gap-3 sm:gap-2">
+              <dl class="grid sm:grid-cols-5 gap-x-3">
+                <dt class="col-span-3 font-semibold text-gray-800 dark:text-gray-200">Subtotal:</dt>
+                <dd class="col-span-2 text-gray-500">$2750.00</dd>
+              </dl>
+
+              <dl class="grid sm:grid-cols-5 gap-x-3">
+                <dt class="col-span-3 font-semibold text-gray-800 dark:text-gray-200">Total:</dt>
+                <dd class="col-span-2 text-gray-500">$2750.00</dd>
+              </dl>
+
+              <dl class="grid sm:grid-cols-5 gap-x-3">
+                <dt class="col-span-3 font-semibold text-gray-800 dark:text-gray-200">Tax:</dt>
+                <dd class="col-span-2 text-gray-500">$39.00</dd>
+              </dl>
+
+              <dl class="grid sm:grid-cols-5 gap-x-3">
+                <dt class="col-span-3 font-semibold text-gray-800 dark:text-gray-200">Amount paid:</dt>
+                <dd class="col-span-2 text-gray-500">$2789.00</dd>
+              </dl>
+
+              <dl class="grid sm:grid-cols-5 gap-x-3">
+                <dt class="col-span-3 font-semibold text-gray-800 dark:text-gray-200">Due balance:</dt>
+                <dd class="col-span-2 text-gray-500">$0.00</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 sm:mt-12">
+          <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Thank you!</h4>
+          <p class="text-gray-500">If you have any questions concerning this invoice, use the following contact information:</p>
+          <div class="mt-2">
+            <p class="block text-sm font-medium text-gray-800 dark:text-gray-200">example@site.com</p>
+            <p class="block text-sm font-medium text-gray-800 dark:text-gray-200">+1 (062) 109-9222</p>
+          </div>
+        </div>
+
+        <p class="mt-5 text-sm text-gray-500">© 2022 Preline.</p>
+      </div>
+
+      <div class="mt-6 flex justify-end gap-x-3">
+        <a class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-lg border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800" href="#">
+          <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Invoice PDF
+        </a>
+        <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+          <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+          Print
+        </a>
+      </div>
     </div>
-    </div>
+  </div>
+   
+
   )
 }
 

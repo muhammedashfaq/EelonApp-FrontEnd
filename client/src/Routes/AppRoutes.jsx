@@ -71,6 +71,7 @@ import UserProfileadminPage from "../Pages/Admin/UserProfile/UserProfileadminPag
 import StudentWiseReportCard from "../Components/Staff/DashboardComponents/ExamModule/StudentWiseReportCard";
 import Footer from "../Components/Staff/Header/Footer";
 import Footersmall from "../Components/Staff/Header/Footersmall";
+import FeeInvoiceBillPage from "../Pages/Staff/Dashboard/FeeCollection/FeeInvoiceBillPage";
 
 const AppRoutes = () => {
   return (
@@ -80,6 +81,10 @@ const AppRoutes = () => {
       <Routes>
         <Route path={RouteObjects.Login} element={<Login />} />
         {/* accountant Module  */}
+        <Route
+          path={`${RouteObjects.FeeInvoiceBill}/:id`}
+          element={<FeeInvoiceBillPage />}
+        />
         <Route
           path={RouteObjects.FeeCollection}
           element={<FeeCollectionPage />}

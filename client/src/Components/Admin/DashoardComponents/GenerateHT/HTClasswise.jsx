@@ -30,6 +30,7 @@ const HTClasswise = () => {
 
       console.log(response, "res");
       setFetchedData(response.data);
+      
     } catch (error) {
       console.log(error);
     }
