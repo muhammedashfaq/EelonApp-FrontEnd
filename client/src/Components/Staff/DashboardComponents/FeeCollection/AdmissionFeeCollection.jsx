@@ -95,7 +95,7 @@ const AdmissionFeeCollection = () => {
                         </Link>
                       </td>
                       <td className={classes}>
-                        {item?.payStatus == "NotPaid" && (
+                        {item?.payStatus == "NotPaid" ? (
                           <Link
                             to={`${RouteObjects.NewApplicationFee}/${item._id}`}
                           >
@@ -110,7 +110,20 @@ const AdmissionFeeCollection = () => {
                               </span>
                             </div>
                           </Link>
-                        )}
+                        ):<Link
+                        to={`${RouteObjects.FeeInvoiceBill}/${item._id}`}
+                      >
+                        <div className="flex">
+                          <span>
+                            <Chip
+                              color="blue-gray"
+                              value="Print"
+                              size="sm"
+                              className="cursor-pointer hover:shadow-lg hover:scale-95"
+                            />
+                          </span>
+                        </div>
+                      </Link> }
                       </td>
                     </tr>
                   );

@@ -47,7 +47,6 @@ const TABLE_HEAD = [
   "Action",
 ];
 
-
 const StudentsList = () => {
   const { page } = useParams();
   const [pageInt, setpageInt] = useState(Number(page));
@@ -58,6 +57,8 @@ const StudentsList = () => {
   const [paginationData, setpaginationData] = useState();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
+
+
 
   const getUsers = async (pageNo) => {
     try {
@@ -123,8 +124,8 @@ const StudentsList = () => {
 
   return (
     <div>
-      <Card className="  m-8">   
-         <TableHeaderName name="Students List" year="2024"/>  
+      <Card className="  m-8">
+        <TableHeaderName name="Students List" year="2024" />
 
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="flex flex-col items-center justify-evenly gap-4 md:flex-row">
@@ -187,28 +188,31 @@ const StudentsList = () => {
               </Link>
             </div>
           </div>
-        </CardHeader>
-        <CardBody className="overflow-scroll px-0">
-          <table className=" w-full min-w-max table-auto text-left">
 
-          <thead>
-            <tr>
-              {TABLE_HEAD.map((head) => (
-                <th
-                  key={head}
-                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 px-2 py-2"
-                >
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
+            
+       </CardHeader>
+
+
+        <CardBody   className="overflow-scroll px-0">
+          <table className=" w-full min-w-max table-auto text-left">
+            <thead>
+              <tr>
+                {TABLE_HEAD.map((head) => (
+                  <th
+                    key={head}
+                    className="border-y border-blue-gray-100 bg-blue-gray-50/50 px-2 py-2"
                   >
-                    {head}
-                  </Typography>
-                </th>
-              ))}
-            </tr>
-          </thead>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal leading-none opacity-70"
+                    >
+                      {head}
+                    </Typography>
+                  </th>
+                ))}
+              </tr>
+            </thead>
             <tbody>
               {searchData
                 ? searchData.map((data, index) => {
@@ -216,185 +220,6 @@ const StudentsList = () => {
 
                     return (
                       <tr key={index}>
-                      <td className={classes}>
-                        <div className="flex flex-col">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal opacity-70"
-                          >
-                            {index + 1}
-                          </Typography>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div className="flex flex-col">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal opacity-70"
-                          >
-                            {index + 1}
-                          </Typography>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div className="flex flex-col">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal opacity-70"
-                          >
-                             {data?.studentName}
-                          </Typography>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div className="flex flex-col">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal opacity-70"
-                          >
-                            {data?.admnNo}
-                          </Typography>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div className="flex flex-col">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal opacity-70"
-                          >
-                            {data?.gender}
-                          </Typography>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div className="flex flex-col">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal opacity-70"
-                          >
-                            {data?.classId}
-                          </Typography>
-                        </div>
-                      </td>
-
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {data?.FathersName}
-                        </Typography>
-                      </td>
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {`${data?.ContactNo}, ${data?.AltCnctNo}`}
-                        </Typography>
-                      </td>
-
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                           {data?.DOB}
-                        </Typography>
-                      </td>
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {data?.email}
-                        </Typography>
-                      </td>
-                 
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {data?.pincode}
-                        </Typography>
-                      </td>
-
-                      <td className={classes}>
-
-                        <div>
-                        <Link
-                          to={`${RouteObjects.StudentProfile}/${data._id}`}
-                        >
-                          <IconButton variant="text">
-                            <FontAwesomeIcon
-                              icon={faEye}
-                              size="xl"
-                              color="green"
-                            />
-                          </IconButton>
-                        </Link>
-                 
-                        <Link
-                          to={`${RouteObjects.EditStudent}/${data._id}/${data.studentName}/${page}`}
-                        >
-                          <Tooltip
-                            content="Edit Student Data"
-                            animate={{
-                              mount: { scale: 1, y: 0 },
-                              unmount: { scale: 0, y: 25 },
-                            }}
-                          >
-                            <IconButton variant="text">
-                              <FontAwesomeIcon
-                                icon={faEdit}
-                                color="green"
-                                size="xl"
-                              />
-                            </IconButton>
-                          </Tooltip>
-                        </Link>
-
-                        <Tooltip
-                          content="Delete Student"
-                          animate={{
-                            mount: { scale: 1, y: 0 },
-                            unmount: { scale: 0, y: 25 },
-                          }}
-                        >
-                          <IconButton variant="text">
-                            <FontAwesomeIcon
-                              color="red"
-                              icon={faTrash}
-                              size="xl"
-                              onClick={() =>
-                                deleteStudent(data._id, data.studentName)
-                              }
-                            />
-                          </IconButton>
-                        </Tooltip>
-                          </div>  
-                      </td>
-                    </tr>
-                    );
-                  })
-                : studentData &&
-                  studentData.map((data, index) => {
-                    const classes = "px-2 border-b border-blue-gray-50";
-
-                    return (
-                      <tr key={index}>
                         <td className={classes}>
                           <div className="flex flex-col">
                             <Typography
@@ -424,7 +249,7 @@ const StudentsList = () => {
                               color="blue-gray"
                               className="font-normal opacity-70"
                             >
-                               {data?.studentName}
+                              {data?.studentName}
                             </Typography>
                           </div>
                         </td>
@@ -487,7 +312,7 @@ const StudentsList = () => {
                             color="blue-gray"
                             className="font-normal"
                           >
-                             {data?.DOB}
+                            {data?.DOB}
                           </Typography>
                         </td>
                         <td className={classes}>
@@ -499,7 +324,7 @@ const StudentsList = () => {
                             {data?.email}
                           </Typography>
                         </td>
-                   
+
                         <td className={classes}>
                           <Typography
                             variant="small"
@@ -511,25 +336,41 @@ const StudentsList = () => {
                         </td>
 
                         <td className={classes}>
-
                           <div>
-                          <Link
-                            to={`${RouteObjects.StudentProfile}/${data._id}`}
-                          >
-                            <IconButton variant="text">
-                              <FontAwesomeIcon
-                                icon={faEye}
-                                size="xl"
-                                color="green"
-                              />
-                            </IconButton>
-                          </Link>
-                   
-                          <Link
-                            to={`${RouteObjects.EditStudent}/${data._id}/${data.studentName}/${page}`}
-                          >
+                            <Link
+                              to={`${RouteObjects.StudentProfile}/${data._id}`}
+                            >
+                              <IconButton variant="text">
+                                <FontAwesomeIcon
+                                  icon={faEye}
+                                  size="xl"
+                                  color="green"
+                                />
+                              </IconButton>
+                            </Link>
+
+                            <Link
+                              to={`${RouteObjects.EditStudent}/${data._id}/${data.studentName}/${page}`}
+                            >
+                              <Tooltip
+                                content="Edit Student Data"
+                                animate={{
+                                  mount: { scale: 1, y: 0 },
+                                  unmount: { scale: 0, y: 25 },
+                                }}
+                              >
+                                <IconButton variant="text">
+                                  <FontAwesomeIcon
+                                    icon={faEdit}
+                                    color="green"
+                                    size="xl"
+                                  />
+                                </IconButton>
+                              </Tooltip>
+                            </Link>
+
                             <Tooltip
-                              content="Edit Student Data"
+                              content="Delete Student"
                               animate={{
                                 mount: { scale: 1, y: 0 },
                                 unmount: { scale: 0, y: 25 },
@@ -537,33 +378,194 @@ const StudentsList = () => {
                             >
                               <IconButton variant="text">
                                 <FontAwesomeIcon
-                                  icon={faEdit}
-                                  color="green"
+                                  color="red"
+                                  icon={faTrash}
                                   size="xl"
+                                  onClick={() =>
+                                    deleteStudent(data._id, data.studentName)
+                                  }
                                 />
                               </IconButton>
                             </Tooltip>
-                          </Link>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })
+                : studentData &&
+                  studentData.map((data, index) => {
+                    const classes = "px-2 border-b border-blue-gray-50";
 
-                          <Tooltip
-                            content="Delete Student"
-                            animate={{
-                              mount: { scale: 1, y: 0 },
-                              unmount: { scale: 0, y: 25 },
-                            }}
+                    return (
+                      <tr key={index}>
+                        <td className={classes}>
+                          <div className="flex flex-col">
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal opacity-70"
+                            >
+                              {index + 1}
+                            </Typography>
+                          </div>
+                        </td>
+                        <td className={classes}>
+                          <div className="flex flex-col">
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal opacity-70"
+                            >
+                              {index + 1}
+                            </Typography>
+                          </div>
+                        </td>
+                        <td className={classes}>
+                          <div className="flex flex-col">
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal opacity-70"
+                            >
+                              {data?.studentName}
+                            </Typography>
+                          </div>
+                        </td>
+                        <td className={classes}>
+                          <div className="flex flex-col">
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal opacity-70"
+                            >
+                              {data?.admnNo}
+                            </Typography>
+                          </div>
+                        </td>
+                        <td className={classes}>
+                          <div className="flex flex-col">
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal opacity-70"
+                            >
+                              {data?.gender}
+                            </Typography>
+                          </div>
+                        </td>
+                        <td className={classes}>
+                          <div className="flex flex-col">
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal opacity-70"
+                            >
+                              {data?.classId}
+                            </Typography>
+                          </div>
+                        </td>
+
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
                           >
-                            <IconButton variant="text">
-                              <FontAwesomeIcon
-                                color="red"
-                                icon={faTrash}
-                                size="xl"
-                                onClick={() =>
-                                  deleteStudent(data._id, data.studentName)
-                                }
-                              />
-                            </IconButton>
-                          </Tooltip>
-                            </div>  
+                            {data?.FathersName}
+                          </Typography>
+                        </td>
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {`${data?.ContactNo}, ${data?.AltCnctNo}`}
+                          </Typography>
+                        </td>
+
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {data?.DOB}
+                          </Typography>
+                        </td>
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {data?.email}
+                          </Typography>
+                        </td>
+
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {data?.pincode}
+                          </Typography>
+                        </td>
+
+                        <td className={classes}>
+                          <div>
+                            <Link
+                              to={`${RouteObjects.StudentProfile}/${data._id}`}
+                            >
+                              <IconButton variant="text">
+                                <FontAwesomeIcon
+                                  icon={faEye}
+                                  size="xl"
+                                  color="green"
+                                />
+                              </IconButton>
+                            </Link>
+
+                            <Link
+                              to={`${RouteObjects.EditStudent}/${data._id}/${data.studentName}/${page}`}
+                            >
+                              <Tooltip
+                                content="Edit Student Data"
+                                animate={{
+                                  mount: { scale: 1, y: 0 },
+                                  unmount: { scale: 0, y: 25 },
+                                }}
+                              >
+                                <IconButton variant="text">
+                                  <FontAwesomeIcon
+                                    icon={faEdit}
+                                    color="green"
+                                    size="xl"
+                                  />
+                                </IconButton>
+                              </Tooltip>
+                            </Link>
+
+                            <Tooltip
+                              content="Delete Student"
+                              animate={{
+                                mount: { scale: 1, y: 0 },
+                                unmount: { scale: 0, y: 25 },
+                              }}
+                            >
+                              <IconButton variant="text">
+                                <FontAwesomeIcon
+                                  color="red"
+                                  icon={faTrash}
+                                  size="xl"
+                                  onClick={() =>
+                                    deleteStudent(data._id, data.studentName)
+                                  }
+                                />
+                              </IconButton>
+                            </Tooltip>
+                          </div>
                         </td>
                       </tr>
                     );

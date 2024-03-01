@@ -73,7 +73,7 @@ export const RouteObjects = {
   HallTicket: "/StudentHT",
 
   // accountant
-
+  FeeInvoiceBill:"/feeinvoicebill",
   FeeCollection: "/feecollection",
   AdminssionFee: "/admissionfee",
   AddFeeStructure: "/addfeestructure",

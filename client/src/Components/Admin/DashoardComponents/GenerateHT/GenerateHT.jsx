@@ -72,6 +72,7 @@ const GenerateHT = () => {
     try {
       const response = await axiosPrivate.get("marks/halltickets");
       setHTdata(response.data);
+      console.log(response)
     } catch (error) {
       console.log(error);
     }
@@ -79,7 +80,7 @@ const GenerateHT = () => {
 
   useEffect(() => {
     getGeneratedHT();
-  });
+  },[]);
 
   const getAcYrndubjects = async () => {
     try {
