@@ -87,7 +87,7 @@ export default function CropImageModal({
               value={zoom}
               max={5}
               min={1}
-              step={0.1}
+              step={0.05}
               onChange={(e) => setZoom(e.target.value)}
               type="range"
               className="w-52 cursor-pointer"
