@@ -101,75 +101,33 @@ export const addStaffValidation = (formData) => {
   const errors = {};
 
   errors.name = !formData.name ? "Name is required" : "";
-
-  errors.DOB = !formData.DOB ? "Date of Birth is required" : "";
-
+  errors.DOB = !formData.DOB ? "Date of Birth is required" : ""; 
   errors.mob = !formData.mob ? "Mobile number is required" : "";
-
-  errors.contactEmail = !formData.contactEmail
-    ? "Contact email is required"
-    : "";
-
+  errors.contactEmail = !formData.contactEmail ? "Contact email is required" : "";
   errors.DOJ = !formData.DOJ ? "Date of Joining is required" : "";
   errors.aadharNo = !formData.aadharNo ? "Aadhar number is required" : "";
-
   errors.pan = !formData.pan ? "PAN number is required" : "";
-
   errors.nationality = !formData.nationality ? "Nationality is required" : "";
-
   errors.state = !formData.state ? "State is required" : "";
-
   errors.city = !formData.city ? "City is required" : "";
-
-
   errors.address = !formData.address ? "Address is required" : "";
-
-  errors.bankAccountNumber = !formData.bankAccountNumber
-    ? "Bank Account Number is required"
-    : "";
-
-  errors.bankAccountName = !formData.bankAccountName
-    ? "Bank Account Name is required"
-    : "";
-
+  errors.bankAccountNumber = !formData.bankAccountNumber ? "Bank Account Number is required" : "";
+  errors.bankAccountName = !formData.bankAccountName ? "Bank Account Name is required" : "";
   errors.bankName = !formData.bankName ? "Bank Name is required" : "";
-
-  errors.bankBranchName = !formData.bankBranchName
-    ? "Bank Branch Name is required"
-    : "";
-
-  errors.bankIFSCcode = !formData.bankIFSCcode
-    ? "Bank IFSC Code is required"
-    : "";
-
-  errors.otherAllowance = !formData.otherAllowance
-    ? "Other Allowance is required"
-    : "";
-
+  errors.bankBranchName = !formData.bankBranchName ? "Bank Branch Name is required" : "";
+  errors.bankIFSCcode = !formData.bankIFSCcode ? "Bank IFSC Code is required" : "";
+  errors.otherAllowance = !formData.otherAllowance ? "Other Allowance is required" : "";
   errors.basicSalary = !formData.basicSalary ? "Basic Salary is required" : "";
-
   errors.pf = !formData.pf ? "PF is required" : "";
-
   errors.epfno = !formData.epfno ? "EPF Number is required" : "";
-
   errors.esi = formData.esi === null ? "ESI is required" : "";
-
   errors.esiip = formData.esiip === null ? "ESIIP is required" : "";
-
   errors.gender = !formData.gender ? "Gender is required" : "";
-
-  errors.maritalStatus = !formData.maritalStatus
-    ? "Marital Status is required"
-    : "";
-
+  errors.maritalStatus = !formData.maritalStatus ? "Marital Status is required" : "";
   errors.religion = !formData.religion ? "Religion is required" : "";
-
   errors.jobType = !formData.jobType ? "Job Type is required" : "";
-
   errors.jobRole = !formData.jobRole ? "Job Role is required" : "";
-
   errors.accType = !formData.accType ? "Account Type is required" : "";
-
   errors.userType = !formData.userType ? "User Type is required" : "";
 
   return errors;
