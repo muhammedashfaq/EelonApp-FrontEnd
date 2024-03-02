@@ -39,6 +39,7 @@ export default function AddConcessionStructureModal({
   const [feeType, setfeeType] = useState();
   const [othersType, setothersType] = useState();
   const [installmentType, setinstallmentType] = useState("termWise");
+  const [concessionReason, setconcessionReason] = useState();
 
   const [reductionType, setreductionType] = useState("amount");
   const [reductionAmount, setreductionAmount] = useState();
@@ -56,22 +57,18 @@ export default function AddConcessionStructureModal({
   };
 
   const addfeestructure = async () => {
-    if (!amount || !selectedClass || !feeType) return;
+    if (!concessionName || !selectedAcademicYr || !reductionType) return;
     try {
       const reqData = {
-        std: selectedClass,
+        concessionName,
         academicYear: selectedAcademicYr,
-        term,
-        amount: Number(amount),
-        feeType: feeType,
-        othersType,
+        reductionType,
+        reductionAmount: Number(reductionAmount),
+        reductionPercentage: Number(reductionPercentage),
+        concessionReason,
       };
-      // console.log(reqData);
-      const response = await axiosPrivate.post(
-        "accounts/feestructure",
-        reqData
-      );
-      getFeeStructures();
+      const response = await axiosPrivate.post("accounts/concession", reqData);
+      console.log(response);
     } catch (error) {
       console.error(error);
     }
@@ -80,10 +77,6 @@ export default function AddConcessionStructureModal({
   // useEffect(() => {
   //   console.log(selectedAcademicYr);
   // }, [selectedAcademicYr]);
-
-  useEffect(() => {
-    console.log(dataArray);
-  }, [dataArray]);
 
   useEffect(() => {
     setDataArray([]);
@@ -137,6 +130,12 @@ export default function AddConcessionStructureModal({
                 />
               )}
             </div>
+            <div className="w-52">
+              <Input
+                label="Concession reason"
+                onChange={(e) => setconcessionReason(e.target.value)}
+              />
+            </div>
           </div>
         </div>
         <DialogFooter>
@@ -148,7 +147,7 @@ export default function AddConcessionStructureModal({
           >
             <span>Cancel</span>
           </Button>
-          <Button variant="gradient" color="green" onClick={handleOpen}>
+          <Button variant="gradient" color="green" onClick={addfeestructure}>
             <span>Add</span>
           </Button>
         </DialogFooter>

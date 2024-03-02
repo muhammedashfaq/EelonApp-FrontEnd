@@ -4,7 +4,7 @@ import { Tooltip, Typography } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddConcessionStructureModal from "./AddConcessionStructureModal";
 import { useState, useEffect } from "react";
-import FeeStructureCards from "./FeeStructureCards";
+import ConcessionStructureCard from "./ConcessionStructureCard";
 
 const AddConcessionStructure = () => {
   const axiosPrivate = useAxiosPrivate();
@@ -34,8 +34,9 @@ const AddConcessionStructure = () => {
 
   const getFeeStructures = async () => {
     try {
-      const response = await axiosPrivate.get("accounts/feestructure");
+      const response = await axiosPrivate.get("accounts/concession");
       setfeeStructures(response.data);
+      console.log(response);
     } catch (error) {
       console.error(error);
     }
@@ -44,7 +45,7 @@ const AddConcessionStructure = () => {
   useEffect(() => {
     getAcademicYrDropdowns();
     getStdDropdowns();
-    // getFeeStructures();
+    getFeeStructures();
   }, []);
   return (
     <>
@@ -69,7 +70,7 @@ const AddConcessionStructure = () => {
           <div className="container xl grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
             {feeStructures &&
               feeStructures.map((item) => (
-                <FeeStructureCards
+                <ConcessionStructureCard
                   item={item}
                   key={item?._id}
                   getFeeStructures={getFeeStructures}
