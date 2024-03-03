@@ -34,7 +34,7 @@ const AddConcessionStructure = () => {
 
   const getFeeStructures = async () => {
     try {
-      const response = await axiosPrivate.get("accounts/concession");
+      const response = await axiosPrivate.get("accounts/concessionstructure");
       setfeeStructures(response.data);
       console.log(response);
     } catch (error) {
@@ -67,16 +67,16 @@ const AddConcessionStructure = () => {
         </div>
 
         <div className="flex justify-center">
-          <div className="container xl grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-            {feeStructures &&
-              feeStructures.map((item) => (
-                <ConcessionStructureCard
-                  item={item}
-                  key={item?._id}
-                  getFeeStructures={getFeeStructures}
-                />
-              ))}
-          </div>
+          {feeStructures &&
+            feeStructures.map((item, index) => (
+              <ConcessionStructureCard
+                index={index + 1}
+                item={item}
+                key={item?._id}
+                getFeeStructures={getFeeStructures}
+                academicYrDD={academicYrDD}
+              />
+            ))}
         </div>
       </div>
     </>
