@@ -1,5 +1,6 @@
 import React from 'react'
 import { RouteObjects } from '../../Routes/RoutObjects'
+import { useLocation } from 'react-router-dom'
 
 const ErrorComponent = () => {
   return (

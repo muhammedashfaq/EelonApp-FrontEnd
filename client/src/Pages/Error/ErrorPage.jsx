@@ -5,7 +5,6 @@ import Banner from '../../Components/Banner/Banner'
 const ErrorPage = () => {
   return (
     <div>
-        <Banner/>
         <ErrorComponent/>
     </div>
   )

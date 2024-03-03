@@ -109,23 +109,7 @@ export default function ClassroomNavbar() {
           </ListItem>
               </Link>
                 </div>
-                <div>
-          <Link to={RouteObjects.StudyRoomHome2}>
-
-          <ListItem className={!openSidebar && "w-10"}>
-            <ListItemPrefix>
-              <FontAwesomeIcon icon={faHome} className="h-5 w-5" />
-            </ListItemPrefix>
-            <ListItemPrefix
-              className={openSidebar ? "showComponent" : "hideComponent"}
-              >
-              <Typography color="blue-gray" className="mr-auto font-normal">
-                Home2
-              </Typography>
-            </ListItemPrefix>
-          </ListItem>
-              </Link>
-                </div>
+                
           <hr className="my-2 border-blue-gray-50" />
           {!openSidebar ? (
             <ListItem
@@ -184,6 +168,46 @@ export default function ClassroomNavbar() {
             </>
           )}
         </Accordion>
+        <hr className="my-2 border-blue-gray-50" />
+
+         <div>
+          <Link to={RouteObjects.StudyRoomHome2}>
+
+          <ListItem className={!openSidebar && "w-10"}>
+            <ListItemPrefix>
+              <FontAwesomeIcon icon={faHome} className="h-5 w-5" />
+            </ListItemPrefix>
+            <ListItemPrefix
+              className={openSidebar ? "showComponent" : "hideComponent"}
+              >
+              <Typography color="blue-gray" className="mr-auto font-normal">
+                Home2
+              </Typography>
+            </ListItemPrefix>
+          </ListItem>
+              </Link>
+                </div> 
+
+                <hr className="my-2 border-blue-gray-50" />
+                <div>
+          <Link to={RouteObjects.StudyRoomHome2}>
+
+          <ListItem className={!openSidebar && "w-10"}>
+            <ListItemPrefix>
+              <FontAwesomeIcon icon={faHome} className="h-5 w-5" />
+            </ListItemPrefix>
+            <ListItemPrefix
+              className={openSidebar ? "showComponent" : "hideComponent"}
+              >
+              <Typography color="blue-gray" className="mr-auto font-normal">
+                Home2
+              </Typography>
+            </ListItemPrefix>
+          </ListItem>
+              </Link>
+                </div> 
+
+                <hr className="my-2 border-blue-gray-50" />
         {/* <Accordion
           open={open === 2}
           icon={
@@ -225,7 +249,6 @@ export default function ClassroomNavbar() {
             </List>
           </AccordionBody>
         </Accordion> */}
-        <hr className="my-2 border-blue-gray-50" />
       </List>
     </Card>
   );

@@ -5,11 +5,12 @@ import {
   faGraduationCap,
   faPlusCircle,
   faTrash,
+  faTrashCan,
   faUpload,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Tooltip } from "@material-tailwind/react";
+import { Button, Chip, IconButton, Tooltip } from "@material-tailwind/react";
 import notFoundImg from "../../../../assets/placeholderImg.jpg";
 
 import React, { useState } from "react";
@@ -17,12 +18,89 @@ import { faSquarePlus } from "@fortawesome/free-regular-svg-icons";
 import AddStaffExperianceDocuModal from "./AddStaffExperianceDocuModal";
 import AddStaffEducationalModal from "./AddStaffEducationalModal";
 import StaffUploadImgModal from "./StaffUploadImgModal";
+import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
+import Swal from "sweetalert2";
+import SpinningLoader from "../../../spinner/SpinningLoader";
+import useAuth from "../../../../Hooks/useAuth";
+import StaffStatus from "./StaffStatus";
 
 const StaffProfile = ({ userData, getData }) => {
+  const { auth } = useAuth();
+  const axiosPrivate = useAxiosPrivate();
   const [image, setImage] = useState();
+  const [isLoading, setisLoading] = useState(false);
 
+  const changeStatus =async(status)=>{
+    try {
+      console.log(status)
+      // const response = await axiosPrivate.post("",status)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const deteteJobRole = async (public_id, arrId) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+      if (result.isConfirmed) {
+        setisLoading(true);
+        await axiosPrivate.delete(
+          `certificates/staff/experience/${userData._id}`,
+          { data: { public_id: public_id, arrId: arrId } }
+        );
+        setisLoading(false);
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+      }
+      getData();
+    } catch (error) {
+      setisLoading(false);
+      console.log(error);
+    }
+  };
+  const deteteEducation = async (public_id, arrId) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+      if (result.isConfirmed) {
+        setisLoading(true);
+        await axiosPrivate.delete(
+          `certificates/staff/education/${userData._id}`,
+          { data: { public_id: public_id, arrId: arrId } }
+        );
+        setisLoading(false);
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+      }
+      getData();
+    } catch (error) {
+      setisLoading(false);
+      console.log(error);
+    }
+  };
   return (
     <div class="container mx-auto my-5 p-5">
+      {isLoading && <SpinningLoader />}
       <div class="md:flex no-wrap md:-mx-2 ">
         <div class="w-full md:w-3/12 md:mx-2">
           <div className="image overflow-hidden">
@@ -77,9 +155,16 @@ const StaffProfile = ({ userData, getData }) => {
             <li className="flex items-center py-3">
               <span>Status</span>
               <span className="ml-auto">
-                <span className="bg-green-500 py-1 px-2 rounded text-white text-sm">
-                  Active
-                </span>
+                {auth?.roles == 2000 ? (
+                  <StaffStatus changeStatus={changeStatus} />
+                ) : ( 
+                  <span>
+                    <Chip
+                      value="Active"
+                      className="bg-green-500 py-1 px-2 rounded text-white text-sm"
+                    />
+                  </span>
+                )}
               </span>
             </li>
             <li className="flex items-center py-3">
@@ -157,43 +242,56 @@ const StaffProfile = ({ userData, getData }) => {
                   <FontAwesomeIcon icon={faBook} />
                   <div className="flex space-x-5 w-full">
                     <span className="tracking-wide">Experience</span>
-                    <AddStaffExperianceDocuModal />
+                    <AddStaffExperianceDocuModal
+                      userData={userData}
+                      getData={getData}
+                    />
                   </div>
                 </div>
 
-                <ul className="list-inside space-y-2">
-                  <li>
-                    <div className="text-teal-600">
-                      Owner at Her Company Inc.
+                <ul className="list-inside space-y-2  mx-2">
+                  {userData?.workExperienceArray.length === 0 ? (
+                    <div className="flex justify-center items-center h-32 bg-gray-100 text-gray-500">
+                      <p className="text-lg">
+                        No job details have been uploaded as of yet.
+                      </p>
                     </div>
-                    <div className="text-gray-500 text-xs">
-                      March 2020 - Now
-                    </div>
-                  </li>
-                  <li>
-                    <div className="text-teal-600">
-                      Owner at Her Company Inc.
-                    </div>
-                    <div className="text-gray-500 text-xs">
-                      March 2020 - Now
-                    </div>
-                  </li>
-                  <li>
-                    <div className="text-teal-600">
-                      Owner at Her Company Inc.
-                    </div>
-                    <div className="text-gray-500 text-xs">
-                      March 2020 - Now
-                    </div>
-                  </li>
-                  <li>
-                    <div className="text-teal-600">
-                      Owner at Her Company Inc.
-                    </div>
-                    <div className="text-gray-500 text-xs">
-                      March 2020 - Now
-                    </div>
-                  </li>
+                  ) : (
+                    <>
+                      {userData &&
+                        userData.workExperienceArray?.map(
+                          (
+                            { _id, jobRole, jobRoleIn, expFrom, expTo, pdf },
+                            i
+                          ) => (
+                            <li key={i}>
+                              <div className="flex justify-between border-b-2  px-7">
+                                <div>
+                                  <div className="text-teal-600">
+                                    <a href={pdf?.url} target="_blank">
+                                      {jobRole} at {jobRoleIn}
+                                    </a>
+                                  </div>
+                                  <div className="text-gray-500 text-xs">
+                                    {expFrom} - {expTo ? expTo : "Now"}
+                                  </div>
+                                </div>
+                                <div
+                                  className="flex justify-center"
+                                  onClick={() =>
+                                    deteteJobRole(pdf.public_id, _id)
+                                  }
+                                >
+                                  <IconButton variant="text">
+                                    <FontAwesomeIcon icon={faTrashCan} />
+                                  </IconButton>
+                                </div>
+                              </div>
+                            </li>
+                          )
+                        )}
+                    </>
+                  )}
                 </ul>
               </div>
               <div>
@@ -205,26 +303,56 @@ const StaffProfile = ({ userData, getData }) => {
                   <div className="flex space-x-5 w-full">
                     <span className="tracking-wide">Education</span>
 
-                    <AddStaffEducationalModal />
+                    <AddStaffEducationalModal
+                      userData={userData}
+                      getData={getData}
+                    />
                   </div>
                 </div>
+
                 <ul className="list-inside space-y-2">
-                  <li>
-                    <div className="text-teal-600">
-                      Masters Degree in Oxford
+                  {userData?.educationArray.length === 0 ? (
+                    <div className="flex justify-center items-center h-32 bg-gray-100 text-gray-500">
+                      <p className="text-lg">
+                        No job details have been uploaded as of yet.
+                      </p>
                     </div>
-                    <div className="text-gray-500 text-xs">
-                      March 2020 - Now
-                    </div>
-                  </li>
-                  <li>
-                    <div className="text-teal-600">
-                      Bachelors Degreen in LPU
-                    </div>
-                    <div className="text-gray-500 text-xs">
-                      March 2020 - Now
-                    </div>
-                  </li>
+                  ) : (
+                    <>
+                      {userData &&
+                        userData.educationArray?.map(
+                          (
+                            { _id, qualification, uni, expFrom, expTo, pdf },
+                            i
+                          ) => (
+                            <li key={i}>
+                              <div className="flex justify-between border-b-2  px-7">
+                                <div>
+                                  <div className="text-teal-600">
+                                    <a href={pdf?.url} target="_blank">
+                                      {qualification} from {uni}
+                                    </a>
+                                  </div>
+                                  <div className="text-gray-500 text-xs">
+                                    {expFrom} - {expTo ? expTo : "Now"}
+                                  </div>
+                                </div>
+                                <div
+                                  className="flex justify-center"
+                                  onClick={() =>
+                                    deteteEducation(pdf.public_id, _id)
+                                  }
+                                >
+                                  <IconButton variant="text">
+                                    <FontAwesomeIcon icon={faTrashCan} />
+                                  </IconButton>
+                                </div>
+                              </div>
+                            </li>
+                          )
+                        )}
+                    </>
+                  )}
                 </ul>
               </div>
             </div>

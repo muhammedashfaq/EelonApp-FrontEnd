@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
-const BarChart = () => {
+const BarChart = ({name}) => {
   const [chartData, setChartData] = useState({
     series: [{
       data: [400, 430, 448, 470,],
@@ -51,7 +51,7 @@ const BarChart = () => {
         },
       },
       title: {
-        text: 'Daily Attandance Report' ,
+        text: `Daily Attandance Report ${name}` ,
         align: 'center',
         floating: true,
       },

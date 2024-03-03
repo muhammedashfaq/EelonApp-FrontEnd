@@ -2,6 +2,7 @@ import { Button, Card, Input, Typography } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import { TrashIcon } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";  // Import useLocation
 
 const Librarysettings = () => {
   const [NewGenre, setNewGenre] = useState();
@@ -46,10 +47,23 @@ const Librarysettings = () => {
   useEffect(() => {
     getSettings();
   }, []);
+  const location = useLocation();  // Use useLocation hook
+  const breadcrumbs = location.pathname.split('/').filter(Boolean);
+
 
   return (
     <>
       <div className="flex flex-wrap justify-center ">
+      <nav className="mb-6">
+        {breadcrumbs.map((crumb, index) => (
+          <span key={index} className="mr-2 text-sm"> 
+            <Link to={`/${breadcrumbs.slice(0, index + 1).join('/')}`}>
+              {crumb}
+            </Link>
+            {index < breadcrumbs.length - 1 && <span className="mx-2">/</span>}
+          </span>
+        ))}
+      </nav>
         <form
           className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
           onSubmit={addSetting}
