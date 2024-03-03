@@ -20,22 +20,25 @@ export default function StaffUploadImgModal({ userId, getData }) {
   const [file, setFile] = useState(null);
   const [editImg, setEditImg] = useState(null);
   const [openModal, setOpenModal] = useState(false);
+  const [isLoading ,setisLoading]=useState(false)
 
   const axiosPrivate = useAxiosPrivate();
 
   const uploadImage = async () => {
     if (!userId) return;
     try {
+      setisLoading(true)
       const response = await axiosPrivate.post(
         `images/staff/profilepic/${userId}`,
         {
           Image: editImg,
         }
       );
-      console.log(response);
+      setisLoading(false)
       setOpen(false);
       getData();
     } catch (error) {
+      setisLoading(false)
       console.error(error);
     }
   };
@@ -105,7 +108,7 @@ export default function StaffUploadImgModal({ userId, getData }) {
           >
             <span>Cancel</span>
           </Button>
-          <Button variant="gradient" color="green" onClick={uploadImage}>
+          <Button variant="gradient" color="green" onClick={uploadImage} loading={isLoading}>
             <span>Upload</span>
           </Button>
           {/* <div className=" flex mobile:flex-wrap Tablet:flex-wrap ipad:flex-wrap gap-2 justify-end my-1 items-center">

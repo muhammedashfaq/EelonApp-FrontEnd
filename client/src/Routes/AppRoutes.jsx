@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { RouteObjects } from "./RoutObjects";
 import { useSelector } from "react-redux";
 import { Toaster } from "react-hot-toast";
@@ -75,14 +75,37 @@ import Footersmall from "../Components/Staff/Header/Footersmall";
 import FeeInvoiceBillPage from "../Pages/Staff/Dashboard/FeeCollection/FeeInvoiceBillPage";
 
 import AddConcessionStructure from "../Pages/Staff/Dashboard/FeeCollection/AddConcessionStructure";
-
+import { useEffect, useState } from "react";
+import SuperAdminLogin from "../Pages/SperAdminPages/SuperLogin/SuperAdminLoginPage";
+import SuperAdminHomePage from "../Pages/SperAdminPages/SuperAdminHome/SuperAdminHomePage";
+import ForgotMailPage from "../Pages/SperAdminPages/SuperLogin/ForgotMailPage";
+import ResetPage from "../Pages/SperAdminPages/SuperLogin/ResetPage";
 
 const AppRoutes = () => {
+  const [editedPath, setEditedPath] = useState("");
+  const location = useLocation();
+  useEffect(() => {
+    const newPath = location.pathname.split(`/`)[1];
+    setEditedPath(newPath);
+  }, [location]);
   return (
     <div>
       <Toaster position="bottom-center" reverseOrder={false} />
-      <StaffHeader />
+
+      {!["test", "login", "iamsuperadmin", "*", "superhome"].includes(editedPath) && <StaffHeader />}
+
+
+
       <Routes>
+        {/* Super Admin */}
+        <Route path={RouteObjects.SuperAdmin} element={<SuperAdminLogin />} />
+        <Route
+          path={RouteObjects.SuperAdminH}
+          element={<SuperAdminHomePage />}
+        />
+        <Route path={RouteObjects.SuperForgot} element={<ForgotMailPage />} />
+        <Route path={RouteObjects.SuperReset} element={<ResetPage />} />
+        {/* Main Login */}
         <Route path={RouteObjects.Login} element={<Login />} />
         {/* accountant Module  */}
         <Route

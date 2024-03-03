@@ -1,19 +1,29 @@
-import React, { useState } from "react";
-import { Input, Tooltip, Dialog } from "@material-tailwind/react";
+import React, { useEffect, useState } from "react";
+import { Input, Tooltip, Dialog, Button } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquarePlus } from "@fortawesome/free-regular-svg-icons";
-
-const AddStaffExperianceDocuModal = () => {
+import { faFileArrowUp } from "@fortawesome/free-solid-svg-icons";
+import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
+import Swal from "sweetalert2";
+const AddStaffExperianceDocuModal = ({ userData, getData }) => {
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen((cur) => !cur);
+  const handleOpen = () => {
+    setOpen((cur) => !cur);
+    setFiles({});
+  };
   const [files, setFiles] = useState({});
   const [isOverlayDraggedOver, setIsOverlayDraggedOver] = useState(false);
   const [jobRole, setJobRole] = useState();
+  const [jobRoleIn, setJobRoleIn] = useState();
+
   const [toDate, setToDate] = useState();
   const [fromdate, setFromDate] = useState();
+  const [base64String, setBase64String] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isValidate, setIsValidate] = useState("");
 
+  const axiosPrivate = useAxiosPrivate();
   const addFile = (file) => {
-    const isImage = file.type.match("image.*");
     const objectURL = URL.createObjectURL(file);
 
     setFiles((prevFiles) => ({
@@ -21,6 +31,10 @@ const AddStaffExperianceDocuModal = () => {
       [objectURL]: file,
     }));
   };
+  function formatFileSize(bytes) {
+    const kilobytes = bytes / 1024;
+    return kilobytes.toFixed(2) + " KB";
+  }
 
   const handleDrop = (event) => {
     event.preventDefault();
@@ -47,62 +61,88 @@ const AddStaffExperianceDocuModal = () => {
     }
   };
 
-  const handleFileInputChange = (event) => {
-    for (const file of event.target.files) {
-      addFile(file);
-    }
-  };
-
   const handleFileDelete = (objectURL) => {
     const newFiles = { ...files };
     delete newFiles[objectURL];
     setFiles(newFiles);
   };
 
-  const handleSubmit = () => {
-    try {
-      const formData = {
-        jobRole,
-        fromdate,
-        toDate,
-        files,
-      };
-      console.log(formData, "check data");
-    } catch (error) {
-      console.log(error);
-    }
-    // alert(`Submitted Files:\n${JSON.stringify(files)}`);
-    // console.log(files);
-  };
-
-  const handleCancel = () => {
-    setFiles({});
-  };
-
   const hasFiles = ({ dataTransfer: { types = [] } }) =>
     types.indexOf("Files") > -1;
 
+  const handleFileInputChange = (event) => {
+    for (const file of event.target.files) {
+      addFile(file);
+
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const base64 = event.target.result;
+        setBase64String(base64);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const formData = {
+    jobRole,
+    jobRoleIn,
+    expFrom: fromdate,
+    expTo: toDate,
+    pdfB64: base64String,
+  };
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      setIsLoading(true);
+      await axiosPrivate.post(
+        `certificates/staff/experience/${userData._id}`,
+        formData
+      );
+      setIsLoading(false);
+      handleOpen();
+      getData();
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        },
+      });
+      Toast.fire({
+        icon: "success",
+        title: "Added successfully",
+      });
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    const isValidate =
+      formData.expFrom && formData.jobRole && formData.jobRoleIn;
+
+    setIsValidate(isValidate);
+  }, [formData]);
   return (
     <>
       <Tooltip content="Add New">
         <span>
           <FontAwesomeIcon
-            icon={faSquarePlus}
+            icon={faFileArrowUp}
             onClick={handleOpen}
-            beat
             size="2xl"
             className="cursor-pointer"
           />
         </span>
       </Tooltip>
-      <Dialog
-        size="xl"
-        open={open}
-        handler={handleOpen}
-        className="bg-transparent shadow-none"
-      >
+      <Dialog size="xl" open={open} className="bg-transparent shadow-none">
         <main className="container mx-auto max-w-screen-lg h-full">
-          {/* file upload modal */}
           <article
             aria-label="File Upload Modal"
             className={`relative h-full flex flex-col bg-white shadow-xl rounded-md ${
@@ -118,30 +158,33 @@ const AddStaffExperianceDocuModal = () => {
               <div className="space-y-6 w-full mx-auto p-6 bg-white rounded-md shadow-md">
                 <h1 className="text-2xl font-semibold mb-4">Upload Details</h1>
                 <div className="flex flex-col gap-4">
-                  <div className="flex items-center">
-                    <label htmlFor="jobRole" className="mr-2">
-                      Job Role:
-                    </label>
+                  <div className="flex items-center gap-3">
                     <Input
+                      label="                      Job Role"
                       id="jobRole"
                       className="border rounded-md p-2"
                       onChange={(e) => setJobRole(e.target.value)}
                     />
-                  </div>
-                  <div className="flex items-center">
-                    <label htmlFor="experienceFrom" className="mr-2">
-                      Experience From:
-                    </label>
+
                     <Input
+                      label="In"
+                      id="jobRole"
+                      className="border rounded-md p-2"
+                      onChange={(e) => setJobRoleIn(e.target.value)}
+                    />
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Input
+                      label="                      Experience From:
+                    "
                       type="date"
                       id="experienceFrom"
                       className="border rounded-md p-2"
                       onChange={(e) => setFromDate(e.target.value)}
                     />
-                    <label htmlFor="experienceTo" className="mr-2">
-                      Experience To:
-                    </label>
+
                     <Input
+                      label="Experience To:"
                       type="date"
                       id="experienceTo"
                       className="border rounded-md p-2"
@@ -160,7 +203,7 @@ const AddStaffExperianceDocuModal = () => {
                 <input
                   id="hidden-input"
                   type="file"
-                  multiple
+                  accept=".pdf"
                   className="hidden"
                   onChange={handleFileInputChange}
                 />
@@ -180,91 +223,74 @@ const AddStaffExperianceDocuModal = () => {
               </h1>
 
               <ul id="gallery" className="flex flex-1 flex-wrap -m-1">
-                {Object.keys(files).length === 0 ? (
+                {Object.keys(files).map((objectURL) => (
                   <li
-                    id="empty"
-                    className="h-full w-full text-center flex flex-col items-center justify-center"
+                    key={objectURL}
+                    className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-1/8 h-24"
                   >
-                    <img
-                      className="mx-auto w-32"
-                      src="https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png"
-                      alt="no data"
-                    />
-                    <span className="text-small text-gray-500">
-                      No files selected
-                    </span>
-                  </li>
-                ) : (
-                  Object.keys(files).map((objectURL) => (
-                    <li
-                      key={objectURL}
-                      className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-1/8 h-24"
+                    <article
+                      tabIndex="0"
+                      className="group w-full h-full rounded-md focus:outline-none focus:shadow-outline relative bg-gray-100 cursor-pointer"
                     >
-                      <article
-                        tabIndex="0"
-                        className="group w-full h-full rounded-md focus:outline-none focus:shadow-outline relative bg-gray-100 cursor-pointer"
-                      >
-                        <img
-                          alt="upload preview"
-                          className="img-preview w-full h-full sticky object-cover rounded-md bg-fixed"
-                          src={objectURL}
-                        />
-                        <section className="flex flex-col rounded-md text-xs break-words w-full h-full z-20 absolute top-0 py-2 px-3">
-                          <h1 className="flex-1"></h1>
-                          <div className="flex">
-                            <span className="p-1">
-                              <i>
-                                <svg
-                                  className="fill-current w-4 h-4 ml-auto pt-"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="24"
-                                  height="24"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path d="M5 8.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5c0 .829-.672 1.5-1.5 1.5s-1.5-.671-1.5-1.5zm9 .5l-2.519 4-2.481-1.96-4 5.96h14l-5-8zm8-4v14h-20v-14h20zm2-2h-24v18h24v-18z" />
-                                </svg>
-                              </i>
-                            </span>
-                            <p className="p-1 size text-xs"></p>
-                            <button
-                              className="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md"
-                              onClick={() => handleFileDelete(objectURL)}
-                            >
+                      <div className="w-full h-full flex flex-col rounded-md text-xs break-words">
+                        <h1 className="flex-1">{files[objectURL].name}</h1>
+                        <div className="flex">
+                          <span className="p-1">
+                            <i>
                               <svg
-                                className="pointer-events-none fill-current w-4 h-4 ml-auto"
+                                className="fill-current w-4 h-4 ml-auto pt-"
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="24"
                                 height="24"
                                 viewBox="0 0 24 24"
                               >
-                                <path
-                                  className="pointer-events-none"
-                                  d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z"
-                                />
+                                <path d="M5 8.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5c0 .829-.672 1.5-1.5 1.5s-1.5-.671-1.5-1.5zm9 .5l-2.519 4-2.481-1.96-4 5.96h14l-5-8zm8-4v14h-20v-14h20zm2-2h-24v18h24v-18z" />
                               </svg>
-                            </button>
-                          </div>
-                        </section>
-                      </article>
-                    </li>
-                  ))
-                )}
+                            </i>
+                          </span>
+                          <p className="p-1 size text-xs">
+                            {formatFileSize(files[objectURL].size)}
+                          </p>
+                          <button
+                            className="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md"
+                            onClick={() => handleFileDelete(objectURL)}
+                          >
+                            <svg
+                              className="pointer-events-none fill-current w-4 h-4 ml-auto"
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                className="pointer-events-none"
+                                d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    </article>
+                  </li>
+                ))}
               </ul>
             </section>
 
             {/* sticky footer */}
             <footer className="flex justify-end px-8 pb-8 pt-4">
-              <button
+              <Button
+                loading={isLoading}
+                disabled={!isValidate}
                 id="submit"
                 className="rounded-sm px-3 py-1 bg-blue-700 hover:bg-blue-500 text-white focus:shadow-outline focus:outline-none"
                 onClick={handleSubmit}
               >
                 Upload now
-              </button>
+              </Button>
               <button
                 id="cancel"
                 className="ml-3 rounded-sm px-3 py-1 hover:bg-gray-300 focus:shadow-outline focus:outline-none"
-                onClick={handleCancel}
+                onClick={handleOpen}
               >
                 Cancel
               </button>

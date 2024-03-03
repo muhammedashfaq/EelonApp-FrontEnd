@@ -78,4 +78,16 @@ export const RouteObjects = {
   AdminssionFee: "/admissionfee",
   AddFeeStructure: "/addfeestructure",
   AddConcessionStructure: "/addconcessionstructure",
+
+
+
+  //super Admin
+
+  SuperAdmin:"/iamsuperadmin",
+  SuperAdminH:"/superhome*",
+  SuperForgot:"/f",
+  SuperReset:"/r",
+
+  SuperAdminHome:"/superhome/home"
+  
 };
