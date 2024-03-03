@@ -15,7 +15,12 @@ import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import Swal from "sweetalert2";
 import StudentsListbysearchName from "./StudentsListbysearchName";
 
-const SearchbyRollno = ({ setStudentData, setIsLoading, isLoading }) => {
+const SearchbyRollno = ({
+  setStudentData,
+  setIsLoading,
+  isLoading,
+  setConcessionData,
+}) => {
   const [inputValue, setInputValue] = useState("");
   const [isValidate, setIsValidate] = useState(false);
   const axiosPrivate = useAxiosPrivate();
@@ -59,6 +64,7 @@ const SearchbyRollno = ({ setStudentData, setIsLoading, isLoading }) => {
       console.log(error);
     }
   };
+
   useEffect(() => {
     const isValidate = inputValue && searchName;
     setIsValidate(isValidate);

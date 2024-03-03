@@ -1,10 +1,19 @@
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import Banner from "../../../../Components/Banner/Banner";
-import { Tooltip, Typography } from "@material-tailwind/react";
+import { Tooltip, Typography, Card } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddConcessionStructureModal from "./AddConcessionStructureModal";
 import { useState, useEffect } from "react";
 import ConcessionStructureCard from "./ConcessionStructureCard";
+
+const TABLE_HEAD = [
+  "Sl.no",
+  "Concession name",
+  "Academic year",
+  "Type",
+  "Percentage/Amount",
+  "Action",
+];
 
 const AddConcessionStructure = () => {
   const axiosPrivate = useAxiosPrivate();
@@ -65,18 +74,43 @@ const AddConcessionStructure = () => {
 
           <div></div>
         </div>
-
         <div className="flex justify-center">
-          {feeStructures &&
-            feeStructures.map((item, index) => (
-              <ConcessionStructureCard
-                index={index + 1}
-                item={item}
-                key={item?._id}
-                getFeeStructures={getFeeStructures}
-                academicYrDD={academicYrDD}
-              />
-            ))}
+          <div className="container xl">
+            <Card className="h-full w-full overflow-scroll mt-5">
+              <table className="w-full min-w-max table-auto text-left">
+                <thead>
+                  <tr>
+                    {TABLE_HEAD.map((head) => (
+                      <th
+                        key={head}
+                        className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
+                      >
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal leading-none opacity-70"
+                        >
+                          {head}
+                        </Typography>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {feeStructures &&
+                    feeStructures.map((item, index) => (
+                      <ConcessionStructureCard
+                        index={index + 1}
+                        item={item}
+                        key={item?._id}
+                        getFeeStructures={getFeeStructures}
+                        academicYrDD={academicYrDD}
+                      />
+                    ))}
+                </tbody>
+              </table>
+            </Card>
+          </div>
         </div>
       </div>
     </>

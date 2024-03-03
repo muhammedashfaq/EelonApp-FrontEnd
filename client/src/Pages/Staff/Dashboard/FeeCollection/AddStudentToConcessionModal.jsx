@@ -88,16 +88,17 @@ export default function AddStudentToConcessionModal({
         type: "concession",
         templateId,
         academicYear,
-        reductionAmount,
-        reductionPercentage,
-        reductionType,
         studentArray: selectedUsers,
         status: "unclaimed",
         concessionName,
+        reductionAmount,
+        reductionPercentage,
+        reductionType,
       };
-      console.log(setSelectedUsers);
+      // console.log(setSelectedUsers);
       const response = await axiosPrivate.post(`accounts/concession`, reqData);
       console.log(response.data);
+      setOpen(false);
     } catch (error) {
       console.error(error);
     }

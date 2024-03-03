@@ -67,8 +67,13 @@ export default function AddConcessionStructureModal({
         reductionPercentage: Number(reductionPercentage),
         concessionReason,
       };
-      const response = await axiosPrivate.post("accounts/concession", reqData);
+      const response = await axiosPrivate.post(
+        "accounts/concessionstructure",
+        reqData
+      );
       console.log(response);
+      setOpen(false);
+      getFeeStructures();
     } catch (error) {
       console.error(error);
     }
