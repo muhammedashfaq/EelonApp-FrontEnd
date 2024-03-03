@@ -7,13 +7,24 @@ import {
   faRupeeSign,
 } from "@fortawesome/free-solid-svg-icons";
 import { FeeType, PaymentMode } from "../../../DropDowns/DropDowns";
-import { Button, Input, Option, Select } from "@material-tailwind/react";
+import {
+  Button,
+  Input,
+  Menu,
+  MenuHandler,
+  MenuItem,
+  MenuList,
+  Option,
+  Select,
+  Typography,
+} from "@material-tailwind/react";
 import SearchbyRollno from "./SearchbyRollno";
 import { v4 as uuidv4 } from "uuid";
 
 import { Oval } from "react-loader-spinner";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import FeeCollectionRow from "./FeeCollectionRow";
+import ConcessionRow from "./ConcessionRow";
 const InformationRow = ({ label, value }) => (
   <div className="flex justify-evenly py-3 shadow-sm ">
     <span className="font-normal text-xl">{label} :</span>
@@ -28,6 +39,7 @@ const FeeCollection = () => {
   const axiosPrivate = useAxiosPrivate();
   const [dataArray, setDataArray] = useState([]);
   const [totalFee, settotalFee] = useState();
+  const [ConcessionData, setConcessionData] = useState([]);
 
   const getacYR = async () => {
     try {
@@ -60,12 +72,37 @@ const FeeCollection = () => {
     }
   };
 
-  const addDiv = () => {
+  const filterConcessionData = async (value) => {
+    if (!value) return;
+    try {
+      const response = await axiosPrivate.put("accounts/concession/filter", {
+        studentId: value,
+      });
+      setConcessionData(response.data);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (!studentData?._id) return;
+    const studentId = studentData?._id;
+    filterConcessionData(studentId);
+  }, [studentData]);
+
+  const addDiv = (value) => {
     const newId = uuidv4();
-    const newObj = { id: newId };
+    const newObj = { id: newId, divType: value };
     setDataArray([...dataArray, newObj]);
   };
   const removeDiv = (idToRemove) => {
+    if (!idToRemove) return;
+    const updatedDivs = dataArray.filter((item) => item.id !== idToRemove);
+    setDataArray(updatedDivs);
+  };
+
+  const removeConcessionDiv = (idToRemove) => {
     if (!idToRemove) return;
     const updatedDivs = dataArray.filter((item) => item.id !== idToRemove);
     setDataArray(updatedDivs);
@@ -94,6 +131,7 @@ const FeeCollection = () => {
               setStudentData={setStudentData}
               setIsLoading={setIsLoading}
               isLoading={isLoading}
+              setConcessionData={setConcessionData}
             />
           </div>
 
@@ -143,31 +181,65 @@ const FeeCollection = () => {
                 ))}
             </Select>
           </div> */}
-          {dataArray &&
-            dataArray.map((item, i) => (
-              <div className="my-10">
-                <hr className="m-3" />
-                <FeeCollectionRow
-                  acYr={acYr}
-                  handleData={handleData}
-                  removeDiv={removeDiv}
+          <Typography variant="h6" className="m-4">
+            Concessions
+          </Typography>
+
+          {ConcessionData?.length !== 0 &&
+            ConcessionData.map((item, i) => (
+              <>
+                <ConcessionRow
                   item={item}
-                  index={i + 1}
+                  handleData={handleData}
+                  id={i + 1}
+                  removeDiv={removeDiv}
                 />
-              </div>
+                <hr className="m-1" />
+              </>
             ))}
+          {dataArray &&
+            dataArray.map(
+              (item, i) =>
+                item?.divType !== "concessionDiv" && (
+                  <div className="my-10">
+                    <hr className="m-3" />
+                    <FeeCollectionRow
+                      acYr={acYr}
+                      handleData={handleData}
+                      removeDiv={removeDiv}
+                      item={item}
+                      index={i + 1}
+                    />
+                  </div>
+                )
+            )}
 
           <hr className="m-3" />
           <div className="flex justify-center">
-            <Button
-              variant="outlined"
-              onClick={addDiv}
-              style={{ textTransform: "none" }}
-              color="brown"
-            >
-              <FontAwesomeIcon icon={faPlus} size="xl" className="mr-3" />
-              Add field
-            </Button>
+            <Menu>
+              <MenuHandler>
+                <Button
+                  variant="outlined"
+                  // onClick={addDiv}
+                  style={{ textTransform: "none" }}
+                  color="brown"
+                >
+                  <FontAwesomeIcon icon={faPlus} size="xl" className="mr-3" />
+                  Add field
+                </Button>
+              </MenuHandler>
+              <MenuList>
+                <MenuItem onClick={() => addDiv("academicFee")}>
+                  Academic fee
+                </MenuItem>
+                <MenuItem onClick={() => addDiv("otherFee")}>
+                  Other fee
+                </MenuItem>
+                <MenuItem onClick={() => addDiv("additionalFee")}>
+                  Additional fee
+                </MenuItem>
+              </MenuList>
+            </Menu>
           </div>
           <hr className="m-3" />
           <div className="flex justify-end">
@@ -191,7 +263,7 @@ const FeeCollection = () => {
               </div>
 
               <Button fullWidth className="bg-dark-purple">
-                <FontAwesomeIcon icon={faIndianRupee}  />
+                <FontAwesomeIcon icon={faIndianRupee} />
                 <p className="font-normal">Pay</p>
               </Button>
             </div>
