@@ -87,6 +87,31 @@ const FeeCollection = () => {
     }
   };
 
+  const addFees = async (req, res) => {
+    try {
+      const reqData = {
+        studentId: studentData?._id,
+        studentName: studentData?.studentName,
+        // billDate: String,
+        invoiceNo: 123848,
+        address: studentData?.address,
+        admnNo: studentData?.admnNo,
+        classSection: studentData?.classId,
+        feesArray: dataArray,
+      };
+      console.log(reqData);
+      const response = await axiosPrivate.post(
+        "accounts/feecollection",
+        reqData
+      );
+      console.log(response);
+      const billId = response?.data?._id;
+      navigate(`${RouteObjects.FeeCollectionInvoice}/${billId}`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     if (!studentData?._id) return;
     const studentId = studentData?._id;
@@ -114,7 +139,7 @@ const FeeCollection = () => {
     settotalFee(calculateTotalFee);
     // console.log("Total fee", calculateTotalFee);
   }, [dataArray]);
-
+  // console.log(studentData);
   useEffect(() => {
     getacYR();
   }, []);
@@ -261,7 +286,8 @@ const FeeCollection = () => {
               <Button
                 fullWidth
                 className="bg-dark-purple"
-                onClick={() => navigate(RouteObjects.FeeInvoiceBill)}
+                // onClick={() => navigate(RouteObjects.FeeInvoiceBill)}
+                onClick={addFees}
               >
                 <FontAwesomeIcon icon={faIndianRupee} />
                 <p className="font-normal">Pay</p>
