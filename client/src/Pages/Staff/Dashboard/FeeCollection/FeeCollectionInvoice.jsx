@@ -109,14 +109,14 @@ const FeeCollectionInvoice = () => {
                   {feeData?.studentName}
                 </h3>
                 <div className="mt-2 not-italic text-gray-500">
-                  {admssionstdntData.gender === "Male" ? (
-                    <span>S/O {admssionstdntData?.FathersName}</span>
+                  {feeData.gender === "Male" ? (
+                    <span>S/O {feeData?.FathersName}</span>
                   ) : (
-                    <span>D/O {admssionstdntData?.FathersName}</span>
+                    <span>D/O {feeData?.FathersName}</span>
                   )}
 
                   <br />
-                  {admssionstdntData?.address}
+                  {feeData?.address}
                 </div>
               </div>
 
