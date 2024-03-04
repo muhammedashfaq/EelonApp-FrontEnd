@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { Button, Option, Select } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
+import { RouteObjects } from "../../../../Routes/RoutObjects";
 
 const AddVehicle = () => {
   const axiosPrivate = useAxiosPrivate();
@@ -10,13 +12,13 @@ const AddVehicle = () => {
   const [base64RC, setBase64RC] = useState("");
   const [isValidate, setIsValidate] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+const navigate=useNavigate()
   const [formData, setFormData] = useState({
     busNo: "",
     rgNo: "",
     vehicleModel: "",
     seatNo: "",
-    milage: "",
+    mileage: "",
     yearOfMade: "",
   });
 
@@ -61,8 +63,11 @@ const AddVehicle = () => {
     try {
       e.preventDefault();
       setIsLoading(true);
-      // const response = await axiosPrivate.post("",allData)
+      const response = await axiosPrivate.post("/transportation/bus",allData)
       setIsLoading(false);
+navigate(RouteObjects.VehcleList)
+
+      console.log(response)
     } catch (error) {
       setIsLoading(false);
       console.log(error);
@@ -87,20 +92,20 @@ const AddVehicle = () => {
     getyear();
   }, []);
 
-  useEffect(() => {
-    const isValidate =
-      allData.yearOfMade &&
-      allData.year &&
-      allData.vehicleModel &&
-      allData.busNo &&
-      allData.seatNo &&
-      allData.rgNo &&
-      allData.milage &&
-      allData.FC &&
-      allData.RC;
+  // useEffect(() => {
+  //   const isValidate =
+  //     allData.yearOfMade &&
+  //     allData.year &&
+  //     allData.vehicleModel &&
+  //     allData.busNo &&
+  //     allData.seatNo &&
+  //     allData.rgNo &&
+  //     allData.milage &&
+  //     // allData.FC &&
+  //     // allData.RC;
 
-    setIsValidate(isValidate);
-  }, [allData]);
+  //   setIsValidate(isValidate);
+  // }, [allData]);
   return (
     <div>
       <div className=" shadow-2xl max-w-7xl mx-auto bg-gray-200 p-16">
@@ -203,7 +208,7 @@ const AddVehicle = () => {
               <input
                 onChange={handleInputChange}
                 type="url"
-                name="milage"
+                name="mileage"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="3.5"
                 required
@@ -272,7 +277,7 @@ const AddVehicle = () => {
 
           <Button
             loading={isLoading}
-            disabled={!isValidate}
+            // disabled={!isValidate}
             onClick={HandleSubmit}
             type="submit"
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"

@@ -79,6 +79,7 @@ const menu = [
         href: RouteObjects.AddStudent,
         icon: faCaretRight,
       },
+     
       {
         title: "Manage Classes",
         href: RouteObjects.StaffManageClass,
@@ -158,6 +159,7 @@ const menu = [
         icon: faCaretRight,
         href: RouteObjects.StaffAttandance,
       },
+     
     ],
   },
   {
@@ -233,6 +235,11 @@ const menu = [
         title: "Vehicle List",
         icon: faCaretRight,
         href: RouteObjects.VehcleList,
+      },
+      {
+        title: "Alocate Student",
+        icon: faCaretRight,
+        href: RouteObjects.AlocateStudent,
       },
      
       
