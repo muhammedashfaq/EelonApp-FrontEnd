@@ -100,12 +100,12 @@ export default function AddFeeStrcrtModal({
     if (!selectedAcademicYr || !installmentType || !selectedClass) return;
     try {
       const reqData = {
-        academicYear: selectedAddnlAccYr,
+        academicYear: selectedAcademicYr,
         amount: Number(addnlAmount),
         feeType: "Academic fee",
         installmentArray: dataArray,
       };
-      console.log(reqData, "reqData");
+      // console.log(reqData, "reqData");
       const response = await axiosPrivate.post(
         "accounts/feestructure",
         reqData

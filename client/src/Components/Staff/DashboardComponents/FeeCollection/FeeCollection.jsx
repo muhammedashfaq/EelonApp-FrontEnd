@@ -103,7 +103,7 @@ const FeeCollection = () => {
   };
 
   useEffect(() => {
-    console.log(dataArray);
+    // console.log(dataArray);
 
     const calculateTotalFee = dataArray.reduce((total, fee) => {
       const feeTotal = fee?.amount ? fee.amount : 0;
