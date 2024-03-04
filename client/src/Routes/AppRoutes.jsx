@@ -80,7 +80,13 @@ import SuperAdminLogin from "../Pages/SperAdminPages/SuperLogin/SuperAdminLoginP
 import SuperAdminHomePage from "../Pages/SperAdminPages/SuperAdminHome/SuperAdminHomePage";
 import ForgotMailPage from "../Pages/SperAdminPages/SuperLogin/ForgotMailPage";
 import ResetPage from "../Pages/SperAdminPages/SuperLogin/ResetPage";
+
 import FeeCollectionInvoice from "../Pages/Staff/Dashboard/FeeCollection/FeeCollectionInvoice";
+
+import LedgerBookPage from "../Pages/Staff/Dashboard/FeeCollection/LedgerBookPage";
+import VehicleListPage from "../Pages/Staff/Dashboard/vehicleDetails/VehicleListPage";
+import AddVehiclePage from "../Pages/Staff/Dashboard/vehicleDetails/AddVehiclePage";
+
 
 const AppRoutes = () => {
   const [editedPath, setEditedPath] = useState("");
@@ -129,6 +135,10 @@ const AppRoutes = () => {
           path={`${RouteObjects.NewApplicationFee}/:id`}
           element={<ApplicationFeePage />}
         />
+            <Route
+          path={RouteObjects.LedgerBook}
+          element={<LedgerBookPage />}
+        />
         {/* Admin ROUTS */}
         <Route
           path={RouteObjects.UserProfileadmin}
@@ -149,6 +159,12 @@ const AppRoutes = () => {
           path={`${RouteObjects.HTClasswise}/:id/:term/:year`}
           element={<HTclasswiseTable />}
         />
+                {/* Vechle ROUTS */}
+                <Route path={RouteObjects.VehcleList} element={<VehicleListPage />} />
+                <Route path={RouteObjects.AddVehicle} element={<AddVehiclePage />} />
+
+
+
         {/* STUDENTS ROUTS */}
         <Route path={RouteObjects.root} element={<LandingPage />} />
         <Route
