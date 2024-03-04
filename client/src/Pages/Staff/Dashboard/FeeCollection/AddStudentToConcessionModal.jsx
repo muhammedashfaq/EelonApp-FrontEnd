@@ -95,9 +95,9 @@ export default function AddStudentToConcessionModal({
         reductionPercentage,
         reductionType,
       };
-      // console.log(setSelectedUsers);
-      const response = await axiosPrivate.post(`accounts/concession`, reqData);
-      console.log(response.data);
+      console.log(reqData, "req");
+      // const response = await axiosPrivate.post(`accounts/concession`, reqData);
+      // console.log(response.data);
       setOpen(false);
     } catch (error) {
       console.error(error);
@@ -220,7 +220,7 @@ export default function AddStudentToConcessionModal({
                     Class
                   </Typography>
                   <Select
-                    label="Academic year"
+                    label="Class"
                     onChange={(e) => setselectedAcademicYr(e)}
                   >
                     {/* <Option disabled>Select academic year</Option> */}
@@ -243,7 +243,14 @@ export default function AddStudentToConcessionModal({
                       style={{ border: "2px solid gray", borderRadius: "5px" }}
                       className="p-2  flex justify-between "
                     >
-                      <Typography className="mt-2.5">{data?.email}</Typography>
+                      <div className="flex flex-col">
+                        <Typography className="mt-2.5" variant="h6">
+                          {data?.studentName}
+                        </Typography>
+                        <Typography className="mt-2.5">
+                          {data?.email}
+                        </Typography>
+                      </div>
                       <Checkbox
                         // checked={
                         //   studentList.includes(data?._id) ||

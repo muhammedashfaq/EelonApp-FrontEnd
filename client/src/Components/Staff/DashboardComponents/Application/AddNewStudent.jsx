@@ -66,17 +66,16 @@ const AddNewStudent = ({ AcademicYrs }) => {
     guardianNameTamil: "",
     guardiansJob: "",
     annualIncome: "",
-    gender:"",
-    classSection:"",
-    bloodGp:"",
-    motherTongue:"",
-    religion:"",
-    community:"",
-    concessionStudent:"",
-    studentCategory:"",
-    board:"",
-    DOB:"",
-
+    gender: "",
+    classSection: "",
+    bloodGp: "",
+    motherTongue: "",
+    religion: "",
+    community: "",
+    concessionStudent: "",
+    studentCategory: "",
+    board: "",
+    DOB: "",
   });
   const [formData, setFormdata] = useState({
     nameTamil: "",
@@ -124,62 +123,61 @@ const AddNewStudent = ({ AcademicYrs }) => {
 
   const reqData = {
     ...formData,
+    admnId: id,
     gender: applicantData?.gender,
     bloodGp,
     motherTongue,
-      religion,
-      community,
-      classOfJoin:applicantData.classApplied,
-      concessionStudent,
-      studentCategory,
-      studentGp,
-      studentName:applicantData.studentName,
-      group: applicantData?.group,
-      mediumOfInstruction: applicantData?.mediumOfInstruction,
-      board: applicantData?.board,
-      academicYear: applicantData?.academicYear,
-      address: applicantData?.address,
-      admnNo:applicantData?.admnNo,
-      ContactNo:applicantData?.ContactNo,
-      FathersName:applicantData?.FathersName,
-      DOB:applicantData?.DOB
+    religion,
+    community,
+    classOfJoin: applicantData.classApplied,
+    concessionStudent,
+    studentCategory,
+    studentGp,
+    studentName: applicantData.studentName,
+    group: applicantData?.group,
+    mediumOfInstruction: applicantData?.mediumOfInstruction,
+    board: applicantData?.board,
+    academicYear: applicantData?.academicYear,
+    address: applicantData?.address,
+    admnNo: applicantData?.admnNo,
+    ContactNo: applicantData?.ContactNo,
+    FathersName: applicantData?.FathersName,
+    DOB: applicantData?.DOB,
+  };
 
-    };
-
-    const handleSubmitForm = async (event) => {
-      try {
+  const handleSubmitForm = async (event) => {
+    try {
       event.preventDefault();
       const addstudentErrors = addStudentsValidation(reqData);
       console.log(addstudentErrors);
       if (!Object.values(addstudentErrors).every((error) => error === "")) {
-        setFrntentErors(addstudentErrors)
+        setFrntentErors(addstudentErrors);
         return;
       } else {
-
         setIsLoading(true);
         const response = await axiosPrivate.post("/users/student", reqData);
-        console.log(response,'resaddd');
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        }
-      });
-      Toast.fire({
-        icon: "success",
-        title: "Added successfully"
-      });
-      setIsLoading(false);
-      navigate(`${RouteObjects.StudentsList}/${1}`);
-    }
+        console.log(response, "resaddd");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Added successfully",
+        });
+        setIsLoading(false);
+        navigate(`${RouteObjects.StudentsList}/${1}`);
+      }
     } catch (error) {
       setIsLoading(false);
-      
+
       console.log(error);
     }
   };
@@ -216,23 +214,24 @@ const AddNewStudent = ({ AcademicYrs }) => {
             <div className=" mt-6">
               <span className="ml-10 text-sm text-red-600">
                 <FontAwesomeIcon icon={faInfoCircle} />
-                Please complete all required  fields.
+                Please complete all required fields.
               </span>
             </div>
             <div className=" gap-4 p-8 Laptop:grid Laptop:grid-cols-4 Tablet:grid Tablet:grid-cols-3 ipad:grid ipad:grid-cols-3 mobile:grid mobile:grid-cols-2">
               <Input
                 className="bg-brown-50"
-                
                 name="studentName"
                 type="text"
                 variant="outlined"
                 value={applicantData.studentName}
                 label={
-                  frntentErors && frntentErors.studentName ? frntentErors.studentName : "Student Name"
+                  frntentErors && frntentErors.studentName
+                    ? frntentErors.studentName
+                    : "Student Name"
                 }
                 placeholder=" Name*"
                 onChange={handleInputChange}
-                error={frntentErors&&frntentErors.studentName?true:false}
+                error={frntentErors && frntentErors.studentName ? true : false}
               />
               <Input
                 className="bg-brown-50"
@@ -252,23 +251,21 @@ const AddNewStudent = ({ AcademicYrs }) => {
 
               <Input
                 className="bg-brown-50"
-             
                 label="DOB"
-                
                 value={applicantData?.DOB}
               />
               <Input
                 className="bg-brown-50"
-                
                 name="AadharNo"
                 type="number"
                 variant="outlined"
                 label={
-                  frntentErors && frntentErors.AadharNo ? frntentErors.AadharNo : "Adhar Number"
+                  frntentErors && frntentErors.AadharNo
+                    ? frntentErors.AadharNo
+                    : "Adhar Number"
                 }
                 placeholder="Adhar Number"
-                error={frntentErors&&frntentErors.AadharNo?true:false}
-
+                error={frntentErors && frntentErors.AadharNo ? true : false}
                 onChange={handleInputChange}
               />
               <Select
@@ -291,21 +288,24 @@ const AddNewStudent = ({ AcademicYrs }) => {
                 className="bg-brown-50"
                 variant="outlined"
                 label="Contact Number"
-               value={applicantData?.ContactNo}
+                value={applicantData?.ContactNo}
               />
               <Input
                 className="bg-brown-50"
                 name="AltCnctNo"
                 type="tel"
                 variant="outlined"
-                label={frntentErors && frntentErors.ContactNo ? frntentErors.ContactNo : "Alternate Number"}
+                label={
+                  frntentErors && frntentErors.ContactNo
+                    ? frntentErors.ContactNo
+                    : "Alternate Number"
+                }
                 placeholder="Alternate Number"
                 error={frntentErors && frntentErors.ContactNo ? true : false}
                 onChange={handleInputChange}
               />
               <Input
                 className="bg-brown-50"
-                
                 variant="outlined"
                 name="city"
                 label="City"
@@ -314,7 +314,6 @@ const AddNewStudent = ({ AcademicYrs }) => {
               />
               <Input
                 className="bg-brown-50"
-                
                 variant="outlined"
                 name="state"
                 label="State"
@@ -324,7 +323,6 @@ const AddNewStudent = ({ AcademicYrs }) => {
 
               <Input
                 className="bg-brown-50"
-                
                 name="nationality"
                 type="text"
                 variant="outlined"
@@ -334,7 +332,6 @@ const AddNewStudent = ({ AcademicYrs }) => {
               />
               <Input
                 className="bg-brown-50"
-                
                 variant="outlined"
                 name="pincode"
                 label="Pin"
@@ -433,11 +430,9 @@ const AddNewStudent = ({ AcademicYrs }) => {
                 variant="outlined"
                 label="Father's Name"
                 value={applicantData.FathersName}
-              
               />
               <Input
                 className="bg-brown-50"
-                
                 name="FathersNameTamil"
                 type="text"
                 variant="outlined"
@@ -448,7 +443,6 @@ const AddNewStudent = ({ AcademicYrs }) => {
 
               <Input
                 className="bg-brown-50"
-                
                 name="FathersJob"
                 type="text"
                 variant="outlined"
@@ -537,15 +531,15 @@ const AddNewStudent = ({ AcademicYrs }) => {
                 label="Admission Number"
                 value={applicantData.admnNo}
               />
-            <Input
-              className="bg-brown-50"
-              variant="outlined"
-              label="Board"
-              value={applicantData.board}/>
+              <Input
+                className="bg-brown-50"
+                variant="outlined"
+                label="Board"
+                value={applicantData.board}
+              />
 
               <Input
                 className="bg-brown-50"
-                
                 value={applicantData?.academicYear}
                 variant="outlined"
                 label="Academic Year"
@@ -553,18 +547,20 @@ const AddNewStudent = ({ AcademicYrs }) => {
 
               <Input
                 className="bg-brown-50"
-                
                 name="email"
                 type="email"
                 variant="outlined"
-                label={frntentErors && frntentErors.email ? frntentErors.email : "Email"}
+                label={
+                  frntentErors && frntentErors.email
+                    ? frntentErors.email
+                    : "Email"
+                }
                 placeholder="Enter Your Email"
                 error={frntentErors && frntentErors.email ? true : false}
                 onChange={handleInputChange}
               />
               <Input
                 className="bg-brown-50"
-                
                 name="password"
                 type="password"
                 variant="outlined"
