@@ -9,10 +9,6 @@ import {
   Card,
   Typography,
   CardBody,
-  Chip,
-  Avatar,
-  IconButton,
-  Tooltip,
   Button,
   Menu,
   MenuHandler,
@@ -25,7 +21,6 @@ import { RouteObjects } from "../../../../Routes/RoutObjects";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import AlocateDriver from "./AlocateDriver";
-import AlocateStudents from "./AlocateStudents";
 
 const TABLE_HEAD = [
   "#No",
@@ -39,24 +34,24 @@ const TABLE_HEAD = [
   "Year Of Made",
   "Driver Name",
   "Alocate Driver",
-  "Alocate Student",
   "Current Status",
   "Action",
 ];
-const changeStatus = (status) => {
-  try {
-    console.log(status);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 const VehicleList = () => {
   const [fetchedData, setFetchedData] = useState([]);
   const axiosPrivate = useAxiosPrivate();
-  const getData = () => {
+  const changeStatus = async (status) => {
     try {
-      const response = axiosPrivate.get("");
+       await axiosPrivate.put("transportation/bus", status);
+      getData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getData = async () => {
+    try {
+      const response = await axiosPrivate.get("transportation/bus");
+      console.log(response);
       setFetchedData(response.data);
     } catch (error) {
       console.log(error);
@@ -102,10 +97,8 @@ const VehicleList = () => {
               </tr>
             </thead>
             <tbody>
-              {
-                //   fetchedData&&fetchedData?
-
-                ["1"].map(
+              {fetchedData &&
+                fetchedData?.map(
                   (
                     {
                       busNo,
@@ -114,7 +107,7 @@ const VehicleList = () => {
                       seatNo,
                       FC,
                       RC,
-                      milage,
+                      mileage,
                       yearOfMade,
                       status,
                     },
@@ -131,15 +124,13 @@ const VehicleList = () => {
                         <td className={classes}>{seatNo}</td>
                         <td className={classes}>{FC}</td>
                         <td className={classes}>{RC}</td>
-                        <td className={classes}>{milage}</td>
+                        <td className={classes}>{mileage}</td>
                         <td className={classes}>{yearOfMade}</td>
                         <td className={classes}>Driver Name</td>
                         <td className={classes}>
                           <AlocateDriver />
                         </td>
-                        <td className={classes}>
-                          <AlocateStudents/>
-                        </td>
+
                         <td className={classes}>{status}</td>
                         <td className={classes}>
                           <Menu>
@@ -169,8 +160,7 @@ const VehicleList = () => {
                       </tr>
                     );
                   }
-                )
-              }
+                )}
             </tbody>
           </table>
         </CardBody>

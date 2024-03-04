@@ -30,6 +30,7 @@ import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { TableHeaderName } from "../../../Table Header/TableHeader";
+import BulkUpload from "./BulkUploadModal";
 
 
 const TABLE_HEAD = [
@@ -100,7 +101,12 @@ const StaffList = () => {
 
         
     <Card className="h-full w-full">
-      <TableHeaderName name="Staff List" year="2024"/>  
+    <div className="bg-dark-purple py-2  rounded-t-md flex justify-between items-center px-4">
+    <span className="text-white font-normal">Staff Details</span>
+    
+    <BulkUpload/>
+
+   </div> 
       <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="flex flex-col items-center justify-evenly gap-4 md:flex-row">
             <div className="w-full md:w-80 mt-1">

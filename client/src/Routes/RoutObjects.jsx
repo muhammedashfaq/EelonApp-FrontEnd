@@ -84,6 +84,8 @@ export const RouteObjects = {
 
   AddVehicle:"/addvehicle",
   VehcleList:"/vehiclelist",
+  AlocateStudent:"/alocatestudent",
+
   //super Admin
 
   SuperAdmin: "/iamsuperadmin",

@@ -86,6 +86,7 @@ import FeeCollectionInvoice from "../Pages/Staff/Dashboard/FeeCollection/FeeColl
 import LedgerBookPage from "../Pages/Staff/Dashboard/FeeCollection/LedgerBookPage";
 import VehicleListPage from "../Pages/Staff/Dashboard/vehicleDetails/VehicleListPage";
 import AddVehiclePage from "../Pages/Staff/Dashboard/vehicleDetails/AddVehiclePage";
+import AlocateStudentPage from "../Pages/Staff/Dashboard/vehicleDetails/AlocateStudentPage";
 
 
 const AppRoutes = () => {
@@ -162,6 +163,8 @@ const AppRoutes = () => {
                 {/* Vechle ROUTS */}
                 <Route path={RouteObjects.VehcleList} element={<VehicleListPage />} />
                 <Route path={RouteObjects.AddVehicle} element={<AddVehiclePage />} />
+                <Route path={RouteObjects.AlocateStudent} element={<AlocateStudentPage />} />
+
 
 
 
