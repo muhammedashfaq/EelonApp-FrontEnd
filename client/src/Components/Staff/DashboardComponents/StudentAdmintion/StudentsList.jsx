@@ -59,8 +59,6 @@ const StudentsList = () => {
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
 
-
-
   const getUsers = async (pageNo) => {
     try {
       const response = await axiosPrivate.get(
@@ -72,8 +70,9 @@ const StudentsList = () => {
       console.log(error);
     }
   };
-  const deleteStudent = async (id, name) => {
+  const deleteStudent = async (id) => {
     try {
+      if (!id) return;
       const result = await Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this Student Data!",
@@ -89,7 +88,7 @@ const StudentsList = () => {
 
         Swal.fire({
           title: "Deleted!",
-          text: `${name}  has been deleted`,
+          text: `Student has been deleted`,
           icon: "success",
         });
       }
@@ -126,12 +125,11 @@ const StudentsList = () => {
   return (
     <div>
       <Card className="  m-8">
-      <div className="bg-dark-purple py-2  rounded-t-md flex justify-between items-center px-4">
-    <span className="text-white font-normal">Student Details</span>
-    
-    <BulkUploadModalStd/>
+        <div className="bg-dark-purple py-2  rounded-t-md flex justify-between items-center px-4">
+          <span className="text-white font-normal">Student Details</span>
 
-   </div> 
+          <BulkUploadModalStd />
+        </div>
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="flex flex-col items-center justify-evenly gap-4 md:flex-row">
             <div className="w-full md:w-80">
@@ -193,12 +191,9 @@ const StudentsList = () => {
               </Link>
             </div>
           </div>
+        </CardHeader>
 
-            
-       </CardHeader>
-
-
-        <CardBody   className="overflow-scroll px-0">
+        <CardBody className="overflow-scroll px-0">
           <table className=" w-full min-w-max table-auto text-left">
             <thead>
               <tr>
@@ -564,9 +559,7 @@ const StudentsList = () => {
                                   color="red"
                                   icon={faTrash}
                                   size="xl"
-                                  onClick={() =>
-                                    deleteStudent(data._id, data.studentName)
-                                  }
+                                  onClick={() => deleteStudent(data?._id)}
                                 />
                               </IconButton>
                             </Tooltip>
