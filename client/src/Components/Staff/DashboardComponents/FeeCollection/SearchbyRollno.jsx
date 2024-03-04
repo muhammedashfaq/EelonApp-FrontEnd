@@ -31,6 +31,7 @@ const SearchbyRollno = ({
     e.preventDefault();
     setInputValue(null);
     setStudentData([]);
+    setConcessionData([]);
     try {
       let formattedInputValue;
       let formattedInputValue2;

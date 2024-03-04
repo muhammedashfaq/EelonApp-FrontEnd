@@ -80,9 +80,13 @@ import SuperAdminLogin from "../Pages/SperAdminPages/SuperLogin/SuperAdminLoginP
 import SuperAdminHomePage from "../Pages/SperAdminPages/SuperAdminHome/SuperAdminHomePage";
 import ForgotMailPage from "../Pages/SperAdminPages/SuperLogin/ForgotMailPage";
 import ResetPage from "../Pages/SperAdminPages/SuperLogin/ResetPage";
+
+import FeeCollectionInvoice from "../Pages/Staff/Dashboard/FeeCollection/FeeCollectionInvoice";
+
 import LedgerBookPage from "../Pages/Staff/Dashboard/FeeCollection/LedgerBookPage";
 import VehicleListPage from "../Pages/Staff/Dashboard/vehicleDetails/VehicleListPage";
 import AddVehiclePage from "../Pages/Staff/Dashboard/vehicleDetails/AddVehiclePage";
+
 
 const AppRoutes = () => {
   const [editedPath, setEditedPath] = useState("");
@@ -95,9 +99,9 @@ const AppRoutes = () => {
     <div>
       <Toaster position="bottom-center" reverseOrder={false} />
 
-      {!["test", "login", "iamsuperadmin", "*", "superhome"].includes(editedPath) && <StaffHeader />}
-
-
+      {!["test", "login", "iamsuperadmin", "*", "superhome"].includes(
+        editedPath
+      ) && <StaffHeader />}
 
       <Routes>
         {/* Super Admin */}
@@ -114,6 +118,10 @@ const AppRoutes = () => {
         <Route
           path={`${RouteObjects.FeeInvoiceBill}/:id`}
           element={<FeeInvoiceBillPage />}
+        />
+        <Route
+          path={`${RouteObjects.FeeCollectionInvoice}/:id`}
+          element={<FeeCollectionInvoice />}
         />
         <Route
           path={RouteObjects.FeeCollection}

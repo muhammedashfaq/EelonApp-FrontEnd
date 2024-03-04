@@ -95,10 +95,11 @@ export default function AddStudentToConcessionModal({
         reductionPercentage,
         reductionType,
       };
-      console.log(reqData, "req");
-      // const response = await axiosPrivate.post(`accounts/concession`, reqData);
-      // console.log(response.data);
+      // console.log(reqData, "req");
+      const response = await axiosPrivate.post(`accounts/concession`, reqData);
+      console.log(response.data);
       setOpen(false);
+      setSelectedUsers([]);
     } catch (error) {
       console.error(error);
     }
