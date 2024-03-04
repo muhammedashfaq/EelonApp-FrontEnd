@@ -31,6 +31,7 @@ import {
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
 import { TableHeaderName } from "../../../Table Header/TableHeader";
+import BulkUploadModalStd from "./BulkUploadModalStd";
 
 const TABLE_HEAD = [
   "#NO",
@@ -125,8 +126,12 @@ const StudentsList = () => {
   return (
     <div>
       <Card className="  m-8">
-        <TableHeaderName name="Students List" year="2024" />
+      <div className="bg-dark-purple py-2  rounded-t-md flex justify-between items-center px-4">
+    <span className="text-white font-normal">Student Details</span>
+    
+    <BulkUploadModalStd/>
 
+   </div> 
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="flex flex-col items-center justify-evenly gap-4 md:flex-row">
             <div className="w-full md:w-80">
