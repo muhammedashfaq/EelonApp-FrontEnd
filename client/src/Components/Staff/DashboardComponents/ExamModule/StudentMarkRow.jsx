@@ -78,60 +78,39 @@ const StudentMarkRow = ({ item, index, classes, handleData }) => {
       <td className={`${classes} bg-blue-gray-50/50 `}>
         <div className="flex flex-col">
           <Typography variant="small" color="blue-gray" className="font-normal">
-            <div className="w-28">
-              <select>
-                <option value="A">A Grade</option>
-                <option value="B">B Grade</option>
-                <option value="C">C Grade</option>
-              </select>
+            <div className="w-52">
+              <Input
+                label="Internal mark"
+                onChange={(e) => setInternalMark(e.target.value)}
+                type="number"
+              />
             </div>
           </Typography>
         </div>
       </td>
       <td className={classes}>
         <Typography variant="small" color="blue-gray" className="font-normal">
-          <div className="w-28">
-            <select>
-              <option value="A">A Grade</option>
-              <option value="B">B Grade</option>
-              <option value="C">C Grade</option>
-            </select>
+          <div className="w-52">
+            <Input
+              label="External mark"
+              onChange={(e) => setexternalMark(e.target.value)}
+              type="number"
+            />
           </div>
         </Typography>
       </td>
       <td className={`${classes} bg-blue-gray-50/50 `}>
         <Typography variant="small" color="blue-gray" className="font-normal">
-          <div className="w-28">
-            <select>
-              <option value="A">A Grade</option>
-              <option value="B">B Grade</option>
-              <option value="C">C Grade</option>
-            </select>
-          </div>
+          {totalMark && totalMark}
         </Typography>
       </td>
-      <td className={classes}>
-        <Typography variant="small" color="blue-gray" className="font-normal">
-          <div className="w-28">
-            <select>
-              <option value="A">A Grade</option>
-              <option value="B">B Grade</option>
-              <option value="C">C Grade</option>
-            </select>
-          </div>
-        </Typography>
-      </td>
-      <td className={`${classes} bg-blue-gray-50/50 `}>
-        <Typography variant="small" color="blue-gray" className="font-normal">
-          <div className="w-28">
-            <select>
-              <option value="A">A Grade</option>
-              <option value="B">B Grade</option>
-              <option value="C">C Grade</option>
-            </select>
-          </div>
-        </Typography>
-      </td>
+      {/* <td className={classes}>
+        <Tooltip content="Edit User">
+          <IconButton variant="text">
+            <FontAwesomeIcon icon={faPencilSquare} />
+          </IconButton>
+        </Tooltip>
+      </td> */}
     </tr>
   );
 };
