@@ -40,6 +40,11 @@ const menu = [
         href: RouteObjects.AddConcessionStructure,
         icon: faCaretRight,
       },
+      {
+        title: "Ledger Book ",
+        href: RouteObjects.LedgerBook,
+        icon: faCaretRight,
+      },
     ],
   },
   {
@@ -217,6 +222,20 @@ const menu = [
         icon: faCaretRight,
         href: RouteObjects.ShowStudentwiseReports,
       },
+    ],
+  },
+  {
+    title: "Vehicle Details",
+    icon: faUserPlus,
+    submenu: true,
+    submenuItems: [
+      {
+        title: "Vehicle List",
+        icon: faCaretRight,
+        href: RouteObjects.VehcleList,
+      },
+     
+      
     ],
   },
 ];

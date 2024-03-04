@@ -31,6 +31,7 @@ const AddSyllubusModal = ({ acYr, subjects, classes, getDetails }) => {
   const [base64String, setBase64String] = useState("");
 
   const handleOpen = () => setOpen(!open);
+  
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
