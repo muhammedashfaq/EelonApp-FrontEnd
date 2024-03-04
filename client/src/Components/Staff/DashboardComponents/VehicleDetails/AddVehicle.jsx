@@ -16,7 +16,7 @@ const AddVehicle = () => {
     rgNo: "",
     vehicleModel: "",
     seatNo: "",
-    milage: "",
+    mileage: "",
     yearOfMade: "",
   });
 
@@ -95,7 +95,7 @@ const AddVehicle = () => {
       allData.busNo &&
       allData.seatNo &&
       allData.rgNo &&
-      allData.milage &&
+      allData.mileage &&
       allData.FC &&
       allData.RC;
 
@@ -198,12 +198,12 @@ const AddVehicle = () => {
                 for="website"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
               >
-                Milage
+                Mileage
               </label>
               <input
                 onChange={handleInputChange}
                 type="url"
-                name="milage"
+                name="mileage"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="3.5"
                 required
@@ -220,7 +220,6 @@ const AddVehicle = () => {
                 onChange={handleInputChange}
                 type="text"
                 name="yearOfMade"
-                placeholder="2010"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="2020"
                 required
@@ -241,7 +240,6 @@ const AddVehicle = () => {
                 type="file"
                 accept=".pdf"
                 id="visitors"
-                placeholder="2010"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="2020"
                 required
@@ -262,7 +260,6 @@ const AddVehicle = () => {
                 type="file"
                 accept=".pdf"
                 id="visitors"
-                placeholder="2010"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="2020"
                 required
