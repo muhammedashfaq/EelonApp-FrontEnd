@@ -20,11 +20,12 @@ import {
 } from "@material-tailwind/react";
 import SearchbyRollno from "./SearchbyRollno";
 import { v4 as uuidv4 } from "uuid";
-
+import { RouteObjects } from "../../../../Routes/RoutObjects";
 import { Oval } from "react-loader-spinner";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import FeeCollectionRow from "./FeeCollectionRow";
 import ConcessionRow from "./ConcessionRow";
+import { useNavigate } from "react-router-dom";
 const InformationRow = ({ label, value }) => (
   <div className="flex justify-evenly py-3 shadow-sm ">
     <span className="font-normal text-xl">{label} :</span>
@@ -40,6 +41,7 @@ const FeeCollection = () => {
   const [dataArray, setDataArray] = useState([]);
   const [totalFee, settotalFee] = useState();
   const [ConcessionData, setConcessionData] = useState([]);
+  const navigate = useNavigate();
 
   const getacYR = async () => {
     try {
@@ -256,7 +258,11 @@ const FeeCollection = () => {
                 </div>
               </div>
 
-              <Button fullWidth className="bg-dark-purple">
+              <Button
+                fullWidth
+                className="bg-dark-purple"
+                onClick={() => navigate(RouteObjects.FeeInvoiceBill)}
+              >
                 <FontAwesomeIcon icon={faIndianRupee} />
                 <p className="font-normal">Pay</p>
               </Button>
