@@ -40,7 +40,7 @@ const AddFeeStructures = () => {
       console.error(error);
     }
   };
-
+  console.log(feeStructures);
   useEffect(() => {
     getAcademicYrDropdowns();
     getStdDropdowns();

@@ -102,12 +102,6 @@ const FeeCollection = () => {
     setDataArray(updatedDivs);
   };
 
-  const removeConcessionDiv = (idToRemove) => {
-    if (!idToRemove) return;
-    const updatedDivs = dataArray.filter((item) => item.id !== idToRemove);
-    setDataArray(updatedDivs);
-  };
-
   useEffect(() => {
     console.log(dataArray);
 
