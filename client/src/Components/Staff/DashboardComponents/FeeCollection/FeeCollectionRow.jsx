@@ -29,16 +29,24 @@ const FeeCollectionRow = ({ acYr, removeDiv, item, handleData, index }) => {
     if (!FeeType || !academicYear || !std) return;
     setisLoading(true);
     try {
-      const reqData = {
+      let reqData = {
         feeType: FeeType,
         academicYear,
         std,
       };
+      if (item?.divType === "academicFee") {
+        reqData = {
+          ...reqData,
+          feeType: "Academic fee",
+          feeIntervalType: installmentType,
+          feeInterval: feeInterval,
+        };
+      }
       const response = await axiosPrivate.put(
         "accounts/feestructure/filter",
         reqData
       );
-      console.log(response);
+      console.log(reqData);
       setfeeData(response.data[0]);
       setisLoading(false);
     } catch (error) {
@@ -46,7 +54,6 @@ const FeeCollectionRow = ({ acYr, removeDiv, item, handleData, index }) => {
       setisLoading(false);
     }
   };
-
   useEffect(() => {
     handleData({
       id: item.id,
@@ -60,9 +67,12 @@ const FeeCollectionRow = ({ acYr, removeDiv, item, handleData, index }) => {
 
   useEffect(() => {
     getFeeStructure();
-  }, [FeeType, academicYear, std]);
+  }, [FeeType, academicYear, std, feeInterval, installmentType]);
   // console.log(feeData?.amount);
 
+  useEffect(() => {
+    if (item?.divType === "academicFee") setFeeType("Academic fee");
+  }, [item?.divType]);
   return (
     <>
       <div className="flex justify-evenly m-5 gap-0">
