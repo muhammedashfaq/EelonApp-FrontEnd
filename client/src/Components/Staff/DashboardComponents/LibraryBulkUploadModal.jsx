@@ -9,11 +9,11 @@ import {
   Textarea,
   Typography,
 } from "@material-tailwind/react";
-import { axiosFormdata } from "../../../../api/axios";
+import { axiosFormdata } from "../../../api/axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDatabase } from "@fortawesome/free-solid-svg-icons";
 
-const StaffBulkUploadModal = ({ getStaffs, page }) => {
+const LibraryBulkUploadModal = ({ getBooks, page }) => {
   const [xlsFile, setXlsFile] = useState("");
   const [isValidate, setIsValidate] = useState(false);
   const [isLoading, setisLoading] = useState(false);
@@ -27,10 +27,12 @@ const StaffBulkUploadModal = ({ getStaffs, page }) => {
       setisLoading(true);
       const formData = new FormData();
       formData.append("file", xlsFile);
-      const response = await axiosFormdata.post("bulkuploads/staff", formData);
-      console.log(response);
+      const response = await axiosFormdata.post(
+        "bulkuploads/library",
+        formData
+      );
       setisLoading(false);
-      getStaffs();
+      getBooks();
       setOpen(false);
     } catch (error) {
       setisLoading(false);
@@ -47,7 +49,7 @@ const StaffBulkUploadModal = ({ getStaffs, page }) => {
       <Button
         onClick={handleOpen}
         variant="gradient"
-        color="blue"
+        color="deep-purple"
         style={{ textTransform: "none", fontSize: "0.9rem" }}
         className="space-x-1"
       >
@@ -68,7 +70,7 @@ const StaffBulkUploadModal = ({ getStaffs, page }) => {
             />
           </div>
           <Typography className="mt-4" color="red" variant="small">
-            *Only .xlsx file types allowed
+            *Only .xlsx file types are allowed
           </Typography>
         </DialogBody>
         <DialogFooter className="space-x-2 -mt-4">
@@ -90,4 +92,4 @@ const StaffBulkUploadModal = ({ getStaffs, page }) => {
   );
 };
 
-export default StaffBulkUploadModal;
+export default LibraryBulkUploadModal;
