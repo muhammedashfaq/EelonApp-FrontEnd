@@ -10,9 +10,8 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { axiosFormdata } from "../../../../api/axios";
-import axios from "axios";
 
-const BulkUploadModal = () => {
+const StaffBulkUploadModal = ({ getStaffs, page }) => {
   const [xlsFile, setXlsFile] = useState("");
   const [isValidate, setIsValidate] = useState(false);
   const [isLoading, setisLoading] = useState(false);
@@ -22,15 +21,15 @@ const BulkUploadModal = () => {
 
   const handleSubmit = async () => {
     try {
+      if (!xlsFile) return;
       setisLoading(true);
       const formData = new FormData();
       formData.append("file", xlsFile);
-      const response = await axiosFormdata.post(
-        "bulkuploads/student",
-        formData
-      );
+      const response = await axiosFormdata.post("bulkuploads/staff", formData);
       console.log(response);
       setisLoading(false);
+      getStaffs();
+      setOpen(false);
     } catch (error) {
       setisLoading(false);
       console.log(error);
@@ -43,27 +42,32 @@ const BulkUploadModal = () => {
   }, [xlsFile]);
   return (
     <>
-      <span
-        className="text-white font-normal cursor-pointer"
+      <Button
         onClick={handleOpen}
+        variant="gradient"
+        color="blue"
+        style={{ textTransform: "none", fontSize: "0.9rem" }}
       >
-        Bulk Upload
-      </span>
+        Bulk Uploads
+      </Button>
       <Dialog open={open} size="xs">
-        <DialogBody>
+        <DialogBody className="m-4">
           <div className="grid gap-6">
-            <Typography className="-mb-1" color="blue-gray" variant="h6">
-              Username
+            <Typography className="-mb-1" color="blue-gray" variant="h5">
+              Bulk upload
             </Typography>
             <Input
               accept=".xlsx"
               type="file"
-              label="Username"
+              label="Upload excel sheet"
               onChange={(e) => setXlsFile(e.target.files[0])}
             />
           </div>
+          <Typography className="mt-4" color="red" variant="small">
+            *Only .xlsx file types allowed
+          </Typography>
         </DialogBody>
-        <DialogFooter className="space-x-2">
+        <DialogFooter className="space-x-2 -mt-4">
           <Button variant="text" color="gray" onClick={handleOpen}>
             cancel
           </Button>
@@ -74,7 +78,7 @@ const BulkUploadModal = () => {
             color="gray"
             onClick={handleSubmit}
           >
-            Upload
+            UpLoad
           </Button>
         </DialogFooter>
       </Dialog>
@@ -82,4 +86,4 @@ const BulkUploadModal = () => {
   );
 };
 
-export default BulkUploadModal;
+export default StaffBulkUploadModal;
