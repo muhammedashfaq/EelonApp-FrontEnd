@@ -91,6 +91,7 @@ const StudentsList = () => {
           text: `Student has been deleted`,
           icon: "success",
         });
+        getUsers(page);
       }
     } catch (error) {
       console.log(error);
@@ -128,7 +129,7 @@ const StudentsList = () => {
         <div className="bg-dark-purple py-2  rounded-t-md flex justify-between items-center px-4">
           <span className="text-white font-normal">Student Details</span>
 
-          <BulkUploadModalStd />
+          <BulkUploadModalStd getUsers={getUsers} page={page} />
         </div>
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="flex flex-col items-center justify-evenly gap-4 md:flex-row">
