@@ -238,7 +238,7 @@ const StudentsList = () => {
                               color="blue-gray"
                               className="font-normal opacity-70"
                             >
-                              {index + 1}
+                              {data?.rollNo}
                             </Typography>
                           </div>
                         </td>
@@ -381,9 +381,7 @@ const StudentsList = () => {
                                   color="red"
                                   icon={faTrash}
                                   size="xl"
-                                  onClick={() =>
-                                    deleteStudent(data._id, data.studentName)
-                                  }
+                                  onClick={() => deleteStudent(data._id)}
                                 />
                               </IconButton>
                             </Tooltip>
@@ -416,7 +414,7 @@ const StudentsList = () => {
                               color="blue-gray"
                               className="font-normal opacity-70"
                             >
-                              {index + 1}
+                              {data?.rollNo}
                             </Typography>
                           </div>
                         </td>
@@ -554,12 +552,14 @@ const StudentsList = () => {
                                 unmount: { scale: 0, y: 25 },
                               }}
                             >
-                              <IconButton variant="text">
+                              <IconButton
+                                variant="text"
+                                onClick={() => deleteStudent(data?._id)}
+                              >
                                 <FontAwesomeIcon
                                   color="red"
                                   icon={faTrash}
                                   size="xl"
-                                  onClick={() => deleteStudent(data?._id)}
                                 />
                               </IconButton>
                             </Tooltip>
