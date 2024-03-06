@@ -212,7 +212,7 @@ const ExamTimeTable = () => {
           <table className="min-w-full">
             <thead>
               <tr>
-                <th className="px-6 py-3 border-b-2 border-gray-300 text-center text-sm leading-4 text-blue-500 tracking-wider">
+                <th className="px-6 py-3 border-b-2 border-gray-300 text<div>AddBusRoutes</div>;-center text-sm leading-4 text-blue-500 tracking-wider">
                   Sl.no
                 </th>
                 <th className="px-6 py-3 border-b-2 border-gray-300  text-sm leading-4 text-blue-500 tracking-wider text-center">

@@ -82,7 +82,6 @@ const SatffAddBookManagement = () => {
         `/library/books/pagination?page=${pageNo}&limit=10`
       );
       // dispatch(hideloading());
-      console.log(response.data.pagination);
 
       setbookData(response.data.books);
       setpaginationData(response.data.pagination);

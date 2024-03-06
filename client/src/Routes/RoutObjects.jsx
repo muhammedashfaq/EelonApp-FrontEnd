@@ -13,7 +13,7 @@ export const RouteObjects = {
   UserProfileStaff: "/profile/staff",
   NewApplication: "/newapplication",
   NewApplicationFee: "/applicationfee",
-  LedgerBook:"/ledger",
+  LedgerBook: "/ledger",
   NewApplicants: "/newapplicats",
   AddNewStudent: "/addnewstudent",
   StaffDashboard: "/staffdash",
@@ -82,9 +82,10 @@ export const RouteObjects = {
   AddConcessionStructure: "/addconcessionstructure",
   //vehicle
 
-  AddVehicle:"/addvehicle",
-  VehcleList:"/vehiclelist",
-  AlocateStudent:"/alocatestudent",
+  AddVehicle: "/addvehicle",
+  VehcleList: "/vehiclelist",
+  AlocateStudent: "/alocatestudent",
+  addroutes: "/addroutes",
 
   //super Admin
 
