@@ -13,7 +13,7 @@ export const RouteObjects = {
   UserProfileStaff: "/profile/staff",
   NewApplication: "/newapplication",
   NewApplicationFee: "/applicationfee",
-  LedgerBook:"/ledger",
+  LedgerBook: "/ledger",
   NewApplicants: "/newapplicats",
   AddNewStudent: "/addnewstudent",
   StaffDashboard: "/staffdash",
@@ -75,8 +75,9 @@ export const RouteObjects = {
   HallTicket: "/StudentHT",
 
   // accountant
-  FeeInvoiceBill:"/feeinvoicebill",
+  FeeInvoiceBill: "/feeinvoicebill",
   FeeCollection: "/feecollection",
+  FeeCollectionInvoice: "/feecollection/invoice",
   AdminssionFee: "/admissionfee",
   AddFeeStructure: "/addfeestructure",
   AddConcessionStructure: "/addconcessionstructure",
@@ -88,13 +89,14 @@ export const RouteObjects = {
   VehicleComplaints:"/complaints",
 
 
+  addroutes: "/addroutes",
+
   //super Admin
 
-  SuperAdmin:"/iamsuperadmin",
-  SuperAdminH:"/superhome*",
-  SuperForgot:"/f",
-  SuperReset:"/r",
+  SuperAdmin: "/iamsuperadmin",
+  SuperAdminH: "/superhome*",
+  SuperForgot: "/f",
+  SuperReset: "/r",
 
-  SuperAdminHome:"/superhome/home"
-  
+  SuperAdminHome: "/superhome/home",
 };

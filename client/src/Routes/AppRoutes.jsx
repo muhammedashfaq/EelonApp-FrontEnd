@@ -80,12 +80,19 @@ import SuperAdminLogin from "../Pages/SperAdminPages/SuperLogin/SuperAdminLoginP
 import SuperAdminHomePage from "../Pages/SperAdminPages/SuperAdminHome/SuperAdminHomePage";
 import ForgotMailPage from "../Pages/SperAdminPages/SuperLogin/ForgotMailPage";
 import ResetPage from "../Pages/SperAdminPages/SuperLogin/ResetPage";
+
+import FeeCollectionInvoice from "../Pages/Staff/Dashboard/FeeCollection/FeeCollectionInvoice";
+
 import LedgerBookPage from "../Pages/Staff/Dashboard/FeeCollection/LedgerBookPage";
 import VehicleListPage from "../Pages/Staff/Dashboard/vehicleDetails/VehicleListPage";
 import AddVehiclePage from "../Pages/Staff/Dashboard/vehicleDetails/AddVehiclePage";
 import AlocateStudentPage from "../Pages/Staff/Dashboard/vehicleDetails/AlocateStudentPage";
+<<<<<<< HEAD
 import ComplaintsUpdationPage from "../Pages/Staff/Dashboard/vehicleDetails/ComplaintsUpdationPage";
 import AdminVehicleUpdates from "../Pages/Admin/Home/AdminVehicleUpdates";
+=======
+import AddBusRoutes from "../Pages/Staff/Dashboard/vehicleDetails/AddBusRoutes";
+>>>>>>> 501afb9b08ef0357eaab755628a067001313b9dc
 
 const AppRoutes = () => {
   const [editedPath, setEditedPath] = useState("");
@@ -98,9 +105,9 @@ const AppRoutes = () => {
     <div>
       <Toaster position="bottom-center" reverseOrder={false} />
 
-      {!["test", "login", "iamsuperadmin", "*", "superhome"].includes(editedPath) && <StaffHeader />}
-
-
+      {!["test", "login", "iamsuperadmin", "*", "superhome"].includes(
+        editedPath
+      ) && <StaffHeader />}
 
       <Routes>
         {/* Super Admin */}
@@ -120,6 +127,10 @@ const AppRoutes = () => {
           element={<FeeInvoiceBillPage />}
         />
         <Route
+          path={`${RouteObjects.FeeCollectionInvoice}/:id`}
+          element={<FeeCollectionInvoice />}
+        />
+        <Route
           path={RouteObjects.FeeCollection}
           element={<FeeCollectionPage />}
         />
@@ -131,10 +142,7 @@ const AppRoutes = () => {
           path={`${RouteObjects.NewApplicationFee}/:id`}
           element={<ApplicationFeePage />}
         />
-            <Route
-          path={RouteObjects.LedgerBook}
-          element={<LedgerBookPage />}
-        />
+        <Route path={RouteObjects.LedgerBook} element={<LedgerBookPage />} />
         {/* Admin ROUTS */}
         <Route
           path={RouteObjects.UserProfileadmin}
@@ -160,6 +168,7 @@ const AppRoutes = () => {
           path={`${RouteObjects.HTClasswise}/:id/:term/:year`}
           element={<HTclasswiseTable />}
         />
+<<<<<<< HEAD
                 {/* Vechle ROUTS */}
                 <Route path={RouteObjects.VehcleList} element={<VehicleListPage />} />
                 <Route path={RouteObjects.AddVehicle} element={<AddVehiclePage />} />
@@ -170,6 +179,16 @@ const AppRoutes = () => {
 
 
 
+=======
+        {/* Vechle ROUTS */}
+        <Route path={RouteObjects.VehcleList} element={<VehicleListPage />} />
+        <Route path={RouteObjects.AddVehicle} element={<AddVehiclePage />} />
+        <Route
+          path={RouteObjects.AlocateStudent}
+          element={<AlocateStudentPage />}
+        />
+        <Route path={RouteObjects.addroutes} element={<AddBusRoutes />} />
+>>>>>>> 501afb9b08ef0357eaab755628a067001313b9dc
         {/* STUDENTS ROUTS */}
         <Route path={RouteObjects.root} element={<LandingPage />} />
         <Route

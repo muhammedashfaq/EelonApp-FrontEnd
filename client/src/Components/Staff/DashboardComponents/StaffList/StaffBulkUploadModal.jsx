@@ -10,8 +10,10 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { axiosFormdata } from "../../../../api/axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDatabase } from "@fortawesome/free-solid-svg-icons";
 
-const BulkUploadModalStd = ({ getUsers, page }) => {
+const StaffBulkUploadModal = ({ getStaffs, page }) => {
   const [xlsFile, setXlsFile] = useState("");
   const [isValidate, setIsValidate] = useState(false);
   const [isLoading, setisLoading] = useState(false);
@@ -25,13 +27,10 @@ const BulkUploadModalStd = ({ getUsers, page }) => {
       setisLoading(true);
       const formData = new FormData();
       formData.append("file", xlsFile);
-      const response = await axiosFormdata.post(
-        "bulkuploads/student",
-        formData
-      );
+      const response = await axiosFormdata.post("bulkuploads/staff", formData);
       console.log(response);
       setisLoading(false);
-      getUsers(page);
+      getStaffs();
       setOpen(false);
     } catch (error) {
       setisLoading(false);
@@ -50,8 +49,10 @@ const BulkUploadModalStd = ({ getUsers, page }) => {
         variant="gradient"
         color="blue"
         style={{ textTransform: "none", fontSize: "0.9rem" }}
+        className="space-x-1"
       >
-        Bulk Uploads
+        <FontAwesomeIcon icon={faDatabase} size="lg" />
+        <span>Bulk Uploads</span>
       </Button>
       <Dialog open={open} size="xs">
         <DialogBody className="m-4">
@@ -89,4 +90,4 @@ const BulkUploadModalStd = ({ getUsers, page }) => {
   );
 };
 
-export default BulkUploadModalStd;
+export default StaffBulkUploadModal;

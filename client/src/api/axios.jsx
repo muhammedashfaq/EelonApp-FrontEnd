@@ -16,4 +16,5 @@ export const axiosFormdata = axios.create({
   headers: {
     "Content-Type": "multipart/form-data",
   },
+  withCredentials: true,
 });

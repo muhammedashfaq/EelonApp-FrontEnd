@@ -9,9 +9,11 @@ import {
   Textarea,
   Typography,
 } from "@material-tailwind/react";
-import { axiosFormdata } from "../../../../api/axios";
+import { axiosFormdata } from "../../../api/axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDatabase } from "@fortawesome/free-solid-svg-icons";
 
-const BulkUploadModalStd = ({ getUsers, page }) => {
+const LibraryBulkUploadModal = ({ getBooks, page }) => {
   const [xlsFile, setXlsFile] = useState("");
   const [isValidate, setIsValidate] = useState(false);
   const [isLoading, setisLoading] = useState(false);
@@ -26,12 +28,11 @@ const BulkUploadModalStd = ({ getUsers, page }) => {
       const formData = new FormData();
       formData.append("file", xlsFile);
       const response = await axiosFormdata.post(
-        "bulkuploads/student",
+        "bulkuploads/library",
         formData
       );
-      console.log(response);
       setisLoading(false);
-      getUsers(page);
+      getBooks();
       setOpen(false);
     } catch (error) {
       setisLoading(false);
@@ -48,10 +49,12 @@ const BulkUploadModalStd = ({ getUsers, page }) => {
       <Button
         onClick={handleOpen}
         variant="gradient"
-        color="blue"
+        color="deep-purple"
         style={{ textTransform: "none", fontSize: "0.9rem" }}
+        className="space-x-1"
       >
-        Bulk Uploads
+        <FontAwesomeIcon icon={faDatabase} size="lg" />
+        <span>Bulk Uploads</span>
       </Button>
       <Dialog open={open} size="xs">
         <DialogBody className="m-4">
@@ -67,7 +70,7 @@ const BulkUploadModalStd = ({ getUsers, page }) => {
             />
           </div>
           <Typography className="mt-4" color="red" variant="small">
-            *Only .xlsx file types allowed
+            *Only .xlsx file types are allowed
           </Typography>
         </DialogBody>
         <DialogFooter className="space-x-2 -mt-4">
@@ -89,4 +92,4 @@ const BulkUploadModalStd = ({ getUsers, page }) => {
   );
 };
 
-export default BulkUploadModalStd;
+export default LibraryBulkUploadModal;

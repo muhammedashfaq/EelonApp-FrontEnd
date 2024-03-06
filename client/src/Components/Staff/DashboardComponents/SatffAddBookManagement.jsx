@@ -28,6 +28,7 @@ import Swal from "sweetalert2";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { RouteObjects } from "../../../Routes/RoutObjects";
+import LibraryBulkUploadModal from "./LibraryBulkUploadModal";
 
 const SatffAddBookManagement = () => {
   const dispatch = useDispatch();
@@ -81,7 +82,6 @@ const SatffAddBookManagement = () => {
         `/library/books/pagination?page=${pageNo}&limit=10`
       );
       // dispatch(hideloading());
-      console.log(response.data.pagination);
 
       setbookData(response.data.books);
       setpaginationData(response.data.pagination);
@@ -216,8 +216,9 @@ const SatffAddBookManagement = () => {
               Reset
             </Button>
           </div>
-          <div>
+          <div className="space-x-2">
             <LibraryBooksAddModal GenreList={GenreList} getBooks={getBooks} />
+            <LibraryBulkUploadModal getBooks={getBooks} />
           </div>
         </div>
 
