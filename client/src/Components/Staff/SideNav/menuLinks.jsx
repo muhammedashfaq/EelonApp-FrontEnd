@@ -250,11 +250,15 @@ const menu = [
         icon: faCaretRight,
         href: RouteObjects.VehicleComplaints,
       },
-      {     
-      
-        title: "Add routes",
+      {
+        title: "Add Routes",
         icon: faCaretRight,
         href: RouteObjects.addroutes,
+      },
+      {
+        title: "Add Stops",
+        icon: faCaretRight,
+        href: RouteObjects.AddStops,
       },
     ],
   },

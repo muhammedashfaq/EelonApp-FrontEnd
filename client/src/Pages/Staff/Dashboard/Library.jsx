@@ -1,14 +1,13 @@
-import StaffLibraryManagemnt from "../../../Components/Staff/DashboardComponents/StaffLibraryManagement"
+import StaffLibraryManagemnt from "../../../Components/Staff/DashboardComponents/StaffLibraryManagement";
 
 const Library = () => {
   return (
     <div>
-
-    <div className="flex">
-      <StaffLibraryManagemnt />
+      <div className="flex">
+        <StaffLibraryManagemnt />
+      </div>
     </div>
-    </div>
-  )
-}
+  );
+};
 
-export default Library
+export default Library;

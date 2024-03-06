@@ -19,6 +19,7 @@ const AddBusRoutes = () => {
   const [busNo, setbusNo] = useState();
   const [busDDs, setBusDDs] = useState([]);
   const axiosPrivate = useAxiosPrivate();
+  const [selectedBus, setselectedBus] = useState({});
 
   const getDropdownData = async () => {
     try {
@@ -75,6 +76,10 @@ const AddBusRoutes = () => {
   useEffect(() => {
     getDropdownData();
   }, []);
+
+  useEffect(() => {
+    console.log(selectedBus);
+  }, [selectedBus]);
   return (
     <>
       <Banner />
@@ -85,20 +90,23 @@ const AddBusRoutes = () => {
         >
           <div className="flex items-center gap-3">
             <Typography variant="h6">Bus no:</Typography>
-            <Select label="Select bus no">
-              {busDDs && busDDs.map((item) => <Option>{item.busNo}</Option>)}
+            <Select label="Select bus no" onChange={(e) => setselectedBus(e)}>
+              {busDDs &&
+                busDDs.map((item) => (
+                  <Option value={item}>
+                    <div className="flex justify-between">
+                      <Typography variant="h6">{item.busNo}</Typography>
+                      <Typography variant="small">{item?.rgNo}</Typography>
+                    </div>
+                  </Option>
+                ))}
             </Select>
-
-            {/* <Typography variant="h6">Enter bus no.</Typography>
-            <form>
-              <Input
-                label="Bus number"
-                onChange={(e) => setbusNo(e.target.value)}
-              />
-            </form>
-            <IconButton variant="outlined">
-              <FontAwesomeIcon icon={faSearch} />
-            </IconButton> */}
+          </div>
+          <div className="flex flex-col">
+            <Typography variant="h6">Bus no:{selectedBus?.busNo}</Typography>
+            <Typography variant="small">
+              Registration no:{selectedBus?.rgNo}
+            </Typography>
           </div>
           <IconButton variant="outlined" size="sm" onClick={addDiv}>
             <FontAwesomeIcon icon={faPlus} size="xl" />
@@ -106,8 +114,14 @@ const AddBusRoutes = () => {
         </div>
       </div>
       <div>
-        <div className="flex justify-center">
-          <div style={{ width: "500px" }}>
+        <div className="flex flex-col items-center">
+          <div className="h-14 w-96 bg-gradient-to-r from-gray-300 to-blue-gray-300 m-5 px-10 shadow-2xl rounded-2xl shadow-black flex justify-between  items-center">
+            <div className="flex justify-between">
+              <Typography variant="paragraph">Start location :</Typography>
+              <Typography variant="h6">MM school</Typography>
+            </div>
+          </div>
+          <div style={{ width: "800px" }}>
             <DragDropContext onDragEnd={onDragEnd}>
               <Droppable droppableId="droppable">
                 {(provided) => (

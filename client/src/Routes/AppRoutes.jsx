@@ -90,6 +90,7 @@ import AlocateStudentPage from "../Pages/Staff/Dashboard/vehicleDetails/AlocateS
 import ComplaintsUpdationPage from "../Pages/Staff/Dashboard/vehicleDetails/ComplaintsUpdationPage";
 import AdminVehicleUpdates from "../Pages/Admin/Home/AdminVehicleUpdates";
 import AddBusRoutes from "../Pages/Staff/Dashboard/vehicleDetails/AddBusRoutes";
+import AddStops from "../Pages/Staff/Dashboard/vehicleDetails/AddStops";
 
 const AppRoutes = () => {
   const [editedPath, setEditedPath] = useState("");
@@ -175,6 +176,7 @@ const AppRoutes = () => {
           element={<ComplaintsUpdationPage />}
         />
         <Route path={RouteObjects.addroutes} element={<AddBusRoutes />} />
+        <Route path={RouteObjects.AddStops} element={<AddStops />} />
         {/* STUDENTS ROUTS */}
         <Route path={RouteObjects.root} element={<LandingPage />} />
         <Route

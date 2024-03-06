@@ -68,8 +68,8 @@ export const RouteObjects = {
 
   AdminHome: "/adminhome",
   AdminAprovals: "/adminaprovals",
-  AdminVehicleUpdates:"/adminvehicleupdates",
-  AdminUpdateDetails:"/updatedetails",
+  AdminVehicleUpdates: "/adminvehicleupdates",
+  AdminUpdateDetails: "/updatedetails",
   AdminGenerateHT: "/admingeterateHT",
   HTClasswise: "/adminHTclasswise",
   HallTicket: "/StudentHT",
@@ -83,12 +83,11 @@ export const RouteObjects = {
   AddConcessionStructure: "/addconcessionstructure",
   //vehicle
 
-  AddVehicle:"/addvehicle",
-  VehcleList:"/vehiclelist",
-  AlocateStudent:"/alocatestudent",
-  VehicleComplaints:"/complaints",
-
-
+  AddVehicle: "/addvehicle",
+  VehcleList: "/vehiclelist",
+  AlocateStudent: "/alocatestudent",
+  VehicleComplaints: "/complaints",
+  AddStops: "/addstops",
   addroutes: "/addroutes",
 
   //super Admin
