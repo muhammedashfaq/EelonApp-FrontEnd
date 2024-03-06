@@ -9,7 +9,7 @@ import {
 } from "@material-tailwind/react";
 import React from "react";
 
-const BusRouteRow = ({ removeDiv, handleData, item, index, uuid }) => {
+const BusRouteRow = ({ removeDiv, handleData, item, index }) => {
   return (
     <>
       <div className="h-28 w-auto bg-gray-200 m-5 px-10 shadow-2xl rounded-2xl shadow-black flex justify-between items-center">
@@ -20,7 +20,7 @@ const BusRouteRow = ({ removeDiv, handleData, item, index, uuid }) => {
           {index}
         </div>
         <div className="flex flex-col">
-          <Typography variant="h6">From</Typography>
+          <Typography variant="h6">Bus no.</Typography>
           <Select>
             <Option>bus no</Option>
             <Option>bus no</Option>

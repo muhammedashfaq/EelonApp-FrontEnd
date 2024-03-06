@@ -59,7 +59,6 @@ const AddBusRoutes = () => {
             <BusRouteRow
               key={item?.id}
               item={item}
-              uuid={item.id}
               handleData={handleData}
               removeDiv={removeDiv}
               index={index + 1}
