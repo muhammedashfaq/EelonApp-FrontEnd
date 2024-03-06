@@ -120,6 +120,11 @@ const menu = [
         href: RouteObjects.AdminGenerateHT,
         icon: faCaretRight,
       },
+      {
+        title: "Vehicle Upates",
+        href: RouteObjects.AdminVehicleUpdates,
+        icon: faCaretRight,
+      },
     ],
   },
   {
@@ -240,6 +245,11 @@ const menu = [
         title: "Alocate Student",
         icon: faCaretRight,
         href: RouteObjects.AlocateStudent,
+      },
+      {
+        title: "Vehicle Complaints",
+        icon: faCaretRight,
+        href: RouteObjects.VehicleComplaints,
       },
      
       

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import  { useState } from "react";
 import {
   Button,
   Dialog,
@@ -8,45 +8,42 @@ import {
   Typography,
   IconButton,
   Badge,
+
   Select,
   Option,
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import {  faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 
-const AlocateDriver = ({ busId, getData }) => {
+const AlocateHelper = ({busId ,getData}) => {
   const axiosPrivate = useAxiosPrivate();
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [drivers, setDrivers] = useState([]);
-  const [alocatedDriver, setAlocatedDriver] = useState("");
+  const [alocatedDriver,setAlocatedDriver]=useState("")
   const onChange = ({ target }) => setName(target.value);
   const handleOpen = () => setOpen(!open);
   const SearchByName = async () => {
     try {
-      const response = await axiosPrivate.put("users/staff/filter", {
-        name: name,
-      });
+      const response = await axiosPrivate.put("users/staff/filter", {name:name});
       setDrivers(response.data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleAlocate = async () => {
+  const handleAlocate =async()=>{
     try {
-      console.log(alocatedDriver, "dddddddddd");
-      const response = await axiosPrivate.put(`transportation/bus/${busId}`, {
-        driverName: alocatedDriver,
-      });
-      handleOpen()
-
-      getData();
+        console.log('ahahah' ,alocatedDriver);
+        const response = await axiosPrivate.put(`transportation/bus/${busId}`,{helper:alocatedDriver}) 
+        console.log(response);
+        handleOpen()
+        getData()
     } catch (error) {
-      console.log(error);
+        console.log(error)
     }
-  };
+  }
   return (
     <>
       <IconButton variant="text">
@@ -89,14 +86,10 @@ const AlocateDriver = ({ busId, getData }) => {
               </div>
               <div className="w-full">
                 <Badge content={drivers.length}>
-                  <Select label="Driver Deails "  onChange={(e) => setAlocatedDriver(e)}>
+                  <Select label="Driver Deails " onChange={(e)=>setAlocatedDriver(e)}>
                     {drivers &&
                       drivers?.map(({ name }, i) => (
-                        <Option
-                          key={i}
-                          value={name}
-                         
-                        >
+                        <Option key={i} value={name} >
                           {name}
                         </Option>
                       ))}
@@ -112,7 +105,7 @@ const AlocateDriver = ({ busId, getData }) => {
             cancel
           </Button>
           <Button variant="gradient" color="gray" onClick={handleAlocate}>
-            Alocate
+           Alocate
           </Button>
         </DialogFooter>
       </Dialog>
@@ -120,4 +113,4 @@ const AlocateDriver = ({ busId, getData }) => {
   );
 };
 
-export default AlocateDriver;
+export default AlocateHelper;

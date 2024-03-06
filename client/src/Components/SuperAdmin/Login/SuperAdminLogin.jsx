@@ -1,12 +1,51 @@
 import { faCircleUser } from "@fortawesome/free-regular-svg-icons";
 import { faBook, faEye, faEyeSlash, faUser, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Input } from "@material-tailwind/react";
-import { useState } from "react";
+import { Button, Input } from "@material-tailwind/react";
+import { useEffect, useState } from "react";
+import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
+import { Link, useNavigate } from "react-router-dom";
+import { RouteObjects } from "../../../Routes/RoutObjects";
 
 const SuperAdminLogin = () => {
+  const navigate= useNavigate()
+  const axiosPrivate = useAxiosPrivate()
   const [eyeOpen, setEyeOpen] = useState(false);
+  const [isValidate,setIsValidate]=useState(false)
+  const [isLoading,setIsLoading]=useState()
+  const [formData,setFormData]=useState({
+    email:"",
+    password:""
+  })
+  const handleInputChange =(e)=>{
+    const {name,value}=e.target;
 
+    setFormData((pre)=>({
+      ...pre,
+      [name]:value
+    }))
+  }
+
+
+const handleSubmit = async()=>{
+  try {
+    setIsLoading(true)
+    const response = await axiosPrivate.post("",formData)
+    setIsLoading(false)
+    navigate(RouteObjects.SuperAdminHome)
+  } catch (error) {
+    setIsLoading(false)
+    console.log(error);
+  }
+}
+
+
+useEffect(()=>{
+const isValidate =
+formData.email&&
+formData.password;
+setIsValidate(isValidate)
+},[formData])
   return (
     <div>
       <>
@@ -40,6 +79,8 @@ const SuperAdminLogin = () => {
               <div className="space-y-6">
                 <div className="">
                   <Input
+                  name="email"
+                  onChange={handleInputChange}
                     // className=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
                     type="Text"
                     placeholder="Email ID"
@@ -47,6 +88,8 @@ const SuperAdminLogin = () => {
                 </div>
                 <div className="">
                   <Input
+                                    onChange={handleInputChange}
+
                   variant="Standard"
                 icon={
                       eyeOpen ? (
@@ -86,12 +129,17 @@ const SuperAdminLogin = () => {
                 </div>
 
                 <div>
-                  <button
+              
+                  <Button
+                  
+                  onClick={handleSubmit}
+                  loading={isLoading}
+                  disabled={!isValidate}
                     type="submit"
                     className="w-full flex justify-center bg-purple-800  hover:bg-purple-700 text-gray-100 p-3  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500"
                   >
                     Sign in
-                  </button>
+                  </Button>
                 </div>
                 <div className="flex items-center justify-center space-x-2 my-5">
                   <span className="h-px w-16 bg-gray-100"></span>

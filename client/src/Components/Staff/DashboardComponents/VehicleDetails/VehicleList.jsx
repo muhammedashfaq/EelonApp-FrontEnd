@@ -14,13 +14,13 @@ import {
   MenuHandler,
   MenuList,
   MenuItem,
-  Badge,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { RouteObjects } from "../../../../Routes/RoutObjects";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import AlocateDriver from "./AlocateDriver";
+import AlocateHelper from "./AlocateHelper";
 
 const TABLE_HEAD = [
   "#No",
@@ -33,16 +33,18 @@ const TABLE_HEAD = [
   "Milage",
   "Year Of Made",
   "Driver Name",
-  "Alocate Driver",
+  "Helper Name",
   "Current Status",
   "Action",
 ];
 const VehicleList = () => {
   const [fetchedData, setFetchedData] = useState([]);
   const axiosPrivate = useAxiosPrivate();
-  const changeStatus = async (status) => {
+  const changeStatus = async (id,status) => {
     try {
-       await axiosPrivate.put("transportation/bus", status);
+      console.log('reach');
+     const response= await axiosPrivate.put(`transportation/bus/${id}`, {status:status});
+     console.log(response)
       getData();
     } catch (error) {
       console.log(error);
@@ -101,6 +103,7 @@ const VehicleList = () => {
                 fetchedData?.map(
                   (
                     {
+                      _id,
                       busNo,
                       rgNo,
                       vehicleModel,
@@ -110,6 +113,8 @@ const VehicleList = () => {
                       mileage,
                       yearOfMade,
                       status,
+                      helper,
+                      driverName,
                     },
                     index
                   ) => {
@@ -126,9 +131,14 @@ const VehicleList = () => {
                         <td className={classes}>{RC}</td>
                         <td className={classes}>{mileage}</td>
                         <td className={classes}>{yearOfMade}</td>
-                        <td className={classes}>Driver Name</td>
                         <td className={classes}>
-                          <AlocateDriver />
+                          {driverName}
+
+                          <AlocateDriver busId={_id} getData={getData} />
+                        </td>
+                        <td className={classes}>
+                          {helper}
+                          <AlocateHelper busId={_id} getData={getData} />
                         </td>
 
                         <td className={classes}>{status}</td>
@@ -141,16 +151,16 @@ const VehicleList = () => {
                               />
                             </MenuHandler>
                             <MenuList>
-                              <MenuItem onClick={() => changeStatus("Active")}>
+                              <MenuItem onClick={() => changeStatus(_id,"Active")}>
                                 Active
                               </MenuItem>
                               <MenuItem
-                                onClick={() => changeStatus("Under Maintnance")}
+                                onClick={() => changeStatus(_id,"Under Maintnance")}
                               >
                                 Under Maintnance
                               </MenuItem>
                               <MenuItem
-                                onClick={() => changeStatus("Not Availiable")}
+                                onClick={() => changeStatus(_id,"Not Availiable")}
                               >
                                 Not Availiable
                               </MenuItem>
