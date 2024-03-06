@@ -87,7 +87,12 @@ import LedgerBookPage from "../Pages/Staff/Dashboard/FeeCollection/LedgerBookPag
 import VehicleListPage from "../Pages/Staff/Dashboard/vehicleDetails/VehicleListPage";
 import AddVehiclePage from "../Pages/Staff/Dashboard/vehicleDetails/AddVehiclePage";
 import AlocateStudentPage from "../Pages/Staff/Dashboard/vehicleDetails/AlocateStudentPage";
+<<<<<<< HEAD
+import ComplaintsUpdationPage from "../Pages/Staff/Dashboard/vehicleDetails/ComplaintsUpdationPage";
+import AdminVehicleUpdates from "../Pages/Admin/Home/AdminVehicleUpdates";
+=======
 import AddBusRoutes from "../Pages/Staff/Dashboard/vehicleDetails/AddBusRoutes";
+>>>>>>> 501afb9b08ef0357eaab755628a067001313b9dc
 
 const AppRoutes = () => {
   const [editedPath, setEditedPath] = useState("");
@@ -108,9 +113,10 @@ const AppRoutes = () => {
         {/* Super Admin */}
         <Route path={RouteObjects.SuperAdmin} element={<SuperAdminLogin />} />
         <Route
-          path={RouteObjects.SuperAdminH}
+          path={RouteObjects.SuperAdminHome}
           element={<SuperAdminHomePage />}
         />
+
         <Route path={RouteObjects.SuperForgot} element={<ForgotMailPage />} />
         <Route path={RouteObjects.SuperReset} element={<ResetPage />} />
         {/* Main Login */}
@@ -148,6 +154,11 @@ const AppRoutes = () => {
           path={RouteObjects.AdminGenerateHT}
           element={<AdminGenerateHT />}
         />
+            <Route
+          path={RouteObjects.AdminVehicleUpdates}
+          element={<AdminVehicleUpdates />}
+        />
+      
         {/* <Route path={RouteObjects.Admin} element={<AdminHome />} /> */}
         <Route
           path={RouteObjects.AdminGenerateHT}
@@ -157,6 +168,18 @@ const AppRoutes = () => {
           path={`${RouteObjects.HTClasswise}/:id/:term/:year`}
           element={<HTclasswiseTable />}
         />
+<<<<<<< HEAD
+                {/* Vechle ROUTS */}
+                <Route path={RouteObjects.VehcleList} element={<VehicleListPage />} />
+                <Route path={RouteObjects.AddVehicle} element={<AddVehiclePage />} />
+                <Route path={RouteObjects.AlocateStudent} element={<AlocateStudentPage />} />
+                <Route path={RouteObjects.VehicleComplaints} element={<ComplaintsUpdationPage />} />
+
+
+
+
+
+=======
         {/* Vechle ROUTS */}
         <Route path={RouteObjects.VehcleList} element={<VehicleListPage />} />
         <Route path={RouteObjects.AddVehicle} element={<AddVehiclePage />} />
@@ -165,6 +188,7 @@ const AppRoutes = () => {
           element={<AlocateStudentPage />}
         />
         <Route path={RouteObjects.addroutes} element={<AddBusRoutes />} />
+>>>>>>> 501afb9b08ef0357eaab755628a067001313b9dc
         {/* STUDENTS ROUTS */}
         <Route path={RouteObjects.root} element={<LandingPage />} />
         <Route

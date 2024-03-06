@@ -1,4 +1,15 @@
-import { Badge, Button, IconButton, Input, Menu, MenuHandler, MenuItem, MenuList, Option, Select } from "@material-tailwind/react";
+import {
+  Badge,
+  Button,
+  IconButton,
+  Input,
+  Menu,
+  MenuHandler,
+  MenuItem,
+  MenuList,
+  Option,
+  Select,
+} from "@material-tailwind/react";
 import React, { useEffect, useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import Swal from "sweetalert2";
@@ -6,7 +17,7 @@ import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
-const AlocateStudent = ({ setStudentData, setIsLoading, isLoading }) => {
+const AlocateStudent = () => {
   const [rgNo, setrgNo] = useState("");
   const onChange = ({ target }) => setrgNo(target.value);
   const contentToPrint = useRef();
@@ -22,22 +33,63 @@ const AlocateStudent = ({ setStudentData, setIsLoading, isLoading }) => {
   const [isValidate, setIsValidate] = useState(false);
   const axiosPrivate = useAxiosPrivate();
   const [searchName, setSearchName] = useState("");
-  const [vehicleData,setVehicledata]=useState([])
-  const [studentDatabyName, setStudentDatabyName] = useState([]);
+  const [vehicleData, setVehicledata] = useState("");
+const [busStudentData,setBusStudentsData]=useState([])
 
-  const fetchBusData = async()=>{
+  const [isLoading, setIsLoading] = useState(false);
+  const [studentData, setStudentData] = useState("");
+  const [studentDatabyName, setStudentDatabyName] = useState("");
+
+  const addToBus = async (id)=>{
+    
     try {
-        const response = await axiosPrivate.get("transportation/bus",rgNo)
-        console.log(response,"reg");
-        setVehicledata(response.data)
+      const data = {
+        busNo:vehicleData.rgNo,
+        busId:vehicleData._id
+      }
+      const result = await Swal.fire({
+        title: "Do you want to save? ",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Save",
+        denyButtonText: `Don't save`
+      })
+        if (result.isDenied) {
+          Swal.fire("Changes are not saved", "", "info");
+        } else if (result.isConfirmed) {
+          console.log(data,'dddddddddddd');
+          const response = await axiosPrivate.put(`users/student/${id}`,data)
+          console.log(response,"hhh");
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+     
     } catch (error) {
-        console.log(error)
+      console.log(error)
     }
   }
+  const fetchBusData = async () => {
+    try {
+      console.log(rgNo);
+      const response = await axiosPrivate.put("transportation/bus/filter-students", {
+        rgNo: rgNo,
+      });
+      console.log(response, "reg");
+      setBusStudentsData(response.data.students)
+      setVehicledata(response.data.busData[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const findStudent = async (e) => {
     e.preventDefault();
     setInputValue(null);
-    setStudentData([]);
+    // setStudentData([]);
     try {
       let formattedInputValue;
       let formattedInputValue2;
@@ -95,7 +147,7 @@ const AlocateStudent = ({ setStudentData, setIsLoading, isLoading }) => {
             }}
           />
           <Button
-          onClick={fetchBusData}
+            onClick={fetchBusData}
             size="sm"
             color={rgNo ? "gray" : "blue-gray"}
             disabled={!rgNo}
@@ -106,7 +158,7 @@ const AlocateStudent = ({ setStudentData, setIsLoading, isLoading }) => {
         </div>
 
         <form onSubmit={findStudent} className=" gap-4">
-          <div className="flex space-x-10" >
+          <div className="flex space-x-10">
             <Select
               label="Select   "
               variant="standard"
@@ -144,25 +196,37 @@ const AlocateStudent = ({ setStudentData, setIsLoading, isLoading }) => {
                 Search
               </Button>
             </div>
+            {studentData && (
+              <Menu>
+                <Badge content={studentData.length}>
+                  <IconButton variant="text">
+                    <MenuHandler>
+                      <FontAwesomeIcon icon={faUser} size="2xl" />
+                    </MenuHandler>
+                  </IconButton>
+                </Badge>
+                <MenuList>
+                  <MenuItem onClick={()=>addToBus(studentData._id)}>{studentData.studentName}</MenuItem>
+                </MenuList>
+              </Menu>
+            )}
 
-            <Menu>
-      <Badge content="5">
-        <IconButton variant="text">
-          <MenuHandler>
-            <FontAwesomeIcon icon={faUser} size="2xl"/>
-          </MenuHandler>
-        </IconButton>
-      </Badge>
-      <MenuList>
-        {
-            studentDatabyName&&studentDatabyName.map((studentName,i)=>(
-
-                <MenuItem key={i}>{studentName}</MenuItem>
-            ))
-        }
-        
-      </MenuList>
-    </Menu>
+            {studentDatabyName && (
+              <Menu>
+                <Badge content={studentDatabyName.length}>
+                  <IconButton variant="text">
+                    <MenuHandler>
+                      <FontAwesomeIcon icon={faUser} size="2xl" />
+                    </MenuHandler>
+                  </IconButton>
+                </Badge>
+                <MenuList>
+                  {studentDatabyName.map((_id,student, i) => (
+                    <MenuItem key={i} onClick={()=>addToBus(_id)}>{student.studentName}</MenuItem>
+                  ))}
+                </MenuList>
+              </Menu>
+            )}
           </div>
         </form>
       </div>
@@ -205,34 +269,49 @@ const AlocateStudent = ({ setStudentData, setIsLoading, isLoading }) => {
       >
         <div className="border border-gray-200 p-4 rounded-lg space-y-4 dark:border-gray-700">
           <div className="hidden sm:grid sm:grid-cols-5">
+      
             <div className="sm:col-span-2 text-xs text-Black uppercase font-bold">
               Student Name
             </div>
-
+            <div className="text-end text-xs  text-Black uppercase font-bold">
+              Admission no
+            </div>
             <div className="text-end text-xs  text-Black uppercase font-bold">
               Class Section
             </div>
           </div>
 
           <div className="hidden sm:block border-b border-black"></div>
-{
-vehicleData&&vehicleData?.map((i)=>(
+          {busStudentData &&
+            busStudentData?.
+            map(({studentName,admnNo,classId
+            },i) => (
+              <div key={i} className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+               
+                <div className="col-span-full sm:col-span-2">
+                  <h5 className="sm:hidden text-xs font-medium  uppercase">
+                    Item
+                  </h5>
+                  <p className="font-medium  dark:text-gray-200">
+                    {studentName}
+                  </p>
+                </div>
 
-    <div key={i} className="grid grid-cols-3 sm:grid-cols-5 gap-2">
-            <div className="col-span-full sm:col-span-2">
-              <h5 className="sm:hidden text-xs font-medium  uppercase">Item</h5>
-              <p className="font-medium  dark:text-gray-200">Admission Fee</p>
-            </div>
-
-            <div>
-              <h5 className="sm:hidden text-xs font-medium  uppercase">
-                Amount
-              </h5>
-              <p className="sm:text-end  dark:text-gray-200">ddd</p>
-            </div>
-          </div>
-              ))
-}
+                <div>
+                  <h5 className="sm:hidden text-xs font-medium  uppercase">
+                    Admission No
+                  </h5>
+                  <p className="sm:text-end  dark:text-gray-200">{admnNo}</p>
+                </div>
+                <div>
+                  <h5 className="sm:hidden text-xs font-medium  uppercase">
+                    Amount
+                  </h5>
+                  <p className="sm:text-end  dark:text-gray-200">{classId
+}</p>
+                </div>
+              </div>
+            ))}
         </div>
       </div>
     </div>

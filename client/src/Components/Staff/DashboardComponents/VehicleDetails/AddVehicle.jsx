@@ -20,6 +20,7 @@ const navigate=useNavigate()
     seatNo: "",
     mileage: "",
     yearOfMade: "",
+  
   });
 
   const handleFileChangeFC = (e) => {
@@ -55,7 +56,7 @@ const navigate=useNavigate()
 
   const allData = {
     ...formData,
-    year,
+    academicYear:year,
     FC: base64FC,
     RC: base64RC,
   };
