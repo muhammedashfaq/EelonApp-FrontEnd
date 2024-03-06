@@ -87,7 +87,7 @@ import LedgerBookPage from "../Pages/Staff/Dashboard/FeeCollection/LedgerBookPag
 import VehicleListPage from "../Pages/Staff/Dashboard/vehicleDetails/VehicleListPage";
 import AddVehiclePage from "../Pages/Staff/Dashboard/vehicleDetails/AddVehiclePage";
 import AlocateStudentPage from "../Pages/Staff/Dashboard/vehicleDetails/AlocateStudentPage";
-
+import AddBusRoutes from "../Pages/Staff/Dashboard/vehicleDetails/AddBusRoutes";
 
 const AppRoutes = () => {
   const [editedPath, setEditedPath] = useState("");
@@ -136,10 +136,7 @@ const AppRoutes = () => {
           path={`${RouteObjects.NewApplicationFee}/:id`}
           element={<ApplicationFeePage />}
         />
-            <Route
-          path={RouteObjects.LedgerBook}
-          element={<LedgerBookPage />}
-        />
+        <Route path={RouteObjects.LedgerBook} element={<LedgerBookPage />} />
         {/* Admin ROUTS */}
         <Route
           path={RouteObjects.UserProfileadmin}
@@ -160,14 +157,14 @@ const AppRoutes = () => {
           path={`${RouteObjects.HTClasswise}/:id/:term/:year`}
           element={<HTclasswiseTable />}
         />
-                {/* Vechle ROUTS */}
-                <Route path={RouteObjects.VehcleList} element={<VehicleListPage />} />
-                <Route path={RouteObjects.AddVehicle} element={<AddVehiclePage />} />
-                <Route path={RouteObjects.AlocateStudent} element={<AlocateStudentPage />} />
-
-
-
-
+        {/* Vechle ROUTS */}
+        <Route path={RouteObjects.VehcleList} element={<VehicleListPage />} />
+        <Route path={RouteObjects.AddVehicle} element={<AddVehiclePage />} />
+        <Route
+          path={RouteObjects.AlocateStudent}
+          element={<AlocateStudentPage />}
+        />
+        <Route path={RouteObjects.addroutes} element={<AddBusRoutes />} />
         {/* STUDENTS ROUTS */}
         <Route path={RouteObjects.root} element={<LandingPage />} />
         <Route
