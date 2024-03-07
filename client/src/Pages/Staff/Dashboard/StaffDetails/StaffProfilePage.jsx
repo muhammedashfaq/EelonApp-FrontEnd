@@ -20,9 +20,11 @@ const StaffProfilePage = () => {
   useEffect(() => {
     getData();
   }, []);
+  const breadcrumbs = ["Profile-Staff"];
+
   return (
     <div>
-      <Banner />
+      <Banner breadcrumbs={breadcrumbs}/>
       <StaffProfile userData={userData} getData={getData} />
     </div>
   );

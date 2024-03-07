@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
 import { RouteObjects } from "../../../../Routes/RoutObjects";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Card,
@@ -15,13 +15,15 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 import UpdateModal from "./UpdateModal";
+import Swal from "sweetalert2";
 
 const TABLE_HEAD = [
   "#No",
-  "Application Number",
-  "Student Name",
-  "Conatct Number",
+  "Title",
+  "Description",
+  "Status",
   "Action",
+
 ];
 
 
@@ -30,6 +32,36 @@ function VehicleUpdates() {
     const [detail,setDetails]=useState("")
     const [rgNo,setrgNo]=useState("")
 const axiosPrivate =useAxiosPrivate()
+
+
+
+const deleteComplaint = async(id)=>{
+  try {
+    console.log(id)
+    if(!id) return;
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    })
+    if (result.isConfirmed) {
+        const response =await axiosPrivate.delete(`transportation/bus/complaints/${detail._id}`,{data:{id:id}})
+        console.log(response);  
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success"
+        });
+      }
+
+  } catch (error) {
+    console.log(error);
+  }
+}
 
     const findBusDetails = async()=>{
         try {
@@ -73,16 +105,25 @@ const axiosPrivate =useAxiosPrivate()
               </tr>
             </thead>
             <tbody>
-              {["1"]?.map((index) => {
-                const classes = "px-3 py-2 border-b border-blue-gray-50";
+              {
+              detail?.complaints?.map(({_id,title,description,status},index) => {
+                const classes = "px-3 py-2 border-b border-blue-gray-50 w-10";
 
                 return (
                   <tr key={index}>
                     <td className={classes}>{index + 1}</td>
-                    <td className={classes}>{index + 1}</td>
-                    <td className={classes}>{index + 1}</td>
-                    <td className={classes}>{index + 1}</td>
-                    <td className={classes}>{index + 1}</td>
+                    <td className={classes}>{title}</td>
+                    <td className={classes}>{description}</td>
+                    <td className={classes}>{status}</td>
+                    <td className={classes} onClick={()=>deleteComplaint(_id)}>
+                      
+                      <IconButton variant="text">
+
+                      <FontAwesomeIcon icon={faTrash}/>
+                      </IconButton>
+                      
+                      </td>
+
                   </tr>
                 );
               })}

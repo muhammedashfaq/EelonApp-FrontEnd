@@ -20,13 +20,16 @@ const UpdateModal = ({ busId }) => {
       [name]: value,
     }));
   };
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
     try {
-      const response = await axiosPrivate.put(
+
+      e.preventDefault()
+      if(!busId) return;
+      const response = await axiosPrivate.post(
         `transportation/bus/complaints/${busId}`,
         { complaintsArray: formData }
       );
-
+console.log(response,'ffff');
       handleOpen();
     } catch (error) {
       console.log(error);
@@ -37,15 +40,15 @@ const UpdateModal = ({ busId }) => {
       <Button onClick={handleOpen} variant="gradient" color="teal">
         Update
       </Button>
-      <Dialog size="lg" open={open} handler={handleOpen}>
+      <Dialog size="lg" open={open} >
         <div className="p-1">
           <div className="heading text-center font-bold text-2xl m-5 text-gray-800 bg-white">
-            New Post
+            New Complaint
           </div>
           <div className="editor mx-auto  flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg ">
             <input
               onChange={handleInputChange}
-              name="reason"
+              name="title"
               className="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none"
               spellcheck="false"
               placeholder="Title"
@@ -87,6 +90,7 @@ const UpdateModal = ({ busId }) => {
               </Button>
 
               <Button
+              type="submit"
                 onClick={handleSubmit}
                 color="green"
                 classNameName="btn border border-green-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-green-500"

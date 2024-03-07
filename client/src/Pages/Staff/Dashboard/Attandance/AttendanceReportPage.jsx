@@ -3,9 +3,11 @@ import Report from '../../../../Components/Staff/DashboardComponents/Attendance/
 import Banner from '../../../../Components/Banner/Banner'
 
 const AttendanceReportPage = () => {
+  const breadcrumbs = ["Attandance Report"];
+
   return (
     <div>
-      <Banner/>
+      <Banner breadcrumbs={breadcrumbs}/>
       <Report/>
     </div>
   )

@@ -17,8 +17,7 @@ import Book from "../../../assets/book.png";
 
 const StaffLibraryManagement = () => {
   return (
-    <div className="w-full h-full bg-red-300 ">
-      <Banner />
+    <div className="">
       <div className="flex justify-center items-center m-20">
         <div className="flex flex-wrap justify-center gap-8 mt-6 mx-4">
           <Link to={`${RouteObjects.Bookmanagment}/1`}>

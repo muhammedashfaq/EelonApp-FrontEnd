@@ -155,7 +155,6 @@ const ShowClasswiseMarks = () => {
 
   return (
     <>
-      <Banner />
       {/* <Button onClick={sortMarksByChemistry}>Sort</Button> */}
       <div className="flex justify-center">
         <div className="container xl">

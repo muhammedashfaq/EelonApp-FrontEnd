@@ -3,9 +3,11 @@ import Banner from '../../../../Components/Banner/Banner'
 import ApplicantTable from '../../../../Components/Staff/DashboardComponents/Application/ApplicantTable'
 
 const ApplicantTablePage = () => {
+  const breadcrumbs = ["New Applicants"];
+
   return (
     <div>
-        <Banner/>
+        <Banner breadcrumbs={breadcrumbs}/>
         <ApplicantTable/>
     </div>
   )
