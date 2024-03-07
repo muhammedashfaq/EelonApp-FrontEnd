@@ -18,9 +18,9 @@ const center = {
 };
 
 const AddStops = () => {
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyDHX1VbvvzOGgrddLg9Ataw_Cf3sUrygag",
-  });
+  // const { isLoaded } = useJsApiLoader({
+  //   googleMapsApiKey: "AIzaSyDHX1VbvvzOGgrddLg9Ataw_Cf3sUrygag",
+  // });
 
   const [stops, setstops] = useState();
   const [distance, setdistance] = useState();
@@ -250,7 +250,7 @@ const AddStops = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-center mb-10">
+      {/* <div className="flex justify-center mb-10">
         <div style={{ height: "90vh", width: "90vw" }}>
           <GoogleMap
             center={center}
@@ -259,7 +259,7 @@ const AddStops = () => {
             options={{ streetViewControl: true, mapTypeControl: true }}
           ></GoogleMap>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
