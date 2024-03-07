@@ -97,7 +97,9 @@ import StaffAcademicPage from "../Pages/Staff/Dashboard/Academic/Staff/StaffAcad
 import StudentAcademicPage from "../Pages/Staff/Dashboard/Academic/Student/StudentAcademicPage";
 import PreperationsPage from "../Pages/Staff/Dashboard/Academic/Preparation/PreperationsPage";
 import AccountantsPage from "../Pages/Staff/Dashboard/Academic/Accountants/AccountantsPage";
+import PayRollPage from "../Pages/Staff/Dashboard/Academic/Accountants/PayRollPage";
 import AddStopsPage from "../Pages/Staff/Dashboard/vehicleDetails/AddStopsPage";
+
 
 const AppRoutes = () => {
   const [editedPath, setEditedPath] = useState("");
@@ -116,21 +118,20 @@ const AppRoutes = () => {
 
       <Routes>
         {/* Academics */}
-        <Route
-          path={RouteObjects.Student_Acadamic}
-          element={<StudentAcademicPage />}
-        />
-        <Route
-          path={RouteObjects.Staff_Acadamic}
-          element={<StaffAcademicPage />}
-        />
-        <Route
-          path={RouteObjects.Preparations}
-          element={<PreperationsPage />}
-        />
+        <Route path={RouteObjects.Student_Acadamic} element={<StudentAcademicPage />} />
+        <Route path={RouteObjects.Staff_Acadamic} element={<StaffAcademicPage />} />
+        <Route path={RouteObjects.Preparations} element={<PreperationsPage />} />
 
-        {/* Accountant */}
-        <Route path={RouteObjects.AccountsPage} element={<AccountantsPage />} />
+
+
+
+                {/* Accountant */}
+                <Route path={RouteObjects.AccountsPage} element={<AccountantsPage />} />
+                <Route path={RouteObjects.PayRolls} element={<PayRollPage />} />
+
+
+
+
 
         {/* Super Admin */}
         <Route path={RouteObjects.SuperAdmin} element={<SuperAdminLogin />} />
