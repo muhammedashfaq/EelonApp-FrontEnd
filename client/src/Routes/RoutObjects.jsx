@@ -1,8 +1,27 @@
 export const RouteObjects = {
   root: "/",
   Login: "/login",
+//academics
+  Student_Acadamic:"/Student",
+  Staff_Acadamic:"/Staff",
+  Preparations:"/staff/Preparations",
+
+
+//accounts
+  AccountsPage:"/Accountance",
+
+
+
+
+
+
+
+
+
+
+
   StudentDashboard: "/studentdash",
-  UserProfileStudent: "/profile/student",
+  UserProfileStudent: "/profile_student",
   FeeInvoice: "/feeinvoice",
   FeeStructure: "/feestructre",
   HomeWorks: "/homeworks",
@@ -18,10 +37,10 @@ export const RouteObjects = {
   AddNewStudent: "/addnewstudent",
   StaffDashboard: "/staffdash",
   Stafflibrary: "/stafflibrary",
-  Bookmanagment: "/bookdetails/page",
-  Issuebooks: "/issuedbookdetails/page",
-  Issuecards: "/issuedcarddetails",
-  LibrarySettings: "/librarysettings",
+  Bookmanagment: "/stafflibrary/bookdetails/page",
+  Issuebooks: "/stafflibrary/issuedbookdetails/page",
+  Issuecards: "/stafflibrary/issuedcarddetails",
+  LibrarySettings: "/stafflibrary/librarysettings",
   StudentsList: "/studentlist/page",
   StudentProfile: "/studentprofile",
   AddStudent: "/addstudent",
@@ -63,7 +82,7 @@ export const RouteObjects = {
   ScholasticSubwiseMarks: "/staff/exam-module/add-scholastic-grade",
   ShowSubwiseMarks: "/staff/exam-module/subjectwise-marks",
   ShowClasswiseMarks: "/staff/exam-module/classwise-marks",
-  UserProfileadmin: "/profile/admin",
+  UserProfileadmin: "/profile_admin",
   ShowStudentwiseReports: "/staff/exam-module/studentwise-report",
 
   AdminHome: "/adminhome",

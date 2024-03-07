@@ -51,8 +51,7 @@ const TimetableExamPage = () => {
   }, []);
   return (
     <>
-      <StaffHeader />
-      <Banner />
+     
       <div className="flex justify-center mt-16">
         <div className="w-full px-5">
           <div>

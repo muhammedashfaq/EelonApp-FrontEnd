@@ -80,7 +80,6 @@ const StaffLibraryCardPage = () => {
 
   return (
     <>
-      <Banner name="Library Section" />
       <div className="  m-10 ">
         <div>
           <div className="relative flex flex-col w-full h-full text-gray-700 bg-white shadow-md rounded-xl bg-clip-border">

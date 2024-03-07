@@ -1,13 +1,15 @@
+import Banner from '../../../Components/Banner/Banner'
 import SatffAddBookManagement from '../../../Components/Staff/DashboardComponents/SatffAddBookManagement'
 
 const AddBooks = () => {
-  return (<div>
+  const breadcrumbs = ['Library',"AddBooks"];
 
-    <div className='flex'>
+  return (<div>
+<Banner breadcrumbs={breadcrumbs}/>
     
         <SatffAddBookManagement/>
     
-    </div>
+    
   </div>
   )
 }

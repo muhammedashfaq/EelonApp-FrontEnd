@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Banner from "../../../../Components/Banner/Banner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -82,7 +81,6 @@ const AddBusRoutes = () => {
   }, [selectedBus]);
   return (
     <>
-      <Banner />
       <div className="px-5">
         <div
           className="h-20 bg-gray-600 w-full shadow-2xl mt-10 flex justify-between items-center px-5"

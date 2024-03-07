@@ -3,10 +3,14 @@ import DailyLedgerBook from '../../../../Components/Staff/DashboardComponents/Fe
 import Banner from '../../../../Components/Banner/Banner'
 
 const LedgerBookPage = () => {
+  const breadcrumbs = ["Invice Ledger"];
+
   return (
     <div>
-        <Banner/>
-        <DailyLedgerBook/></div>
+        <Banner breadcrumbs={breadcrumbs}/>
+        <DailyLedgerBook/>
+        
+        </div>
   )
 }
 

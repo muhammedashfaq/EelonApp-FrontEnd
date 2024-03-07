@@ -25,8 +25,10 @@ const AddNewStudentPage = () => {
   useEffect(() => {
     getClsSection();
   }, []);
+  const breadcrumbs = ['Library',"issueBooks"];
+
   return (
-    <div><Banner/>
+    <div><Banner breadcrumbs={breadcrumbs}/>
     <AddNewStudent AcademicYrs={AcademicYrs}/></div>
   )
 }

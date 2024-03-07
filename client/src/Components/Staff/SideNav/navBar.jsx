@@ -1,6 +1,6 @@
 import { useState } from "react";
 import logo from "../../../assets/EelonLogo.png";
-import { Drawer,} from "@material-tailwind/react";
+import { Avatar, Drawer,} from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -33,12 +33,31 @@ const NavBar = () => {
 
       <Drawer open={open} onClose={closeDrawer} className="p-4 bg-dark-purple overflow-y-auto">
         <div className="h-screen">
+
+       <div className="flex items-center  p-3 rounded-lg shadow-inner bg-blue-800">
+            <Avatar src="https://docs.material-tailwind.com/img/face-2.jpg" alt="avatar" size="xs" />
+            <span className="text-white ml-2 text-sm font-medium">Username</span>
+          </div>
+
+          <div className="mt-4 mb-2">
+            <input
+              type="search"
+              placeholder="Search..."
+              className="px-4 py-2 rounded-lg w-full bg-gray-500 text-white outline-none"
+            />
+          </div>
+
+      
+
+
+
           <ul className="pt-2">
             {menu.map((item, index) => (
               <li
                 className={`text-gray-200 text-sm flex flex-col cursor-pointer p-2 hover:bg-deep-orange-500 rounded-md mt-2 relative`}
                 key={index} onClick={() => toggleSubmenu(index)}
               >
+              
                 <Link to={item.href}>
                   <div className="flex items-center gap-x-4" >
                     <FontAwesomeIcon icon={item.icon} />

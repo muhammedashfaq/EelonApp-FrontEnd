@@ -40,8 +40,6 @@ import StaffProfilePage from "../Pages/Staff/Dashboard/StaffDetails/StaffProfile
 import AcademicsSettings from "../Pages/Staff/Dashboard/Academics/AcademicsSettingsPage";
 import ClassTimeTablePage from "../Pages/Staff/Dashboard/TimeTable/ClassTimeTablePage";
 import TableStaff from "../Pages/Staff/Dashboard/Attandance/TableStaff";
-import ExamTimeTablePage from "../Pages/Staff/Dashboard/TimeTable/ExamTimeTablePage";
-import AddClassTimetable from "../Components/Staff/DashboardComponents/Timetables/Classtimetable/AddClassTimetable";
 import ErrorPage from "../Pages/Error/ErrorPage";
 import SyllubusPlanningPage from "../Pages/Staff/Dashboard/Academics/SyllubusPlanningPage";
 import QustionBankPage from "../Pages/Staff/Dashboard/Academics/QustionBankPage";
@@ -89,8 +87,17 @@ import AddVehiclePage from "../Pages/Staff/Dashboard/vehicleDetails/AddVehiclePa
 import AlocateStudentPage from "../Pages/Staff/Dashboard/vehicleDetails/AlocateStudentPage";
 import ComplaintsUpdationPage from "../Pages/Staff/Dashboard/vehicleDetails/ComplaintsUpdationPage";
 import AdminVehicleUpdates from "../Pages/Admin/Home/AdminVehicleUpdates";
-import AddBusRoutes from "../Pages/Staff/Dashboard/vehicleDetails/AddBusRoutes";
-import AddStops from "../Pages/Staff/Dashboard/vehicleDetails/AddStops";
+import AddBusRoutesPage from "../Pages/Staff/Dashboard/vehicleDetails/AddBusRoutesPage";
+import AddExamTimeTablePage from "../Pages/Staff/Dashboard/TimeTable/AddExamTimeTablePage";
+import ExamTimeTablePage from "../Pages/Staff/Dashboard/TimeTable/ExamTimeTablePage";
+import AddClassTimeTablePage from "../Pages/Staff/Dashboard/TimeTable/AddClassTimeTablePage";
+import StudentWiseReport from "../Pages/Staff/Dashboard/Exam/StudentWiseReport";
+import ShowClasswiseMarksPage from "../Pages/Staff/Dashboard/Exam/ShowClasswiseMarksPage";
+import StaffAcademicPage from "../Pages/Staff/Dashboard/Academic/Staff/StaffAcademicPage";
+import StudentAcademicPage from "../Pages/Staff/Dashboard/Academic/Student/StudentAcademicPage";
+import PreperationsPage from "../Pages/Staff/Dashboard/Academic/Preparation/PreperationsPage";
+import AccountantsPage from "../Pages/Staff/Dashboard/Academic/Accountants/AccountantsPage";
+import AddStopsPage from "../Pages/Staff/Dashboard/vehicleDetails/AddStopsPage";
 
 const AppRoutes = () => {
   const [editedPath, setEditedPath] = useState("");
@@ -108,6 +115,23 @@ const AppRoutes = () => {
       ) && <StaffHeader />}
 
       <Routes>
+        {/* Academics */}
+        <Route
+          path={RouteObjects.Student_Acadamic}
+          element={<StudentAcademicPage />}
+        />
+        <Route
+          path={RouteObjects.Staff_Acadamic}
+          element={<StaffAcademicPage />}
+        />
+        <Route
+          path={RouteObjects.Preparations}
+          element={<PreperationsPage />}
+        />
+
+        {/* Accountant */}
+        <Route path={RouteObjects.AccountsPage} element={<AccountantsPage />} />
+
         {/* Super Admin */}
         <Route path={RouteObjects.SuperAdmin} element={<SuperAdminLogin />} />
         <Route
@@ -116,8 +140,10 @@ const AppRoutes = () => {
         />
         <Route path={RouteObjects.SuperForgot} element={<ForgotMailPage />} />
         <Route path={RouteObjects.SuperReset} element={<ResetPage />} />
+
         {/* Main Login */}
         <Route path={RouteObjects.Login} element={<Login />} />
+
         {/* accountant Module  */}
         <Route
           path={`${RouteObjects.FeeInvoiceBill}/:id`}
@@ -140,6 +166,7 @@ const AppRoutes = () => {
           element={<ApplicationFeePage />}
         />
         <Route path={RouteObjects.LedgerBook} element={<LedgerBookPage />} />
+
         {/* Admin ROUTS */}
         <Route
           path={RouteObjects.UserProfileadmin}
@@ -175,8 +202,9 @@ const AppRoutes = () => {
           path={RouteObjects.VehicleComplaints}
           element={<ComplaintsUpdationPage />}
         />
-        <Route path={RouteObjects.addroutes} element={<AddBusRoutes />} />
-        <Route path={RouteObjects.AddStops} element={<AddStops />} />
+        <Route path={RouteObjects.addroutes} element={<AddBusRoutesPage />} />
+        <Route path={RouteObjects.AddStops} element={<AddStopsPage />} />
+
         {/* STUDENTS ROUTS */}
         <Route path={RouteObjects.root} element={<LandingPage />} />
         <Route
@@ -210,11 +238,13 @@ const AppRoutes = () => {
           path={RouteObjects.StudentLibrary}
           element={<StudentLibrary />}
         />
+
         {/* STAFF ROUTS */}
         <Route
           path={RouteObjects.UserProfileStaff}
           element={<UserProfileSfaffPage />}
         />
+
         {/* application  */}
         <Route
           path={RouteObjects.NewApplication}
@@ -282,7 +312,8 @@ const AppRoutes = () => {
           path={RouteObjects.AttandanceReport}
           element={<AttendanceReportPage />}
         />
-        {/* /////////////////// Exam module ////////////////// */}
+
+        {/*  Exam module */}
         <Route
           path={RouteObjects.ExamAddSubwiseMarks}
           element={<AddSubwiseMarks />}
@@ -297,20 +328,21 @@ const AppRoutes = () => {
         />
         <Route
           path={RouteObjects.ShowClasswiseMarks}
-          element={<ShowClasswiseMarks />}
+          element={<ShowClasswiseMarksPage />}
         />
         <Route
           path={RouteObjects.ShowStudentwiseReports}
-          element={<StudentWiseReportCard />}
+          element={<StudentWiseReport />}
         />
-        ////////////////// TimeTable //////////////////////
+
+        {/* TimeTable  */}
         <Route
           path={RouteObjects.examTimeTable}
-          element={<ExamTimeTablePage />}
+          element={<AddExamTimeTablePage />}
         />
         <Route
           path={RouteObjects.ExamtableDisplayPage}
-          element={<TimetableExamPage />}
+          element={<ExamTimeTablePage />}
         />
         <Route
           path={RouteObjects.ClasstimetablePage}
@@ -318,7 +350,7 @@ const AppRoutes = () => {
         />
         <Route
           path={RouteObjects.AddClassTimetable}
-          element={<AddClassTimetable />}
+          element={<AddClassTimeTablePage />}
         />
         <Route path={RouteObjects.StaffManageClass} element={<ManageClass />} />
         <Route path={RouteObjects.StaffList} element={<StaffListPage />} />
@@ -348,11 +380,13 @@ const AppRoutes = () => {
           path={RouteObjects.QustionPaper}
           element={<QustionPapperPage />}
         />
+
         {/* Staff CLASS ROOM ROUTS */}
         <Route
           path={RouteObjects.StaffStudyRoom}
           element={<StaffClassRoom />}
         />
+
         {/* Student CLASS ROOM ROUTS */}
         <Route
           path={RouteObjects.StudentStudyRoom}

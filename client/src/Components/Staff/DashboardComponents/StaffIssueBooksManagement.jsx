@@ -114,7 +114,6 @@ const StaffIssueBookManagement = () => {
   return (
     <div className="w-full">
       {isLoading && <Spinner />}
-      <Banner />
 
       {alertissue && (
         <Alert color="red" open={open} onClose={() => setOpen(false)}>

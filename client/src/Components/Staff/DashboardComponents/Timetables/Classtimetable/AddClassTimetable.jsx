@@ -119,8 +119,7 @@ const AddClassTimetable = () => {
 
   return (
     <div>
-      <StaffHeader />
-      <Banner />
+      
       <div class="container mx-auto mt-10 mb-20 shadow-2xl shadow-black ">
         <div className="text-center py-4">
           <Typography variant="h4" textGradient color="gray">

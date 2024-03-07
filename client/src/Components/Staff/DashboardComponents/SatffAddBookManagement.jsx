@@ -143,7 +143,6 @@ const SatffAddBookManagement = () => {
   return (
     <div className="w-full">
       {isLoading && <Spinner />}
-      <Banner />
       <div className=" m-20">
         <div className=" w-full h-auto  flex justify-around mb-2 border-2 p-1 rounded-lg shadow-md">
           <div className="w-auto flex gap-1">

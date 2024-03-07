@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
-import Banner from "../../../../Components/Banner/Banner";
+import Banner from "../../../Banner/Banner";
 import { useJsApiLoader, GoogleMap } from "@react-google-maps/api";
 
 const center = {
@@ -251,15 +251,15 @@ const AddStops = () => {
         </div>
       </div>
       {/* <div className="flex justify-center mb-10">
-        <div style={{ height: "90vh", width: "90vw" }}>
-          <GoogleMap
-            center={center}
-            zoom={15}
-            mapContainerStyle={{ height: "100%", width: "100%" }}
-            options={{ streetViewControl: true, mapTypeControl: true }}
-          ></GoogleMap>
-        </div>
-      </div> */}
+          <div style={{ height: "90vh", width: "90vw" }}>
+            <GoogleMap
+              center={center}
+              zoom={15}
+              mapContainerStyle={{ height: "100%", width: "100%" }}
+              options={{ streetViewControl: true, mapTypeControl: true }}
+            ></GoogleMap>
+          </div>
+        </div> */}
     </>
   );
 };
