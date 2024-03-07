@@ -93,12 +93,18 @@ export const RouteObjects = {
   AddConcessionStructure: "/addconcessionstructure",
 
 
+
   //vehicle
+
 
   AddVehicle: "/addvehicle",
   VehcleList: "/vehiclelist",
   AlocateStudent: "/alocatestudent",
   VehicleComplaints: "/complaints",
+
+
+
+  AddStops: "/addstops",
 
   addroutes: "/addroutes",
 
