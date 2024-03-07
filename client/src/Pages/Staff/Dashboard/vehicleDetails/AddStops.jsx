@@ -10,8 +10,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import Banner from "../../../../Components/Banner/Banner";
+import { useJsApiLoader, GoogleMap } from "@react-google-maps/api";
+
+const center = {
+  lat: 11.444954555669439,
+  lng: 77.72715079848072,
+};
 
 const AddStops = () => {
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: "AIzaSyDHX1VbvvzOGgrddLg9Ataw_Cf3sUrygag",
+  });
+  if (!isLoaded) {
+    console.log("not loaded");
+  }
   const [stops, setstops] = useState();
   const [stopsData, setstopsData] = useState([]);
   const [KmPrice, setKmPrice] = useState();
@@ -124,6 +136,10 @@ const AddStops = () => {
     getStopsData();
     getPriceData();
   }, []);
+
+  useEffect(() => {
+    console.log(isLoaded);
+  }, [isLoaded]);
   return (
     <>
       <Banner />
@@ -220,6 +236,16 @@ const AddStops = () => {
               </div>
             )}
           </div>
+        </div>
+      </div>
+      <div className="flex justify-center">
+        <div style={{ height: "90vh", width: "90vw" }}>
+          <GoogleMap
+            center={center}
+            zoom={15}
+            mapContainerStyle={{ height: "100%", width: "100%" }}
+            options={{ streetViewControl: true, mapTypeControl: true }}
+          ></GoogleMap>
         </div>
       </div>
     </>
