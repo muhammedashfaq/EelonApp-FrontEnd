@@ -1,33 +1,29 @@
 import { RouteObjects } from "../../../../../Routes/RoutObjects";
 
-import {
-    faBars,
-    faBook,
-    faCaretRight,
-    faChalkboard,
-    faHome,
-    faUserPlus,
-  } from "@fortawesome/free-solid-svg-icons";
+import syllabus from '../../../../../assets/syllabus.png'
+import pattern from '../../../../../assets/pattern.png'
+import bank from '../../../../../assets/bank.png'
+import paper from '../../../../../assets/paperr.png'
 const PreparationLink = [
     {
         titleName: "Syllabus ",
         href: RouteObjects.SyllubusPlanning,
-        icon: faBook,
+        icon: syllabus,
       },
       {
         titleName: "Question Pattern ",
         href: RouteObjects.QustionPattern,
-        icon: faBook,
+        icon: pattern,
       },
       {
         titleName: "Question Bank ",
         href: RouteObjects.QustionBank,
-        icon: faBook,
+        icon: bank,
       },
       {
         titleName: "Question Paper ",
         href: RouteObjects.QustionPaper,
-        icon: faBook,
+        icon: paper,
       },
      
 

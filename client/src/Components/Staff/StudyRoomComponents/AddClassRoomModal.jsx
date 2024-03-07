@@ -18,7 +18,7 @@ import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 
-const AddClassRoomModal = ({ userId }) => {
+const AddClassRoomModal = ({ userId ,getClassRooms }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [desableButton, setdesableButton] = useState(false);
@@ -57,6 +57,7 @@ const AddClassRoomModal = ({ userId }) => {
     try {
       console.log(formData, "kdbkhsbhdbh");
       const response = await axiosPrivate.post("/classroom", formData);
+      getClassRooms()
       console.log(response);
       handleOpen();
     } catch (error) {

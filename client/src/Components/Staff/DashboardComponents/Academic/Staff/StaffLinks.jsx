@@ -1,43 +1,41 @@
 import { RouteObjects } from "../../../../../Routes/RoutObjects";
+import attendance from '../../../../../assets/attendance.png'
+import attrepo from '../../../../../assets/report.png' 
+import staffd from '../../../../../assets/grouping.png'
+import preprtion from '../../../../../assets/preparation.png'
+import settings from '../../../../../assets/recovery.png'
+import classsectn from '../../../../../assets/classSection.png'
 
-import {
-    faBars,
-    faBook,
-    faCaretRight,
-    faChalkboard,
-    faHome,
-    faUserPlus,
-  } from "@fortawesome/free-solid-svg-icons";
 const StaffLink = [
     {
         titleName: "Staff Details",
         href: RouteObjects.StaffList,
-        icon: faBook,
+        icon: staffd,
       },
       {
         titleName: "Attandance",
-        href: RouteObjects.StaffList,
-        icon: faBook,
+        href: RouteObjects.StaffAttandance,
+        icon: attendance,
       },
       {
         titleName: "Attandance Reports (Monthly)",
-        href: RouteObjects.StaffList,
-        icon: faBook,
+        href: RouteObjects.AttandanceReport,
+        icon: attrepo,
       },
       {
         titleName: "Manage Class&Section",
         href: RouteObjects.StaffManageClass,
-        icon: faBook,
+        icon: classsectn,
       },
       {
         titleName: "Preparations",
         href: RouteObjects.Preparations,
-        icon: faBook,
+        icon: preprtion,
       },
       {
         titleName: "Settings",
         href: RouteObjects.StaffAcademicsSettings,
-        icon: faBook,
+        icon: settings,
       },
 
 

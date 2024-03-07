@@ -22,6 +22,7 @@ const HomeClassRoom = () => {
       const response = await axiosPrivate.get(
         `classroom/getstaffclassrooms/${userId}`
       );
+      console.log(response,"rrrrrrrrrrr");
       setClassrooms(response.data);
     } catch (error) {
       console.log(error);
@@ -30,9 +31,6 @@ const HomeClassRoom = () => {
   useEffect(() => {
     getClassRooms();
   }, []);
-  useEffect(() => {
-    getClassRooms();
-  }, [userId,classRooms]);
 
   return (
     <>
@@ -40,7 +38,7 @@ const HomeClassRoom = () => {
       <div className=" grid grid-cols-4 gap-4  mobile:grid-cols-1 Tablet:grid-cols-3 Laptop:grid-cols-4 ipad:grid-cols-3">
       
         
-              <AddClassRoomModal userId={userId} />
+              <AddClassRoomModal userId={userId} getClassRooms={getClassRooms} />
             
         {classRooms.map((classroom) => (
           <div key={classroom._id} className="col-span-1">
