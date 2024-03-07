@@ -3,10 +3,12 @@ import HTClasswise from '../../../Components/Admin/DashoardComponents/GenerateHT
 import Banner from '../../../Components/Banner/Banner'
 
 const HTclasswiseTable = () => {
+  const breadcrumbs = ["Class wise Hallticket"];
+
   return (
     <div>
         
-        <Banner/>
+        <Banner breadcrumbs={breadcrumbs}/>
         
         <HTClasswise/>
         

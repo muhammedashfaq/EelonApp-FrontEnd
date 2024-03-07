@@ -56,9 +56,11 @@ const AddConcessionStructure = () => {
     getStdDropdowns();
     getFeeStructures();
   }, []);
+  const breadcrumbs = ["Concession Fee Structure"];
+
   return (
     <>
-      <Banner />
+      <Banner breadcrumbs={breadcrumbs} />
       <div>
         <div className="bg-blue-gray-500 rounded-lg p-2 flex justify-between items-center mt-10 mx-5">
           <div>

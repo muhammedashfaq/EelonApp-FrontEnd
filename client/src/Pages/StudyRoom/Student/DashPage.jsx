@@ -6,9 +6,11 @@ import StudentClassroomPage from "../../../Components/Student/StudyRoomComponent
 import { Routes, Route } from "react-router-dom";
 
 const DashPage = () => {
+  const breadcrumbs = ["Study Room-student"];
+
   return (
     <>
-      <Banner/>
+      <Banner breadcrumbs={breadcrumbs}/>
       <div className="flex">
         <ClassroomNavbar />
 

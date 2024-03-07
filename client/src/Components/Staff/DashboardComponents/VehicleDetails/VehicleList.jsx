@@ -3,6 +3,7 @@ import {
   faBell,
   faEdit,
   faEllipsis,
+  faFilePdf,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -14,6 +15,7 @@ import {
   MenuHandler,
   MenuList,
   MenuItem,
+  Tooltip,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { RouteObjects } from "../../../../Routes/RoutObjects";
@@ -98,7 +100,7 @@ const VehicleList = () => {
                 ))}
               </tr>
             </thead>
-            <tbody>
+             <tbody>
               {fetchedData &&
                 fetchedData?.map(
                   (
@@ -127,8 +129,47 @@ const VehicleList = () => {
                         <td className={classes}>{rgNo}</td>
                         <td className={classes}>{vehicleModel}</td>
                         <td className={classes}>{seatNo}</td>
-                        <td className={classes}>{FC}</td>
-                        <td className={classes}>{RC}</td>
+                        <td className={classes}>
+
+                          <a href={FC?.url} target="_blank">
+                          <Tooltip
+                              content={
+                                FC?.url
+                                  ? "View document"
+                                  : "No document uploaded"
+                              }
+                            >
+                              <FontAwesomeIcon
+                                icon={faFilePdf}
+                                size="xl"
+                                style={{
+                                  color: FC?.url ? "black" : "GrayText",
+                                }}
+                              />
+                            </Tooltip>
+                          </a>
+                        </td>
+                        <td className={classes}>
+                        
+                        <a href={RC?.url} target="_blank">
+                        <Tooltip
+                              content={
+                                RC?.url
+                                  ? "View document"
+                                  : "No document uploaded"
+                              }
+                            >
+                              <FontAwesomeIcon
+                                icon={faFilePdf}
+                                size="xl"
+                                style={{
+                                  color: RC?.url ? "black" : "GrayText",
+                                }}
+                              />
+                            </Tooltip>
+                        </a>
+                        
+                        </td>
                         <td className={classes}>{mileage}</td>
                         <td className={classes}>{yearOfMade}</td>
                         <td className={classes}>
@@ -143,35 +184,35 @@ const VehicleList = () => {
 
                         <td className={classes}>{status}</td>
                         <td className={classes}>
-                          <Menu>
-                            <MenuHandler>
-                              <FontAwesomeIcon
-                                icon={faEllipsis}
-                                className="cursor-pointer"
-                              />
-                            </MenuHandler>
-                            <MenuList>
-                              <MenuItem onClick={() => changeStatus(_id,"Active")}>
-                                Active
-                              </MenuItem>
-                              <MenuItem
-                                onClick={() => changeStatus(_id,"Under Maintnance")}
-                              >
-                                Under Maintnance
-                              </MenuItem>
-                              <MenuItem
-                                onClick={() => changeStatus(_id,"Not Availiable")}
-                              >
-                                Not Availiable
-                              </MenuItem>
-                            </MenuList>
-                          </Menu>
+                            <Menu>
+                              <MenuHandler>
+                                <FontAwesomeIcon
+                                  icon={faEllipsis}
+                                  className="cursor-pointer"
+                                />
+                              </MenuHandler>
+                              <MenuList>
+                                <MenuItem onClick={() => changeStatus(_id,"Active")}>
+                                  Active
+                                </MenuItem>
+                                <MenuItem
+                                  onClick={() => changeStatus(_id,"Under Maintnance")}
+                                >
+                                  Under Maintnance
+                                </MenuItem>
+                                <MenuItem
+                                  onClick={() => changeStatus(_id,"Not Availiable")}
+                                >
+                                  Not Availiable
+                                </MenuItem>
+                              </MenuList>
+                            </Menu>
                         </td>
                       </tr>
                     );
                   }
                 )}
-            </tbody>
+            </tbody> 
           </table>
         </CardBody>
       </Card>

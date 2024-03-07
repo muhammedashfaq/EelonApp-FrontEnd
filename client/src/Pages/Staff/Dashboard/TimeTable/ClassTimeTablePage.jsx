@@ -4,9 +4,11 @@ import Classtimetable from "../../../../Components/Staff/DashboardComponents/Tim
 import TimeTable from "../../../../Components/Staff/DashboardComponents/Timetables/Classtimetable/TimeTable";
 
 const ClassTimeTablePage = () => {
+  const breadcrumbs = ["Class TimeTable"];
+
   return (
     <div>
-      <Banner />
+      <Banner breadcrumbs={breadcrumbs}/>
       <Classtimetable />
 
       {/* <TimeTable /> */}

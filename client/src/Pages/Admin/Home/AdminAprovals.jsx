@@ -3,9 +3,11 @@ import AprovalPage from '../../../Components/Admin/DashoardComponents/Approvals/
 import Banner from '../../../Components/Banner/Banner'
 
 const AdminAprovals = () => {
+  const breadcrumbs = ['AdminApprovals'];
+
   return (
     <div>
-        <Banner/>
+        <Banner breadcrumbs={breadcrumbs}/>
         <AprovalPage/>
     </div>
   )

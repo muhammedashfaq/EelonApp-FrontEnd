@@ -1,13 +1,17 @@
 import React from 'react'
-import ExamTimeTable from '../../../../Components/Staff/DashboardComponents/Timetables/ExamTimeTable/ExamTimeTable'
 import Banner from '../../../../Components/Banner/Banner'
+import TimetableExamPage from '../../../../Components/Staff/DashboardComponents/Timetables/ExamTimeTable/TimetableExamPage'
 
 const ExamTimeTablePage = () => {
+    const breadcrumbs = ["Exam TimeTable"];
+
   return (
-<div>
-    <Banner/>
-    <ExamTimeTable/>
-</div>
+    <div>
+        
+<Banner breadcrumbs={breadcrumbs}/>
+<TimetableExamPage/>
+
+    </div>
   )
 }
 

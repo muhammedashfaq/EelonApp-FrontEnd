@@ -28,9 +28,11 @@ const AddStudents = () => {
   useEffect(() => {
     getClsSection();
   }, []);
+  const breadcrumbs = ["Add Students"];
+
   return (
     <div>
-      <Banner />
+      <Banner breadcrumbs={breadcrumbs} />
       <div className="flex">
         <AddStudent classDetails={classDetails} AcademicYrs={AcademicYrs} />
       </div>

@@ -6,9 +6,11 @@ import Home2 from "../../../Components/Staff/StudyRoomComponents/home2";
 import { Routes, Route } from "react-router-dom";
 
 const DashPage = () => {
+  const breadcrumbs = ["Study Room-Staff"];
+
   return (
     <>
-      <Banner/>
+      <Banner breadcrumbs={breadcrumbs}/>
       <div className="flex">
         <ClassroomNavbar />
 

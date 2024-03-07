@@ -36,9 +36,11 @@ useEffect(()=>{
   getClsSection()
 
 },[])
+const breadcrumbs = ["Edit Students"];
+
   return (
     <div>
-        <Banner />
+        <Banner breadcrumbs={breadcrumbs} />
         <div className='flex'>
             <EditStudentComponent  name={name} acYr={acYr}/>
         </div>

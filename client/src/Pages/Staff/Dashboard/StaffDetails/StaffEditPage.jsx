@@ -5,10 +5,12 @@ import { useParams } from 'react-router-dom';
 import useAxiosPrivate from '../../../../Hooks/useAxiosPrivate';
 
 const StaffEditPage = () => {
+  const breadcrumbs = ["Edit Staff"];
+
 
   return (
     <div>
-      <Banner />
+      <Banner breadcrumbs={breadcrumbs}/>
       <EditSraffDetails  />
     </div>
   );

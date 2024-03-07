@@ -9,107 +9,53 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const menu = [
+
   {
-    title: "Library",
-    icon: faBook,
-    href: RouteObjects.Stafflibrary,
+    title: "Study Room",
+    href: RouteObjects.StudyRoomHome,
+    icon: faChalkboard,
   },
+  {
+    title: "Library Details",
+    href: RouteObjects.StudyRoomHome,
+    icon: faChalkboard,
+  },
+  {
+    title: "Hostel ",
+    href: RouteObjects.StudyRoomHome,
+    icon: faChalkboard,
+  },
+  {
+    title: "Transportation ",
+    href: RouteObjects.StudyRoomHome,
+    icon: faChalkboard,
+  },
+
 
   {
     title: "Accounts",
+    href: RouteObjects.AccountsPage,
+
     icon: faUserPlus,
-    submenu: true,
-    submenuItems: [
-      {
-        title: "Fee Collection ",
-        href: RouteObjects.FeeCollection,
-        icon: faCaretRight,
-      },
-      {
-        title: "Admission Fee ",
-        href: RouteObjects.AdminssionFee,
-        icon: faCaretRight,
-      },
-      {
-        title: "Add Fee structure ",
-        href: RouteObjects.AddFeeStructure,
-        icon: faCaretRight,
-      },
-      {
-        title: "Add Concession fee structure ",
-        href: RouteObjects.AddConcessionStructure,
-        icon: faCaretRight,
-      },
-      {
-        title: "Ledger Book ",
-        href: RouteObjects.LedgerBook,
-        icon: faCaretRight,
-      },
-    ],
+    
   },
-  {
-    title: "Admission",
-    icon: faUserPlus,
-    submenu: true,
-    submenuItems: [
-      {
-        title: "New Application ",
-        href: RouteObjects.NewApplication,
-        icon: faCaretRight,
-      },
-      {
-        title: "New Applicants ",
-        href: RouteObjects.NewApplicants,
-        icon: faCaretRight,
-      },
-    ],
-  },
+ 
   {
     title: "Academics",
     icon: faUserPlus,
     submenu: true,
     submenuItems: [
       {
-        title: "Students List ",
-        href: `${RouteObjects.StudentsList}/1`,
+        title: "Students  ",
+        href: RouteObjects.Student_Acadamic,
         icon: faCaretRight,
       },
       {
-        title: "Add Student",
-        href: RouteObjects.AddStudent,
+        title: "Staff ",
+        href: RouteObjects.Staff_Acadamic,
         icon: faCaretRight,
       },
-
-      {
-        title: "Manage Classes",
-        href: RouteObjects.StaffManageClass,
-        icon: faCaretRight,
-      },
-      {
-        title: "Settings",
-        href: RouteObjects.StaffAcademicsSettings,
-        icon: faCaretRight,
-      },
-      {
-        title: "Syllabus Planning",
-        href: RouteObjects.SyllubusPlanning,
-        icon: faCaretRight,
-      },
-      {
-        title: "Question Bank",
-        href: RouteObjects.QustionBank,
-        icon: faCaretRight,
-      },
-      {
-        title: "Question Pattern",
-        href: RouteObjects.QustionPattern,
-        icon: faCaretRight,
-      },
-      {
-        title: "Question Paper",
-        href: RouteObjects.QustionPaper,
-        icon: faCaretRight,
-      },
+      
       {
         title: "AdminApprovals",
         href: RouteObjects.AdminAprovals,
@@ -127,50 +73,9 @@ const menu = [
       },
     ],
   },
-  {
-    title: "Attendance",
-    icon: faUserPlus,
-    submenu: true,
-    submenuItems: [
-      {
-        title: "Students",
-        icon: faCaretRight,
-        href: RouteObjects.StudentsAttendance,
-      },
-      {
-        title: "Staff",
-        icon: faCaretRight,
-        href: RouteObjects.StaffAttandance,
-      },
-      {
-        title: "Attendance Report",
-        icon: faCaretRight,
-        href: RouteObjects.AttandanceReport,
-      },
-    ],
-  },
-  {
-    title: "Manage Staff",
-    icon: faUserPlus,
-    submenu: true,
-    submenuItems: [
-      {
-        title: "Staff List",
-        icon: faCaretRight,
-        href: RouteObjects.StaffList,
-      },
-      {
-        title: "Staff Category",
-        icon: faCaretRight,
-        href: RouteObjects.StaffAttandance,
-      },
-    ],
-  },
-  {
-    title: "Study Room",
-    href: RouteObjects.StudyRoomHome,
-    icon: faChalkboard,
-  },
+  
+ 
+
   {
     title: "Timetables",
     icon: faUserPlus,
@@ -229,6 +134,11 @@ const menu = [
         href: RouteObjects.ShowStudentwiseReports,
       },
     ],
+  },
+  {
+    title: "Library",
+    icon: faBook,
+    href: RouteObjects.Stafflibrary,
   },
   {
     title: "Vehicle Details",

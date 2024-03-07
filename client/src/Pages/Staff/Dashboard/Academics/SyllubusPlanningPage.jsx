@@ -3,9 +3,11 @@ import SyllubusPlanning from '../../../../Components/Staff/DashboardComponents/S
 import Banner from '../../../../Components/Banner/Banner'
 
 const SyllubusPlanningPage = () => {
+  const breadcrumbs = ["Syllabus Plan Upload"];
+
   return (
     <div>
-        <Banner/>
+        <Banner breadcrumbs={breadcrumbs}/>
         <SyllubusPlanning/></div>
   )
 }

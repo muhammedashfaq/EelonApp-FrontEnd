@@ -3,9 +3,11 @@ import AddStaffDetails from '../../../../Components/Staff/DashboardComponents/St
 import Banner from '../../../../Components/Banner/Banner'
 
 const StaffAddPage = () => {
+  const breadcrumbs = ["Add Staff"];
+
   return (
     <div>
-        <Banner/>
+        <Banner breadcrumbs={breadcrumbs}/>
         <AddStaffDetails/>
 
     </div>

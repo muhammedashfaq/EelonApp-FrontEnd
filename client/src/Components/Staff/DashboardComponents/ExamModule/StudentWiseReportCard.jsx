@@ -32,8 +32,7 @@ const TABLE_HEAD = [
 ];
 
 const SCHOLASTIC_TABLE_HEAD = ["Sl.no", "Aspect", "Grade"];
-
-export default function StudentWiseReportCard() {
+ function StudentWiseReportCard() {
   const axiosPrivate = useAxiosPrivate();
   const [StudentId, setStudentId] = useState();
   const [studentMarklist, setstudentMarklist] = useState([]);
@@ -175,7 +174,6 @@ export default function StudentWiseReportCard() {
 
   return (
     <>
-      <Banner />
       <div className="flex justify-center">
         <div className="container xl mt-10">
           <Card className="h-full w-full">
@@ -691,3 +689,4 @@ const MarksRow = ({ item, index, classes }) => {
     </>
   );
 };
+export default StudentWiseReportCard

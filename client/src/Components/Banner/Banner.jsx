@@ -2,8 +2,17 @@ import useAuth from "../../Hooks/useAuth";
 import NavBar from "../Staff/SideNav/navBar";
 import SideNavbar from "../Student/SideNav/SideNavbar";
 import logowhite from "../../assets/logowhite.svg";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { RouteObjects } from "../../Routes/RoutObjects";
+import { Breadcrumbs } from "@material-tailwind/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBackwardStep, faHouse, faHouseUser } from "@fortawesome/free-solid-svg-icons";
 
-const Banner = () => {
+const Banner = ({breadcrumbs}) => {
+  const navigate =useNavigate()
+  const location = useLocation();  // Use useLocation hook
+  const breadcrumb = location.pathname.split('/').filter(Boolean);
+
   const { auth } = useAuth();
   return (
     <div className="bg-dark-purple text-gray-100 ">
@@ -17,6 +26,52 @@ const Banner = () => {
         ) : (
           ""
         )}
+ <div className="flex items-center">
+      <Breadcrumbs>
+          <span onClick={()=>navigate(-1)}> 
+          <FontAwesomeIcon icon={faBackwardStep} size="lg"/ >
+          
+          
+          
+          </span>
+        <Link to={RouteObjects.root}>
+        <FontAwesomeIcon icon={faHouse}/ >
+
+          {/* <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+          </svg> */}
+        </Link>
+       
+
+        {breadcrumbs?.map((crumb, index) => {
+  const isLast = index === breadcrumbs.length - 1;
+
+  return (
+    <span key={index} className="text-sm">
+      {isLast ? (
+        <span className="">{crumb}</span>
+      ) : (
+        <>
+          <Link to={`/${breadcrumb.slice(0, index + 1).join('/')}`}>
+            {crumb}
+          </Link>
+          {/* <span className="mx-2">/</span> */}
+        </>
+      )}
+    </span>
+  );
+})}
+
+        
+      </Breadcrumbs>
+
+      
+    </div>
 
         <div className="flex items-center space-x-4">
           <img src={logowhite} alt="College Logo" className="h-16 rounded-md" />
