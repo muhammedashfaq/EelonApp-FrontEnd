@@ -47,7 +47,7 @@ const BusRouteRow = ({ removeDiv, handleData, item, index }) => {
   }, [StopName, index]);
   return (
     <>
-      <div className="h-28 w-auto bg-gradient-to-r from-gray-300 to-blue-gray-300 m-5 px-10 shadow-2xl rounded-2xl shadow-black flex justify-between  items-center">
+      <div className="h-24 w-auto bg-gradient-to-r from-gray-300 to-blue-gray-300 m-5 px-10 shadow-2xl rounded-2xl shadow-black flex justify-between  items-center">
         <Tooltip content="Drag to change the order">
           <FontAwesomeIcon
             icon={faGripVertical}
@@ -69,9 +69,17 @@ const BusRouteRow = ({ removeDiv, handleData, item, index }) => {
               onChange={(e) => setStopName(e.target.value)}
             />
           </div> */}
-          <Select label="Select stop" onChange={(e) => setStopName(e)}>
+          <Select
+            label="Select stop"
+            onChange={(e) => {
+              setStopName(e?.stopName);
+              setstopDistance(e?.distance);
+            }}
+          >
             {stopsDD &&
-              stopsDD.map((item) => <Option>{item?.stopName} </Option>)}
+              stopsDD.map((item) => (
+                <Option value={item}>{item?.stopName} </Option>
+              ))}
           </Select>
         </div>
         <div></div>
@@ -82,6 +90,7 @@ const BusRouteRow = ({ removeDiv, handleData, item, index }) => {
               label="Distance(Km)"
               type="number"
               onChange={(e) => setstopDistance(e.target.value)}
+              value={stopDistance}
             />
             <Typography variant="h6">KMs</Typography>
           </div>

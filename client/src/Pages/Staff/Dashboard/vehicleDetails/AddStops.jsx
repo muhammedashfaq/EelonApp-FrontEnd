@@ -21,10 +21,9 @@ const AddStops = () => {
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: "AIzaSyDHX1VbvvzOGgrddLg9Ataw_Cf3sUrygag",
   });
-  if (!isLoaded) {
-    console.log("not loaded");
-  }
+
   const [stops, setstops] = useState();
+  const [distance, setdistance] = useState();
   const [stopsData, setstopsData] = useState([]);
   const [KmPrice, setKmPrice] = useState();
   const [price, setprice] = useState();
@@ -47,6 +46,7 @@ const AddStops = () => {
       if (!stops) return;
       const response = await axiosPrivate.post("/transportation/bus/stops", {
         stopName: stops,
+        distance,
       });
       console.log(response);
       getStopsData();
@@ -68,13 +68,16 @@ const AddStops = () => {
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.isConfirmed) {
-          axiosPrivate.delete(`/transportation/bus/stops/${id}`);
-          getStopsData();
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success",
-          });
+          axiosPrivate.delete(`/transportation/bus/stops/${id}`).then(() =>
+            Swal.fire(
+              {
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              },
+              getStopsData()
+            )
+          );
         }
       });
     } catch (error) {
@@ -137,9 +140,6 @@ const AddStops = () => {
     getPriceData();
   }, []);
 
-  useEffect(() => {
-    console.log(isLoaded);
-  }, [isLoaded]);
   return (
     <>
       <Banner />
@@ -151,7 +151,7 @@ const AddStops = () => {
 
           <form
             onSubmit={addStopsData}
-            className="relative flex w-full max-w-[24rem]"
+            className="flex flex-col gap-2 w-full max-w-[24rem]"
           >
             <Input
               type="text"
@@ -162,11 +162,16 @@ const AddStops = () => {
                 className: "min-w-0",
               }}
             />
-            <Button
-              size="sm"
-              className="!absolute right-1 top-1 rounded"
-              onClick={addStopsData}
-            >
+            <Input
+              type="number"
+              label="Enter distance(Km)"
+              onChange={(e) => setdistance(e.target.value)}
+              className="pr-20"
+              containerProps={{
+                className: "min-w-0",
+              }}
+            />
+            <Button size="sm" className="rounded" onClick={addStopsData}>
               Add
             </Button>
           </form>
@@ -177,7 +182,14 @@ const AddStops = () => {
                   className="bg-blue-gray-200 p-4 m-3 shadow-xl flex justify-between items-center"
                   style={{ borderRadius: "10px" }}
                 >
-                  <Typography variant="h6">{item.stopName}</Typography>
+                  <div className="flex flex-col">
+                    <Typography variant="h6">{item?.stopName}</Typography>
+                    {item?.distance && (
+                      <Typography variant="small">
+                        {item?.distance} KM
+                      </Typography>
+                    )}
+                  </div>
                   <IconButton
                     variant="text"
                     onClick={() => deleteStops(item?._id)}
@@ -238,7 +250,7 @@ const AddStops = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center mb-10">
         <div style={{ height: "90vh", width: "90vw" }}>
           <GoogleMap
             center={center}

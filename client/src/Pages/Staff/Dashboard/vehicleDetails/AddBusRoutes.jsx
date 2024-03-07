@@ -117,7 +117,7 @@ const AddBusRoutes = () => {
         <div className="flex flex-col items-center">
           <div className="h-14 w-96 bg-gradient-to-r from-gray-300 to-blue-gray-300 m-5 px-10 shadow-2xl rounded-2xl shadow-black flex justify-between  items-center">
             <div className="flex justify-between">
-              <Typography variant="paragraph">Start location :</Typography>
+              <Typography variant="paragraph">Start location: </Typography>
               <Typography variant="h6">MM school</Typography>
             </div>
           </div>
