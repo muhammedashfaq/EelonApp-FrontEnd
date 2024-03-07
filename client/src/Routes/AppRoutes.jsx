@@ -87,7 +87,6 @@ import AddVehiclePage from "../Pages/Staff/Dashboard/vehicleDetails/AddVehiclePa
 import AlocateStudentPage from "../Pages/Staff/Dashboard/vehicleDetails/AlocateStudentPage";
 import ComplaintsUpdationPage from "../Pages/Staff/Dashboard/vehicleDetails/ComplaintsUpdationPage";
 import AdminVehicleUpdates from "../Pages/Admin/Home/AdminVehicleUpdates";
-import AddBusRoutes from "../Pages/Staff/Dashboard/vehicleDetails/AddBusRoutesPage";
 import AddBusRoutesPage from "../Pages/Staff/Dashboard/vehicleDetails/AddBusRoutesPage";
 import AddExamTimeTablePage from "../Pages/Staff/Dashboard/TimeTable/AddExamTimeTablePage";
 import ExamTimeTablePage from "../Pages/Staff/Dashboard/TimeTable/ExamTimeTablePage";
@@ -98,6 +97,7 @@ import StaffAcademicPage from "../Pages/Staff/Dashboard/Academic/Staff/StaffAcad
 import StudentAcademicPage from "../Pages/Staff/Dashboard/Academic/Student/StudentAcademicPage";
 import PreperationsPage from "../Pages/Staff/Dashboard/Academic/Preparation/PreperationsPage";
 import AccountantsPage from "../Pages/Staff/Dashboard/Academic/Accountants/AccountantsPage";
+import AddStopsPage from "../Pages/Staff/Dashboard/vehicleDetails/AddStopsPage";
 
 const AppRoutes = () => {
   const [editedPath, setEditedPath] = useState("");
@@ -115,31 +115,22 @@ const AppRoutes = () => {
       ) && <StaffHeader />}
 
       <Routes>
-
         {/* Academics */}
-        <Route path={RouteObjects.Student_Acadamic} element={<StudentAcademicPage />} />
-        <Route path={RouteObjects.Staff_Acadamic} element={<StaffAcademicPage />} />
-        <Route path={RouteObjects.Preparations} element={<PreperationsPage />} />
+        <Route
+          path={RouteObjects.Student_Acadamic}
+          element={<StudentAcademicPage />}
+        />
+        <Route
+          path={RouteObjects.Staff_Acadamic}
+          element={<StaffAcademicPage />}
+        />
+        <Route
+          path={RouteObjects.Preparations}
+          element={<PreperationsPage />}
+        />
 
-
-
-
-                {/* Accountant */}
-                <Route path={RouteObjects.AccountsPage} element={<AccountantsPage />} />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        {/* Accountant */}
+        <Route path={RouteObjects.AccountsPage} element={<AccountantsPage />} />
 
         {/* Super Admin */}
         <Route path={RouteObjects.SuperAdmin} element={<SuperAdminLogin />} />
@@ -150,14 +141,8 @@ const AppRoutes = () => {
         <Route path={RouteObjects.SuperForgot} element={<ForgotMailPage />} />
         <Route path={RouteObjects.SuperReset} element={<ResetPage />} />
 
-
-
-
-
-
         {/* Main Login */}
         <Route path={RouteObjects.Login} element={<Login />} />
-
 
         {/* accountant Module  */}
         <Route
@@ -182,9 +167,6 @@ const AppRoutes = () => {
         />
         <Route path={RouteObjects.LedgerBook} element={<LedgerBookPage />} />
 
-
-
-        
         {/* Admin ROUTS */}
         <Route
           path={RouteObjects.UserProfileadmin}
@@ -209,9 +191,6 @@ const AppRoutes = () => {
           path={`${RouteObjects.HTClasswise}/:id/:term/:year`}
           element={<HTclasswiseTable />}
         />
-
-
-
         {/* Vechle ROUTS */}
         <Route path={RouteObjects.VehcleList} element={<VehicleListPage />} />
         <Route path={RouteObjects.AddVehicle} element={<AddVehiclePage />} />
@@ -224,9 +203,7 @@ const AppRoutes = () => {
           element={<ComplaintsUpdationPage />}
         />
         <Route path={RouteObjects.addroutes} element={<AddBusRoutesPage />} />
-
-
-
+        <Route path={RouteObjects.AddStops} element={<AddStopsPage />} />
 
         {/* STUDENTS ROUTS */}
         <Route path={RouteObjects.root} element={<LandingPage />} />
@@ -261,8 +238,6 @@ const AppRoutes = () => {
           path={RouteObjects.StudentLibrary}
           element={<StudentLibrary />}
         />
-
-
 
         {/* STAFF ROUTS */}
         <Route
@@ -338,7 +313,6 @@ const AppRoutes = () => {
           element={<AttendanceReportPage />}
         />
 
-
         {/*  Exam module */}
         <Route
           path={RouteObjects.ExamAddSubwiseMarks}
@@ -361,11 +335,7 @@ const AppRoutes = () => {
           element={<StudentWiseReport />}
         />
 
-
-
-
-
-     {/* TimeTable  */}
+        {/* TimeTable  */}
         <Route
           path={RouteObjects.examTimeTable}
           element={<AddExamTimeTablePage />}
@@ -411,15 +381,11 @@ const AppRoutes = () => {
           element={<QustionPapperPage />}
         />
 
-
-
         {/* Staff CLASS ROOM ROUTS */}
         <Route
           path={RouteObjects.StaffStudyRoom}
           element={<StaffClassRoom />}
         />
-
-
 
         {/* Student CLASS ROOM ROUTS */}
         <Route

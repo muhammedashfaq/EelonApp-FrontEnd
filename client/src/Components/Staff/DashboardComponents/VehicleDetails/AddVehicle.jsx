@@ -12,15 +12,14 @@ const AddVehicle = () => {
   const [base64RC, setBase64RC] = useState("");
   const [isValidate, setIsValidate] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-const navigate=useNavigate()
+  const [rgNo, setrgNo] = useState();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     busNo: "",
-    rgNo: "",
     vehicleModel: "",
     seatNo: "",
     mileage: "",
     yearOfMade: "",
-  
   });
 
   const handleFileChangeFC = (e) => {
@@ -56,7 +55,8 @@ const navigate=useNavigate()
 
   const allData = {
     ...formData,
-    academicYear:year,
+    rgNo,
+    academicYear: year,
     FC: base64FC,
     RC: base64RC,
   };
@@ -64,11 +64,13 @@ const navigate=useNavigate()
     try {
       e.preventDefault();
       setIsLoading(true);
-      const response = await axiosPrivate.post("/transportation/bus",allData)
+      const response = await axiosPrivate.post("/transportation/bus", allData);
       setIsLoading(false);
-navigate(RouteObjects.VehcleList)
 
-      console.log(response)
+      console.log(response);
+      // console.log(allData);
+      setIsLoading(false);
+      navigate(RouteObjects.VehcleList);
     } catch (error) {
       setIsLoading(false);
       console.log(error);
@@ -92,7 +94,6 @@ navigate(RouteObjects.VehcleList)
   useEffect(() => {
     getyear();
   }, []);
-
 
   // useEffect(() => {
   //   const isValidate =
@@ -160,9 +161,9 @@ navigate(RouteObjects.VehcleList)
                 Registration No
               </label>
               <input
-                onChange={handleInputChange}
+                onChange={(e) => setrgNo(e.target.value.toUpperCase())}
                 type="text"
-                name="rgNo"
+                value={rgNo}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="TN-AB-1200"
                 required
