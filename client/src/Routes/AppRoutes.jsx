@@ -98,6 +98,7 @@ import StaffAcademicPage from "../Pages/Staff/Dashboard/Academic/Staff/StaffAcad
 import StudentAcademicPage from "../Pages/Staff/Dashboard/Academic/Student/StudentAcademicPage";
 import PreperationsPage from "../Pages/Staff/Dashboard/Academic/Preparation/PreperationsPage";
 import AccountantsPage from "../Pages/Staff/Dashboard/Academic/Accountants/AccountantsPage";
+import PayRollPage from "../Pages/Staff/Dashboard/Academic/Accountants/PayRollPage";
 
 const AppRoutes = () => {
   const [editedPath, setEditedPath] = useState("");
@@ -126,6 +127,8 @@ const AppRoutes = () => {
 
                 {/* Accountant */}
                 <Route path={RouteObjects.AccountsPage} element={<AccountantsPage />} />
+                <Route path={RouteObjects.PayRolls} element={<PayRollPage />} />
+
 
 
 

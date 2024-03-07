@@ -1,25 +1,21 @@
 export const RouteObjects = {
   root: "/",
   Login: "/login",
-//academics
-  Student_Acadamic:"/Student",
-  Staff_Acadamic:"/Staff",
-  Preparations:"/staff/Preparations",
+  //academics
+  Student_Acadamic: "/Student",
+  Staff_Acadamic: "/Staff",
+  Preparations: "/staff/Preparations",
+  
+  //accounts
+  AccountsPage: "/accounts",
+  PayRolls: "/accounts/payrolls",
+  FeeInvoiceBill: "/accounts/feeinvoicebill",
+  FeeCollection: "/accounts/feecollection",
+  FeeCollectionInvoice: "/accounts/feecollection/invoice",
+  AdminssionFee: "/accounts/admissionfee",
+  LedgerBook: "/accounts/ledger",
 
-
-//accounts
-  AccountsPage:"/Accountance",
-
-
-
-
-
-
-
-
-
-
-
+  
   StudentDashboard: "/studentdash",
   UserProfileStudent: "/profile_student",
   FeeInvoice: "/feeinvoice",
@@ -32,7 +28,6 @@ export const RouteObjects = {
   UserProfileStaff: "/profile/staff",
   NewApplication: "/newapplication",
   NewApplicationFee: "/applicationfee",
-  LedgerBook: "/ledger",
   NewApplicants: "/newapplicats",
   AddNewStudent: "/addnewstudent",
   StaffDashboard: "/staffdash",
@@ -85,28 +80,25 @@ export const RouteObjects = {
   UserProfileadmin: "/profile_admin",
   ShowStudentwiseReports: "/staff/exam-module/studentwise-report",
 
+
+  //Admin
   AdminHome: "/adminhome",
   AdminAprovals: "/adminaprovals",
-  AdminVehicleUpdates:"/adminvehicleupdates",
-  AdminUpdateDetails:"/updatedetails",
+  AdminVehicleUpdates: "/adminvehicleupdates",
+  AdminUpdateDetails: "/updatedetails",
   AdminGenerateHT: "/admingeterateHT",
   HTClasswise: "/adminHTclasswise",
   HallTicket: "/StudentHT",
-
-  // accountant
-  FeeInvoiceBill: "/feeinvoicebill",
-  FeeCollection: "/feecollection",
-  FeeCollectionInvoice: "/feecollection/invoice",
-  AdminssionFee: "/admissionfee",
   AddFeeStructure: "/addfeestructure",
   AddConcessionStructure: "/addconcessionstructure",
+
+
   //vehicle
 
-  AddVehicle:"/addvehicle",
-  VehcleList:"/vehiclelist",
-  AlocateStudent:"/alocatestudent",
-  VehicleComplaints:"/complaints",
-
+  AddVehicle: "/addvehicle",
+  VehcleList: "/vehiclelist",
+  AlocateStudent: "/alocatestudent",
+  VehicleComplaints: "/complaints",
 
   addroutes: "/addroutes",
 
