@@ -34,6 +34,7 @@ const PayRoll = () => {
     if (!baseSalary) return;
     try {
       const reqData = {
+        staffName: selectedStaff?.name,
         staffId: selectedStaff._id,
         staffRole: selectedStaff?.staffRole,
         staffType: selectedStaff?.staffType,
@@ -265,6 +266,7 @@ const PayRoll = () => {
                   <div className=''>
                     <p className='mb-1 text-lg font-bold'>
                       <FontAwesomeIcon icon={faIndianRupee} />
+                      {total}
                     </p>
                   </div>
                 </div>
