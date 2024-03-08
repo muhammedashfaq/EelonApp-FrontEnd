@@ -10,13 +10,15 @@ export const AuthProvider = ({ children }) => {
 
   const email = localStorage.getItem("email");
   const userId = localStorage.getItem("userId");
+  const userProfilePic = localStorage.getItem("userProfilePic");
+
 
   useEffect(() => {
-    setAuth({ accessToken, roles, userId, email });
-  }, [accessToken, roles, userId, email]);
+    setAuth({ accessToken, roles, userId, email,userProfilePic });
+  }, [accessToken, roles, userId, email,userProfilePic]);
 
   useEffect(() => {
-    setAuth({ accessToken, roles, userId });
+    setAuth({ accessToken, roles, userId ,userProfilePic });
   }, []);
 
   return (

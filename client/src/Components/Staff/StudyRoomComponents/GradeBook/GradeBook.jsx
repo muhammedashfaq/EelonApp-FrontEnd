@@ -1,71 +1,50 @@
-import { Button, Input } from "@material-tailwind/react"
-import AddGradeBookModal from "./AddGradeBookModal"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import AddGradeBookModal from "./AddGradeBookModal";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Typography,
+  Button,
+} from "@material-tailwind/react";
+import { faBook } from "@fortawesome/free-solid-svg-icons";
 
-
-const  GradeBook =() =>{
+const GradeBook = () => {
   return (
     <>
-
-<section className="container mx-auto p-6 font-mono">
-    <div className="bg-gray-200 tracking-wide my-2 rounded-t-xl flex space-x-3 py-2 px-3">
-        <AddGradeBookModal/>
-    </div>
-  <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
-    <div className="w-full overflow-x-auto">
-      <table className="w-full">
-        <thead>
-          <tr className="text-md font-semibold  text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
-            <th className="px-4 py-3">#No</th>
-            <th className="px-4 py-3">Unit</th>
-            <th className="px-4 py-3">Page Numbers</th>
-            <th className="px-4 py-3">Youtube Links</th>
-            <th className="px-4 py-3">PDF</th>
-            <th className="px-4 py-3">PPT</th>
-            <th className="px-4 py-3">Links</th>
+      <section className="container mx-auto p-6 font-mono">
+        <div className="bg-gray-200 tracking-wide my-2 rounded-t-xl flex space-x-3 py-2 px-3">
+          <AddGradeBookModal />
+        </div>
+        <div className="grid grid-cols-5 gap-6 mb-8   rounded-lg shadow-lg p-6">
 
 
-          </tr>
-        </thead>
-        <tbody className="bg-white">
-          <tr className="text-gray-700">
-            <td className="px-4 py-3 text-ms font-semibold border">22</td>
-            <td className="px-4 py-3 border">
-              <div className="flex items-center text-sm">
-                <div className="relative w-8 h-8 mr-3 rounded-full md:block">
-                  <img className="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
-                  <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                </div>
-                <div>
-                  <p className="font-semibold text-black">Sufyan</p>
-                  <p className="text-xs text-gray-600">Developer</p>
-                </div>
-              </div>
-            </td>
-            <td className="px-4 py-3 text-xs border">
-              <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm"> Acceptable </span>
-            </td>
-            <td className="px-4 py-3 text-sm border">6/4/2000</td>
-            <td className="px-4 py-3 text-sm border">6/4/2000</td>
+        <div className="max-w-xs p-4 rounded-md bg-gradient-to-b from-blue-500 via-blue-400 to-blue-600 shadow-md text-white dark:bg-gray-900 dark:text-gray-50">
+  <img src="https://source.unsplash.com/random/300x300/?book" alt="" className="object-cover object-center rounded-md dark:bg-gray-500 w-full h-40 mb-4" />
+  <div className="mb-2">
+    <h2 className="text-2xl font-semibold tracking-tighter"> <FontAwesomeIcon icon={faBook} className="mr-2"/>Book Title</h2>
 
-            <td className="px-4 py-3 text-sm border">6/4/2000</td>
-
-
-            <td className="px-4 py-3 text-sm border">6/4/2000</td>
-
-
-
-          </tr>
-
-
-
-         
-        </tbody>
-      </table>
-    </div>
   </div>
-</section>
-    </>
-  )
-}
 
-export default GradeBook
+  <div className="flex justify-between items-center">
+    <span className="text-xs opacity-75">Pages: <span className="font-medium">312</span></span>
+    <button className="bg-white text-blue-500 py-1 px-3 rounded-full text-xs font-semibold hover:bg-blue-100 transition duration-300">Read Now</button>
+  </div>
+</div>
+
+
+  {/* <div className=" p-2 rounded-lg shadow-inner  bg-teal-100">
+    <img src="https://telegra.ph/file/2acfcad8d39e49d95addd.jpg" alt="idk - Highvyn, Taylor Shin" className="w-36 h-36  mx-auto rounded-lg mb-4 shadow-lg shadow-teal-50"/>
+    <h2 className="text-xl font-semibold text-center">idk</h2>
+    <p className="text-gray-600 text-sm text-center">Highvyn, Taylor Shin</p>
+  </div> */}
+  
+</div>
+        
+      </section>
+    </>
+  );
+};
+
+export default GradeBook;

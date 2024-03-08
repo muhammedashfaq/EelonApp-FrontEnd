@@ -36,6 +36,7 @@ export default function StaffClassroomPage() {
 
   const { classroomId } = useParams();
   const axiosPrivate = useAxiosPrivate();
+  console.log(classRoomData)
   // useEffect(() => {
   //   console.log(classroomId);
   // }, [classroomId]);
@@ -66,9 +67,6 @@ export default function StaffClassroomPage() {
         <SpinningLoader/>
       )
     }
-      <div className="w-full">
-        <div className="w-full ">
-          <div className="">
             <Tabs value={tabValue}>
               <TabsHeader>
                 <Tab value="Stream" onClick={() => settabValue("Stream")}>
@@ -114,7 +112,7 @@ export default function StaffClassroomPage() {
                   </>
                 ) :tabValue === "Syllabus" ? (
                   <>
-                    <Syllabus />
+                    <Syllabus classRoomData={classRoomData}/>
                   </>
                 ) : tabValue === "GradeBooks" ? (
                   <>
@@ -129,9 +127,6 @@ export default function StaffClassroomPage() {
                 )}
               </TabsBody>
             </Tabs>
-          </div>
-        </div>
-      </div>
     </>
   );
 }
