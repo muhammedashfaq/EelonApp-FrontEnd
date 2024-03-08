@@ -18,7 +18,7 @@ import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 
-const AddClassRoomModal = ({ userId }) => {
+const AddClassRoomModal = ({ userId ,getClassRooms }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [desableButton, setdesableButton] = useState(false);
@@ -28,6 +28,7 @@ const AddClassRoomModal = ({ userId }) => {
   const [section, setSection] = useState("");
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
+  const [isLoading ,setIsLoading]=useState(false)
 
   const [FrntError, setFrntError] = useState(null);
 
@@ -55,10 +56,11 @@ const AddClassRoomModal = ({ userId }) => {
       return;
     }
     try {
-      console.log(formData, "kdbkhsbhdbh");
-      const response = await axiosPrivate.post("/classroom", formData);
-      console.log(response);
-      handleOpen();
+      setIsLoading(true)
+      await axiosPrivate.post("/classroom", formData);
+      setIsLoading(false)
+      getClassRooms()
+      handleOpen()
     } catch (error) {
       console.log(error);
     }
@@ -79,7 +81,6 @@ const AddClassRoomModal = ({ userId }) => {
       <Dialog
         size="xs"
         open={open}
-        handler={handleOpen}
         className="bg-transparent shadow-none"
       >
         <Card className="w-96 p-5">
@@ -171,6 +172,7 @@ const AddClassRoomModal = ({ userId }) => {
                 </span>
 
                 <Button
+                loading={isLoading}
                   onClick={handleFormSubmit}
                   type="submit"
                   className="hover:bg-blue-gray-100 rounded-md p-2 cursor-pointer "

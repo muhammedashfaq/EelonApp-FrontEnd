@@ -4,9 +4,9 @@ import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 
 const UpdateModal = ({ busId }) => {
   const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(!open);
   const axiosPrivate = useAxiosPrivate();
 
-  const handleOpen = () => setOpen(!open);
 
   const [formData, setFormData] = useState({
     title: "",

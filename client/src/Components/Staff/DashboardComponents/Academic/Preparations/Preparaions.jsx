@@ -26,7 +26,7 @@ const Preparaions = () => {
             <CardHeader>
               <div className="bg-hero-pattern rounded-t-md">
                 <img
-                  src={student}
+                  src={icon}
                   alt="Student"
                   className="w-full h-full object-cover"
                   />

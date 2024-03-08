@@ -37,7 +37,7 @@ const HomeClassRoom = () => {
     <>
       <div>
         <div className=' grid grid-cols-4 gap-4  mobile:grid-cols-1 Tablet:grid-cols-3 Laptop:grid-cols-4 ipad:grid-cols-3'>
-          <AddClassRoomModal userId={userId} />
+          <AddClassRoomModal userId={userId} getClassRooms={getClassRooms}/>
 
           {classRooms.map(classroom => (
             <div key={classroom._id} className='col-span-1'>

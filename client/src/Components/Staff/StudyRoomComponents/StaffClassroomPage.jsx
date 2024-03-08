@@ -26,6 +26,8 @@ import Strems from "./Strems";
 import { faBullhorn, faL, faUserPen, faUsers } from "@fortawesome/free-solid-svg-icons";
 import SpinningLoader from "../../spinner/SpinningLoader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import GradeBook from "./GradeBook/GradeBook";
+import Syllabus from "./SyllabusPlanningStudyRoom/Syllabus";
 
 export default function StaffClassroomPage() {
   const [tabValue, settabValue] = useState("Stream");
@@ -75,6 +77,12 @@ export default function StaffClassroomPage() {
                 <Tab value="Classwork" onClick={() => settabValue("Classwork")}>
                  <FontAwesomeIcon icon={faUserPen}/> Classwork
                 </Tab>
+                <Tab value="Syllabus" onClick={() => settabValue("Syllabus")}>
+                <FontAwesomeIcon icon={faUsers}/> Syllabus
+                </Tab>
+                <Tab value="GradeBooks" onClick={() => settabValue("GradeBooks")}>
+                <FontAwesomeIcon icon={faUsers}/> GradeBooks
+                </Tab>
                 <Tab value="People" onClick={() => settabValue("People")}>
                 <FontAwesomeIcon icon={faUsers}/> People
                 </Tab>
@@ -103,6 +111,14 @@ export default function StaffClassroomPage() {
                 ) : tabValue === "Classwork" ? (
                   <>
                     <ClassWorks />
+                  </>
+                ) :tabValue === "Syllabus" ? (
+                  <>
+                    <Syllabus />
+                  </>
+                ) : tabValue === "GradeBooks" ? (
+                  <>
+                    <GradeBook />
                   </>
                 ) : tabValue === "People" ? (
                   <>
