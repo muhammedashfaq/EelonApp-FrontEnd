@@ -85,11 +85,14 @@ const Login = () => {
         const roles = response?.data?.roles;
         const email = response?.data?.email;
         const userId = response?.data?.userId;
+        const userProfilePic = response?.data?.profilePic;
         setUserRoles(roles);
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("roles", roles);
         localStorage.setItem("email", email);
         localStorage.setItem("userId", userId);
+        localStorage.setItem("userProfilePic", userProfilePic);
+
 
         if (
           userType === "Student" ||

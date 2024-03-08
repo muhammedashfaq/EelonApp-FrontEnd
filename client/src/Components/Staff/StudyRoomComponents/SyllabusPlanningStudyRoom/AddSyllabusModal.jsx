@@ -25,48 +25,40 @@ import { faYoutube } from "@fortawesome/free-brands-svg-icons";
 import { faClose, faUser } from "@fortawesome/free-solid-svg-icons";
 import { faFile } from "@fortawesome/free-regular-svg-icons";
 
-const AddGradeBookModal = () => {
+const AddSyllabusModal = ({classRoomData}) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
-  const [bookName, setBookName] = useState("");
+  const [termName, setTermName] = useState("");
   const [description, setDescription] = useState("");
   const [academicYear, setAcademicYear] = useState("");
   const [isvalidate, setIsValidate] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [year,setYear]=useState([])
-  const [base64grdadBook, setBase64grdadBook] = useState("");
-  const [coverPage,setCoverPage]=useState("")
-
+  const [year, setYear] = useState([]);
+  const [unitName,setunitName]=useState("")
+  const [noPages,setNoPages]=useState("")
 
   const axiosPrivate = useAxiosPrivate();
   const { classroomId } = useParams();
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const base64 = event.target.result;
-      setBase64grdadBook(base64);
-    };
-    reader.readAsDataURL(file);
-  };
 
   const formData = {
-    bookName,
-    description,
+    studyRoomId:classroomId,
+    std:classRoomData.std,
+    subject:classRoomData.subject,
     academicYear,
+    term:termName,
+    unitName,
+    description,
+    pageNo:noPages,
   };
   const handleFormSubmition = async (e) => {
     e.preventDefault();
 
     try {
       setIsLoading(true);
+const response = await axiosPrivate.post(`classmaterials/syllabus`,formData)
 
-      const response = await axiosPrivate.put(
-        `classroom/assignment/${classroomId}`,
-        formData
-      );
+    
+      console.log(response,'ggggg');
       setIsLoading(false);
       handleOpen();
     } catch (error) {
@@ -74,26 +66,27 @@ const AddGradeBookModal = () => {
       console.log(error);
     }
   };
-const getYear = async()=>{
-  try {
-    const response = await axiosPrivate.get(
-      "classsection/academicyear/academicyear"
-    );
-   
+  const getYear = async () => {
+    try {
+      const response = await axiosPrivate.get(
+        "classsection/academicyear/academicyear"
+      );
+
       const sortedData = response.data?.academicYear.sort((a, b) =>
         a.localeCompare(b)
       );
       setYear(sortedData);
-  } catch (error) {
-    console.log(error)
-  }
-}
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-useEffect(()=>{
-getYear()
-},[])
   useEffect(() => {
-    const isvalidate = formData.bookName && formData.academicYear;
+    getYear();
+  }, []);
+  useEffect(() => {
+    const isvalidate = formData.uniname && formData.academicYear
+    &&formData.termName&& formData.noPages;
 
     setIsValidate(isvalidate);
   }, [formData]);
@@ -122,31 +115,52 @@ getYear()
                   <Typography className=" " variant="h6">
                     Academic Year
                   </Typography>
-                  <Select label="Select Year" onChange={(e) => setAcademicYear(e)}>
-                {year &&
-                  year.map((item, i) => (
-                    <Option key={i} value={item}>
-                      {i + 1}. {item}
-                    </Option>
-                  ))}
-              </Select>
+                  <Select
+                    label="Select Year"
+                    onChange={(e) => setAcademicYear(e)}
+                  >
+                    {year &&
+                      year.map((item, i) => (
+                        <Option key={i} value={item}>
+                          {i + 1}. {item}
+                        </Option>
+                      ))}
+                  </Select>
                 </div>
                 <div className="w-1/2 pr-2">
                   <Typography className=" " variant="h6">
-                    Book Name
+                    Term
                   </Typography>
-                  <Input
-                    label="Name"
-                    size="md"
-                    onChange={(e) => setBookName(e.target.value)}
-                  />
+                  <Select
+                    label="Select The Exam"
+                     onChange={(e) => setTermName(e)}
+                  >
+                    <Option value="1st Mid Term">1. 1st Mid Term </Option>
+                    <Option value="Quarterly Exam">2. Quarterly Exam</Option>
+                    <Option value="2nd Mid Term">3. 2nd Mid Term </Option>
+                    <Option value="Half Yearly Exam">
+                      4. Half Yearly Exam
+                    </Option>
+                    <Option value="3rd Mid Term">5. 3rd Mid Term </Option>
+                    <Option value="Annual Exam">6. Annual Exam</Option>
+                  </Select>
                 </div>
               </div>
-            </CardBody>
-          </Card>
+              <div className="flex">
+                <div className="w-1/2 pr-2">
+                  <Typography className=" " variant="h6">
+                    Unit Name
+                  </Typography>
+                  <Input placeholder="Enter Here" onChange={(e)=>setunitName(e.target.value)} />
+                </div>
+                <div className="w-1/2 pr-2">
+                  <Typography className=" " variant="h6">
+                    Number Of Pages
+                  </Typography>
+                  <Input placeholder="Page 01 - 10" onChange={(e)=>setNoPages(e.target.value)}/>
+                </div>
+              </div>
 
-          <Card>
-            <CardBody className="flex flex-col gap-4">
               <Typography className="-mb-2" variant="h6">
                 Description
               </Typography>
@@ -156,46 +170,17 @@ getYear()
                 name="content"
                 onChange={(e) => setDescription(e.target.value)}
               />
-              <div className=" flex space-x-1">
-                <div className="w-1/2">
-                  <Typography className="" variant="h6">
-                    Coverpage
-                  </Typography>
-                  <Input
-                    accept=".jpg"
-                    type="file"
-                    size="lg"
-                    name="topic"
-                    onChange={(e) => setCoverPage(e.target.value)}
-                    />
-                </div>
-                <div className="w-1/2">
-                  <Typography className="" variant="h6">
-                    File
-                  </Typography>
-                  <Input
-                    accept=".pdf"
-                    type="file"
-                    size="lg"
-                    name="content"
-                    onChange={handleFileChange}
-                    />
-                  <span className="text-red-400 text-xs font-normal pl-2">
-                    *PDF Only
-                  </span>
-                </div>
-              </div>
             </CardBody>
             <CardFooter className="pt-0">
               <Button
-                disabled={!isvalidate}
+                // disabled={!isvalidate}
                 loading={isLoading}
                 type="submit"
                 variant="gradient"
                 fullWidth
                 onClick={handleFormSubmition}
               >
-                Add Grade Book
+                Add To List
               </Button>
             </CardFooter>
           </Card>
@@ -205,4 +190,4 @@ getYear()
   );
 };
 
-export default AddGradeBookModal;
+export default AddSyllabusModal;

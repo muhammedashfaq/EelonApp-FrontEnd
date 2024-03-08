@@ -3,10 +3,14 @@ import { useParams } from 'react-router-dom'
 import Banner from '../../../Components/Banner/Banner'
 import StaffProfile from '../../../Components/Staff/DashboardComponents/StaffList/StaffProfile'
 import useAxiosPrivate from '../../../Hooks/useAxiosPrivate'
+import useAuth from '../../../Hooks/useAuth'
 const UserProfileSfaffPage = () => {
     const[userData,setuserdata]=useState()
-  // const {auth} = useAuth()
-  const userId = localStorage.getItem("userId");
+  const {auth} = useAuth()
+  const userId = auth?.userId
+  // const userId = localStorage.getItem("userId");
+
+
   const axiosPrivate = useAxiosPrivate();
 const getData=async()=>{
 
@@ -22,6 +26,10 @@ const getData=async()=>{
 useEffect(()=>{
   getData()
 },[])
+
+useEffect(()=>{
+  getData()
+},[userId])
   return (
 <div>
         <Banner/>
