@@ -28,6 +28,7 @@ const AddClassRoomModal = ({ userId ,getClassRooms }) => {
   const [section, setSection] = useState("");
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
+  const [isLoading ,setIsLoading]=useState(false)
 
   const [FrntError, setFrntError] = useState(null);
 
@@ -55,11 +56,11 @@ const AddClassRoomModal = ({ userId ,getClassRooms }) => {
       return;
     }
     try {
-      console.log(formData, "kdbkhsbhdbh");
-      const response = await axiosPrivate.post("/classroom", formData);
+      setIsLoading(true)
+      await axiosPrivate.post("/classroom", formData);
+      setIsLoading(false)
       getClassRooms()
-      console.log(response);
-      handleOpen();
+      handleOpen()
     } catch (error) {
       console.log(error);
     }
@@ -80,7 +81,6 @@ const AddClassRoomModal = ({ userId ,getClassRooms }) => {
       <Dialog
         size="xs"
         open={open}
-        handler={handleOpen}
         className="bg-transparent shadow-none"
       >
         <Card className="w-96 p-5">
@@ -172,6 +172,7 @@ const AddClassRoomModal = ({ userId ,getClassRooms }) => {
                 </span>
 
                 <Button
+                loading={isLoading}
                   onClick={handleFormSubmit}
                   type="submit"
                   className="hover:bg-blue-gray-100 rounded-md p-2 cursor-pointer "

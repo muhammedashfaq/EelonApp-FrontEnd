@@ -51,7 +51,7 @@ export default function ClassroomNavbar() {
     getClassRooms();
   }, [userId]);
   const [open, setOpen] = React.useState(0);
-  const [openSidebar, setopenSidebar] = React.useState(true);
+  const [openSidebar, setopenSidebar] = useState(false);
 
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
