@@ -25,7 +25,7 @@ import { faYoutube } from "@fortawesome/free-brands-svg-icons";
 import { faClose, faUser } from "@fortawesome/free-solid-svg-icons";
 import { faFile } from "@fortawesome/free-regular-svg-icons";
 
-const AddSyllabusModal = ({classRoomData}) => {
+const AddSyllabusModal = ({classRoomData,getsyllabusData}) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
   const [termName, setTermName] = useState("");
@@ -56,11 +56,10 @@ const AddSyllabusModal = ({classRoomData}) => {
     try {
       setIsLoading(true);
 const response = await axiosPrivate.post(`classmaterials/syllabus`,formData)
-
+setIsLoading(false);
+handleOpen();
+getsyllabusData()
     
-      console.log(response,'ggggg');
-      setIsLoading(false);
-      handleOpen();
     } catch (error) {
       setIsLoading(false);
       console.log(error);
@@ -85,8 +84,8 @@ const response = await axiosPrivate.post(`classmaterials/syllabus`,formData)
     getYear();
   }, []);
   useEffect(() => {
-    const isvalidate = formData.uniname && formData.academicYear
-    &&formData.termName&& formData.noPages;
+    const isvalidate = formData.unitName && formData.academicYear
+    &&formData.term && formData.pageNo;
 
     setIsValidate(isvalidate);
   }, [formData]);
@@ -173,7 +172,7 @@ const response = await axiosPrivate.post(`classmaterials/syllabus`,formData)
             </CardBody>
             <CardFooter className="pt-0">
               <Button
-                // disabled={!isvalidate}
+                disabled={!isvalidate}
                 loading={isLoading}
                 type="submit"
                 variant="gradient"
