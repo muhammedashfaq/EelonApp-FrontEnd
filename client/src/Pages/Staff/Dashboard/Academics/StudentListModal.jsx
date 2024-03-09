@@ -54,7 +54,7 @@ export default function StudentListModal({setopenStdListModal, openStdListModal,
                     cursor: 'pointer',
                   }}
                   onClick={() => navigate(`${RouteObjects.StudentProfile}/${data?._id}`)}
-                  className='p-2 text-center shadow-2xl bg-gray-300 text-black hover:scale-105 transition duration-150 ease-in-out'
+                  className='p-2 text-center shadow-2xl bg-gray-300 text-black hover:scale-105 transition duration-150 ease-in-out  '
                 >
                   {data?.email}
                 </div>
