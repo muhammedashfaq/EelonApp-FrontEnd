@@ -71,7 +71,15 @@ export default function StaffUploadImgModal({userId, getData}) {
             ) : (
               <FileUploader handleChange={handleFileChange} types={fileTypes} name='staffImage' hoverTitle='Drop image here' />
             )}
-            <CropImageModal editImg={editImg} setEditImg={setEditImg} file={file} setFile={setFile} openModal={openModal} setOpenModal={setOpenModal} />
+            <CropImageModal
+              editImg={editImg}
+              aspectRatio={3 / 4}
+              setEditImg={setEditImg}
+              file={file}
+              setFile={setFile}
+              openModal={openModal}
+              setOpenModal={setOpenModal}
+            />
           </div>
         </DialogBody>
         <DialogFooter>
