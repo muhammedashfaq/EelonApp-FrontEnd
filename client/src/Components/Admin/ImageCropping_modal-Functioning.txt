@@ -1,0 +1,57 @@
+//// Parent modal ////
+
+import CropImageModal from '../../../Admin/CropImageModal';
+import {FileUploader} from 'react-drag-drop-files';
+
+const fileTypes = ['JPG', 'PNG', 'GIF', 'JPEG'];
+
+///// Function  ////////
+
+  const [file, setFile] = useState(null);
+  const [editImg, setEditImg] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+
+
+  const handleFileChange = file => {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      setFile(reader.result);
+    };
+    reader.onerror = error => {
+      console.error('Error :', error);
+    };
+    setOpenModal(true);
+    // setFile(file);
+  };
+
+  useEffect(() => {
+    if (!file) return;
+    setOpenModal(true);
+  }, [file]);
+
+
+
+
+
+////////  JSX  ////////
+
+          <div className='flex justify-center'>
+            {file ? (
+              <img src={editImg} width='300px' />
+            ) : (
+              <FileUploader handleChange={handleFileChange} types={fileTypes} name='staffImage' hoverTitle='Drop image here' />
+            )}
+            <CropImageModal
+              editImg={editImg}
+              aspectRatio={3 / 4}
+              setEditImg={setEditImg}
+              file={file}
+              setFile={setFile}
+              openModal={openModal}
+              setOpenModal={setOpenModal}
+            />
+          </div>
+
+
+/////////////////////////////////
