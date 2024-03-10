@@ -39,7 +39,6 @@ const GradeBookCard = ({item, getGradeBooks}) => {
       console.error(error);
     }
   };
-  console.log(item);
   return (
     <>
       <div className='max-w-xs p-4 rounded-md bg-gradient-to-b from-blue-500 via-blue-400 to-blue-600 shadow-md text-white dark:bg-gray-900 dark:text-gray-50 '>
