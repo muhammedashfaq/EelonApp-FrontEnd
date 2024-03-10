@@ -19,6 +19,7 @@ const GradeBook = () => {
       console.log(response);
     } catch (error) {
       console.error(error);
+      setgradeBooks([]);
     }
   };
 
@@ -29,10 +30,10 @@ const GradeBook = () => {
     <>
       <section className='container mx-auto p-6 font-mono'>
         <div className='bg-gray-200 tracking-wide my-2 rounded-t-xl flex space-x-3 py-2 px-3'>
-          <AddGradeBookModal />
+          <AddGradeBookModal getGradeBooks={getGradeBooks} />
         </div>
         <div className='grid grid-cols-5 gap-6 mb-8   rounded-lg shadow-lg p-6'>
-          {gradeBooks && gradeBooks.map(item => <GradeBookCard key={item?._id} item={item} />)}
+          {gradeBooks && gradeBooks.map(item => <GradeBookCard key={item?._id} item={item} getGradeBooks={getGradeBooks} />)}
         </div>
       </section>
     </>

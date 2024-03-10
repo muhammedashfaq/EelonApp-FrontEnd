@@ -22,12 +22,18 @@ import {useParams} from 'react-router-dom';
 import {toast} from 'react-hot-toast';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faYoutube} from '@fortawesome/free-brands-svg-icons';
-import {faClose, faUser} from '@fortawesome/free-solid-svg-icons';
+import {faClose, faTrash, faUser} from '@fortawesome/free-solid-svg-icons';
 import {faFile} from '@fortawesome/free-regular-svg-icons';
+import {FileUploader} from 'react-drag-drop-files';
+import CropImageModal from '../../../Admin/CropImageModal';
 
-const AddGradeBookModal = () => {
+const AddGradeBookModal = ({getGradeBooks}) => {
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(!open);
+  const handleOpen = () => {
+    setOpen(!open);
+    setEditImg(null);
+    setFile(null);
+  };
   const [bookName, setBookName] = useState('');
   const [description, setDescription] = useState('');
   const [academicYear, setAcademicYear] = useState('');
@@ -36,6 +42,11 @@ const AddGradeBookModal = () => {
   const [year, setYear] = useState([]);
   const [base64grdadBook, setBase64grdadBook] = useState('');
   const [coverPage, setCoverPage] = useState('');
+  const [file, setFile] = useState(null);
+  const [editImg, setEditImg] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+
+  const fileTypes = ['JPG', 'PNG', 'GIF', 'JPEG'];
 
   const axiosPrivate = useAxiosPrivate();
   const {classroomId} = useParams();
@@ -50,17 +61,24 @@ const AddGradeBookModal = () => {
     };
     reader.readAsDataURL(file);
   };
-  const handleCoverImgChange = e => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = event => {
-      const base64 = event.target.result;
-      setCoverPage(base64);
-    };
+  const handleCoverImgChange = file => {
+    var reader = new FileReader();
     reader.readAsDataURL(file);
+    reader.onload = () => {
+      setFile(reader.result);
+    };
+    reader.onerror = error => {
+      console.error('Error :', error);
+    };
+    setOpenModal(true);
+    // setFile(file);
   };
+
+  useEffect(() => {
+    if (!file) return;
+    setOpenModal(true);
+  }, [file]);
+
   const formData = {
     bookName,
     description,
@@ -80,6 +98,7 @@ const AddGradeBookModal = () => {
       console.log(response);
       setIsLoading(false);
       handleOpen();
+      getGradeBooks();
     } catch (error) {
       setIsLoading(false);
       console.log(error);
@@ -105,15 +124,20 @@ const AddGradeBookModal = () => {
     setIsValidate(isvalidate);
   }, [formData]);
 
+  useEffect(() => {
+    if (!editImg) return;
+    setCoverPage(editImg);
+  }, [editImg]);
+
   return (
     <div>
       <Button onClick={handleOpen} variant='gradient' color='teal' style={{textTransform: 'none'}}>
         Add Grade books
       </Button>
-      <Dialog open={open}>
-        <div className='bg-dark-purple rounded-t-md float-right'>
-          <IconButton variant='text' onClick={handleOpen}>
-            <FontAwesomeIcon icon={faClose} size='2x' className='' color='white' />
+      <Dialog open={open} style={{maxHeight: '90vh', overflowY: 'auto'}}>
+        <div className='bg-dark-purple rounded-md ' style={{position: 'absolute', right: '10px', top: '10px', zIndex: 99}}>
+          <IconButton variant='text' onClick={handleOpen} size='sm'>
+            <FontAwesomeIcon icon={faClose} size='xl' className='' color='white' />
           </IconButton>
         </div>
         <div className='mt-4'>
@@ -149,14 +173,45 @@ const AddGradeBookModal = () => {
                 Description
               </Typography>
               <Textarea label='Description' size='lg' name='content' onChange={e => setDescription(e.target.value)} />
-              <div className=' flex space-x-1'>
-                <div className='w-1/2'>
+              <div className=' flex justify-center'>
+                <div>
                   <Typography className='' variant='h6'>
                     Coverpage
                   </Typography>
-                  <Input accept='.jpg' type='file' size='lg' name='topic' onChange={handleCoverImgChange} />
+                  <div className='flex justify-center'>
+                    {file ? (
+                      <div className='flex gap-2 '>
+                        <img src={editImg} width='180px' className='rounded-md' />
+                        <IconButton
+                          onClick={() => {
+                            setFile(null);
+                            setEditImg(null);
+                          }}
+                          variant='outlined'
+                          style={{alignSelf: 'flex-end'}}
+                        >
+                          <FontAwesomeIcon icon={faTrash} />
+                        </IconButton>
+                      </div>
+                    ) : (
+                      <FileUploader handleChange={handleCoverImgChange} types={fileTypes} name='staffImage' hoverTitle='Drop image here' />
+                    )}
+                    <CropImageModal
+                      editImg={editImg}
+                      aspectRatio={3 / 4.5}
+                      setEditImg={setEditImg}
+                      file={file}
+                      setFile={setFile}
+                      openModal={openModal}
+                      setOpenModal={setOpenModal}
+                    />
+                  </div>
+
+                  {/* <Input accept='.jpg' type='file' size='lg' name='topic' onChange={handleCoverImgChange} /> */}
                 </div>
-                <div className='w-1/2'>
+              </div>
+              <div className=' flex justify-center'>
+                <div>
                   <Typography className='' variant='h6'>
                     File
                   </Typography>
@@ -166,7 +221,7 @@ const AddGradeBookModal = () => {
               </div>
             </CardBody>
             <CardFooter className='pt-0'>
-              <Button disabled={!isvalidate} loading={isLoading} type='submit' variant='gradient' fullWidth onClick={handleFormSubmition}>
+              <Button disabled={!isvalidate || isLoading} loading={isLoading} type='submit' variant='gradient' fullWidth onClick={handleFormSubmition}>
                 Add Grade Book
               </Button>
             </CardFooter>

@@ -1,14 +1,14 @@
-import axios from "../api/axios";
-import useAuth from "./useAuth";
+import axios from '../api/axios';
+import useAuth from './useAuth';
 
 const useRefreshToken = () => {
-  const { setAuth } = useAuth();
-
+  const {setAuth} = useAuth();
+  // console.log('RT called');
   const refresh = async () => {
-    const response = await axios.get("/refresh/staff", {
+    const response = await axios.get('/refresh/staff', {
       withCredentials: true,
     });
-    setAuth((prev) => {
+    setAuth(prev => {
       // console.log(JSON.stringify(prev));
       // console.log(response.data.accessToken);
       return {
