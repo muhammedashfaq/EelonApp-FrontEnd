@@ -99,6 +99,8 @@ import PreperationsPage from "../Pages/Staff/Dashboard/Academic/Preparation/Prep
 import AccountantsPage from "../Pages/Staff/Dashboard/Academic/Accountants/AccountantsPage";
 import PayRollPage from "../Pages/Staff/Dashboard/Academic/Accountants/PayRollPage";
 import AddStopsPage from "../Pages/Staff/Dashboard/vehicleDetails/AddStopsPage";
+import HostelPage from "../Pages/Admin/Home/HostelPage";
+import AddHostelRoomDetailsPage from "../Pages/Admin/Home/AddHostelRoomDetailsPage";
 
 
 const AppRoutes = () => {
@@ -128,6 +130,11 @@ const AppRoutes = () => {
                 {/* Accountant */}
                 <Route path={RouteObjects.AccountsPage} element={<AccountantsPage />} />
                 <Route path={RouteObjects.PayRolls} element={<PayRollPage />} />
+
+        {/* Hostel  */}
+        <Route path={RouteObjects.HostelRoom} element={<HostelPage />} />
+        <Route path={RouteObjects.AddRooms} element={<AddHostelRoomDetailsPage/>} />
+
 
 
 
