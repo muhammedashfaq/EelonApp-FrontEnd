@@ -16,27 +16,23 @@ import {
   Select,
   Option,
   IconButton,
-} from '@material-tailwind/react';
-import useAxiosPrivate from '../../../../Hooks/useAxiosPrivate';
-import {useParams} from 'react-router-dom';
-import {toast} from 'react-hot-toast';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faYoutube} from '@fortawesome/free-brands-svg-icons';
-import {faClose, faUpload, faUser} from '@fortawesome/free-solid-svg-icons';
-import {faFile} from '@fortawesome/free-regular-svg-icons';
 
-const AddContentModal = () => {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(!open);
-  const [contentType, setContentType] = useState('pdf');
-  const [bookName, setBookName] = useState('');
-  const [description, setDescription] = useState('');
-  const [academicYear, setAcademicYear] = useState('');
+} from "@material-tailwind/react";
+import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
+import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClose, faUpload } from "@fortawesome/free-solid-svg-icons";
+
+const AddContentModal = ({id, showModal,handleOpen}) => {
+  const [contentType, setContentType] = useState("pdf");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [links, setLinks] = useState("");
+  const [ytLink,setYTLink]=useState("")
+
   const [isvalidate, setIsValidate] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [year, setYear] = useState([]);
-  const [base64grdadBook, setBase64grdadBook] = useState('');
-  const [coverPage, setCoverPage] = useState('');
+  const [base64grdadsyllabus, setBase64grdadsyllabus] = useState("");
 
   const axiosPrivate = useAxiosPrivate();
   const {classroomId} = useParams();
@@ -47,23 +43,59 @@ const AddContentModal = () => {
     const reader = new FileReader();
     reader.onload = event => {
       const base64 = event.target.result;
-      setBase64grdadBook(base64);
+      setBase64grdadsyllabus(base64);
     };
     reader.readAsDataURL(file);
   };
 
-  const formData = {
-    bookName,
-    description,
-    academicYear,
-  };
-  const handleFormSubmition = async e => {
+  let formData = {};
+
+  if (contentType === "pdf") {
+    formData = {
+      title,
+      description,
+      contentType,
+      pdfB64:base64grdadsyllabus
+      
+    };
+  } else if (contentType === "ppt") {
+    formData = {
+      title,
+      description,
+      contentType
+      
+    };
+  }else if(contentType === "YT"){
+    formData = {
+      title,
+      description,
+      contentType,
+      link:ytLink
+      
+    };
+  }else if (contentType === "other"){
+    formData = {
+      title,
+      description,
+      contentType,
+      link:links
+      
+    };
+  }
+
+  const handleFormSubmition = async (e) => {
     e.preventDefault();
 
     try {
+
+      console.log(formData)
       setIsLoading(true);
 
-      const response = await axiosPrivate.put(`classroom/assignment/${classroomId}`, formData);
+      const response = await axiosPrivate.post(
+        `classmaterials/syllabus/syllabus/${id}`,
+        formData
+      );
+      console.log(response,'jjjjjjjjjjjjjjjjj');
       setIsLoading(false);
       handleOpen();
     } catch (error) {
@@ -71,56 +103,47 @@ const AddContentModal = () => {
       console.log(error);
     }
   };
-  // const getYear = async () => {
-  //   try {
-  //     const response = await axiosPrivate.get(
-  //       "classsection/academicyear/academicyear"
-  //     );
-
-  //     const sortedData = response.data?.academicYear.sort((a, b) =>
-  //       a.localeCompare(b)
-  //     );
-  //     setYear(sortedData);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getYear();
-  // }, []);
-  useEffect(() => {
-    const isvalidate = formData.bookName && formData.academicYear;
-
-    setIsValidate(isvalidate);
-  }, [formData]);
 
   return (
     <div>
-      <Button size='sm' color='cyan'>
-        <FontAwesomeIcon icon={faUpload} onClick={handleOpen} size='2xl' />
-      </Button>
-      <Dialog open={open}>
-        <div className='bg-dark-purple rounded-t-md float-right'>
-          <IconButton variant='text' onClick={handleOpen}>
-            <FontAwesomeIcon icon={faClose} size='2x' className='' color='white' />
+
+      {/* <Button size="sm" color="cyan">
+        <FontAwesomeIcon icon={faUpload} onClick={handleOpen} size="2xl" />
+      </Button> */}
+      <Dialog open={showModal}>
+        <div className="bg-dark-purple rounded-t-md float-right">
+          <IconButton variant="text" onClick={handleOpen}>
+            <FontAwesomeIcon
+              icon={faClose}
+              size="2x"
+              className=""
+              color="white"
+            />
+
           </IconButton>
         </div>
         <div className='mt-4'>
           <Card>
-            <CardBody className='flex flex-col gap-4'>
-              <div className='flex'>
-                <div className='w-1/2 pr-2'>
-                  <Select label='Select' onChange={e => setContentType(e)}>
-                    <Option value='pdf'>PDF</Option>
-                    <Option value='ppt'>PPT</Option>
-                    <Option value='yt'>YouTube Embed</Option>
-                    <Option value='other'>Links</Option>
+
+            <CardBody className="flex flex-col gap-4">
+              <div className="flex">
+                <div className="w-1/2 pr-2">
+                  <Select label="Select" onChange={(e) => setContentType(e)}>
+                    <Option value="pdf">PDF</Option>
+                    <Option value="ppt">PPT</Option>
+                    <Option value="YT">YouTube Embed</Option>
+                    <Option value="other">Links</Option>
                   </Select>
                 </div>
 
-                <div className='w-1/2 pr-2'>
-                  <Input label='Title' size='md' onChange={e => setBookName(e.target.value)} />
+                <div className="w-1/2 pr-2">
+                  <Input
+                 
+                    label="Title"
+                    size="md"
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+
                 </div>
               </div>
 
@@ -146,20 +169,37 @@ const AddContentModal = () => {
                       <Input accept='.pdf' type='file' size='lg' name='content' onChange={handleFileChange} />
                       <span className='text-red-400 text-xs font-normal pl-2'>*PPT Only</span>
                     </>
-                  ) : contentType == 'yt' ? (
+
+                  ) : contentType == "YT" ? (
                     <>
                       <Typography className='' variant='h6'>
                         Youtube Embed Links
                       </Typography>
-                      <Input accept='.pdf' type='file' size='lg' name='content' onChange={handleFileChange} />
-                      <span className='text-red-400 text-xs font-normal pl-2'>*Youtube Embed Links Only</span>
+
+                      <Input
+                        
+                        type="url"
+                        size="lg"
+                        onChange={(e)=>setYTLink(e.target.value)}
+                      />
+                      <span className="text-red-400 text-xs font-normal pl-2">
+                        *Youtube Embed Links Only
+                      </span>
                     </>
                   ) : contentType == 'other' ? (
                     <>
                       <Typography className='' variant='h6'>
                         Links
                       </Typography>
-                      <Input accept='.pdf' type='file' size='lg' name='content' onChange={handleFileChange} />
+
+                      <Input
+                        type="url"
+                        placeholder="Enter Here"
+                        size="lg"
+                        name="content"
+                        onChange={(e)=>setLinks(e.target.value)}
+                      />
+
                     </>
                   ) : (
                     ''
@@ -167,8 +207,16 @@ const AddContentModal = () => {
                 </div>
               </div>
             </CardBody>
-            <CardFooter className='pt-0'>
-              <Button disabled={!isvalidate} loading={isLoading} type='submit' variant='gradient' fullWidth onClick={handleFormSubmition}>
+
+            <CardFooter className="pt-0">
+              <Button
+                // disabled={!isvalidate}
+                loading={isLoading}
+                type="submit"
+                variant="gradient"
+                fullWidth
+                onClick={handleFormSubmition}
+              >
                 Add
               </Button>
             </CardFooter>

@@ -1,13 +1,23 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from "react";
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 import {
   Dialog,
-  DialogHeader,
-  DialogBody,
-  DialogFooter,
   Button,
   Input,
-  Checkbox,
   Typography,
   Card,
   CardBody,
@@ -16,36 +26,36 @@ import {
   Select,
   Option,
   IconButton,
-} from '@material-tailwind/react';
-import useAxiosPrivate from '../../../../Hooks/useAxiosPrivate';
-import {useParams} from 'react-router-dom';
-import {toast} from 'react-hot-toast';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faYoutube} from '@fortawesome/free-brands-svg-icons';
-import {faClose, faUser} from '@fortawesome/free-solid-svg-icons';
-import {faFile} from '@fortawesome/free-regular-svg-icons';
-import {useQuery} from '@tanstack/react-query';
 
-const AddSyllabusModal = ({classRoomData, getsyllabusData}) => {
+} from "@material-tailwind/react";
+import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
+import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClose } from "@fortawesome/free-solid-svg-icons";
+import { format } from "date-fns";
+
+const AddSyllabusModal = ({ classRoomData, getsyllabusData }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
-  const [termName, setTermName] = useState('');
-  const [description, setDescription] = useState('');
-  const [academicYear, setAcademicYear] = useState('');
+  const [selectedMonth, setSetSelectedMonth] = useState("");
+  const [description, setDescription] = useState("");
+  const [academicYear, setAcademicYear] = useState("");
   const [isvalidate, setIsValidate] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [unitName, setunitName] = useState('');
-  const [noPages, setNoPages] = useState('');
-
+  const [year, setYear] = useState([]);
+  const [unitName, setunitName] = useState("");
+  const [noPages, setNoPages] = useState("");
   const axiosPrivate = useAxiosPrivate();
   const {classroomId} = useParams();
 
   const formData = {
     studyRoomId: classroomId,
-    std: classRoomData?.std,
-    subject: classRoomData?.subject,
+
+    std: classRoomData.std,
+    subject: classRoomData.subject,
     academicYear,
-    term: termName,
+    month:selectedMonth,
+
     unitName,
     description,
     pageNo: noPages,
@@ -54,8 +64,14 @@ const AddSyllabusModal = ({classRoomData, getsyllabusData}) => {
     e.preventDefault();
 
     try {
+      console.log(formData,'formmmm')
       setIsLoading(true);
-      const response = await axiosPrivate.post(`classmaterials/syllabus`, formData);
+
+      const response = await axiosPrivate.post(
+        `classmaterials/syllabus`,
+        formData
+      );
+
       setIsLoading(false);
       handleOpen();
       getsyllabusData();
@@ -79,10 +95,20 @@ const AddSyllabusModal = ({classRoomData, getsyllabusData}) => {
   });
 
   useEffect(() => {
-    const isvalidate = formData.unitName && formData.academicYear && formData.term && formData.pageNo;
+
+    getYear();
+  }, []);
+  useEffect(() => {
+    const isvalidate =
+      formData.unitName &&
+      formData.academicYear &&
+      formData.month &&
+      formData.pageNo;
+
 
     setIsValidate(isvalidate);
   }, [formData]);
+
 
   return (
     <div>
@@ -112,17 +138,16 @@ const AddSyllabusModal = ({classRoomData, getsyllabusData}) => {
                       ))}
                   </Select>
                 </div>
-                <div className='w-1/2 pr-2'>
-                  <Typography className=' ' variant='h6'>
-                    Term
-                  </Typography>
-                  <Select label='Select The Exam' onChange={e => setTermName(e)}>
-                    <Option value='1st Mid Term'>1. 1st Mid Term </Option>
-                    <Option value='Quarterly Exam'>2. Quarterly Exam</Option>
-                    <Option value='2nd Mid Term'>3. 2nd Mid Term </Option>
-                    <Option value='Half Yearly Exam'>4. Half Yearly Exam</Option>
-                    <Option value='3rd Mid Term'>5. 3rd Mid Term </Option>
-                    <Option value='Annual Exam'>6. Annual Exam</Option>
+
+                <div className="w-1/2 pr-2">
+                  <label htmlFor="monthDropdown">Select a Month:</label>
+                  <Select label="Select" name="month" onChange={(e)=>setSetSelectedMonth(e)}>
+                  
+                    {monthNames.map((month, index) => (
+                      <Option key={index} value={month}>
+                        {month}
+                      </Option>
+                    ))}
                   </Select>
                 </div>
               </div>
@@ -131,20 +156,36 @@ const AddSyllabusModal = ({classRoomData, getsyllabusData}) => {
                   <Typography className=' ' variant='h6'>
                     Unit Name
                   </Typography>
-                  <Input placeholder='Enter Here' onChange={e => setunitName(e.target.value)} />
+
+                  <Input
+                    placeholder="Enter Here"
+                    onChange={(e) => setunitName(e.target.value)}
+                  />
                 </div>
                 <div className='w-1/2 pr-2'>
                   <Typography className=' ' variant='h6'>
                     Number Of Pages
                   </Typography>
-                  <Input placeholder='Page 01 - 10' onChange={e => setNoPages(e.target.value)} />
+
+                  <Input
+                    placeholder="Page 01 - 10"
+                    onChange={(e) => setNoPages(e.target.value)}
+                  />
                 </div>
               </div>
+     
 
               <Typography className='-mb-2' variant='h6'>
                 Description
               </Typography>
-              <Textarea label='Description' size='lg' name='content' onChange={e => setDescription(e.target.value)} />
+
+              <Textarea
+                label="Description"
+                placeholder="Enter Here"
+                size="lg"
+                name="content"
+                onChange={(e) => setDescription(e.target.value)}
+              />
             </CardBody>
             <CardFooter className='pt-0'>
               <Button disabled={!isvalidate} loading={isLoading} type='submit' variant='gradient' fullWidth onClick={handleFormSubmition}>

@@ -1,10 +1,12 @@
 import { RouteObjects } from "../../../Routes/RoutObjects";
 import {
   faBars,
+  faBed,
   faBook,
   faCaretRight,
   faChalkboard,
   faHome,
+  faHomeLg,
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -139,6 +141,11 @@ const menu = [
     title: "Library",
     icon: faBook,
     href: RouteObjects.Stafflibrary,
+  },
+  {
+    title: "Hostel",
+    icon: faHomeLg,
+    href: RouteObjects.HostelRoom,
   },
   {
     title: "Vehicle Details",
