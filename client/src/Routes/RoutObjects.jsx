@@ -15,7 +15,11 @@ export const RouteObjects = {
   AdminssionFee: "/accounts/admissionfee",
   LedgerBook: "/accounts/ledger",
 
-  
+  //Hostel
+  HostelRoom:"/hostelrooms",
+  AddRooms:"/hostelrooms/addrooms",
+  AlocateMember:"/hostelrooms/alocatemember",
+
   StudentDashboard: "/studentdash",
   UserProfileStudent: "/profile_student",
   FeeInvoice: "/feeinvoice",
