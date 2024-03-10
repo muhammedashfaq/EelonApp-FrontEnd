@@ -105,16 +105,6 @@ const AddGradeBookModal = ({getGradeBooks}) => {
       console.log(error);
     }
   };
-  // const getYear = async () => {
-  //   try {
-  //     const response = await axiosPrivate.get('classsection/academicyear/academicyear');
-
-  //     const sortedData = response.data?.academicYear.sort((a, b) => a.localeCompare(b));
-  //     setYear(sortedData);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const {data: accYrData, isRefetching} = useQuery({
     queryKey: ['academicYearDD'],
@@ -129,9 +119,6 @@ const AddGradeBookModal = ({getGradeBooks}) => {
   });
   if (isRefetching) console.log('refetching -STDRM');
 
-  // useEffect(() => {
-  //   getYear();
-  // }, []);
   useEffect(() => {
     const isvalidate = formData.bookName && formData.academicYear;
 
