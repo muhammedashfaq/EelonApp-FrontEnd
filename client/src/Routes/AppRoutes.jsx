@@ -102,6 +102,7 @@ import PayRollPage from "../Pages/Staff/Dashboard/Academic/Accountants/PayRollPa
 import AddStopsPage from "../Pages/Staff/Dashboard/vehicleDetails/AddStopsPage";
 import HostelPage from "../Pages/Admin/Home/HostelPage";
 import AddHostelRoomDetailsPage from "../Pages/Admin/Home/AddHostelRoomDetailsPage";
+import AlocateMemberPage from "../Pages/Admin/Home/AlocateMemberPage";
 
 
 
@@ -134,6 +135,8 @@ const AppRoutes = () => {
         {/* Hostel  */}
         <Route path={RouteObjects.HostelRoom} element={<HostelPage />} />
         <Route path={RouteObjects.AddRooms} element={<AddHostelRoomDetailsPage/>} />
+        <Route path={RouteObjects.AlocateMember} element={<AlocateMemberPage/>} />
+
 
 
 

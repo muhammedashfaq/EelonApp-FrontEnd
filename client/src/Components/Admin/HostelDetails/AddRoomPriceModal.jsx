@@ -16,7 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 
 
-const AddRoomPriceModal = ({id}) => {
+const AddRoomPriceModal = ({id,getDataHostel}) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [roomType, setRoomType] = useState("");
@@ -36,15 +36,17 @@ const AddRoomPriceModal = ({id}) => {
     try {
       e.preventDefault();
       setIsLoading(true)
-    //   const response = await axiosPrivate.post("", formData);
+       await axiosPrivate.post(`hostel/${id}`, {hostelRoomTypes:formData});
       setIsLoading(false)
+      getDataHostel()
+      handleOpen()
     } catch (error) {
         setIsLoading(false)
       console.log(error);
     }
   };
   useEffect(() => {
-    const isValidate = formData.amount && formData.roomType&&formData.occupantsNo;
+    const isValidate = formData.rentPerMonth && formData.type&&formData.occupantsNo;
     setIsValidate(isValidate);
   }, [formData]);
   return (

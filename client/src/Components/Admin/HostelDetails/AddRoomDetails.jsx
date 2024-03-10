@@ -2,22 +2,34 @@ import { useEffect, useState } from "react";
 import AddRoomPriceModal from "./AddRoomPriceModal";
 import AddRoomsModal from "./AddRoomsModal";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBed } from "@fortawesome/free-solid-svg-icons";
 
 const AddRoomDetails = () => {
   const id = "65ec46a49dde104983cc0b17"
   const [hostelData,setHostelData]=useState([])
 const axiosPrivate = useAxiosPrivate()
+const [roomdata , setRoomdata]=useState([])
 
-console.log(hostelData)
+console.log(roomdata,'datassss');
   const getDataHostel =async()=>{
     try {
-      const response = await axiosPrivate.get('/hostel')
-      setHostelData(response.data)
+      const response = await axiosPrivate.get(`school/${id}`)
+      setHostelData(response.data.hostelRoomTypes)
     } catch (error) {
       console.log(error);
     }
   }
+  const getRoomData=async()=>{
+    try {
+      const response = await axiosPrivate.get("hostel/room")
+      setRoomdata(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   useEffect(()=>{
+    getRoomData()
     getDataHostel()
   },[])
   return (
@@ -33,7 +45,7 @@ console.log(hostelData)
                 href="#"
                 className="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg p-2"
               >
-                <AddRoomsModal />
+                <AddRoomsModal hostelData={hostelData} id={id} />
               </a>
             </div>
           </div>
@@ -54,49 +66,47 @@ console.log(hostelData)
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
-                <tr className="text-gray-500">
+
+                {roomdata&&roomdata?.map(({type,occupantsNo,roomNo,rentPerMonth},i)=>
+                <tr key={i} className="text-gray-500">
                   <th className="border-t-0 px-4 align-middle text-sm font-normal whitespace-nowrap p-4 text-left flex  space-x-1 items-center">
                     <div className="flex-shrink-0">
-                      <img
-                        className="h-8 w-8 rounded-full"
-                        src="https://demo.themesberg.com/windster/images/users/neil-sims.png"
-                        alt="Neil image"
-                      />
+                      <FontAwesomeIcon />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-gray-900 truncate">
-                        Neil Sims
+                        {type}
                       </p>
                       <p className="text-sm text-gray-500 truncate">
-                        <a
-                          href="/cdn-cgi/l/email-protection"
-                          className="__cf_email__"
-                          data-cfemail="17727a767e7b57607e7973646372653974787a"
-                        >
-                          [email&#160;protected]
-                        </a>
+                        
+                          {occupantsNo}
                       </p>
                     </div>
                   </th>
+
+                          
+
                   <td className="border-t-0 px-4 align-middle text-xs font-medium text-gray-900 whitespace-nowrap p-4">
                     <div className="inline-flex items-center text-base font-semibold text-gray-900">
-                      $320
+                      {rentPerMonth}
                     </div>
                   </td>
+
                   <td className="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
                     <div className="flex items-center">
-                      <span className="mr-2 text-xs font-medium">30%</span>
-                      <div className="relative w-full">
+                      <span className="mr-2 text-xs font-medium">{roomNo}</span>
+                      {/* <div className="relative w-full">
                         <div className="w-full bg-gray-200 rounded-sm h-2">
                           <div
                             className="bg-cyan-600 h-2 rounded-sm"
                             style={{ width: "30%" }}
                           ></div>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </td>
                 </tr>
+                  )}
               </tbody>
             </table>
           </div>
@@ -117,7 +127,7 @@ console.log(hostelData)
                 href="#"
                 className="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg p-2"
               >
-                <AddRoomPriceModal id={id} />
+                <AddRoomPriceModal id={id}  getDataHostel={getDataHostel}/>
               </a>
             </div>
           </div>
@@ -138,7 +148,7 @@ console.log(hostelData)
                           scope="col"
                           className="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                          Date & Time
+                          No of Beds
                         </th>
                         <th
                           scope="col"
@@ -149,18 +159,25 @@ console.log(hostelData)
                       </tr>
                     </thead>
                     <tbody className="bg-white">
-                      <tr>
+                      {
+                        hostelData&&hostelData?.map(({type,rentPerMonth,occupantsNo},i)=>(
+                          <>
+                      <tr key={i}>
                         <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                          Payment from{" "}
-                          <span className="font-semibold">Bonnie </span>
+                         
+                          <span className="font-semibold">{type} </span>
                         </td>
                         <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                          Apr 23 ,2021
+                        {occupantsNo}
                         </td>
                         <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                          $2300
+                        {rentPerMonth}
                         </td>
                       </tr>
+
+                          </>
+                        ))}
+
                     </tbody>
                   </table>
                 </div>
