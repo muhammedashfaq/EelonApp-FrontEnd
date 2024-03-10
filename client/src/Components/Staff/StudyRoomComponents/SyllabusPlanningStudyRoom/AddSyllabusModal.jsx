@@ -24,6 +24,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faYoutube} from '@fortawesome/free-brands-svg-icons';
 import {faClose, faUser} from '@fortawesome/free-solid-svg-icons';
 import {faFile} from '@fortawesome/free-regular-svg-icons';
+import {useQuery} from '@tanstack/react-query';
 
 const AddSyllabusModal = ({classRoomData, getsyllabusData}) => {
   const [open, setOpen] = useState(false);
@@ -33,7 +34,6 @@ const AddSyllabusModal = ({classRoomData, getsyllabusData}) => {
   const [academicYear, setAcademicYear] = useState('');
   const [isvalidate, setIsValidate] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [year, setYear] = useState([]);
   const [unitName, setunitName] = useState('');
   const [noPages, setNoPages] = useState('');
 
@@ -64,20 +64,20 @@ const AddSyllabusModal = ({classRoomData, getsyllabusData}) => {
       console.log(error);
     }
   };
-  const getYear = async () => {
-    try {
+
+  const {data: academicYearDD, isRefetching} = useQuery({
+    queryKey: ['academicYearDD'],
+    queryFn: async () => {
       const response = await axiosPrivate.get('classsection/academicyear/academicyear');
 
       const sortedData = response.data?.academicYear.sort((a, b) => a.localeCompare(b));
-      setYear(sortedData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+      return sortedData;
+    },
+    refetchInterval: false,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
 
-  useEffect(() => {
-    getYear();
-  }, []);
   useEffect(() => {
     const isvalidate = formData.unitName && formData.academicYear && formData.term && formData.pageNo;
 
@@ -89,10 +89,10 @@ const AddSyllabusModal = ({classRoomData, getsyllabusData}) => {
       <Button onClick={handleOpen} variant='gradient' color='teal'>
         Update
       </Button>
-      <Dialog open={open}>
-        <div className='bg-dark-purple rounded-t-md float-right'>
-          <IconButton variant='text' onClick={handleOpen}>
-            <FontAwesomeIcon icon={faClose} size='2x' className='' color='white' />
+      <Dialog open={open} className='relative'>
+        <div className='bg-dark-purple rounded-md absolute right-3 top-3 z-50'>
+          <IconButton variant='text' onClick={handleOpen} size='sm'>
+            <FontAwesomeIcon icon={faClose} size='xl' className='' color='white' />
           </IconButton>
         </div>
         <div className='mt-4'>
@@ -104,8 +104,8 @@ const AddSyllabusModal = ({classRoomData, getsyllabusData}) => {
                     Academic Year
                   </Typography>
                   <Select label='Select Year' onChange={e => setAcademicYear(e)}>
-                    {year &&
-                      year.map((item, i) => (
+                    {academicYearDD &&
+                      academicYearDD.map((item, i) => (
                         <Option key={i} value={item}>
                           {i + 1}. {item}
                         </Option>
