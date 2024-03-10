@@ -55,7 +55,7 @@ const SatffAddBookManagement = () => {
           text: `Book has been deleted`,
           icon: 'success',
         });
-        getBooks();
+        getBooks(page);
       }
     } catch (error) {
       toast.error('Something went wrong');
