@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from 'react';
 
 import {
   Dialog,
@@ -16,6 +16,7 @@ import {
   Select,
   Option,
   IconButton,
+
 } from "@material-tailwind/react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useParams } from "react-router-dom";
@@ -34,19 +35,18 @@ const AddContentModal = ({id, showModal,handleOpen}) => {
   const [base64grdadsyllabus, setBase64grdadsyllabus] = useState("");
 
   const axiosPrivate = useAxiosPrivate();
-  const { classroomId } = useParams();
-  const handleFileChange = (e) => {
+  const {classroomId} = useParams();
+  const handleFileChange = e => {
     const file = e.target.files[0];
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = (event) => {
+    reader.onload = event => {
       const base64 = event.target.result;
       setBase64grdadsyllabus(base64);
     };
     reader.readAsDataURL(file);
   };
-
 
   let formData = {};
 
@@ -83,8 +83,6 @@ const AddContentModal = ({id, showModal,handleOpen}) => {
     };
   }
 
-
-
   const handleFormSubmition = async (e) => {
     e.preventDefault();
 
@@ -106,9 +104,9 @@ const AddContentModal = ({id, showModal,handleOpen}) => {
     }
   };
 
-
   return (
     <div>
+
       {/* <Button size="sm" color="cyan">
         <FontAwesomeIcon icon={faUpload} onClick={handleOpen} size="2xl" />
       </Button> */}
@@ -121,10 +119,12 @@ const AddContentModal = ({id, showModal,handleOpen}) => {
               className=""
               color="white"
             />
+
           </IconButton>
         </div>
-        <div className="mt-4">
+        <div className='mt-4'>
           <Card>
+
             <CardBody className="flex flex-col gap-4">
               <div className="flex">
                 <div className="w-1/2 pr-2">
@@ -143,57 +143,39 @@ const AddContentModal = ({id, showModal,handleOpen}) => {
                     size="md"
                     onChange={(e) => setTitle(e.target.value)}
                   />
+
                 </div>
               </div>
 
-              <Typography className="-mb-2" variant="h6">
+              <Typography className='-mb-2' variant='h6'>
                 Description
               </Typography>
-              <Textarea
-                label="Description"
-                size="lg"
-                name="content"
-                onChange={(e) => setDescription(e.target.value)}
-              />
-              <div className=" flex space-x-1">
-                <div className="w-1/2">
-                  {contentType == "pdf" ? (
+              <Textarea label='Description' size='lg' name='content' onChange={e => setDescription(e.target.value)} />
+              <div className=' flex space-x-1'>
+                <div className='w-1/2'>
+                  {contentType == 'pdf' ? (
                     <>
-                      <Typography className="" variant="h6">
+                      <Typography className='' variant='h6'>
                         PDF File
                       </Typography>
-                      <Input
-                        accept=".pdf"
-                        type="file"
-                        size="lg"
-                        name="content"
-                        onChange={handleFileChange}
-                      />
-                      <span className="text-red-400 text-xs font-normal pl-2">
-                        *PDF Only
-                      </span>
+                      <Input accept='.pdf' type='file' size='lg' name='content' onChange={handleFileChange} />
+                      <span className='text-red-400 text-xs font-normal pl-2'>*PDF Only</span>
                     </>
-                  ) : contentType == "ppt" ? (
+                  ) : contentType == 'ppt' ? (
                     <>
-                      <Typography className="" variant="h6">
+                      <Typography className='' variant='h6'>
                         PPT File
                       </Typography>
-                      <Input
-                        accept=".pdf"
-                        type="file"
-                        size="lg"
-                        name="content"
-                        onChange={handleFileChange}
-                      />
-                      <span className="text-red-400 text-xs font-normal pl-2">
-                        *PPT Only
-                      </span>
+                      <Input accept='.pdf' type='file' size='lg' name='content' onChange={handleFileChange} />
+                      <span className='text-red-400 text-xs font-normal pl-2'>*PPT Only</span>
                     </>
+
                   ) : contentType == "YT" ? (
                     <>
-                      <Typography className="" variant="h6">
+                      <Typography className='' variant='h6'>
                         Youtube Embed Links
                       </Typography>
+
                       <Input
                         
                         type="url"
@@ -204,11 +186,12 @@ const AddContentModal = ({id, showModal,handleOpen}) => {
                         *Youtube Embed Links Only
                       </span>
                     </>
-                  ) : contentType == "other" ? (
+                  ) : contentType == 'other' ? (
                     <>
-                      <Typography className="" variant="h6">
+                      <Typography className='' variant='h6'>
                         Links
                       </Typography>
+
                       <Input
                         type="url"
                         placeholder="Enter Here"
@@ -216,13 +199,15 @@ const AddContentModal = ({id, showModal,handleOpen}) => {
                         name="content"
                         onChange={(e)=>setLinks(e.target.value)}
                       />
+
                     </>
                   ) : (
-                    ""
+                    ''
                   )}
                 </div>
               </div>
             </CardBody>
+
             <CardFooter className="pt-0">
               <Button
                 // disabled={!isvalidate}

@@ -58,6 +58,7 @@ export default function CropImageModal({setEditImg, file, setFile, setOpenModal,
                 onRotationChange={setRotation}
                 onCropComplete={onCropComplete}
                 onZoomChange={setZoom}
+                zoomWithScroll={true}
               />
             )}
           </div>
@@ -65,11 +66,11 @@ export default function CropImageModal({setEditImg, file, setFile, setOpenModal,
         <DialogFooter className='flex flex-col'>
           <div className='w-96 m-3 flex justify-evenly gap-5'>
             <Typography>Zoom</Typography>
-            <input value={zoom} max={5} min={1} step={0.05} onChange={e => setZoom(e.target.value)} type='range' className='w-52 cursor-pointer' />
+            <input value={zoom} max={6} min={1} step={0.05} onChange={e => setZoom(e.target.value)} type='range' className='w-52 cursor-pointer' />
           </div>
           <div className='w-96 m-3 flex justify-evenly gap-5'>
             <Typography>Rotation</Typography>
-            <input value={rotation} max={360} min={0} step={1} className='w-52 cursor-pointer' onChange={e => setRotation(e.target.value)} type='range' />
+            <input value={rotation} max={360} min={0} step={0.5} className='w-52 cursor-pointer' onChange={e => setRotation(e.target.value)} type='range' />
           </div>
         </DialogFooter>
         <DialogFooter>
@@ -80,6 +81,10 @@ export default function CropImageModal({setEditImg, file, setFile, setOpenModal,
               handleOpen();
               setFile(null);
               setOpenModal(false);
+              setZoom(1);
+              setRotation(0);
+              setCrop({x: 0, y: 0});
+              setCroppedAreaPixels(null);
             }}
             className='mr-1'
           >
