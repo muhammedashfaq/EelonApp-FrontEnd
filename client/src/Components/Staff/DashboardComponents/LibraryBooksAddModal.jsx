@@ -8,10 +8,12 @@ import CropImageModal from '../../Admin/CropImageModal';
 import {FileUploader} from 'react-drag-drop-files';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTrash} from '@fortawesome/free-solid-svg-icons';
+import useAxiosPrivate from '../../../Hooks/useAxiosPrivate';
 
 const fileTypes = ['JPG', 'PNG', 'GIF', 'JPEG'];
 
 export default function LibraryBooksAddModal({GenreList, getBooks}) {
+  const axiosPrivate = useAxiosPrivate();
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [file, setFile] = useState(null);
@@ -108,7 +110,7 @@ export default function LibraryBooksAddModal({GenreList, getBooks}) {
         return;
       } else {
         setIsLoading(true);
-        const response = await axios.post('/library/books', {...formData, Image: editImg});
+        const response = await axiosPrivate.post('/library/books', {...formData, Image: editImg});
         console.log(response);
         setIsLoading(false);
         handleClose();
