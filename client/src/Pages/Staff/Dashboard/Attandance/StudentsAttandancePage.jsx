@@ -1,17 +1,17 @@
-import React from 'react'
-import Banner from '../../../../Components/Banner/Banner'
-import StudentsAttendance from '../../../../Components/Staff/DashboardComponents/Attendance/Students/StudentsAttendance'
+import React from 'react';
+import Banner from '../../../../Components/Banner/Banner';
+import StudentsAttendance from '../../../../Components/Staff/DashboardComponents/Attendance/Students/StudentsAttendance';
 
 const StudentsAttandancePage = () => {
-  const breadcrumbs = ["Attandance-Students"];
+  const breadcrumbs = ['Attandance-Students'];
 
   return (
     <div>
-        <Banner breadcrumbs={breadcrumbs}/>
+      <Banner breadcrumbs={breadcrumbs} />
 
-        <StudentsAttendance/>
+      <StudentsAttendance />
     </div>
-  )
-}
+  );
+};
 
-export default StudentsAttandancePage
+export default StudentsAttandancePage;

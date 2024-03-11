@@ -1,12 +1,12 @@
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {Button, Tooltip, Typography} from '@material-tailwind/react';
 import React, {useEffect, useState} from 'react';
-import AttandanceRadio from './AttandanceRadio';
 import {faSquareCheck} from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
+import HostelAttendanceRadio from './HostelAttendanceRadio';
 
-const StudentRow = ({name, index, checkedValue, createAttendanceArray, studentId}) => {
-  const [isPresent, setisPresent] = useState('');
+const HostelAttendanceRow = ({name, index, checkedValue, createAttendanceArray, studentId}) => {
+  const [isPresent, setisPresent] = useState('Pr');
   const [reason, setReason] = useState('');
 
   const handleChange = () => {
@@ -53,7 +53,7 @@ const StudentRow = ({name, index, checkedValue, createAttendanceArray, studentId
           </Typography>
         </td>
         <td className='px-4 py-1  border-b border-blue-gray-50 bg-blue-gray-50/50 '>
-          <AttandanceRadio isPresent={isPresent} setisPresent={setisPresent} index={index} handleChange={handleChange} studentId={studentId} />
+          <HostelAttendanceRadio isPresent={isPresent} setisPresent={setisPresent} index={index} handleChange={handleChange} studentId={studentId} />
         </td>
         <td className='px-4 py-1  border-b border-blue-gray-50'>
           <Button onClick={() => addremarks()} variant='outlined'>
@@ -65,4 +65,4 @@ const StudentRow = ({name, index, checkedValue, createAttendanceArray, studentId
   );
 };
 
-export default StudentRow;
+export default HostelAttendanceRow;
