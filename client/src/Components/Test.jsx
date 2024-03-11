@@ -12,12 +12,12 @@ import {RouteObjects} from '../Routes/RoutObjects';
 import Banner from './Banner/Banner';
 import useAuth from '../Hooks/useAuth';
 
-const TABLE_HEAD = ['#NO', 'Name', 'Attendance', 'Remarks', 'Aprove', ''];
+const TABLE_HEAD = ['#NO', 'Name', 'Attendance', 'Remarks'];
 
 const Test = () => {
   const [attendance, setAttendance] = useState([]);
   const [attendanceArray, setAttendanceArray] = useState([]);
-  // const [AllPresent, setAllPresent] = useState(false);
+  const [AllPresent, setAllPresent] = useState(false);
   const [studentData, setstudentData] = useState();
   const [classwiseAttendance, setclasswiseAttendance] = useState();
   const [attendanceDbId, setattendanceDbId] = useState();
@@ -83,46 +83,63 @@ const Test = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(attendanceArray);
-  }, [attendanceArray]);
+  // useEffect(() => {
+  //   console.log(attendanceArray);
+  // }, [attendanceArray]);
 
   useEffect(() => {
     getClasswiseStudents();
     getClasswiseAttendance();
   }, []);
 
+  useEffect(() => {
+    getClasswiseStudents();
+  }, [schoolId]);
+  console.log(AllPresent);
   return (
     <>
       <Banner />
-      <Card className='h-full w-full overflow-scroll'>
-        <table className='w-full min-w-max table-auto text-left'>
-          <thead>
-            <div className='mx-10 my-4'>
-              <Button variant='outlined' onClick={() => setAllPresent(prev => !prev)}>
-                Mark all Present
-              </Button>
-            </div>
-            <tr>
-              {TABLE_HEAD.map(head => (
-                <th key={head} className='border-b border-blue-gray-100 bg-blue-gray-50 p-4'>
-                  <Typography variant='small' color='blue-gray' className='font-normal leading-none opacity-70'>
-                    {head}
-                  </Typography>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className=''>
-            {studentData &&
-              studentData.map((data, index) => (
-                <StudentRow key={data._id} name={data.studentName} index={index} studentId={data._id} createAttendanceArray={createAttendanceArray} />
-              ))}
-          </tbody>
-        </table>
-      </Card>
-      <div style={{textAlign: 'center'}} className='p-5'>
-        <Button onClick={addAttendanceToCollection}>Save</Button>
+      <div className='flex justify-center'>
+        <div className='container xl'>
+          <Card className='h-full w-full overflow-scroll'>
+            <table className='w-full min-w-max table-auto text-left'>
+              <thead>
+                <div className='mx-10 my-4'>
+                  <Button variant='outlined' onClick={() => setAllPresent(prev => !prev)}>
+                    Mark all Present
+                  </Button>
+                </div>
+                <tr>
+                  {TABLE_HEAD.map(head => (
+                    <th key={head} className='border-b border-blue-gray-100 bg-blue-gray-50 p-4'>
+                      <Typography variant='small' color='blue-gray' className='font-normal leading-none opacity-70'>
+                        {head}
+                      </Typography>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className=''>
+                {studentData &&
+                  studentData.map((data, index) => (
+                    <StudentRow
+                      key={data._id}
+                      name={data.studentName}
+                      index={index}
+                      studentId={data._id}
+                      createAttendanceArray={createAttendanceArray}
+                      pres={true}
+                      setAllPresent={setAllPresent}
+                      AllPresent={AllPresent}
+                    />
+                  ))}
+              </tbody>
+            </table>
+          </Card>
+          <div style={{textAlign: 'center'}} className='p-5'>
+            <Button onClick={addAttendanceToCollection}>Save</Button>
+          </div>
+        </div>
       </div>
     </>
   );
