@@ -13,7 +13,7 @@ const useLogout = roles => {
       const response = await axiosPrivate.get(url, {
         withCredentials: true,
       });
-      console.log(response);
+      // console.log(response);
     } catch (error) {
       console.error(error);
     }

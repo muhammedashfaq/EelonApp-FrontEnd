@@ -6,10 +6,14 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faBars, faRightFromBracket} from '@fortawesome/free-solid-svg-icons';
 import useLogout from '../../../Hooks/useLogout';
 import menu from './menuLinks.jsx';
+import useAuth from '../../../Hooks/useAuth.jsx';
 
 const NavBar = () => {
   const [open, setOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState({});
+
+  const {auth} = useAuth();
+
   const logOut = useLogout();
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
@@ -26,8 +30,8 @@ const NavBar = () => {
       <Drawer open={open} onClose={closeDrawer} className='p-4 bg-dark-purple overflow-y-auto'>
         <div className='h-screen'>
           <div className='flex items-center  p-3 rounded-lg shadow-inner bg-blue-800'>
-            <Avatar src='https://docs.material-tailwind.com/img/face-2.jpg' alt='avatar' size='xs' />
-            <span className='text-white ml-2 text-sm font-medium'>Username</span>
+            <Avatar src={auth?.userData?.profilePic?.url || 'https://docs.material-tailwind.com/img/face-2.jpg'} alt='avatar' size='xs' />
+            <span className='text-white ml-2 text-sm font-medium'>{auth?.userData?.name || auth?.userData?.studentName || 'Username'}</span>
           </div>
 
           <div className='mt-4 mb-2'>

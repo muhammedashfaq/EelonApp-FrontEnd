@@ -6,12 +6,12 @@ import useLogout from '../../../Hooks/useLogout';
 
 import {RouteObjects} from '../../../Routes/RoutObjects';
 import useAuth from '../../../Hooks/useAuth';
-import {useEffect} from 'react';
+
 const UserAvatar = ({dash, profile, roles}) => {
   const {auth} = useAuth();
-  const ProfilePic = auth?.userProfilePic;
-  const logOut = useLogout(roles);
 
+  const ProfilePic = auth?.userData?.profilePic?.url;
+  const logOut = useLogout(roles);
   return (
     <div>
       <Menu>

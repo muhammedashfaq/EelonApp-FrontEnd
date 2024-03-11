@@ -1,4 +1,5 @@
 
+
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { RouteObjects } from "./RoutObjects";
 import { useSelector } from "react-redux";
@@ -111,6 +112,7 @@ import MessStockDetailsPage from "../Pages/Admin/Home/Hostel/MessStockDetailsPag
 
 
 const AppRoutes = () => {
+
   const [editedPath, setEditedPath] = useState('');
   const location = useLocation();
   useEffect(() => {
@@ -121,23 +123,25 @@ const AppRoutes = () => {
     <div>
       <Toaster position='bottom-center' reverseOrder={false} />
 
-      {!['test', 'login', 'iamsuperadmin', '*', 'superhome'].includes(editedPath) && <StaffHeader />}
+      {!['login', 'iamsuperadmin', '*', 'superhome'].includes(editedPath) && <StaffHeader refetchUserdata={refetchUserdata} />}
 
       <Routes>
+        {/* Main Login */}
+        <Route path={RouteObjects.Login} element={<Login />} />
+        <Route path={RouteObjects.root} element={<LandingPage />} />
+
         {/* Academics */}
         <Route path={RouteObjects.Student_Acadamic} element={<StudentAcademicPage />} />
         <Route path={RouteObjects.Staff_Acadamic} element={<StaffAcademicPage />} />
         <Route path={RouteObjects.Preparations} element={<PreperationsPage />} />
 
-
-
-
-                {/* Accountant */}
-                <Route path={RouteObjects.AccountsPage} element={<AccountantsPage />} />
-                <Route path={RouteObjects.PayRolls} element={<PayRollPage />} />
+        {/* Accountant */}
+        <Route path={RouteObjects.AccountsPage} element={<AccountantsPage />} />
+        <Route path={RouteObjects.PayRolls} element={<PayRollPage />} />
 
         {/* Hostel  */}
         <Route path={RouteObjects.HostelRoom} element={<HostelPage />} />
+
         <Route path={RouteObjects.AddRooms} element={<AddHostelRoomDetailsPage/>} />
         <Route path={RouteObjects.AlocateMember} element={<AlocateMemberPage/>} />
         <Route path={RouteObjects.InandOutStatus} element={<In_OutHostelPage/>} />
@@ -156,14 +160,12 @@ const AppRoutes = () => {
 
 
 
+
         {/* Super Admin */}
         <Route path={RouteObjects.SuperAdmin} element={<SuperAdminLogin />} />
         <Route path={RouteObjects.SuperAdminHome} element={<SuperAdminHomePage />} />
         <Route path={RouteObjects.SuperForgot} element={<ForgotMailPage />} />
         <Route path={RouteObjects.SuperReset} element={<ResetPage />} />
-
-        {/* Main Login */}
-        <Route path={RouteObjects.Login} element={<Login />} />
 
         {/* accountant Module  */}
         <Route path={`${RouteObjects.FeeInvoiceBill}/:id`} element={<FeeInvoiceBillPage />} />
@@ -191,7 +193,6 @@ const AppRoutes = () => {
         <Route path={RouteObjects.AddStops} element={<AddStopsPage />} />
 
         {/* STUDENTS ROUTS */}
-        <Route path={RouteObjects.root} element={<LandingPage />} />
         <Route path={RouteObjects.StudentDashboard} element={<StudentDashBoard />} />
         <Route path={RouteObjects.UserProfileStudent} element={<UserProfileStudentPage />} />
         <Route path={RouteObjects.FeeInvoice} element={<StudentFeeInvoice />} />
@@ -258,6 +259,7 @@ const AppRoutes = () => {
         <Route path={RouteObjects.AllstudentsPage} element={<Allstudents />} />
         <Route path='/test' element={<Test />} />
         <Route path='/testyk' element={<TestYk />} />
+        <Route path='/unauthorized' element={<ErrorPage />} />
         <Route path='*' element={<ErrorPage />} />
       </Routes>
     </div>
