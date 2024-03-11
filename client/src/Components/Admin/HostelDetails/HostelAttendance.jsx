@@ -9,8 +9,11 @@ import Swal from 'sweetalert2';
 import {RouteObjects} from '../../../Routes/RoutObjects';
 import useAuth from '../../../Hooks/useAuth';
 import HostelAttendanceRow from './HostelAttendanceRow';
+import Banner from '../../Banner/Banner';
 
 const TABLE_HEAD = ['#NO', 'Name', 'Attendance', 'Remarks'];
+
+const breadcrumbs = ['Hostel', 'Attendance', 'Addattendance'];
 
 const HostelAttendance = () => {
   const [attendance, setAttendance] = useState([]);
@@ -116,7 +119,7 @@ const HostelAttendance = () => {
 
   return (
     <>
-      {' '}
+      <Banner breadcrumbs={breadcrumbs} />
       <div className='flex justify-center'>
         <div className='container xl'>
           <Card className='h-full w-full overflow-scroll'>

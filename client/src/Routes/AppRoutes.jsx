@@ -106,6 +106,8 @@ import In_OutHostelPage from '../Pages/Admin/Home/Hostel/In_OutHostelPage';
 import HostelAttendancePage from '../Pages/Admin/Home/Hostel/HostelAttendancePage';
 import VisitersDetailspage from '../Pages/Admin/Home/Hostel/VisitersDetailspage';
 import MessStockDetailsPage from '../Pages/Admin/Home/Hostel/MessStockDetailsPage';
+import HostelAttendance from '../Components/Admin/HostelDetails/HostelAttendance';
+import ViewHostelAttendance from '../Components/Admin/HostelDetails/ViewHostelAttendance';
 
 const AppRoutes = () => {
   const [editedPath, setEditedPath] = useState('');
@@ -143,6 +145,8 @@ const AppRoutes = () => {
         <Route path={RouteObjects.HostelAttendance} element={<HostelAttendancePage />} />
         <Route path={RouteObjects.VisitersDetails} element={<VisitersDetailspage />} />
         <Route path={RouteObjects.MessStock} element={<MessStockDetailsPage />} />
+        <Route path={RouteObjects.AddHostelAttendance} element={<HostelAttendance />} />
+        <Route path={RouteObjects.ViewHostelAttendance} element={<ViewHostelAttendance />} />
 
         {/* Super Admin */}
         <Route path={RouteObjects.SuperAdmin} element={<SuperAdminLogin />} />
