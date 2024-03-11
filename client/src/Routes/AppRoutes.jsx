@@ -100,9 +100,13 @@ import PreperationsPage from "../Pages/Staff/Dashboard/Academic/Preparation/Prep
 import AccountantsPage from "../Pages/Staff/Dashboard/Academic/Accountants/AccountantsPage";
 import PayRollPage from "../Pages/Staff/Dashboard/Academic/Accountants/PayRollPage";
 import AddStopsPage from "../Pages/Staff/Dashboard/vehicleDetails/AddStopsPage";
-import HostelPage from "../Pages/Admin/Home/HostelPage";
-import AddHostelRoomDetailsPage from "../Pages/Admin/Home/AddHostelRoomDetailsPage";
-import AlocateMemberPage from "../Pages/Admin/Home/AlocateMemberPage";
+import HostelPage from "../Pages/Admin/Home/Hostel/HostelPage";
+import AddHostelRoomDetailsPage from "../Pages/Admin/Home/Hostel/AddHostelRoomDetailsPage";
+import AlocateMemberPage from "../Pages/Admin/Home/Hostel/AlocateMemberPage";
+import In_OutHostelPage from "../Pages/Admin/Home/Hostel/In_OutHostelPage";
+import HostelAttendancePage from "../Pages/Admin/Home/Hostel/HostelAttendancePage";
+import VisitersDetailspage from "../Pages/Admin/Home/Hostel/VisitersDetailspage";
+import MessStockDetailsPage from "../Pages/Admin/Home/Hostel/MessStockDetailsPage";
 
 
 
@@ -136,6 +140,14 @@ const AppRoutes = () => {
         <Route path={RouteObjects.HostelRoom} element={<HostelPage />} />
         <Route path={RouteObjects.AddRooms} element={<AddHostelRoomDetailsPage/>} />
         <Route path={RouteObjects.AlocateMember} element={<AlocateMemberPage/>} />
+        <Route path={RouteObjects.InandOutStatus} element={<In_OutHostelPage/>} />
+        <Route path={RouteObjects.HostelAttendance} element={<HostelAttendancePage/>} />
+        <Route path={RouteObjects.VisitersDetails} element={<VisitersDetailspage/>} />
+        <Route path={RouteObjects.MessStock} element={<MessStockDetailsPage/>} />
+
+
+
+
 
 
 

@@ -19,6 +19,10 @@ export const RouteObjects = {
   HostelRoom:"/hostelrooms",
   AddRooms:"/hostelrooms/addrooms",
   AlocateMember:"/hostelrooms/alocatemember",
+  InandOutStatus:"/hostelrooms/inandout",
+  HostelAttendance:"/hostelrooms/attendance",
+  VisitersDetails:"/hostelrooms/visitersdetails",
+  MessStock:"/hostelrooms/messstockdata",
 
   StudentDashboard: "/studentdash",
   UserProfileStudent: "/profile_student",

@@ -1,7 +1,7 @@
 
-import Banner from '../../../Components/Banner/Banner';
-import Hostel from '../../../Components/Admin/HostelDetails/Hostel';
-import AllColours from '../../Colours/AllColours';
+import Banner from '../../../../Components/Banner/Banner';
+import Hostel from '../../../../Components/Admin/HostelDetails/Hostel';
+import AllColours from '../../../Colours/AllColours';
 
 const HostelPage = () => {
     const breadcrumbs = ['Hostel'];
