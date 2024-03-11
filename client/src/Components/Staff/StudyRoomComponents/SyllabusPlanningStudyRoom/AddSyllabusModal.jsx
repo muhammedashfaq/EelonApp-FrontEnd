@@ -7,7 +7,6 @@ import {useParams} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faClose} from '@fortawesome/free-solid-svg-icons';
 import {format} from 'date-fns';
-import {useQuery} from '@tanstack/react-query';
 import AcademicYearDropdown from '../../../DropDowns/AcademicYearDropdown';
 
 const AddSyllabusModal = ({classRoomData, getsyllabusData}) => {
@@ -54,18 +53,18 @@ const AddSyllabusModal = ({classRoomData, getsyllabusData}) => {
     }
   };
 
-  const {data: academicYearDD, isRefetching} = useQuery({
-    queryKey: ['academicYearDD'],
-    queryFn: async () => {
-      const response = await axiosPrivate.get('classsection/academicyear/academicyear');
+  // const {data: academicYearDD, isRefetching} = useQuery({
+  //   queryKey: ['academicYearDD'],
+  //   queryFn: async () => {
+  //     const response = await axiosPrivate.get('classsection/academicyear/academicyear');
 
-      const sortedData = response.data?.academicYear.sort((a, b) => a.localeCompare(b));
-      return sortedData;
-    },
-    refetchInterval: false,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
+  //     const sortedData = response.data?.academicYear.sort((a, b) => a.localeCompare(b));
+  //     return sortedData;
+  //   },
+  //   refetchInterval: false,
+  //   refetchOnMount: false,
+  //   refetchOnWindowFocus: false,
+  // });
 
   useEffect(() => {
     const isvalidate = formData.unitName && formData.academicYear && formData.month && formData.pageNo;
@@ -104,7 +103,7 @@ const AddSyllabusModal = ({classRoomData, getsyllabusData}) => {
                         </Option>
                       ))}
                   </Select> */}
-                  <AcademicYearDropdown setYear={setYear} label={'Select academic year'} />
+                  <AcademicYearDropdown setYear={setAcademicYear} label={'Select academic year'} />
                 </div>
 
                 <div className='w-1/2 pr-2'>
