@@ -1,109 +1,118 @@
-import {Routes, Route, useNavigate, useLocation} from 'react-router-dom';
-import {RouteObjects} from './RoutObjects';
-import {useSelector} from 'react-redux';
-import {Toaster} from 'react-hot-toast';
-import Test from '../Components/Test';
-import AdminStudentPage from '../Pages/Users/Admin/AdminStudentPage';
-import Allstudents from '../Pages/Users/Admin/Allstudents';
-import LandingPage from '../Pages/LandingPage/landingPage';
-import Login from '../Pages/Login/loginPage';
-import StudentDashBoard from '../Pages/Student/Dashboard/StudentDashBoard';
-import StudentFeeInvoice from '../Pages/Student/Dashboard/StudentFeeInvoice';
-import StudentFeeStructure from '../Pages/Student/Dashboard/StudentFeeStructure';
-import StudentHomeWorks from '../Pages/Student/Dashboard/StudentsHomeWorks';
-import PaymentHistory from '../Pages/Student/Dashboard/StudentPaymentHistory';
-import StudyMaterials from '../Pages/Student/Dashboard/StudyMaterials';
-import StaffDashBoard from '../Pages/Staff/Dashboard/StaffDashBoard';
-import LibraryManagemnet from '../Pages/Staff/Dashboard/Library';
-import TestYk from '../Components/TestYk';
-import AddBooks from '../Pages/Staff/Dashboard/AddBooks';
-import IssueBooks from '../Pages/Staff/Dashboard/IssueBooks';
-import Issuecards from '../Pages/Staff/Dashboard/Issuecards';
-import StudentLibrary from '../Pages/Student/Dashboard/SudentLibrary';
-import AddStudents from '../Pages/Staff/Dashboard/AddStudents';
-import StudentsList from '../Pages/Staff/Dashboard/StudentsList';
-import StudentProfile from '../Pages/Staff/Dashboard/StudentProfile';
-import EditStudent from '../Pages/Staff/Dashboard/EditStudent';
-import StaffClassRoom from '../Pages/StudyRoom/Staff/DashPage';
-import StudentClassRoom from '../Pages/StudyRoom/Student/DashPage';
-import AdminHome from '../Pages/Admin/Home/AdminHome';
-import LibrarySettings from '../Pages/Staff/Dashboard/LibrarySettingsPage';
-import StudentsAttandancePage from '../Pages/Staff/Dashboard/Attandance/StudentsAttandancePage';
-import StaffAttandancePage from '../Pages/Staff/Dashboard/Attandance/StaffAttandancePage';
-import ManageClass from '../Pages/Staff/Dashboard/Academics/ManageClass';
-import AttendanceReportPage from '../Pages/Staff/Dashboard/Attandance/AttendanceReportPage';
-import TableStudents from '../Pages/Staff/Dashboard/Attandance/TableStudents';
-import StaffListPage from '../Pages/Staff/Dashboard/StaffDetails/StaffListPage';
-import StaffAddPage from '../Pages/Staff/Dashboard/StaffDetails/StaffAddPage';
-import StaffEditPage from '../Pages/Staff/Dashboard/StaffDetails/StaffEditPage';
-import StaffProfilePage from '../Pages/Staff/Dashboard/StaffDetails/StaffProfilePage';
-import AcademicsSettings from '../Pages/Staff/Dashboard/Academics/AcademicsSettingsPage';
-import ClassTimeTablePage from '../Pages/Staff/Dashboard/TimeTable/ClassTimeTablePage';
-import TableStaff from '../Pages/Staff/Dashboard/Attandance/TableStaff';
-import ErrorPage from '../Pages/Error/ErrorPage';
-import SyllubusPlanningPage from '../Pages/Staff/Dashboard/Academics/SyllubusPlanningPage';
-import QustionBankPage from '../Pages/Staff/Dashboard/Academics/QustionBankPage';
-import QustionPatternPage from '../Pages/Staff/Dashboard/Academics/QustionPatternPage';
-import QustionPapperPage from '../Pages/Staff/Dashboard/Academics/QustionPapperPage';
-import AdminAprovals from '../Pages/Admin/Home/AdminAprovals';
-import TimetableExamPage from '../Components/Staff/DashboardComponents/Timetables/ExamTimeTable/TimetableExamPage';
-import AddSubwiseMarks from '../Components/Staff/DashboardComponents/ExamModule/AddSubwiseMarks';
-import ShowSubwiseMarklist from '../Components/Staff/DashboardComponents/ExamModule/ShowSubwiseMarklist';
-import ShowClasswiseMarks from '../Components/Staff/DashboardComponents/ExamModule/ShowClasswiseMarks';
-import AdminGenerateHT from '../Pages/Admin/Home/AdminGenerateHT';
-import AddScholasticGrades from '../Components/Staff/DashboardComponents/ExamModule/AddScholasticGrades';
-import HTclasswiseTable from '../Pages/Admin/Home/HTclasswiseTable';
-import NewApplicationPage from '../Pages/Staff/Dashboard/Application/NewApplicationPage';
-import ApplicationFeePage from '../Pages/Staff/Dashboard/Application/ApplicationFeePage';
-import ApplicantTablePage from '../Pages/Staff/Dashboard/Application/ApplicantTablePage';
-import StaffHeader from '../Components/Staff/Header/landingPageHeader';
-import Banner from '../Components/Banner/Banner';
-import FeeCollectionPage from '../Pages/Staff/Dashboard/FeeCollection/FeeCollectionPage';
-import AdmissionFeePage from '../Pages/Staff/Dashboard/FeeCollection/AdmissionFeePage';
-import AddNewStudentPage from '../Pages/Staff/Dashboard/Application/AddNewStudentPage';
-import AddFeeStructures from '../Pages/Staff/Dashboard/FeeCollection/AddFeeStructures';
-import UserProfileStudent from '../Pages/Student/Dashboard/UserProfileStudentPage';
-import UserProfileStudentPage from '../Pages/Student/Dashboard/UserProfileStudentPage';
-import UserProfileSfaffPage from '../Pages/Staff/UserProfile/UserProfileSfaffPage';
-import UserProfileadminPage from '../Pages/Admin/UserProfile/UserProfileadminPage';
-import StudentWiseReportCard from '../Components/Staff/DashboardComponents/ExamModule/StudentWiseReportCard';
-import Footer from '../Components/Staff/Header/Footer';
-import Footersmall from '../Components/Staff/Header/Footersmall';
 
-import FeeInvoiceBillPage from '../Pages/Staff/Dashboard/FeeCollection/FeeInvoiceBillPage';
 
-import AddConcessionStructure from '../Pages/Staff/Dashboard/FeeCollection/AddConcessionStructure';
-import {useEffect, useState} from 'react';
-import SuperAdminLogin from '../Pages/SperAdminPages/SuperLogin/SuperAdminLoginPage';
-import SuperAdminHomePage from '../Pages/SperAdminPages/SuperAdminHome/SuperAdminHomePage';
-import ForgotMailPage from '../Pages/SperAdminPages/SuperLogin/ForgotMailPage';
-import ResetPage from '../Pages/SperAdminPages/SuperLogin/ResetPage';
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { RouteObjects } from "./RoutObjects";
+import { useSelector } from "react-redux";
+import { Toaster } from "react-hot-toast";
+import Test from "../Components/Test";
+import AdminStudentPage from "../Pages/Users/Admin/AdminStudentPage";
+import Allstudents from "../Pages/Users/Admin/Allstudents";
+import LandingPage from "../Pages/LandingPage/landingPage";
+import Login from "../Pages/Login/loginPage";
+import StudentDashBoard from "../Pages/Student/Dashboard/StudentDashBoard";
+import StudentFeeInvoice from "../Pages/Student/Dashboard/StudentFeeInvoice";
+import StudentFeeStructure from "../Pages/Student/Dashboard/StudentFeeStructure";
+import StudentHomeWorks from "../Pages/Student/Dashboard/StudentsHomeWorks";
+import PaymentHistory from "../Pages/Student/Dashboard/StudentPaymentHistory";
+import StudyMaterials from "../Pages/Student/Dashboard/StudyMaterials";
+import StaffDashBoard from "../Pages/Staff/Dashboard/StaffDashBoard";
+import LibraryManagemnet from "../Pages/Staff/Dashboard/Library";
+import TestYk from "../Components/TestYk";
+import AddBooks from "../Pages/Staff/Dashboard/AddBooks";
+import IssueBooks from "../Pages/Staff/Dashboard/IssueBooks";
+import Issuecards from "../Pages/Staff/Dashboard/Issuecards";
+import StudentLibrary from "../Pages/Student/Dashboard/SudentLibrary";
+import AddStudents from "../Pages/Staff/Dashboard/AddStudents";
+import StudentsList from "../Pages/Staff/Dashboard/StudentsList";
+import StudentProfile from "../Pages/Staff/Dashboard/StudentProfile";
+import EditStudent from "../Pages/Staff/Dashboard/EditStudent";
+import StaffClassRoom from "../Pages/StudyRoom/Staff/DashPage";
+import StudentClassRoom from "../Pages/StudyRoom/Student/DashPage";
+import AdminHome from "../Pages/Admin/Home/AdminHome";
+import LibrarySettings from "../Pages/Staff/Dashboard/LibrarySettingsPage";
+import StudentsAttandancePage from "../Pages/Staff/Dashboard/Attandance/StudentsAttandancePage";
+import StaffAttandancePage from "../Pages/Staff/Dashboard/Attandance/StaffAttandancePage";
+import ManageClass from "../Pages/Staff/Dashboard/Academics/ManageClass";
+import AttendanceReportPage from "../Pages/Staff/Dashboard/Attandance/AttendanceReportPage";
+import TableStudents from "../Pages/Staff/Dashboard/Attandance/TableStudents";
+import StaffListPage from "../Pages/Staff/Dashboard/StaffDetails/StaffListPage";
+import StaffAddPage from "../Pages/Staff/Dashboard/StaffDetails/StaffAddPage";
+import StaffEditPage from "../Pages/Staff/Dashboard/StaffDetails/StaffEditPage";
+import StaffProfilePage from "../Pages/Staff/Dashboard/StaffDetails/StaffProfilePage";
+import AcademicsSettings from "../Pages/Staff/Dashboard/Academics/AcademicsSettingsPage";
+import ClassTimeTablePage from "../Pages/Staff/Dashboard/TimeTable/ClassTimeTablePage";
+import TableStaff from "../Pages/Staff/Dashboard/Attandance/TableStaff";
+import ErrorPage from "../Pages/Error/ErrorPage";
+import SyllubusPlanningPage from "../Pages/Staff/Dashboard/Academics/SyllubusPlanningPage";
+import QustionBankPage from "../Pages/Staff/Dashboard/Academics/QustionBankPage";
+import QustionPatternPage from "../Pages/Staff/Dashboard/Academics/QustionPatternPage";
+import QustionPapperPage from "../Pages/Staff/Dashboard/Academics/QustionPapperPage";
+import AdminAprovals from "../Pages/Admin/Home/AdminAprovals";
+import TimetableExamPage from "../Components/Staff/DashboardComponents/Timetables/ExamTimeTable/TimetableExamPage";
+import AddSubwiseMarks from "../Components/Staff/DashboardComponents/ExamModule/AddSubwiseMarks";
+import ShowSubwiseMarklist from "../Components/Staff/DashboardComponents/ExamModule/ShowSubwiseMarklist";
+import ShowClasswiseMarks from "../Components/Staff/DashboardComponents/ExamModule/ShowClasswiseMarks";
+import AdminGenerateHT from "../Pages/Admin/Home/AdminGenerateHT";
+import AddScholasticGrades from "../Components/Staff/DashboardComponents/ExamModule/AddScholasticGrades";
+import HTclasswiseTable from "../Pages/Admin/Home/HTclasswiseTable";
+import NewApplicationPage from "../Pages/Staff/Dashboard/Application/NewApplicationPage";
+import ApplicationFeePage from "../Pages/Staff/Dashboard/Application/ApplicationFeePage";
+import ApplicantTablePage from "../Pages/Staff/Dashboard/Application/ApplicantTablePage";
+import StaffHeader from "../Components/Staff/Header/landingPageHeader";
+import Banner from "../Components/Banner/Banner";
+import FeeCollectionPage from "../Pages/Staff/Dashboard/FeeCollection/FeeCollectionPage";
+import AdmissionFeePage from "../Pages/Staff/Dashboard/FeeCollection/AdmissionFeePage";
+import AddNewStudentPage from "../Pages/Staff/Dashboard/Application/AddNewStudentPage";
+import AddFeeStructures from "../Pages/Staff/Dashboard/FeeCollection/AddFeeStructures";
+import UserProfileStudent from "../Pages/Student/Dashboard/UserProfileStudentPage";
+import UserProfileStudentPage from "../Pages/Student/Dashboard/UserProfileStudentPage";
+import UserProfileSfaffPage from "../Pages/Staff/UserProfile/UserProfileSfaffPage";
+import UserProfileadminPage from "../Pages/Admin/UserProfile/UserProfileadminPage";
+import StudentWiseReportCard from "../Components/Staff/DashboardComponents/ExamModule/StudentWiseReportCard";
+import Footer from "../Components/Staff/Header/Footer";
+import Footersmall from "../Components/Staff/Header/Footersmall";
 
-import FeeCollectionInvoice from '../Pages/Staff/Dashboard/FeeCollection/FeeCollectionInvoice';
+import FeeInvoiceBillPage from "../Pages/Staff/Dashboard/FeeCollection/FeeInvoiceBillPage";
 
-import LedgerBookPage from '../Pages/Staff/Dashboard/FeeCollection/LedgerBookPage';
-import VehicleListPage from '../Pages/Staff/Dashboard/vehicleDetails/VehicleListPage';
-import AddVehiclePage from '../Pages/Staff/Dashboard/vehicleDetails/AddVehiclePage';
-import AlocateStudentPage from '../Pages/Staff/Dashboard/vehicleDetails/AlocateStudentPage';
-import ComplaintsUpdationPage from '../Pages/Staff/Dashboard/vehicleDetails/ComplaintsUpdationPage';
-import AdminVehicleUpdates from '../Pages/Admin/Home/AdminVehicleUpdates';
-import AddBusRoutesPage from '../Pages/Staff/Dashboard/vehicleDetails/AddBusRoutesPage';
-import AddExamTimeTablePage from '../Pages/Staff/Dashboard/TimeTable/AddExamTimeTablePage';
-import ExamTimeTablePage from '../Pages/Staff/Dashboard/TimeTable/ExamTimeTablePage';
-import AddClassTimeTablePage from '../Pages/Staff/Dashboard/TimeTable/AddClassTimeTablePage';
-import StudentWiseReport from '../Pages/Staff/Dashboard/Exam/StudentWiseReport';
-import ShowClasswiseMarksPage from '../Pages/Staff/Dashboard/Exam/ShowClasswiseMarksPage';
-import StaffAcademicPage from '../Pages/Staff/Dashboard/Academic/Staff/StaffAcademicPage';
-import StudentAcademicPage from '../Pages/Staff/Dashboard/Academic/Student/StudentAcademicPage';
-import PreperationsPage from '../Pages/Staff/Dashboard/Academic/Preparation/PreperationsPage';
-import AccountantsPage from '../Pages/Staff/Dashboard/Academic/Accountants/AccountantsPage';
-import PayRollPage from '../Pages/Staff/Dashboard/Academic/Accountants/PayRollPage';
-import AddStopsPage from '../Pages/Staff/Dashboard/vehicleDetails/AddStopsPage';
-import HostelPage from '../Pages/Admin/Home/HostelPage';
-import AddHostelRoomDetailsPage from '../Pages/Admin/Home/AddHostelRoomDetailsPage';
-import AlocateMemberPage from '../Pages/Admin/Home/AlocateMemberPage';
+import AddConcessionStructure from "../Pages/Staff/Dashboard/FeeCollection/AddConcessionStructure";
+import { useEffect, useState } from "react";
+import SuperAdminLogin from "../Pages/SperAdminPages/SuperLogin/SuperAdminLoginPage";
+import SuperAdminHomePage from "../Pages/SperAdminPages/SuperAdminHome/SuperAdminHomePage";
+import ForgotMailPage from "../Pages/SperAdminPages/SuperLogin/ForgotMailPage";
+import ResetPage from "../Pages/SperAdminPages/SuperLogin/ResetPage";
 
-const AppRoutes = ({refetchUserdata}) => {
+import FeeCollectionInvoice from "../Pages/Staff/Dashboard/FeeCollection/FeeCollectionInvoice";
+
+import LedgerBookPage from "../Pages/Staff/Dashboard/FeeCollection/LedgerBookPage";
+import VehicleListPage from "../Pages/Staff/Dashboard/vehicleDetails/VehicleListPage";
+import AddVehiclePage from "../Pages/Staff/Dashboard/vehicleDetails/AddVehiclePage";
+import AlocateStudentPage from "../Pages/Staff/Dashboard/vehicleDetails/AlocateStudentPage";
+import ComplaintsUpdationPage from "../Pages/Staff/Dashboard/vehicleDetails/ComplaintsUpdationPage";
+import AdminVehicleUpdates from "../Pages/Admin/Home/AdminVehicleUpdates";
+import AddBusRoutesPage from "../Pages/Staff/Dashboard/vehicleDetails/AddBusRoutesPage";
+import AddExamTimeTablePage from "../Pages/Staff/Dashboard/TimeTable/AddExamTimeTablePage";
+import ExamTimeTablePage from "../Pages/Staff/Dashboard/TimeTable/ExamTimeTablePage";
+import AddClassTimeTablePage from "../Pages/Staff/Dashboard/TimeTable/AddClassTimeTablePage";
+import StudentWiseReport from "../Pages/Staff/Dashboard/Exam/StudentWiseReport";
+import ShowClasswiseMarksPage from "../Pages/Staff/Dashboard/Exam/ShowClasswiseMarksPage";
+import StaffAcademicPage from "../Pages/Staff/Dashboard/Academic/Staff/StaffAcademicPage";
+import StudentAcademicPage from "../Pages/Staff/Dashboard/Academic/Student/StudentAcademicPage";
+import PreperationsPage from "../Pages/Staff/Dashboard/Academic/Preparation/PreperationsPage";
+import AccountantsPage from "../Pages/Staff/Dashboard/Academic/Accountants/AccountantsPage";
+import PayRollPage from "../Pages/Staff/Dashboard/Academic/Accountants/PayRollPage";
+import AddStopsPage from "../Pages/Staff/Dashboard/vehicleDetails/AddStopsPage";
+import HostelPage from "../Pages/Admin/Home/Hostel/HostelPage";
+import AddHostelRoomDetailsPage from "../Pages/Admin/Home/Hostel/AddHostelRoomDetailsPage";
+import AlocateMemberPage from "../Pages/Admin/Home/Hostel/AlocateMemberPage";
+import In_OutHostelPage from "../Pages/Admin/Home/Hostel/In_OutHostelPage";
+import HostelAttendancePage from "../Pages/Admin/Home/Hostel/HostelAttendancePage";
+import VisitersDetailspage from "../Pages/Admin/Home/Hostel/VisitersDetailspage";
+import MessStockDetailsPage from "../Pages/Admin/Home/Hostel/MessStockDetailsPage";
+
+
+
+const AppRoutes = () => {
+
   const [editedPath, setEditedPath] = useState('');
   const location = useLocation();
   useEffect(() => {
@@ -132,8 +141,25 @@ const AppRoutes = ({refetchUserdata}) => {
 
         {/* Hostel  */}
         <Route path={RouteObjects.HostelRoom} element={<HostelPage />} />
-        <Route path={RouteObjects.AddRooms} element={<AddHostelRoomDetailsPage />} />
-        <Route path={RouteObjects.AlocateMember} element={<AlocateMemberPage />} />
+
+        <Route path={RouteObjects.AddRooms} element={<AddHostelRoomDetailsPage/>} />
+        <Route path={RouteObjects.AlocateMember} element={<AlocateMemberPage/>} />
+        <Route path={RouteObjects.InandOutStatus} element={<In_OutHostelPage/>} />
+        <Route path={RouteObjects.HostelAttendance} element={<HostelAttendancePage/>} />
+        <Route path={RouteObjects.VisitersDetails} element={<VisitersDetailspage/>} />
+        <Route path={RouteObjects.MessStock} element={<MessStockDetailsPage/>} />
+
+
+
+
+
+
+
+
+
+
+
+
 
         {/* Super Admin */}
         <Route path={RouteObjects.SuperAdmin} element={<SuperAdminLogin />} />
