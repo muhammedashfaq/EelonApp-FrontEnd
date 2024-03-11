@@ -89,12 +89,12 @@ const AddContentModal = ({id, showModal,handleOpen}) => {
     e.preventDefault();
 
     try {
-
+      console.log(id)
       console.log(formData)
       setIsLoading(true);
 
       const response = await axiosPrivate.post(
-        `classmaterials/syllabus/syllabus/${id}`,
+        `classmaterials/syllabus/contents/${id}`,
         formData
       );
       console.log(response,'jjjjjjjjjjjjjjjjj');
