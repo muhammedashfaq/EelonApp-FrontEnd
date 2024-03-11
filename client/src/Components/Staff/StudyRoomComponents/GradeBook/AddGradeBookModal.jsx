@@ -26,6 +26,7 @@ import {faClose, faTrash, faUser} from '@fortawesome/free-solid-svg-icons';
 import {faFile} from '@fortawesome/free-regular-svg-icons';
 import {FileUploader} from 'react-drag-drop-files';
 import CropImageModal from '../../../Admin/CropImageModal';
+import {useQuery} from '@tanstack/react-query';
 
 const AddGradeBookModal = ({getGradeBooks}) => {
   const [open, setOpen] = useState(false);
@@ -104,20 +105,20 @@ const AddGradeBookModal = ({getGradeBooks}) => {
       console.log(error);
     }
   };
-  const getYear = async () => {
-    try {
+
+  const {data: accYrData, isRefetching} = useQuery({
+    queryKey: ['academicYearDD'],
+    queryFn: async () => {
       const response = await axiosPrivate.get('classsection/academicyear/academicyear');
-
       const sortedData = response.data?.academicYear.sort((a, b) => a.localeCompare(b));
-      setYear(sortedData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+      return sortedData;
+    },
+    refetchInterval: false,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
+  if (isRefetching) console.log('refetching -STDRM');
 
-  useEffect(() => {
-    getYear();
-  }, []);
   useEffect(() => {
     const isvalidate = formData.bookName && formData.academicYear;
 
@@ -149,8 +150,8 @@ const AddGradeBookModal = ({getGradeBooks}) => {
                     Academic Year
                   </Typography>
                   <Select label='Select Year' onChange={e => setAcademicYear(e)}>
-                    {year &&
-                      year.map((item, i) => (
+                    {accYrData &&
+                      accYrData.map((item, i) => (
                         <Option key={i} value={item}>
                           {i + 1}. {item}
                         </Option>

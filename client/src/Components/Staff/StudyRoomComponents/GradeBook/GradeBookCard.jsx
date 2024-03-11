@@ -31,7 +31,7 @@ const GradeBookCard = ({item, getGradeBooks}) => {
                 text: 'Your file has been deleted.',
                 icon: 'success',
               },
-              () => getGradeBooks()
+              getGradeBooks()
             )
           );
       });
