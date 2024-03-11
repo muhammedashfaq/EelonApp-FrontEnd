@@ -95,14 +95,7 @@ const AddSyllabusModal = ({classRoomData, getsyllabusData}) => {
                   <Typography className=' ' variant='h6'>
                     Academic Year
                   </Typography>
-                  {/* <Select label='Select Year' onChange={e => setAcademicYear(e)}>
-                    {academicYearDD &&
-                      academicYearDD.map((item, i) => (
-                        <Option key={i} value={item}>
-                          {i + 1}. {item}
-                        </Option>
-                      ))}
-                  </Select> */}
+
                   <AcademicYearDropdown setYear={setAcademicYear} label={'Select academic year'} />
                 </div>
 

@@ -83,12 +83,14 @@ const Login = () => {
         localStorage.setItem('userId', userId);
         localStorage.setItem('userProfilePic', userProfilePic);
 
+        setAuth({accessToken, roles, email, userId, userProfilePic});
+
         if (userType === 'Student' || userType === 'Staff') {
           navigate(RouteObjects.root);
-          location.reload();
+          // location.reload();
         } else if (userType === 'Admin') {
           navigate(RouteObjects.AdminHome);
-          location.reload();
+          // location.reload();
         }
       }
     } catch (error) {

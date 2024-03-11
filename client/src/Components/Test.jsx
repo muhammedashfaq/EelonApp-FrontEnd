@@ -1,50 +1,131 @@
-import React from 'react'
-import logo  from '../assets/loblack.svg'
-import { Input } from '@material-tailwind/react'
+import {Button, Card, Tooltip, Typography} from '@material-tailwind/react';
+import AttandanceRadio from './Staff/DashboardComponents/Attendance/Students/AttandanceRadio';
+import {useEffect, useState} from 'react';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faSquareCheck} from '@fortawesome/free-solid-svg-icons';
+import StudentRow from './Staff/DashboardComponents/Attendance/Students/StudentRow';
+import useAxiosPrivate from '../Hooks/useAxiosPrivate';
+import {useLocation, useNavigate} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
+import Swal from 'sweetalert2';
+import {RouteObjects} from '../Routes/RoutObjects';
+import Banner from './Banner/Banner';
+import useAuth from '../Hooks/useAuth';
+
+const TABLE_HEAD = ['#NO', 'Name', 'Attendance', 'Remarks', 'Aprove', ''];
+
 const Test = () => {
-    
+  const [attendance, setAttendance] = useState([]);
+  const [attendanceArray, setAttendanceArray] = useState([]);
+  // const [AllPresent, setAllPresent] = useState(false);
+  const [studentData, setstudentData] = useState();
+  const [classwiseAttendance, setclasswiseAttendance] = useState();
+  const [attendanceDbId, setattendanceDbId] = useState();
+  const navigate = useNavigate();
+  const {auth} = useAuth();
+
+  const schoolId = auth?.userData?.schoolId;
+
+  const axiosPrivate = useAxiosPrivate();
+
+  const {classId} = useParams();
+  const {date} = useParams();
+
+  const createAttendanceArray = value => {
+    const index = value.index;
+    const existingIndex = attendanceArray.findIndex(item => item.index === index);
+
+    if (existingIndex !== -1) {
+      const newArray = [...attendanceArray];
+      newArray[existingIndex] = value;
+      setAttendanceArray(newArray);
+    } else {
+      setAttendanceArray([...attendanceArray, value]);
+    }
+  };
+
+  const getClasswiseStudents = async () => {
+    try {
+      if (!schoolId) return;
+      const response = await axiosPrivate.put('users/student/filterbydata', {schoolId: schoolId});
+      setstudentData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getClasswiseAttendance = async () => {
+    try {
+      const reqData = {
+        date: date,
+      };
+
+      const response = await axiosPrivate.put(`attendance/class/datewiseattendance/${classId}`, reqData);
+      setclasswiseAttendance(response.data);
+      setattendanceDbId(response.data[0]?._id);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const addAttendanceToCollection = async () => {
+    try {
+      const response = await axiosPrivate.post(`attendance/class/addattendance/${attendanceDbId}`, attendanceArray);
+      Swal.fire({
+        title: 'Attendance added!',
+        text: `Attendance for ${classId} on ${date} is added`,
+        icon: 'success',
+      });
+      navigate(RouteObjects.StudentsAttendance);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    console.log(attendanceArray);
+  }, [attendanceArray]);
+
+  useEffect(() => {
+    getClasswiseStudents();
+    getClasswiseAttendance();
+  }, []);
+
   return (
-<div>
-  
-
-  <Input type='month'/>
-  {/* <div className="flex items-center justify-center min-h-screen bg-gray-300">
-        <div className="relative bg-blue-500 p-8 rounded-lg shadow-lg">
-          <div className="text-center mb-8">
-            <h2 className="font-cursive text-4xl text-white">Certificate of Completion</h2>
-          </div>
-  
-          <div className="text-center mb-8">
-            <span className="block text-lg font-bold text-white">Presented to</span>
-            <span className="block text-xl font-cursive text-white">John Doe</span>
-          </div>
-  
-          <div className="text-center mb-8">
-            <span className="block text-xl font-cursive text-white">For successfully completing</span>
-            <div className="border-b border-white my-2"></div>
-          </div>
-  
-          <div className="text-center mb-8">
-            <span className="block text-lg font-bold text-white">Web Development Course</span>
-          </div>
-  
-          <div className="flex justify-between mt-8">
-            <div className="text-left">
-              <span className="block text-sm font-sans text-white">Issued by</span>
-              <div className="border-b border-white my-2"></div>
-              <span className="block font-bold text-white">Your Institution</span>
+    <>
+      <Banner />
+      <Card className='h-full w-full overflow-scroll'>
+        <table className='w-full min-w-max table-auto text-left'>
+          <thead>
+            <div className='mx-10 my-4'>
+              <Button variant='outlined' onClick={() => setAllPresent(prev => !prev)}>
+                Mark all Present
+              </Button>
             </div>
-            <div className="text-right">
-              <span className="block text-sm font-sans text-white">Date</span>
-              <div className="border-b border-white my-2"></div>
-              <span className="block font-bold text-white">March 5, 2024</span>
-            </div>
-          </div>
-        </div>
-      </div> */}
-</div>
+            <tr>
+              {TABLE_HEAD.map(head => (
+                <th key={head} className='border-b border-blue-gray-100 bg-blue-gray-50 p-4'>
+                  <Typography variant='small' color='blue-gray' className='font-normal leading-none opacity-70'>
+                    {head}
+                  </Typography>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className=''>
+            {studentData &&
+              studentData.map((data, index) => (
+                <StudentRow key={data._id} name={data.studentName} index={index} studentId={data._id} createAttendanceArray={createAttendanceArray} />
+              ))}
+          </tbody>
+        </table>
+      </Card>
+      <div style={{textAlign: 'center'}} className='p-5'>
+        <Button onClick={addAttendanceToCollection}>Save</Button>
+      </div>
+    </>
+  );
+};
 
-  )
-}
-
-export default Test
+export default Test;
