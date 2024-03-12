@@ -20,14 +20,20 @@ const AcademicYearDropdown = ({setYear, name, label}) => {
   if (isRefetching) console.log('fetching academic years');
 
   return (
-    <Select name={name} label={label} onChange={e => setYear(e)}>
-      {academicYearDD &&
-        academicYearDD.map(year => (
-          <Option key={year} value={year}>
-            {year}
-          </Option>
-        ))}
-    </Select>
+    <>
+      {academicYearDD ? (
+        <Select name={name} label={label} onChange={e => setYear(e)}>
+          {academicYearDD &&
+            academicYearDD.map(year => (
+              <Option key={year} value={year}>
+                {year}
+              </Option>
+            ))}
+        </Select>
+      ) : (
+        <div></div>
+      )}
+    </>
   );
 };
 
