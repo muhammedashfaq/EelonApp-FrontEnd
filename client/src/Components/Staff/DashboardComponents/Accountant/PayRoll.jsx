@@ -113,13 +113,19 @@ const PayRoll = () => {
               {/* <Typography variant='h6'>Search staff</Typography> */}
               <div className='flex gap-2 justify-center'>
                 <div className='w-52'>
-                  <Select label='Filter by' onChange={e => setsearchType(e)}>
+                  <Select label='Filter by' onChange={e => setsearchType(e)} color='green'>
                     <Option value='staffName'>Staff name</Option>
                     <Option value='staffId'>Staff id</Option>
                   </Select>
                 </div>
                 <div className='w-60'>
-                  <Input type={searchType === 'staffName' ? 'text' : 'number'} label='Search staff' onChange={e => setsearchQuery(e.target.value)} />
+                  <Input
+                    type={searchType === 'staffName' ? 'text' : 'number'}
+                    label='Search staff'
+                    onChange={e => setsearchQuery(e.target.value)}
+                    className='text-blue-gray-100'
+                    color='green'
+                  />
                 </div>
                 <Button color='teal' variant='contained' onClick={filterStaff}>
                   Search
@@ -141,7 +147,7 @@ const PayRoll = () => {
               <div className='flex flex-col gap-2'>
                 <Typography variant='h6'>Select month</Typography>
                 <div className='w-60'>
-                  <Input type='month' onChange={e => setmonth(e.target.value)} />
+                  <Input type='month' label='Select month' onChange={e => setmonth(e.target.value)} />
                 </div>
               </div>
               <div className='flex flex-col gap-2'>
