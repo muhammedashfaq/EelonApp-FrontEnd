@@ -123,7 +123,7 @@ const AppRoutes = () => {
     <div>
       <Toaster position='bottom-center' reverseOrder={false} />
 
-      {!['login', 'iamsuperadmin', '*', 'superhome'].includes(editedPath) && <StaffHeader refetchUserdata={refetchUserdata} />}
+      {!['login', 'iamsuperadmin', '*', 'superhome'].includes(editedPath) && <StaffHeader  />}
 
       <Routes>
         {/* Main Login */}
