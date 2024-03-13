@@ -1,16 +1,22 @@
-import {faCircleCheck, faCircleXmark} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {Button, Option, Select} from '@material-tailwind/react';
-import React, {useState} from 'react';
-import useAxiosPrivate from '../../../../Hooks/useAxiosPrivate';
-import Swal from 'sweetalert2';
 
-const AprovalFilter = ({acYr, classes, subject, api, setFilteredData}) => {
-  const [year, setyear] = useState('');
-  const [termName, setTermName] = useState('');
-  const [subjects, setSubjects] = useState('');
-  const [std, setStd] = useState('');
-  const [status, setStatus] = useState('');
+import {
+  faCircleCheck,
+  faCircleXmark,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button, Option, Select } from "@material-tailwind/react";
+import React, { useState } from "react";
+import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
+import Swal from "sweetalert2";
+import AcademicYearDropdown from '../../../../Components/DropDowns/AcademicYearDropdown'
+
+const AprovalFilter = ({  classes, subject, api, setFilteredData }) => {
+  const [year, setyear] = useState("");
+  const [termName, setTermName] = useState("");
+  const [subjects, setSubjects] = useState("");
+  const [std, setStd] = useState("");
+  const [status, setStatus] = useState("");
+
   const axiosPrivate = useAxiosPrivate();
   const accesApi = api;
 
@@ -39,16 +45,12 @@ const AprovalFilter = ({acYr, classes, subject, api, setFilteredData}) => {
   };
   return (
     <div>
-      <div className=' z-50 flex items-center justify-center mobile:flex-wrap gap-4 p-4 rounded-t-lg  h-auto border-2 bg-gradient-to-r from-emerald-400 to-cyan-400 shadow-inherit'>
-        <div className=''>
-          <Select label='Accademic Year' className='overflow-auto' onChange={e => setyear(e)}>
-            {acYr &&
-              acYr?.map((item, i) => (
-                <Option key={i} value={item}>
-                  {item}
-                </Option>
-              ))}
-          </Select>
+
+      <div className=" z-50 flex items-center justify-center mobile:flex-wrap gap-4 p-4 rounded-t-lg  h-auto border-2 bg-gradient-to-r from-emerald-400 to-cyan-400 shadow-inherit">
+        <div className="">
+          ddd
+        <AcademicYearDropdown />
+
         </div>
         <div className=' '>
           <Select label=' Exam' className='' onChange={e => setTermName(e)}>

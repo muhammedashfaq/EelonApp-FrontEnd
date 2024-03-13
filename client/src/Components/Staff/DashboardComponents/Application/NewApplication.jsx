@@ -11,11 +11,11 @@ import { faIndianRupee } from "@fortawesome/free-solid-svg-icons";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
 import { RouteObjects } from "../../../../Routes/RoutObjects";
+import AcademicYearDropdown from "../../../DropDowns/AcademicYearDropdown";
 
 const NewApplication = () => {
   const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
-  const [acYr, setAcYr] = useState([]);
   const [classes, setClasses] = useState([]);
   const [isFormValid, setIsFormValid] = useState(false);
   const [contactError,setContactError]=useState("")
@@ -133,19 +133,7 @@ const NewApplication = () => {
               <label htmlFor="academicYear" className="text-sm">
                 Academic Year
               </label>
-              <Select
-                label="Select"
-                id="academicYear"
-                onChange={(e) => setAcademicYear(e)}
-                required
-              >
-                {acYr &&
-                  acYr.map((item, i) => (
-                    <Option key={i} value={item}>
-                      {item}
-                    </Option>
-                  ))}
-              </Select>
+              <AcademicYearDropdown />
             </div>
             <div className="col-span-full sm:col-span-2">
               <label htmlFor="board" className="text-sm">

@@ -242,7 +242,7 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
                 variant="outlined"
                 value={gender}
                 onChange={(e) => setgender(e)}
-                label="Gender**"
+                label="Gender"
               >
                 <Option value="Male">Male</Option>
                 <Option value="Female">Female</Option>

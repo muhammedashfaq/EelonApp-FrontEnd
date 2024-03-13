@@ -234,7 +234,10 @@ const StaffProfile = ({ userData, getData }) => {
           </div>
 
           <div className="my-4"></div>
+          <div className="flex justify-center bg-teal-200">
 
+<h1 className="text-2xl underline font-semibold">Education and Experaince</h1>
+</div>
           <div className="bg-white p-3 shadow-sm rounded-sm">
             <div className="grid grid-cols-2">
               <div>
@@ -355,6 +358,136 @@ const StaffProfile = ({ userData, getData }) => {
                   )}
                 </ul>
               </div>
+              
+            </div>
+          </div>
+
+          <hr className="py-10"/>
+<div className="flex justify-center bg-teal-200">
+
+<h1 className="text-2xl underline font-semibold">Documents</h1>
+</div>
+          <div className="bg-white p-3 shadow-sm rounded-sm">
+            <div className="grid grid-cols-2">
+              <div>
+                <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-4">
+                  <FontAwesomeIcon icon={faBook} />
+                  <div className="flex space-x-5 w-full">
+                    <span className="tracking-wide">Personal</span>
+                    <AddStaffExperianceDocuModal
+                      userData={userData}
+                      getData={getData}
+                    />
+                  </div>
+                </div>
+
+                <ul className="list-inside space-y-2  mx-2">
+                  {userData?.workExperienceArray.length === 0 ? (
+                    <div className="flex justify-center items-center h-32 bg-gray-100 text-gray-500">
+                      <p className="text-lg">
+                        No job details have been uploaded as of yet.
+                      </p>
+                    </div>
+                  ) : (
+                    <>
+                      {userData &&
+                        userData.workExperienceArray?.map(
+                          (
+                            { _id, jobRole, jobRoleIn, expFrom, expTo, pdf },
+                            i
+                          ) => (
+                            <li key={i}>
+                              <div className="flex justify-between border-b-2  px-7">
+                                <div>
+                                  <div className="text-teal-600">
+                                    <a href={pdf?.url} target="_blank">
+                                      {jobRole} at {jobRoleIn}
+                                    </a>
+                                  </div>
+                                  <div className="text-gray-500 text-xs">
+                                    {expFrom} - {expTo ? expTo : "Now"}
+                                  </div>
+                                </div>
+                                <div
+                                  className="flex justify-center"
+                                  onClick={() =>
+                                    deteteJobRole(pdf.public_id, _id)
+                                  }
+                                >
+                                  <IconButton variant="text">
+                                    <FontAwesomeIcon icon={faTrashCan} />
+                                  </IconButton>
+                                </div>
+                              </div>
+                            </li>
+                          )
+                        )}
+                    </>
+                  )}
+                </ul>
+              </div>
+              <div>
+                <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-4">
+                  <span>
+                    <FontAwesomeIcon icon={faGraduationCap} />
+                  </span>
+
+                  <div className="flex space-x-5 w-full">
+                    <span className="tracking-wide">Education</span>
+
+                    <AddStaffEducationalModal
+                      userData={userData}
+                      getData={getData}
+                    />
+                  </div>
+                </div>
+
+                <ul className="list-inside space-y-2">
+                  {userData?.educationArray.length === 0 ? (
+                    <div className="flex justify-center items-center h-32 bg-gray-100 text-gray-500">
+                      <p className="text-lg">
+                        No job details have been uploaded as of yet.
+                      </p>
+                    </div>
+                  ) : (
+                    <>
+                      {userData &&
+                        userData.educationArray?.map(
+                          (
+                            { _id, qualification, uni, expFrom, expTo, pdf },
+                            i
+                          ) => (
+                            <li key={i}>
+                              <div className="flex justify-between border-b-2  px-7">
+                                <div>
+                                  <div className="text-teal-600">
+                                    <a href={pdf?.url} target="_blank">
+                                      {qualification} from {uni}
+                                    </a>
+                                  </div>
+                                  <div className="text-gray-500 text-xs">
+                                    {expFrom} - {expTo ? expTo : "Now"}
+                                  </div>
+                                </div>
+                                <div
+                                  className="flex justify-center"
+                                  onClick={() =>
+                                    deteteEducation(pdf.public_id, _id)
+                                  }
+                                >
+                                  <IconButton variant="text">
+                                    <FontAwesomeIcon icon={faTrashCan} />
+                                  </IconButton>
+                                </div>
+                              </div>
+                            </li>
+                          )
+                        )}
+                    </>
+                  )}
+                </ul>
+              </div>
+              
             </div>
           </div>
         </div>

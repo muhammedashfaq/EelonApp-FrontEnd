@@ -80,13 +80,13 @@ const AprovalPage = () => {
 
   if (isRefetching) console.log('refetching -ADMN');
 
-  useEffect(() => {
-    getAcYrndubjects();
-  }, []);
+  // useEffect(() => {
+  //   getAcYrndubjects();
+  // }, []);
 
-  useEffect(() => {
-    setFilteredData(null);
-  }, [activeTab]);
+  // useEffect(() => {
+  //   setFilteredData(null);
+  // }, [activeTab]);
   return (
     <div className='m-10 space-y-10'>
       <Tabs value={activeTab}>
@@ -96,14 +96,14 @@ const AprovalPage = () => {
             className: 'bg-transparent border-b-2 border-gray-900 shadow-none rounded-none',
           }}
         >
-          {data.map(({label, value}) => (
+          {data?.map(({label, value}) => (
             <Tab key={value} value={value} onClick={() => setActiveTab(value)} className={activeTab === value ? 'text-gray-900' : ''}>
               {label}
             </Tab>
           ))}
         </TabsHeader>
         <TabsBody>
-          {data.map(({value, filterapi, approveApi}) => (
+          {data?.map(({value, filterapi, approveApi}) => (
             <TabPanel key={value} value={value}>
               {value === '1' ? (
                 <>
@@ -111,8 +111,11 @@ const AprovalPage = () => {
                     <div className='flex justify-center p-3 '>
                       <h1 className='text-2xl font-extrabold underline'>Class Syllabus Aproval</h1>
                     </div>
-                    {/* <AprovalFilter acYr={academicYearDD} classes={classes} subject={subjects} api={filterapi} setFilteredData={setFilteredData} /> */}
+
+                    <AprovalFilter  classes={classes} subject={subjects} api={filterapi} setFilteredData={setFilteredData} />
+
                     <AprovalTable filteredData={filteredData} api={approveApi} />
+                    
                   </div>
                 </>
               ) : value === '2' ? (
@@ -122,7 +125,9 @@ const AprovalPage = () => {
                       <h1 className='text-2xl font-extrabold underline'>Question Pattern Aproval</h1>
                     </div>
 
-                    {/* <AprovalFilter acYr={academicYearDD} classes={classes} subject={subjects} api={filterapi} setFilteredData={setFilteredData} /> */}
+
+                    <AprovalFilter  classes={classes} subject={subjects} api={filterapi} setFilteredData={setFilteredData} />
+
                     <AprovalTable filteredData={filteredData} api={approveApi} />
                   </div>
                 </>
@@ -132,7 +137,9 @@ const AprovalPage = () => {
                     <div className='flex justify-center p-3 '>
                       <h1 className='text-2xl font-extrabold underline'>Question Bank Aproval</h1>
                     </div>
-                    {/* <AprovalFilter acYr={academicYearDD} classes={classes} subject={subjects} api={filterapi} setFilteredData={setFilteredData} /> */}
+
+                    <AprovalFilter  classes={classes} subject={subjects} api={filterapi} setFilteredData={setFilteredData} />
+
                     <AprovalTable filteredData={filteredData} api={approveApi} />
                   </div>
                 </>
@@ -142,7 +149,7 @@ const AprovalPage = () => {
                     <div className='flex justify-center p-3 '>
                       <h1 className='text-2xl font-extrabold underline'>Question Papper Aproval</h1>
                     </div>
-                    <AprovalFilter acYr={academicYearDD} classes={classes} subject={subjects} api={filterapi} setFilteredData={setFilteredData} />
+                    <AprovalFilter  classes={classes} subject={subjects} api={filterapi} setFilteredData={setFilteredData} />
                     <AprovalTable filteredData={filteredData} api={approveApi} />
                   </div>
                 </>

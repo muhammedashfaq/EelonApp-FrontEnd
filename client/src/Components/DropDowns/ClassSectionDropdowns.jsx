@@ -2,7 +2,7 @@ import {useQuery} from '@tanstack/react-query';
 import useAxiosPrivate from '../../Hooks/useAxiosPrivate';
 import {Select, Option} from '@material-tailwind/react';
 
-const ClassSectionDropdowns = ({setClassSection, name, label}) => {
+const ClassSectionDropdowns = ({setClassSection, name, label,variant}) => {
   const axiosPrivate = useAxiosPrivate();
 
   const {data: DropDowns, isRefetching} = useQuery({
@@ -22,7 +22,7 @@ const ClassSectionDropdowns = ({setClassSection, name, label}) => {
   return (
     <>
       {DropDowns ? (
-        <Select name={name} label={label} onChange={e => setClassSection(e)}>
+        <Select name={name} label={label} variant={variant} onChange={e => setClassSection(e)}>
           {DropDowns &&
             DropDowns.map(item => (
               <Option key={item} value={item}>

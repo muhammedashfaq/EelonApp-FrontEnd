@@ -3,7 +3,7 @@ import useAxiosPrivate from '../../Hooks/useAxiosPrivate';
 import {Select, Option} from '@material-tailwind/react';
 import useAuth from '../../Hooks/useAuth';
 
-const SubjectsDropdown = ({setSubject, name, label}) => {
+const SubjectsDropdown = ({setSubject, name, label ,variant}) => {
   const axiosPrivate = useAxiosPrivate();
   const {auth} = useAuth();
   const schoolId = auth?.userData?.schoolId;
@@ -25,7 +25,7 @@ const SubjectsDropdown = ({setSubject, name, label}) => {
   return (
     <>
       {DropDowns ? (
-        <Select name={name} label={label} onChange={e => setSubject(e)}>
+        <Select name={name} label={label} variant={variant} onChange={e => setSubject(e)}>
           {DropDowns &&
             DropDowns.map(item => (
               <Option key={item} value={item}>

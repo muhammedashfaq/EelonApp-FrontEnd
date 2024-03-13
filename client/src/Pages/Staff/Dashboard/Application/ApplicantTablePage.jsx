@@ -3,7 +3,7 @@ import Banner from '../../../../Components/Banner/Banner'
 import ApplicantTable from '../../../../Components/Staff/DashboardComponents/Application/ApplicantTable'
 
 const ApplicantTablePage = () => {
-  const breadcrumbs = ["New Applicants"];
+  const breadcrumbs = ["Students","New Applicants"];
 
   return (
     <div>

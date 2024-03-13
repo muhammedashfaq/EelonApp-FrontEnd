@@ -112,7 +112,7 @@ const AprovalTable = ({ filteredData, api }) => {
         </thead>
         <tbody>
           {filteredData &&
-            filteredData.map(
+            filteredData?.map(
               ({ _id, subject, termName, status, pdf }, index) => {
                 const classes = "p-4 border-b border-blue-gray-50";
 

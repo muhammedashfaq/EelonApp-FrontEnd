@@ -22,6 +22,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import UpdateInOutModal from "./UpdateInOutModal";
+import useAuth from "../../../Hooks/useAuth";
 const TABLE_HEAD = [
   "#No",
   "Name",
@@ -41,7 +42,8 @@ const InandOut = () => {
     onAfterPrint: () => console.log("after printing..."),
     removeAfterPrint: true,
   });
-
+  const { auth } = useAuth();
+  const schoolIds = auth?.userData?.schoolId;
   const [isValidate, setIsValidate] = useState(false);
   const axiosPrivate = useAxiosPrivate();
   const [roomdata, setRoomData] = useState("");
@@ -51,7 +53,7 @@ const InandOut = () => {
   const  OpenModal = ()=> setShowUpdateModal((current)=>!current) 
   const [inOutUser,setInOutUser]=useState("")
   const [label,setLabel]=useState("")
-
+console.log(roomMembersData,'hhhhh')
   const fetchRoomData = async () => {
     try {
       const roomNumber = Number(roomNo) || "";
@@ -72,8 +74,6 @@ const InandOut = () => {
     OpenModal()
     setLabel(label)
     }
-
-  
 
   return (
     <div className="m-10">
@@ -97,6 +97,7 @@ const InandOut = () => {
               className: "min-w-0",
             }}
           />
+          
           <Button
             onClick={fetchRoomData}
             size="sm"
@@ -170,7 +171,7 @@ const InandOut = () => {
                 </tr>
               </thead>
               <tbody>
-                {roomMembersData?.map(({_id, occupantName, occupantType }, i) => {
+                {roomMembersData?.map(({_id, occupantName, occupantType, }, i) => {
                   const classes = "px-3 py-2 border-b border-blue-gray-50";
 
                   return (
@@ -182,8 +183,9 @@ const InandOut = () => {
                       <td className={classes}>id/admissionid</td>
                       <td className={classes}>
                         <div className=" flex justify-center items-center space-x-3">
-                         <span className="cursor-pointer" onClick={()=>handleUpdateinout(_id ,"IN")}><Chip color="cyan" value="update" /></span>
-                         <span className="cursor-pointer" onClick={()=>handleUpdateinout(_id,"OUT")}><Chip color="cyan" value="update" /></span>
+                         
+<span className="cursor-pointer" onClick={()=>handleUpdateinout(_id )}><Chip color="cyan" value="in/out" /></span>
+                 
                         </div>
                       </td>
                     </tr>
@@ -195,7 +197,7 @@ const InandOut = () => {
         </Card>
 
         {
-  showUpdateModal && <UpdateInOutModal inOutUser={inOutUser} closeModal={OpenModal} setShowUpdateModal={setShowUpdateModal} labels={label} />
+  showUpdateModal && <UpdateInOutModal inOutUser={inOutUser} closeModal={OpenModal} setShowUpdateModal={setShowUpdateModal} schoolIds={schoolIds}  />
 }
 
       </div>
