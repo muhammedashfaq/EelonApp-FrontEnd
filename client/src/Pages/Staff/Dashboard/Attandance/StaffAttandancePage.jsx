@@ -3,7 +3,7 @@ import Banner from '../../../../Components/Banner/Banner'
 import StaffAttendance from '../../../../Components/Staff/DashboardComponents/Attendance/Staff/StaffAttendance'
 
 const StaffAttandancePage = () => {
-  const breadcrumbs = ["Attandance-Staff"];
+  const breadcrumbs = ["Staff","Attandance-Staff"];
 
   return (
     <div>

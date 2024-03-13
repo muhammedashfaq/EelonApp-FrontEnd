@@ -133,21 +133,7 @@ const NewApplication = () => {
               <label htmlFor="academicYear" className="text-sm">
                 Academic Year
               </label>
-              <AcademicYearDropdown />
-            </div>
-            <div className="col-span-full sm:col-span-2">
-              <label htmlFor="board" className="text-sm">
-                Board
-              </label>
-              <Select
-                label="Select "
-                id="board"
-                onChange={(e) => setBoard(e)}
-                required
-              >
-                <Option value="State">State</Option>
-                <Option value="CBSE">CBSE</Option>
-              </Select>
+              <AcademicYearDropdown setYear={setAcademicYear} label={"Select"} />
             </div>
             <div className="col-span-full sm:col-span-2">
               <label htmlFor="medium" className="text-sm">
@@ -192,7 +178,7 @@ const NewApplication = () => {
                 required
               />
             </div>
-            <div className="col-span-full sm:col-span-1">
+            <div className="col-span-full sm:col-span-2">
               <label htmlFor="studentName" className="text-sm">
                 Gender
               </label>
@@ -208,7 +194,7 @@ const NewApplication = () => {
 
               </Select>
             </div>
-            <div className="col-span-full sm:col-span-1">
+            <div className="col-span-full sm:col-span-2">
               <label htmlFor="dob" className="text-sm">
                 DOB
               </label>
