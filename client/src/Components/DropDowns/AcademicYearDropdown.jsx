@@ -4,7 +4,7 @@ import {Select, Option} from '@material-tailwind/react';
 import useAuth from '../../Hooks/useAuth';
 import {useEffect} from 'react';
 
-const AcademicYearDropdown = ({setYear, name, label}) => {
+const AcademicYearDropdown = ({setYear, name, label, variant}) => {
   const axiosPrivate = useAxiosPrivate();
   const {auth} = useAuth();
   const schoolId = auth?.userData?.schoolId;
@@ -35,7 +35,7 @@ const AcademicYearDropdown = ({setYear, name, label}) => {
   return (
     <>
       {academicYearDD ? (
-        <Select name={name} label={label} onChange={e => setYear(e)}>
+        <Select name={name} label={label} variant={variant} onChange={e => setYear(e)}>
           {academicYearDD &&
             academicYearDD.map(year => (
               <Option key={year} value={year}>

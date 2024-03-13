@@ -1,4 +1,6 @@
 import {Routes, Route, useNavigate, useLocation} from 'react-router-dom';
+import PersistLogin from '../Components/PersistLogin';
+import RequireAuth from '../Components/RequireAuth';
 import {RouteObjects} from './RoutObjects';
 import {useSelector} from 'react-redux';
 import {Toaster} from 'react-hot-toast';
@@ -108,6 +110,14 @@ import VisitersDetailspage from '../Pages/Admin/Home/Hostel/VisitersDetailspage'
 import MessStockDetailsPage from '../Pages/Admin/Home/Hostel/MessStockDetailsPage';
 import HostelAttendance from '../Components/Admin/HostelDetails/HostelAttendance';
 import ViewHostelAttendance from '../Components/Admin/HostelDetails/ViewHostelAttendance';
+import Layout from '../Components/Layout';
+
+const USERS = {
+  student: 999,
+  staff: 5151,
+  admin: 2000,
+  superAdmin: 2924,
+};
 
 const AppRoutes = () => {
   const [editedPath, setEditedPath] = useState('');
@@ -124,130 +134,134 @@ const AppRoutes = () => {
 
       <Routes>
         {/* Main Login */}
-        <Route path={RouteObjects.Login} element={<Login />} />
-        <Route path={RouteObjects.root} element={<LandingPage />} />
+        <Route element={<Layout />}>
+          <Route path={RouteObjects.Login} element={<Login />} />
+          <Route path={RouteObjects.root} element={<LandingPage />} />
 
-        {/* Academics */}
-        <Route path={RouteObjects.Student_Acadamic} element={<StudentAcademicPage />} />
-        <Route path={RouteObjects.Staff_Acadamic} element={<StaffAcademicPage />} />
-        <Route path={RouteObjects.Preparations} element={<PreperationsPage />} />
+          {/* Academics */}
+          <Route element={<PersistLogin />}>
+            <Route path={RouteObjects.Student_Acadamic} element={<StudentAcademicPage />} />
+            <Route path={RouteObjects.Staff_Acadamic} element={<StaffAcademicPage />} />
+            <Route path={RouteObjects.Preparations} element={<PreperationsPage />} />
 
-        {/* Accountant */}
-        <Route path={RouteObjects.AccountsPage} element={<AccountantsPage />} />
-        <Route path={RouteObjects.PayRolls} element={<PayRollPage />} />
+            {/* Accountant */}
+            <Route path={RouteObjects.AccountsPage} element={<AccountantsPage />} />
+            <Route path={RouteObjects.PayRolls} element={<PayRollPage />} />
 
-        {/* Hostel  */}
-        <Route path={RouteObjects.HostelRoom} element={<HostelPage />} />
+            {/* Hostel  */}
+            <Route path={RouteObjects.HostelRoom} element={<HostelPage />} />
 
-        <Route path={RouteObjects.AddRooms} element={<AddHostelRoomDetailsPage />} />
-        <Route path={RouteObjects.AlocateMember} element={<AlocateMemberPage />} />
-        <Route path={RouteObjects.InandOutStatus} element={<In_OutHostelPage />} />
-        <Route path={RouteObjects.HostelAttendance} element={<HostelAttendancePage />} />
-        <Route path={RouteObjects.VisitersDetails} element={<VisitersDetailspage />} />
-        <Route path={RouteObjects.MessStock} element={<MessStockDetailsPage />} />
-        <Route path={RouteObjects.AddHostelAttendance} element={<HostelAttendance />} />
-        <Route path={RouteObjects.ViewHostelAttendance} element={<ViewHostelAttendance />} />
+            <Route path={RouteObjects.AddRooms} element={<AddHostelRoomDetailsPage />} />
+            <Route path={RouteObjects.AlocateMember} element={<AlocateMemberPage />} />
+            <Route path={RouteObjects.InandOutStatus} element={<In_OutHostelPage />} />
+            <Route path={RouteObjects.HostelAttendance} element={<HostelAttendancePage />} />
+            <Route path={RouteObjects.VisitersDetails} element={<VisitersDetailspage />} />
+            <Route path={RouteObjects.MessStock} element={<MessStockDetailsPage />} />
+            <Route path={RouteObjects.AddHostelAttendance} element={<HostelAttendance />} />
+            <Route path={RouteObjects.ViewHostelAttendance} element={<ViewHostelAttendance />} />
 
-        {/* Super Admin */}
-        <Route path={RouteObjects.SuperAdmin} element={<SuperAdminLogin />} />
-        <Route path={RouteObjects.SuperAdminHome} element={<SuperAdminHomePage />} />
-        <Route path={RouteObjects.SuperForgot} element={<ForgotMailPage />} />
-        <Route path={RouteObjects.SuperReset} element={<ResetPage />} />
+            {/* Super Admin */}
+            <Route path={RouteObjects.SuperAdmin} element={<SuperAdminLogin />} />
+            <Route path={RouteObjects.SuperAdminHome} element={<SuperAdminHomePage />} />
+            <Route path={RouteObjects.SuperForgot} element={<ForgotMailPage />} />
+            <Route path={RouteObjects.SuperReset} element={<ResetPage />} />
 
-        {/* accountant Module  */}
-        <Route path={`${RouteObjects.FeeInvoiceBill}/:id`} element={<FeeInvoiceBillPage />} />
-        <Route path={`${RouteObjects.FeeCollectionInvoice}/:id`} element={<FeeCollectionInvoice />} />
-        <Route path={RouteObjects.FeeCollection} element={<FeeCollectionPage />} />
-        <Route path={RouteObjects.AdminssionFee} element={<AdmissionFeePage />} />
-        <Route path={`${RouteObjects.NewApplicationFee}/:id`} element={<ApplicationFeePage />} />
-        <Route path={RouteObjects.LedgerBook} element={<LedgerBookPage />} />
+            {/* accountant Module  */}
+            <Route path={`${RouteObjects.FeeInvoiceBill}/:id`} element={<FeeInvoiceBillPage />} />
+            <Route path={`${RouteObjects.FeeCollectionInvoice}/:id`} element={<FeeCollectionInvoice />} />
+            <Route path={RouteObjects.FeeCollection} element={<FeeCollectionPage />} />
+            <Route path={RouteObjects.AdminssionFee} element={<AdmissionFeePage />} />
+            <Route path={`${RouteObjects.NewApplicationFee}/:id`} element={<ApplicationFeePage />} />
+            <Route path={RouteObjects.LedgerBook} element={<LedgerBookPage />} />
 
-        {/* Admin ROUTS */}
-        <Route path={RouteObjects.UserProfileadmin} element={<UserProfileadminPage />} />
-        <Route path={RouteObjects.AdminHome} element={<AdminHome />} />
-        <Route path={RouteObjects.AdminAprovals} element={<AdminAprovals />} />
-        <Route path={RouteObjects.AdminGenerateHT} element={<AdminGenerateHT />} />
-        <Route path={RouteObjects.AdminVehicleUpdates} element={<AdminVehicleUpdates />} />
-        {/* <Route path={RouteObjects.Admin} element={<AdminHome />} /> */}
-        <Route path={RouteObjects.AdminGenerateHT} element={<AdminGenerateHT />} />
-        <Route path={`${RouteObjects.HTClasswise}/:id/:term/:year`} element={<HTclasswiseTable />} />
-        {/* Vechle ROUTS */}
-        <Route path={RouteObjects.VehcleList} element={<VehicleListPage />} />
-        <Route path={RouteObjects.AddVehicle} element={<AddVehiclePage />} />
-        <Route path={RouteObjects.AlocateStudent} element={<AlocateStudentPage />} />
-        <Route path={RouteObjects.VehicleComplaints} element={<ComplaintsUpdationPage />} />
-        <Route path={RouteObjects.addroutes} element={<AddBusRoutesPage />} />
-        <Route path={RouteObjects.AddStops} element={<AddStopsPage />} />
+            {/* Admin ROUTS */}
+            <Route path={RouteObjects.UserProfileadmin} element={<UserProfileadminPage />} />
+            <Route path={RouteObjects.AdminHome} element={<AdminHome />} />
+            <Route path={RouteObjects.AdminAprovals} element={<AdminAprovals />} />
+            <Route path={RouteObjects.AdminGenerateHT} element={<AdminGenerateHT />} />
+            <Route path={RouteObjects.AdminVehicleUpdates} element={<AdminVehicleUpdates />} />
+            {/* <Route path={RouteObjects.Admin} element={<AdminHome />} /> */}
+            <Route path={RouteObjects.AdminGenerateHT} element={<AdminGenerateHT />} />
+            <Route path={`${RouteObjects.HTClasswise}/:id/:term/:year`} element={<HTclasswiseTable />} />
+            {/* Vechle ROUTS */}
+            <Route path={RouteObjects.VehcleList} element={<VehicleListPage />} />
+            <Route path={RouteObjects.AddVehicle} element={<AddVehiclePage />} />
+            <Route path={RouteObjects.AlocateStudent} element={<AlocateStudentPage />} />
+            <Route path={RouteObjects.VehicleComplaints} element={<ComplaintsUpdationPage />} />
+            <Route path={RouteObjects.addroutes} element={<AddBusRoutesPage />} />
+            <Route path={RouteObjects.AddStops} element={<AddStopsPage />} />
 
-        {/* STUDENTS ROUTS */}
-        <Route path={RouteObjects.StudentDashboard} element={<StudentDashBoard />} />
-        <Route path={RouteObjects.UserProfileStudent} element={<UserProfileStudentPage />} />
-        <Route path={RouteObjects.FeeInvoice} element={<StudentFeeInvoice />} />
-        <Route path={RouteObjects.FeeStructure} element={<StudentFeeStructure />} />
-        <Route path={RouteObjects.AddFeeStructure} element={<AddFeeStructures />} />
-        <Route path={RouteObjects.AddConcessionStructure} element={<AddConcessionStructure />} />
-        <Route path={RouteObjects.HomeWorks} element={<StudentHomeWorks />} />
-        <Route path={RouteObjects.Payment} element={<PaymentHistory />} />
-        <Route path={RouteObjects.StudyMaterials} element={<StudyMaterials />} />
-        <Route path={RouteObjects.StudentLibrary} element={<StudentLibrary />} />
+            {/* STUDENTS ROUTS */}
+            <Route path={RouteObjects.StudentDashboard} element={<StudentDashBoard />} />
+            <Route path={RouteObjects.UserProfileStudent} element={<UserProfileStudentPage />} />
+            <Route path={RouteObjects.FeeInvoice} element={<StudentFeeInvoice />} />
+            <Route path={RouteObjects.FeeStructure} element={<StudentFeeStructure />} />
+            <Route path={RouteObjects.AddFeeStructure} element={<AddFeeStructures />} />
+            <Route path={RouteObjects.AddConcessionStructure} element={<AddConcessionStructure />} />
+            <Route path={RouteObjects.HomeWorks} element={<StudentHomeWorks />} />
+            <Route path={RouteObjects.Payment} element={<PaymentHistory />} />
+            <Route path={RouteObjects.StudyMaterials} element={<StudyMaterials />} />
+            <Route path={RouteObjects.StudentLibrary} element={<StudentLibrary />} />
 
-        {/* STAFF ROUTS */}
-        <Route path={RouteObjects.UserProfileStaff} element={<UserProfileSfaffPage />} />
+            {/* STAFF ROUTS */}
+            <Route path={RouteObjects.UserProfileStaff} element={<UserProfileSfaffPage />} />
 
-        {/* application  */}
-        <Route path={RouteObjects.NewApplication} element={<NewApplicationPage />} />
-        <Route path={RouteObjects.NewApplicants} element={<ApplicantTablePage />} />
-        <Route path={`${RouteObjects.AddNewStudent}/:id`} element={<AddNewStudentPage />} />
-        <Route path={RouteObjects.StaffDashboard} element={<StaffDashBoard />} />
-        <Route path={RouteObjects.Stafflibrary} element={<LibraryManagemnet />} />
-        <Route path={`${RouteObjects.Bookmanagment}/:page`} element={<AddBooks />} />
-        <Route path={`${RouteObjects.Issuebooks}/:page`} element={<IssueBooks />} />
-        <Route path={RouteObjects.Issuecards} element={<Issuecards />} />
-        <Route path={RouteObjects.LibrarySettings} element={<LibrarySettings />} />
-        <Route path={`${RouteObjects.StudentsList}/:page`} element={<StudentsList />} />
-        <Route path={`${RouteObjects.StudentProfile}/:id`} element={<StudentProfile />} />
-        <Route path={RouteObjects.AddStudent} element={<AddStudents />} />
-        <Route path={`${RouteObjects.EditStudent}/:id/:name/:page`} element={<EditStudent />} />
-        <Route path={RouteObjects.StudentsAttendance} element={<StudentsAttandancePage />} />
-        <Route path={`${RouteObjects.StudentsAttendanceTable}/:classId/:date`} element={<TableStudents />} />
-        <Route path={RouteObjects.StaffAttandance} element={<StaffAttandancePage />} />
-        <Route path={`${RouteObjects.StaffAttandanceTable}/:id/:date`} element={<TableStaff />} />
-        <Route path={RouteObjects.AttandanceReport} element={<AttendanceReportPage />} />
+            {/* application  */}
+            <Route path={RouteObjects.NewApplication} element={<NewApplicationPage />} />
+            <Route path={RouteObjects.NewApplicants} element={<ApplicantTablePage />} />
+            <Route path={`${RouteObjects.AddNewStudent}/:id`} element={<AddNewStudentPage />} />
+            <Route path={RouteObjects.StaffDashboard} element={<StaffDashBoard />} />
+            <Route path={RouteObjects.Stafflibrary} element={<LibraryManagemnet />} />
+            <Route path={`${RouteObjects.Bookmanagment}/:page`} element={<AddBooks />} />
+            <Route path={`${RouteObjects.Issuebooks}/:page`} element={<IssueBooks />} />
+            <Route path={RouteObjects.Issuecards} element={<Issuecards />} />
+            <Route path={RouteObjects.LibrarySettings} element={<LibrarySettings />} />
+            <Route path={`${RouteObjects.StudentsList}/:page`} element={<StudentsList />} />
+            <Route path={`${RouteObjects.StudentProfile}/:id`} element={<StudentProfile />} />
+            <Route path={RouteObjects.AddStudent} element={<AddStudents />} />
+            <Route path={`${RouteObjects.EditStudent}/:id/:name/:page`} element={<EditStudent />} />
+            <Route path={RouteObjects.StudentsAttendance} element={<StudentsAttandancePage />} />
+            <Route path={`${RouteObjects.StudentsAttendanceTable}/:classId/:date`} element={<TableStudents />} />
+            <Route path={RouteObjects.StaffAttandance} element={<StaffAttandancePage />} />
+            <Route path={`${RouteObjects.StaffAttandanceTable}/:id/:date`} element={<TableStaff />} />
+            <Route path={RouteObjects.AttandanceReport} element={<AttendanceReportPage />} />
 
-        {/*  Exam module */}
-        <Route path={RouteObjects.ExamAddSubwiseMarks} element={<AddSubwiseMarks />} />
-        <Route path={RouteObjects.ScholasticSubwiseMarks} element={<AddScholasticGrades />} />
-        <Route path={RouteObjects.ShowSubwiseMarks} element={<ShowSubwiseMarklist />} />
-        <Route path={RouteObjects.ShowClasswiseMarks} element={<ShowClasswiseMarksPage />} />
-        <Route path={RouteObjects.ShowStudentwiseReports} element={<StudentWiseReport />} />
+            {/*  Exam module */}
+            <Route path={RouteObjects.ExamAddSubwiseMarks} element={<AddSubwiseMarks />} />
+            <Route path={RouteObjects.ScholasticSubwiseMarks} element={<AddScholasticGrades />} />
+            <Route path={RouteObjects.ShowSubwiseMarks} element={<ShowSubwiseMarklist />} />
+            <Route path={RouteObjects.ShowClasswiseMarks} element={<ShowClasswiseMarksPage />} />
+            <Route path={RouteObjects.ShowStudentwiseReports} element={<StudentWiseReport />} />
 
-        {/* TimeTable  */}
-        <Route path={RouteObjects.examTimeTable} element={<AddExamTimeTablePage />} />
-        <Route path={RouteObjects.ExamtableDisplayPage} element={<ExamTimeTablePage />} />
-        <Route path={RouteObjects.ClasstimetablePage} element={<ClassTimeTablePage />} />
-        <Route path={RouteObjects.AddClassTimetable} element={<AddClassTimeTablePage />} />
-        <Route path={RouteObjects.StaffManageClass} element={<ManageClass />} />
-        <Route path={RouteObjects.StaffList} element={<StaffListPage />} />
-        <Route path={RouteObjects.AddStaffList} element={<StaffAddPage />} />
-        <Route path={`${RouteObjects.EditStaffList}/:id`} element={<StaffEditPage />} />
-        <Route path={`${RouteObjects.StaffProfile}/:id`} element={<StaffProfilePage />} />
-        <Route path={RouteObjects.StaffAcademicsSettings} element={<AcademicsSettings />} />
-        <Route path={RouteObjects.SyllubusPlanning} element={<SyllubusPlanningPage />} />
-        <Route path={RouteObjects.QustionBank} element={<QustionBankPage />} />
-        <Route path={RouteObjects.QustionPattern} element={<QustionPatternPage />} />
-        <Route path={RouteObjects.QustionPaper} element={<QustionPapperPage />} />
+            {/* TimeTable  */}
+            <Route path={RouteObjects.examTimeTable} element={<AddExamTimeTablePage />} />
+            <Route path={RouteObjects.ExamtableDisplayPage} element={<ExamTimeTablePage />} />
+            <Route path={RouteObjects.ClasstimetablePage} element={<ClassTimeTablePage />} />
+            <Route path={RouteObjects.AddClassTimetable} element={<AddClassTimeTablePage />} />
+            <Route path={RouteObjects.StaffManageClass} element={<ManageClass />} />
+            <Route path={RouteObjects.StaffList} element={<StaffListPage />} />
+            <Route path={RouteObjects.AddStaffList} element={<StaffAddPage />} />
+            <Route path={`${RouteObjects.EditStaffList}/:id`} element={<StaffEditPage />} />
+            <Route path={`${RouteObjects.StaffProfile}/:id`} element={<StaffProfilePage />} />
+            <Route path={RouteObjects.StaffAcademicsSettings} element={<AcademicsSettings />} />
+            <Route path={RouteObjects.SyllubusPlanning} element={<SyllubusPlanningPage />} />
+            <Route path={RouteObjects.QustionBank} element={<QustionBankPage />} />
+            <Route path={RouteObjects.QustionPattern} element={<QustionPatternPage />} />
+            <Route path={RouteObjects.QustionPaper} element={<QustionPapperPage />} />
 
-        {/* Staff CLASS ROOM ROUTS */}
-        <Route path={RouteObjects.StaffStudyRoom} element={<StaffClassRoom />} />
+            {/* Staff CLASS ROOM ROUTS */}
+            <Route path={RouteObjects.StaffStudyRoom} element={<StaffClassRoom />} />
 
-        {/* Student CLASS ROOM ROUTS */}
-        <Route path={RouteObjects.StudentStudyRoom} element={<StudentClassRoom />} />
-        <Route path={RouteObjects.AdminStudentPage} element={<AdminStudentPage />} />
-        <Route path={RouteObjects.AllstudentsPage} element={<Allstudents />} />
-        <Route path='/test' element={<Test />} />
-        <Route path='/testyk' element={<TestYk />} />
-        <Route path='/unauthorized' element={<ErrorPage />} />
-        <Route path='*' element={<ErrorPage />} />
+            {/* Student CLASS ROOM ROUTS */}
+            <Route path={RouteObjects.StudentStudyRoom} element={<StudentClassRoom />} />
+            <Route path={RouteObjects.AdminStudentPage} element={<AdminStudentPage />} />
+            <Route path={RouteObjects.AllstudentsPage} element={<Allstudents />} />
+            <Route path='/test' element={<Test />} />
+            <Route path='/testyk' element={<TestYk />} />
+            <Route path='/unauthorized' element={<ErrorPage />} />
+            <Route path='*' element={<ErrorPage />} />
+          </Route>
+        </Route>
       </Routes>
     </div>
   );
