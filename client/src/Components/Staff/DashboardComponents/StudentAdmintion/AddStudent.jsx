@@ -16,7 +16,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import { addStudentsValidation } from "../../../../Helper/Validations/validations";
+import useAuth from "../../../../Hooks/useAuth";
 const AddStudent = ({ classDetails, AcademicYrs }) => {
+  const {auth} = useAuth();
+  const schoolId = auth?.userData?.schoolId;
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const [gender, setgender] = useState();
@@ -152,6 +155,7 @@ const AddStudent = ({ classDetails, AcademicYrs }) => {
     studentGp,
     board,
     DOB,
+    schoolId
   };
   const handleSubmitForm = async (event) => {
     try {

@@ -81,8 +81,9 @@ const StaffIssueBookManagement = () => {
   };
   const getSettings = async () => {
     try {
-      const response = await axiosPrivate.get(`librarysettings`);
-      setGenreList(response.data);
+      if (!schoolId) return;
+      const response = await axiosPrivate.put(`librarysettings`, {schoolId});
+      setGenreList(response.data?.libraryGenre);
     } catch (error) {
       console.log(error);
     }
@@ -113,6 +114,8 @@ const StaffIssueBookManagement = () => {
   }, []);
   useEffect(() => {
     getBooks(page);
+    getSettings();
+
   }, [schoolId]);
 
   useEffect(() => {

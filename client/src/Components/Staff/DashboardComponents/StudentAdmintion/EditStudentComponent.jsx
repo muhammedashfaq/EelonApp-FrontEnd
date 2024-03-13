@@ -13,6 +13,8 @@ import Spinner from "../../../spinner/SpinningLoader";
 import { RouteObjects } from "../../../../Routes/RoutObjects";
 import Swal from "sweetalert2";
 import { addStudentsValidation } from "../../../../Helper/Validations/validations";
+import useAuth from "../../../../Hooks/useAuth";
+import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 
 const useDropdownState = (initialValue, fetchedValue) => {
   const [value, setValue] = useState(initialValue);
@@ -26,6 +28,9 @@ const useDropdownState = (initialValue, fetchedValue) => {
   return [value, setValue];
 };
 const EditStudentComponent = ({ acYr, name }) => {
+  const {auth} = useAuth();
+  const schoolId = auth?.userData?.schoolId;
+  const axiosPrivate=useAxiosPrivate()
   const [fetData, setFetchData] = useState("");
   const classSectionState = useDropdownState("", fetData?.classSection);
   const bloodGpState = useDropdownState("", fetData?.bloodGp);
@@ -183,7 +188,7 @@ const EditStudentComponent = ({ acYr, name }) => {
         setIsLoading(true);
         
         
-        const response = await axios.put(`/users/student/${id}`, reqData);
+        const response = await axiosPrivate.put(`/users/student/${id}`, reqData);
         
         const Toast = Swal.mixin({
           toast: true,
@@ -213,9 +218,10 @@ const EditStudentComponent = ({ acYr, name }) => {
 
   const getData = async () => {
     try {
+      
       setIsLoading(true);
 
-      const response = await axios.get(`/users/student/${id}`);
+      const response = await axiosPrivate.get(`/users/student/${id}`);
       setIsLoading(false);
 
       setFetchData(response.data);
@@ -230,7 +236,7 @@ const EditStudentComponent = ({ acYr, name }) => {
   useEffect(() => {
     getData();
   }, []);
-
+  
   return (
     <div className=" w-screen">
       {isLoading && <Spinner />}

@@ -127,6 +127,8 @@ const SatffAddBookManagement = () => {
   
   useEffect(() => {
     getBooks(page);
+    getSettings();
+
   }, [schoolId]);
 
   useEffect(() => {

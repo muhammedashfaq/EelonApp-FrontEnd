@@ -16,7 +16,7 @@ const StudentsAttendanceTable = () => {
   const [attendance, setAttendance] = useState([]);
   const [attendanceArray, setAttendanceArray] = useState([]);
   // const [AllPresent, setAllPresent] = useState(false);
-  const [studentData, setstudentData] = useState();
+  const [studentData, setstudentData] = useState([]);
   const [classwiseAttendance, setclasswiseAttendance] = useState();
   const [attendanceDbId, setattendanceDbId] = useState();
   const navigate=useNavigate()
