@@ -107,19 +107,6 @@ const AddGradeBookModal = ({getGradeBooks}) => {
     }
   };
 
-  const {data: accYrData, isRefetching} = useQuery({
-    queryKey: ['academicYearDD'],
-    queryFn: async () => {
-      const response = await axiosPrivate.get('classsection/academicyear/academicyear');
-      const sortedData = response.data?.academicYear.sort((a, b) => a.localeCompare(b));
-      return sortedData;
-    },
-    refetchInterval: false,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
-  if (isRefetching) console.log('refetching -STDRM');
-
   useEffect(() => {
     const isvalidate = formData.bookName && formData.academicYear;
 
@@ -151,14 +138,6 @@ const AddGradeBookModal = ({getGradeBooks}) => {
                     Academic Year
                   </Typography>
                   <AcademicYearDropdown setYear={setAcademicYear} label='Select Year' />
-                  {/* <Select label='Select Year' onChange={e => setAcademicYear(e)}>
-                    {accYrData &&
-                      accYrData.map((item, i) => (
-                        <Option key={i} value={item}>
-                          {i + 1}. {item}
-                        </Option>
-                      ))}
-                  </Select> */}
                 </div>
                 <div className='w-1/2 pr-2'>
                   <Typography className=' ' variant='h6'>

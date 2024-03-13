@@ -146,7 +146,7 @@ const AppRoutes = () => {
         <Route path={RouteObjects.VisitersDetails} element={<VisitersDetailspage />} />
         <Route path={RouteObjects.MessStock} element={<MessStockDetailsPage />} />
         <Route path={RouteObjects.AddHostelAttendance} element={<HostelAttendance />} />
-        <Route path={RouteObjects.ViewHostelAttendance} element={<ViewHostelAttendance />} />
+        <Route path={RouteObjects.ViewHostelAttendanceget} element={<ViewHostelAttendance />} />
 
         {/* Super Admin */}
         <Route path={RouteObjects.SuperAdmin} element={<SuperAdminLogin />} />

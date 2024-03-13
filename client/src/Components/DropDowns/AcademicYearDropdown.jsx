@@ -2,13 +2,18 @@ import {useQuery} from '@tanstack/react-query';
 import useAxiosPrivate from '../../Hooks/useAxiosPrivate';
 import {Select, Option} from '@material-tailwind/react';
 import useAuth from '../../Hooks/useAuth';
+import {useEffect} from 'react';
 
 const AcademicYearDropdown = ({setYear, name, label}) => {
   const axiosPrivate = useAxiosPrivate();
   const {auth} = useAuth();
   const schoolId = auth?.userData?.schoolId;
 
-  const {data: academicYearDD, isRefetching} = useQuery({
+  const {
+    data: academicYearDD,
+    isRefetching,
+    refetch,
+  } = useQuery({
     queryKey: ['academicYearDD'],
     queryFn: async () => {
       const response = await axiosPrivate.put('classsection/academicyear', {schoolId});
@@ -20,6 +25,10 @@ const AcademicYearDropdown = ({setYear, name, label}) => {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
+
+  // useEffect(() => {
+  //   refetch();
+  // }, []);
 
   if (isRefetching) console.log('fetching academic years');
 
