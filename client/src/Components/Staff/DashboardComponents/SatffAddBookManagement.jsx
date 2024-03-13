@@ -16,8 +16,10 @@ import {useParams} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
 import {RouteObjects} from '../../../Routes/RoutObjects';
 import LibraryBulkUploadModal from './LibraryBulkUploadModal';
+import useAuth from '../../../Hooks/useAuth';
 
 const SatffAddBookManagement = () => {
+  const {auth} = useAuth();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(cur => !cur);
@@ -29,6 +31,8 @@ const SatffAddBookManagement = () => {
   const [isLoading, setisLoading] = useState(false);
   const axiosPrivate = useAxiosPrivate();
   const [GenreList, setGenreList] = useState();
+
+  const schoolId = auth?.userData?.schoolId;
 
   const {page} = useParams();
   const navigate = useNavigate();
@@ -105,8 +109,9 @@ const SatffAddBookManagement = () => {
 
   const getSettings = async () => {
     try {
-      const response = await axiosPrivate.get(`librarysettings`);
-      setGenreList(response.data);
+      if (!schoolId) return;
+      const response = await axiosPrivate.put(`librarysettings`, {schoolId});
+      setGenreList(response.data?.libraryGenre);
     } catch (error) {
       console.log(error);
     }
@@ -116,6 +121,9 @@ const SatffAddBookManagement = () => {
     getBooks(page);
     getSettings();
   }, []);
+  useEffect(() => {
+    getSettings();
+  }, [schoolId]);
 
   useEffect(() => {
     setpageInt(Number(page));

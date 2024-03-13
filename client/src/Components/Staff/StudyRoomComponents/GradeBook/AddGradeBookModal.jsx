@@ -27,6 +27,7 @@ import {faFile} from '@fortawesome/free-regular-svg-icons';
 import {FileUploader} from 'react-drag-drop-files';
 import CropImageModal from '../../../Admin/CropImageModal';
 import {useQuery} from '@tanstack/react-query';
+import AcademicYearDropdown from '../../../DropDowns/AcademicYearDropdown';
 
 const AddGradeBookModal = ({getGradeBooks}) => {
   const [open, setOpen] = useState(false);
@@ -149,14 +150,15 @@ const AddGradeBookModal = ({getGradeBooks}) => {
                   <Typography className=' ' variant='h6'>
                     Academic Year
                   </Typography>
-                  <Select label='Select Year' onChange={e => setAcademicYear(e)}>
+                  <AcademicYearDropdown setYear={setAcademicYear} label='Select Year' />
+                  {/* <Select label='Select Year' onChange={e => setAcademicYear(e)}>
                     {accYrData &&
                       accYrData.map((item, i) => (
                         <Option key={i} value={item}>
                           {i + 1}. {item}
                         </Option>
                       ))}
-                  </Select>
+                  </Select> */}
                 </div>
                 <div className='w-1/2 pr-2'>
                   <Typography className=' ' variant='h6'>

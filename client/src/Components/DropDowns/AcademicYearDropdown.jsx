@@ -1,15 +1,19 @@
 import {useQuery} from '@tanstack/react-query';
 import useAxiosPrivate from '../../Hooks/useAxiosPrivate';
 import {Select, Option} from '@material-tailwind/react';
+import useAuth from '../../Hooks/useAuth';
 
 const AcademicYearDropdown = ({setYear, name, label}) => {
   const axiosPrivate = useAxiosPrivate();
+  const {auth} = useAuth();
+  const schoolId = auth?.userData?.schoolId;
 
   const {data: academicYearDD, isRefetching} = useQuery({
     queryKey: ['academicYearDD'],
     queryFn: async () => {
-      const response = await axiosPrivate.get('classsection/academicyear/academicyear');
-      const sortedData = response.data?.academicYear.sort((a, b) => a.localeCompare(b));
+      const response = await axiosPrivate.put('classsection/academicyear', {schoolId});
+      const sortedData = response?.data?.academicYears.sort((a, b) => a.localeCompare(b));
+      console.log(sortedData);
       return sortedData;
     },
     refetchInterval: false,
