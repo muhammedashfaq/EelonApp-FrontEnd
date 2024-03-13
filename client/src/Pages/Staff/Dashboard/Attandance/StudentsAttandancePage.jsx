@@ -3,7 +3,7 @@ import Banner from '../../../../Components/Banner/Banner';
 import StudentsAttendance from '../../../../Components/Staff/DashboardComponents/Attendance/Students/StudentsAttendance';
 
 const StudentsAttandancePage = () => {
-  const breadcrumbs = ['Attandance-Students'];
+  const breadcrumbs = ['Student','Attandance-Students'];
 
   return (
     <div>
