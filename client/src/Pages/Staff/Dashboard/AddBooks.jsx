@@ -1,5 +1,5 @@
 import Banner from '../../../Components/Banner/Banner';
-import SatffAddBookManagement from '../../../Components/Staff/DashboardComponents/SatffAddBookManagement';
+import SatffAddBookManagement from '../../../Components/Staff/DashboardComponents/Library/SatffAddBookManagement';
 
 const AddBooks = () => {
   const breadcrumbs = ['Library', 'AddBooks'];

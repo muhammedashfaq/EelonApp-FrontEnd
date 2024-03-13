@@ -22,7 +22,7 @@ const  AddSchool = ()=> {
   const handlesumbit = async()=>{
     try {
         const formData ={
-            schoolIndexNo:"20",
+            schoolIndexNo:"30",
             shoolName:schoolAddress,
             address:schoolName
         }

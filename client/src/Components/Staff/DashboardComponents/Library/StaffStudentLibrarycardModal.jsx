@@ -11,7 +11,7 @@ import {
   Typography,
   Tooltip,
 } from "@material-tailwind/react";
-import useAuth from "../../../Hooks/useAuth";
+import useAuth from "../../../../Hooks/useAuth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 

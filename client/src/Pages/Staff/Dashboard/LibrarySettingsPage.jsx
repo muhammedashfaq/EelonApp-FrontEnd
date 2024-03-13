@@ -1,9 +1,9 @@
 import React from "react";
-import Librarysettings from "../../../Components/Staff/DashboardComponents/LibrarySettings";
+import Librarysettings from "../../../Components/Staff/DashboardComponents/Library/LibrarySettings";
 import Banner from "../../../Components/Banner/Banner";
 import LibraryBarReportChart from "../../../Components/Charts/Library/LibraryBarReportChart";
 import LibraryPieReportChart from "../../../Components/Charts/Library/LibraryPieReportChart";
-import LibrarysettingsCard from "../../../Components/Staff/DashboardComponents/LibrarysettingsCard";
+import LibrarysettingsCard from "../../../Components/Staff/DashboardComponents/Library/LibrarysettingsCard";
 import AllColours from "../../Colours/AllColours";
 
 const LibrarySettingsPage = () => {

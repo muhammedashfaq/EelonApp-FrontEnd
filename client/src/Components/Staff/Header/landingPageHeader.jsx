@@ -16,6 +16,8 @@ const StaffHeader = () => {
 
   const userId = auth?.userId;
   const userRole = auth?.roles;
+  const schID = auth?.userData?.schoolId;
+console.log(auth,"authe");
 
   const {
     data: userData,
@@ -67,6 +69,7 @@ const StaffHeader = () => {
               </Link>
             </li>
           </div>
+          ----ID:{schID}
           <div className='flex justify-center items-center space-x-6'>
             <NavItem href='#' label='Home' />
             <NavItem href='#About' label='About' />
@@ -111,6 +114,7 @@ const renderAvatar = userRoles => {
     const {auth} = useAuth();
     return (
       <li className='block Laptop:block ipad:block Tablet:block '>
+        
         <UserAvatar dash={roleToDashboard[userRoles]} profile={roleToProfile[userRoles]} roles={auth?.roles} />
       </li>
     );

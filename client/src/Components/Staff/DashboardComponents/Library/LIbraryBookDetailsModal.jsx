@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, Dialog, Card, CardHeader, CardBody, Typography} from '@material-tailwind/react';
-import placeholderImg from '../../../assets/placeholderImg.jpg';
+import placeholderImg from '../../../../assets/placeholderImg.jpg';
 
 export default function LIbraryBookDetailsModal({data}) {
   const [open, setOpen] = React.useState(false);

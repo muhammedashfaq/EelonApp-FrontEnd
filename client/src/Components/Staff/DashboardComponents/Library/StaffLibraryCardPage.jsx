@@ -1,14 +1,18 @@
 import {Button, IconButton, Tooltip, Typography} from '@material-tailwind/react';
-import useAxiosPrivate from '../../../Hooks/useAxiosPrivate';
+import useAxiosPrivate from '../../../../Hooks/useAxiosPrivate';
 import {useEffect, useState} from 'react';
 import IssueLibCardModal from './IssueLibCardModal';
 import StaffStudentLibrarycardModal from './StaffStudentLibrarycardModal';
-import Banner from '../../Banner/Banner';
+import Banner from '../../../Banner/Banner';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faMinusSquare} from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
+import useAuth from '../../../../Hooks/useAuth';
 
 const StaffLibraryCardPage = () => {
+  const {auth} = useAuth();
+  const schoolId = auth?.userData?.schoolId;
+
   const [searchQuery, setsearchQuery] = useState();
   const [searchData, setsearchData] = useState();
   const [studentData, setstudentData] = useState();
@@ -28,7 +32,8 @@ const StaffLibraryCardPage = () => {
   };
   const getAllStudents = async () => {
     try {
-      const response = await axiosPrivate.get(`users/student`);
+      if(schoolId) return;
+      const response = await axiosPrivate.put(`users/student`,{schoolId});
       setstudentData(response.data);
     } catch (error) {
       console.log(error);
@@ -74,6 +79,9 @@ const StaffLibraryCardPage = () => {
   useEffect(() => {
     getAllStudents();
   }, [studentData, searchData]);
+  useEffect(() => {
+    getAllStudents();
+  }, [schoolId]);
 
   return (
     <>

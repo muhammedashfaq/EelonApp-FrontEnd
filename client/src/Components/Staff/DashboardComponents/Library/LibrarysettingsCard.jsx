@@ -1,10 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
+import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookOpen, faBookSkull } from "@fortawesome/free-solid-svg-icons";
+import useAuth from "../../../../Hooks/useAuth";
 
 const LibrarysettingsCard = () => {
+  const {auth} = useAuth();
+  const schoolId = auth?.userData?.schoolId;
   const axiosPrivate = useAxiosPrivate();
 
   const [bookCount, setbookCount] = useState();
@@ -12,7 +15,8 @@ const LibrarysettingsCard = () => {
 
   const getBookCount = async () => {
     try {
-      const response = await axiosPrivate.get("library/reports/bookcount");
+      if(!schoolId)return;
+      const response = await axiosPrivate.put("library/reports/bookcount/filter",{schoolId});
       console.log(response.data);
       setbookCount(response.data);
     } catch (error) {
@@ -22,7 +26,8 @@ const LibrarysettingsCard = () => {
 
   const getBooksIssued = async () => {
     try {
-      const response = await axiosPrivate.get("library/reports/issuecount");
+      if(!schoolId) return;
+      const response = await axiosPrivate.put("library/reports/issuecount/filter",{schoolId});
       console.log(response.data);
       setissueCount(response.data);
     } catch (error) {
@@ -34,6 +39,11 @@ const LibrarysettingsCard = () => {
     getBookCount();
     getBooksIssued();
   }, []);
+  
+  useEffect(() => {
+    getBookCount();
+    getBooksIssued();
+  }, [schoolId]);
 
   return (
     <div className="mx-10 mt-4">
@@ -45,7 +55,7 @@ const LibrarysettingsCard = () => {
           </div>
           <div className="p-4 text-right">
             <p className="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">Total Books</p>
-            <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">{bookCount} nos</h4>
+            <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">{bookCount?bookCount:0} nos</h4>
           </div>
           <div className="border-t border-blue-gray-50 p-4">
             <p className="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
@@ -60,7 +70,7 @@ const LibrarysettingsCard = () => {
           </div>
           <div className="p-4 text-right">
             <p className="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600"> Total Books Issued</p>
-            <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">{issueCount} nos</h4>
+            <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">{issueCount?issueCount:0} nos</h4>
           </div>
           <div className="border-t border-blue-gray-50 p-4">
             <p className="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">

@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import ReactApexChart from "react-apexcharts";
+import useAuth from "../../../Hooks/useAuth";
 
 const LibraryBarReportChart = () => {
+  const {auth} = useAuth();
+  const schoolId = auth?.userData?.schoolId;
   const [state, setState] = useState({
     series: [
       {

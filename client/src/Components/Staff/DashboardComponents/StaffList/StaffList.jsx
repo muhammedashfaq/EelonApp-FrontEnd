@@ -21,18 +21,20 @@ import {RouteObjects} from '../../../../Routes/RoutObjects';
 import useAxiosPrivate from '../../../../Hooks/useAxiosPrivate';
 import {useEffect, useState} from 'react';
 import Swal from 'sweetalert2';
-import {TableHeaderName} from '../../../Table Header/TableHeader';
 import StaffBulkUploadModal from './StaffBulkUploadModal';
+import useAuth from '../../../../Hooks/useAuth';
 
 const TABLE_HEAD = ['#NO', 'ID', 'Name', 'Gender', 'Category', 'Contact Number', 'Email ID', 'DOB', 'Alocated Class', 'Current Status', 'Action'];
 
 const StaffList = () => {
+  const {auth}=useAuth()
+  const schoolIds= auth?.userData?.schoolId
   const [StaffData, setStaffData] = useState();
   const axiosPrivate = useAxiosPrivate();
 
   const getStaffs = async () => {
     try {
-      const response = await axiosPrivate.get('users/staff');
+      const response = await axiosPrivate.put('users/staff',{schoolId:schoolIds});
       setStaffData(response.data);
     } catch (error) {
       console.error(error);
@@ -76,6 +78,9 @@ const StaffList = () => {
   useEffect(() => {
     getStaffs();
   }, []);
+  useEffect(() => {
+    getStaffs();
+  }, [schoolIds]);
   return (
     <div className='m-10'>
       <Card className='h-full w-full'>
