@@ -27,6 +27,7 @@ import {faFile} from '@fortawesome/free-regular-svg-icons';
 import {FileUploader} from 'react-drag-drop-files';
 import CropImageModal from '../../../Admin/CropImageModal';
 import {useQuery} from '@tanstack/react-query';
+import AcademicYearDropdown from '../../../DropDowns/AcademicYearDropdown';
 
 const AddGradeBookModal = ({getGradeBooks}) => {
   const [open, setOpen] = useState(false);
@@ -106,19 +107,6 @@ const AddGradeBookModal = ({getGradeBooks}) => {
     }
   };
 
-  const {data: accYrData, isRefetching} = useQuery({
-    queryKey: ['academicYearDD'],
-    queryFn: async () => {
-      const response = await axiosPrivate.get('classsection/academicyear/academicyear');
-      const sortedData = response.data?.academicYear.sort((a, b) => a.localeCompare(b));
-      return sortedData;
-    },
-    refetchInterval: false,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
-  if (isRefetching) console.log('refetching -STDRM');
-
   useEffect(() => {
     const isvalidate = formData.bookName && formData.academicYear;
 
@@ -149,14 +137,7 @@ const AddGradeBookModal = ({getGradeBooks}) => {
                   <Typography className=' ' variant='h6'>
                     Academic Year
                   </Typography>
-                  <Select label='Select Year' onChange={e => setAcademicYear(e)}>
-                    {accYrData &&
-                      accYrData.map((item, i) => (
-                        <Option key={i} value={item}>
-                          {i + 1}. {item}
-                        </Option>
-                      ))}
-                  </Select>
+                  <AcademicYearDropdown setYear={setAcademicYear} label='Select Year' />
                 </div>
                 <div className='w-1/2 pr-2'>
                   <Typography className=' ' variant='h6'>

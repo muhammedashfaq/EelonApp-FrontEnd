@@ -111,7 +111,9 @@ const AprovalPage = () => {
                     <div className='flex justify-center p-3 '>
                       <h1 className='text-2xl font-extrabold underline'>Class Syllabus Aproval</h1>
                     </div>
+
                     <AprovalFilter  classes={classes} subject={subjects} api={filterapi} setFilteredData={setFilteredData} />
+
                     <AprovalTable filteredData={filteredData} api={approveApi} />
                     
                   </div>
@@ -123,7 +125,9 @@ const AprovalPage = () => {
                       <h1 className='text-2xl font-extrabold underline'>Question Pattern Aproval</h1>
                     </div>
 
+
                     <AprovalFilter  classes={classes} subject={subjects} api={filterapi} setFilteredData={setFilteredData} />
+
                     <AprovalTable filteredData={filteredData} api={approveApi} />
                   </div>
                 </>
@@ -133,7 +137,9 @@ const AprovalPage = () => {
                     <div className='flex justify-center p-3 '>
                       <h1 className='text-2xl font-extrabold underline'>Question Bank Aproval</h1>
                     </div>
+
                     <AprovalFilter  classes={classes} subject={subjects} api={filterapi} setFilteredData={setFilteredData} />
+
                     <AprovalTable filteredData={filteredData} api={approveApi} />
                   </div>
                 </>
