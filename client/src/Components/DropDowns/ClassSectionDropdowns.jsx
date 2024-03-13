@@ -2,7 +2,7 @@ import {useQuery} from '@tanstack/react-query';
 import useAxiosPrivate from '../../Hooks/useAxiosPrivate';
 import {Select, Option} from '@material-tailwind/react';
 
-const ClassSectionDropdowns = ({setClassSection, name, label,variant}) => {
+const ClassSectionDropdowns = ({setClassSection, name, label, variant}) => {
   const axiosPrivate = useAxiosPrivate();
 
   const {data: DropDowns, isRefetching} = useQuery({
