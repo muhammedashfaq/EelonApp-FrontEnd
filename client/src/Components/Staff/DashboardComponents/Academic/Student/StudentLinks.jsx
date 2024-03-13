@@ -15,12 +15,12 @@ const StudentLink = [
         icon: allstd,
       },
       {
-        titleName: "Attandance",
+        titleName: "Attendance",
         href: RouteObjects.StudentsAttendance,
         icon: attendance,
       },
       {
-        titleName: "Attandance Reports (Monthly)",
+        titleName: "Attendance Reports (Monthly)",
         href: RouteObjects.AttandanceReport,
         icon: attrepo,
       },

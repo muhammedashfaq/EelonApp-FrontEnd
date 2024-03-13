@@ -13,12 +13,12 @@ const StaffLink = [
         icon: staffd,
       },
       {
-        titleName: "Attandance",
+        titleName: "Attendance",
         href: RouteObjects.StaffAttandance,
         icon: attendance,
       },
       {
-        titleName: "Attandance Reports (Monthly)",
+        titleName: "Attendance Reports (Monthly)",
         href: RouteObjects.AttandanceReport,
         icon: attrepo,
       },

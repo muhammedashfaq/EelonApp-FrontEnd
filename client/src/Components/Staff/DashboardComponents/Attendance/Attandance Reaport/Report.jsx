@@ -27,11 +27,11 @@ const Report = () => {
   }, []);
   return (
     <div className="m-9 space-y-8 ">
-      <div className="bg-blue-800 p-2 rounded-t-lg">
+      <div className="bg-blue-300 p-1 rounded-t-lg">
         <OptionGroup clss={clss} Name="Students" />
         <ReportTable />
       </div>
-      <div className="bg-blue-800 p-2 rounded-t-lg">
+      <div className="bg-blue-300 p-1 rounded-t-lg">
         <OptionGroup clss={clss} Name="Staff" />
         <ReportTable />
       </div>

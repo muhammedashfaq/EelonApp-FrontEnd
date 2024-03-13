@@ -44,7 +44,6 @@ const TABLE_HEAD = [
 const ClassDetails = () => {
   const { auth } = useAuth();
   const schoolIds = auth?.userData?.schoolId;
-  console.log(schoolIds);
   const [openMenu, setOpenMenu] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [studentData, setStudentData] = useState("");

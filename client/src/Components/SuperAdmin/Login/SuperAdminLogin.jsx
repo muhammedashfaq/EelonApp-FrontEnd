@@ -30,7 +30,7 @@ const SuperAdminLogin = () => {
 const handleSubmit = async()=>{
   try {
     setIsLoading(true)
-    const response = await axiosPrivate.post("",formData)
+    const response = await axiosPrivate.post("/auth/super-admin",formData)
     setIsLoading(false)
     navigate(RouteObjects.SuperAdminHome)
   } catch (error) {

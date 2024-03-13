@@ -46,12 +46,12 @@ const GradeBook = () => {
 
   if (isRefetching) console.log('refetching');
 
-  if (isLoading)
-    return (
-      <div>
-        <SpinningLoader />
-      </div>
-    );
+  // if (isLoading)
+  //   return (
+  //     <div>
+  //       <SpinningLoader />
+  //     </div>
+  //   );
   // if (isLoading) return (<div><SpinningLoader /></div>);
 
   // useEffect(() => {

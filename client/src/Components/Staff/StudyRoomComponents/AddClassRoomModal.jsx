@@ -4,6 +4,8 @@ import axios from '../../../api/axios';
 import useAxiosPrivate from '../../../Hooks/useAxiosPrivate';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faAdd} from '@fortawesome/free-solid-svg-icons';
+import ClassSectionDropdowns from '../../DropDowns/ClassSectionDropdowns';
+import SubjectsDropdown from '../../DropDowns/SubjectsDropdown';
 
 const AddClassRoomModal = ({userId, getClassRooms}) => {
   const [open, setOpen] = React.useState(false);
@@ -25,6 +27,8 @@ const AddClassRoomModal = ({userId, getClassRooms}) => {
       roomName,
       std,
       section,
+
+
       subject,
       description,
       roomId: `${roomName}-${section} ${subject}`,
@@ -76,7 +80,9 @@ const AddClassRoomModal = ({userId, getClassRooms}) => {
               <h1>Create Class</h1>
             </div>
             <CardBody className='flex flex-col gap-4'>
-              <Select name='std' color='blue' variant='standard' label='Class' value={std} onChange={e => setStd(e)}>
+              <ClassSectionDropdowns setClassSection={"a"} label={"ClassSection"} variant={"standard"}/>
+
+              {/* <Select name='std' color='blue' variant='standard' label='Class' value={std} onChange={e => setStd(e)}>
                 <Option value='1'>1</Option>
                 <Option value='2'>2</Option>
                 <Option value='3'>3</Option>
@@ -96,16 +102,20 @@ const AddClassRoomModal = ({userId, getClassRooms}) => {
                 <Option value='B'>B</Option>
                 <Option value='C'>C</Option>
                 <Option value='D'>D</Option>
-              </Select>
+              </Select> */}
 
-              <Select name='subject' color='blue' variant='standard' label='Subject' onChange={e => setSubject(e)}>
+<SubjectsDropdown label={"Subject"} setSubject={setSubject} variant={"standard"} />
+
+
+
+              {/* <Select name='subject' color='blue' variant='standard' label='Subject' onChange={e => setSubject(e)}>
                 <Option value='Physics'>Physics</Option>
                 <Option value='Maths'>Maths</Option>
                 <Option value='Chemistry'>Chemistry</Option>
                 <Option value='Biology'>Biology</Option>
                 <Option value='English'>English</Option>
                 <Option value='Tamil'>Tamil</Option>
-              </Select>
+              </Select> */}
 
               <Input
                 name='roomName'

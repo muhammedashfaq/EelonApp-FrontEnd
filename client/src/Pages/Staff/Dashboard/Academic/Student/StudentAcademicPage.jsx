@@ -4,10 +4,12 @@ import StudentsAcademic from '../../../../../Components/Staff/DashboardComponent
 import AllColours from '../../../../Colours/AllColours'
 
 const StudentAcademicPage = () => {
+  const breadcrumbs = ['Student'];
+
   return (
     <div className='h-screen' style={AllColours.bgcrossStylish}>
         
-        <Banner/>
+        <Banner breadcrumbs={breadcrumbs}/>
         <StudentsAcademic/></div>
   )
 }

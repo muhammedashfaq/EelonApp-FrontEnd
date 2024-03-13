@@ -442,8 +442,8 @@ const AddStaffDetails = () => {
               <Input
                 name="bankIFSCcode"
                 variant="outlined"
-                label="IFSE Code"
-                placeholder="Enter IFSE Code"
+                label="IFSC Code"
+                placeholder="Enter IFSC Code"
                 
                 onChange={handleInputChange}
               />

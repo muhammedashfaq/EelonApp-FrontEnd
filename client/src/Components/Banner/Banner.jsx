@@ -16,8 +16,8 @@ const Banner = ({ breadcrumbs }) => {
   const navigate = useNavigate();
   const location = useLocation(); // Use useLocation hook
   const breadcrumb = location.pathname.split("/").filter(Boolean);
-
   const { auth } = useAuth();
+
   return (
     <div className="bg-dark-purple text-gray-100 ">
       <section className="container mx-auto flex flex-wrap items-center justify-between py-4">
@@ -35,9 +35,25 @@ const Banner = ({ breadcrumbs }) => {
             <span onClick={() => navigate(-1)}>
               <FontAwesomeIcon icon={faBackwardStep} size="lg" />
             </span>
-            <Link to={RouteObjects.root}>
-              <FontAwesomeIcon icon={faHouse} />
-            </Link>
+
+            {auth.roles == 5151 ? (
+              <Link to={RouteObjects.StaffDashboard}>
+                <FontAwesomeIcon icon={faHouse} />
+                {/* Add text or any other content for StaffDashboard */}
+              </Link>
+            ) : auth.roles == 999 ? (
+              <Link to={RouteObjects.StudentDashboard}>
+                <FontAwesomeIcon icon={faHouse} />
+                {/* Add text or any other content for StudentDashboard */}
+              </Link>
+            ) : auth.roles == 2000 ? (
+              <Link to={RouteObjects.AdminHome}>
+                <FontAwesomeIcon icon={faHouse} />
+                {/* Add text or any other content for AdminHome */}
+              </Link>
+            ) : (
+              ""
+            )}
 
             {breadcrumbs?.map((crumb, index) => {
               const isLast = index === breadcrumbs.length - 1;
