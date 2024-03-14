@@ -12,7 +12,7 @@ import {
   Alert,
   Tooltip,
 } from "@material-tailwind/react";
-import axios from "../../../api/axios";
+import axios from "../../../../api/axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

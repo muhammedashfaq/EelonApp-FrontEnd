@@ -1,10 +1,10 @@
 import {Button, Card, Input, Typography} from '@material-tailwind/react';
 import {useEffect, useState} from 'react';
-import useAxiosPrivate from '../../../Hooks/useAxiosPrivate';
+import useAxiosPrivate from '../../../../Hooks/useAxiosPrivate';
 import {TrashIcon} from 'lucide-react';
 import {Link, useLocation} from 'react-router-dom'; // Import useLocation
-import {RouteObjects} from '../../../Routes/RoutObjects';
-import useAuth from '../../../Hooks/useAuth';
+import {RouteObjects} from '../../../../Routes/RoutObjects';
+import useAuth from '../../../../Hooks/useAuth';
 
 const Librarysettings = () => {
   const [NewGenre, setNewGenre] = useState();
@@ -29,6 +29,7 @@ const Librarysettings = () => {
   const addSetting = async e => {
     e.preventDefault();
     try {
+      console.log(schoolId)
       if (!NewGenre || !schoolId) return;
       const reqData = {
         schoolId,

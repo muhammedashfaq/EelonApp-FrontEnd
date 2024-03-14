@@ -32,6 +32,7 @@ import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
 import { TableHeaderName } from "../../../Table Header/TableHeader";
 import BulkUploadModalStd from "./BulkUploadModalStd";
+import useAuth from "../../../../Hooks/useAuth";
 
 const TABLE_HEAD = [
   "#NO",
@@ -50,6 +51,8 @@ const TABLE_HEAD = [
 
 const StudentsList = () => {
   const { page } = useParams();
+  const {auth}=useAuth()
+  const schoolIds= auth?.userData?.schoolId
   const [pageInt, setpageInt] = useState(Number(page));
 
   const [studentData, setStudentData] = useState();
@@ -61,9 +64,11 @@ const StudentsList = () => {
 
   const getUsers = async (pageNo) => {
     try {
-      const response = await axiosPrivate.get(
-        `/users/student/pagination?page=${pageNo}&limit=10`
+      if(!schoolIds) return;
+      const response = await axiosPrivate.put(
+        `/users/student/pagination?page=${pageNo}&limit=10`,{schoolId:schoolIds}
       );
+      console.log(response);
       setStudentData(response.data.users);
       setpaginationData(response.data.pagination);
     } catch (error) {
@@ -115,14 +120,17 @@ const StudentsList = () => {
     }
   };
 
-  useEffect(() => {
-    getUsers(page);
-  }, []);
-
+  
   useEffect(() => {
     setpageInt(Number(page));
   }, [page]);
-
+  
+  useEffect(() => {
+    getUsers(page);
+  }, []);
+  useEffect(() => {
+    getUsers(page);
+  }, [schoolIds]);
   return (
     <div>
       <Card className="  m-8">

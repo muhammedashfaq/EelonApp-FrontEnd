@@ -1,18 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import {Button, Dialog, DialogHeader, DialogBody, DialogFooter, Input, Select, Option, Spinner, IconButton} from '@material-tailwind/react';
-import axios from '../../../api/axios';
-import {bookAddValidation} from '../../../Helper/Validations/validations';
+import axios from '../../../../api/axios';
+import {bookAddValidation} from '../../../../Helper/Validations/validations';
 import {useNavigate} from 'react-router-dom';
-import {RouteObjects} from '../../../Routes/RoutObjects';
-import CropImageModal from '../../Admin/CropImageModal';
+import {RouteObjects} from '../../../../Routes/RoutObjects';
+import CropImageModal from '../../../Admin/CropImageModal';
 import {FileUploader} from 'react-drag-drop-files';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTrash} from '@fortawesome/free-solid-svg-icons';
-import useAxiosPrivate from '../../../Hooks/useAxiosPrivate';
+import useAxiosPrivate from '../../../../Hooks/useAxiosPrivate';
 
 const fileTypes = ['JPG', 'PNG', 'GIF', 'JPEG'];
 
-export default function LibraryBooksAddModal({GenreList, getBooks}) {
+export default function LibraryBooksAddModal({GenreList, getBooks,schoolId}) {
   const axiosPrivate = useAxiosPrivate();
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = React.useState(false);
@@ -110,7 +110,7 @@ export default function LibraryBooksAddModal({GenreList, getBooks}) {
         return;
       } else {
         setIsLoading(true);
-        const response = await axiosPrivate.post('/library/books', {...formData, Image: editImg});
+        const response = await axiosPrivate.post('/library/books', {...formData, Image: editImg ,schoolId:schoolId});
         console.log(response);
         setIsLoading(false);
         handleClose();

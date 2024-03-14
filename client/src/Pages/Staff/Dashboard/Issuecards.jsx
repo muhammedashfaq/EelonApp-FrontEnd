@@ -1,5 +1,5 @@
 import Banner from "../../../Components/Banner/Banner";
-import Cards from "../../../Components/Staff/DashboardComponents/StaffLibraryCardPage";
+import Cards from "../../../Components/Staff/DashboardComponents/Library/StaffLibraryCardPage";
 
 const Issuecards = () => {
   const breadcrumbs = ['Library',"IssueCards"];

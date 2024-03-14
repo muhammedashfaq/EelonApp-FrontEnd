@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {Button, Dialog, DialogHeader, DialogBody, DialogFooter, Input, Textarea, Typography} from '@material-tailwind/react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faDatabase} from '@fortawesome/free-solid-svg-icons';
-import useAxiosFormDataPrivate from '../../../Hooks/useAxiosFormDataPrivate';
+import useAxiosFormDataPrivate from '../../../../Hooks/useAxiosFormDataPrivate';
 
-const LibraryBulkUploadModal = ({getBooks, page}) => {
+const LibraryBulkUploadModal = ({getBooks, page,schoolId}) => {
   const axiosFormdata = useAxiosFormDataPrivate();
 
   const [xlsFile, setXlsFile] = useState('');
@@ -20,7 +20,7 @@ const LibraryBulkUploadModal = ({getBooks, page}) => {
       setisLoading(true);
       const formData = new FormData();
       formData.append('file', xlsFile);
-      const response = await axiosFormdata.post('bulkuploads/library', formData);
+      const response = await axiosFormdata.post('bulkuploads/library', {formData:formData, schoolId:schoolId });
       setisLoading(false);
       getBooks();
       setOpen(false);

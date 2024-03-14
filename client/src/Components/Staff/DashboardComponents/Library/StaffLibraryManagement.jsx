@@ -8,12 +8,12 @@ import {
 } from "@material-tailwind/react";
 // import bookimage from './images/librarybooks.png'
 import { Link } from "react-router-dom";
-import { RouteObjects } from "../../../Routes/RoutObjects";
-import Banner from "../../Banner/Banner";
-import student from "../../../assets/student.svg";
-import settings from "../../../assets/settings.png";
-import idCard from "../../../assets/idCards.png";
-import Book from "../../../assets/book.png";
+import { RouteObjects } from "../../../../Routes/RoutObjects";
+import Banner from "../../../Banner/Banner";
+import student from "../../../../assets/student.svg";
+import settings from "../../../../assets/settings.png";
+import idCard from "../../../../assets/idCards.png";
+import Book from "../../../../assets/book.png";
 
 const StaffLibraryManagement = () => {
   return (

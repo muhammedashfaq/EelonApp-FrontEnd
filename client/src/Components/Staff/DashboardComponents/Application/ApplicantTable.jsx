@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import { Link } from "react-router-dom";
 import { RouteObjects } from "../../../../Routes/RoutObjects";
+import useAuth from "../../../../Hooks/useAuth";
 
 const TABLE_HEAD = [
   "#No",
@@ -15,6 +16,8 @@ const TABLE_HEAD = [
 ];
 
 const ApplicantTable = () => {
+  const {auth} = useAuth();
+  const schoolId = auth?.userData?.schoolId;
   const axiosPrivate = useAxiosPrivate();
   const [applicantData, setApplicantData] = useState([]);
 
@@ -29,8 +32,8 @@ const ApplicantTable = () => {
 
   const getApplicant = async () => {
     try {
-      const response = await axiosPrivate.get("/admission");
-      console.log(response);
+      if(!schoolId) return;
+      const response = await axiosPrivate.put("/admission",{schoolId});
       setApplicantData(response.data);
     } catch (error) {
       console.log(error);
@@ -39,6 +42,9 @@ const ApplicantTable = () => {
   useEffect(() => {
     getApplicant();
   }, []);
+  useEffect(() => {
+    getApplicant();
+  }, [schoolId]);
   return (
     <div className="m-10">
       <Card className="h-96">

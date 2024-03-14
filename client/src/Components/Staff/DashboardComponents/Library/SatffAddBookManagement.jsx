@@ -1,25 +1,26 @@
 import {Card, Typography, CardHeader, CardBody, Button, Dialog, Input, Select, Option, Tooltip, IconButton, CardFooter} from '@material-tailwind/react';
 import {useEffect, useState} from 'react';
-import axios from '../../../api/axios';
+import axios from '../../../../api/axios';
 import LibraryBooksAddModal from './LibraryBooksAddModal';
 import {useDispatch} from 'react-redux';
-import Banner from '../../Banner/Banner';
+import Banner from '../../../Banner/Banner';
 import LIbraryBookDetailsModal from './LIbraryBookDetailsModal';
 import LibraryEditBooksModal from './LibraryEditBooksModal';
-import Spinner from '../../spinner/SpinningLoader';
-import useAxiosPrivate from '../../../Hooks/useAxiosPrivate';
+import Spinner from '../../../spinner/SpinningLoader';
+import useAxiosPrivate from '../../../../Hooks/useAxiosPrivate';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTrash} from '@fortawesome/free-solid-svg-icons';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 import {useParams} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
-import {RouteObjects} from '../../../Routes/RoutObjects';
+import {RouteObjects} from '../../../../Routes/RoutObjects';
 import LibraryBulkUploadModal from './LibraryBulkUploadModal';
-import useAuth from '../../../Hooks/useAuth';
+import useAuth from '../../../../Hooks/useAuth';
 
 const SatffAddBookManagement = () => {
   const {auth} = useAuth();
+  const schoolId = auth?.userData?.schoolId;
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(cur => !cur);
@@ -30,9 +31,8 @@ const SatffAddBookManagement = () => {
   const [searchData, setsearchData] = useState();
   const [isLoading, setisLoading] = useState(false);
   const axiosPrivate = useAxiosPrivate();
-  const [GenreList, setGenreList] = useState();
+  const [GenreList, setGenreList] = useState([]);
 
-  const schoolId = auth?.userData?.schoolId;
 
   const {page} = useParams();
   const navigate = useNavigate();
@@ -68,10 +68,11 @@ const SatffAddBookManagement = () => {
   };
   const getBooks = async pageNo => {
     try {
+      if(!schoolId) return;
       setisLoading(true);
-      const response = await axiosPrivate.get(`/library/books/pagination?page=${pageNo}&limit=10`);
+      const response = await axiosPrivate.put(`/library/books/pagination/filter?page=${pageNo}&limit=10` ,{schoolId});
       // dispatch(hideloading());
-
+      console.log(response,"book res")
       setbookData(response.data.books);
       setpaginationData(response.data.pagination);
       setisLoading(false);
@@ -84,8 +85,9 @@ const SatffAddBookManagement = () => {
     e.preventDefault();
     try {
       setisLoading(true);
-      if (!searchQuery) return;
-      const response = await axios.get(`library/books/issuelist/search/${searchQuery}`);
+      
+      if (!searchQuery || schoolId) return;
+      const response = await axiosPrivate.put(`library/books/issuelist/search/${searchQuery}`,{schoolId});
       setsearchData(response.data);
       setisLoading(false);
     } catch (error) {
@@ -96,9 +98,10 @@ const SatffAddBookManagement = () => {
 
   const getBookByGenre = async value => {
     try {
+      if(!schoolId) return;
       setisLoading(true);
 
-      const response = await axios.get(`library/books/issuelist/searchGenre/${value}`);
+      const response = await axios.get(`library/books/issuelist/searchGenre/${value}`,{schoolId});
       setsearchData(response.data);
       setisLoading(false);
     } catch (error) {
@@ -121,8 +124,11 @@ const SatffAddBookManagement = () => {
     getBooks(page);
     getSettings();
   }, []);
+  
   useEffect(() => {
+    getBooks(page);
     getSettings();
+
   }, [schoolId]);
 
   useEffect(() => {
@@ -190,8 +196,8 @@ const SatffAddBookManagement = () => {
             </Button>
           </div>
           <div className='space-x-2'>
-            <LibraryBooksAddModal GenreList={GenreList} getBooks={getBooks} />
-            <LibraryBulkUploadModal getBooks={getBooks} />
+            <LibraryBooksAddModal GenreList={GenreList} getBooks={getBooks} schoolId={schoolId} />
+            <LibraryBulkUploadModal getBooks={getBooks} schoolId={schoolId}/>
           </div>
         </div>
 

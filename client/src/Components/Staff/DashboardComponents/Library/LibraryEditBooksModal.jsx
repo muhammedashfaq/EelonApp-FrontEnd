@@ -14,13 +14,14 @@ import {
   IconButton,
   Tooltip,
 } from "@material-tailwind/react";
-import axios from "../../../api/axios";
+import axios from "../../../../api/axios";
 import { useDispatch } from "react-redux";
-import { bookAddValidation } from "../../../Helper/Validations/validations";
+import { bookAddValidation } from "../../../../Helper/Validations/validations";
 import { useNavigate } from "react-router-dom";
-import { RouteObjects } from "../../../Routes/RoutObjects";
+import { RouteObjects } from "../../../../Routes/RoutObjects";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faPencil } from "@fortawesome/free-solid-svg-icons";
+import useAuth from "../../../../Hooks/useAuth";
 const useDropdownState = (initialValue, fetchedValue) => {
   const [value, setValue] = useState(initialValue);
 
@@ -35,7 +36,8 @@ const useDropdownState = (initialValue, fetchedValue) => {
 
 export default function LibraryEditBooksModal({ getBooks, data, GenreList }) {
   const [open, setOpen] = React.useState(false);
-
+  const {auth} = useAuth();
+  const schoolId = auth?.userData?.schoolId;
   const [formData, setFormData] = useState({
     bookName: "",
     author: "",

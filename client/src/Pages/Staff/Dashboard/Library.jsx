@@ -1,5 +1,5 @@
 import Banner from '../../../Components/Banner/Banner';
-import StaffLibraryManagemnt from '../../../Components/Staff/DashboardComponents/StaffLibraryManagement';
+import StaffLibraryManagemnt from '../../../Components/Staff/DashboardComponents/Library/StaffLibraryManagement';
 import AllColours from '../../Colours/AllColours';
 
 const Library = () => {

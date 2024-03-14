@@ -11,7 +11,7 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 import { useState } from "react";
-import axios from "../../../api/axios";
+import axios from "../../../../api/axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 

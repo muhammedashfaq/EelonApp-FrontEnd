@@ -2,8 +2,11 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 import { useState, useEffect } from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
+import useAuth from "../../../Hooks/useAuth";
 
 const LibraryPieReportChart = () => {
+  const {auth} = useAuth();
+  const schoolId = auth?.userData?.schoolId;
   const [genreCount, setgenreCount] = useState();
   const axiosPrivate = useAxiosPrivate();
   const [chartDataPie, setChartDataPie] = useState({
@@ -53,7 +56,9 @@ const LibraryPieReportChart = () => {
   }, [genreCount]);
   const getGenreCount = async () => {
     try {
-      const response = await axiosPrivate.get("library/reports/genrecount");
+      if(!schoolId) return;
+
+      const response = await axiosPrivate.put("library/reports/genrecount/filter",{schoolId});
       setgenreCount(response.data);
       console.log(response.data);
     } catch (error) {
@@ -64,6 +69,9 @@ const LibraryPieReportChart = () => {
   useEffect(() => {
     getGenreCount();
   }, []);
+  useEffect(() => {
+    getGenreCount();
+  }, [schoolId]);
   return (
     <div>
       <div id="chart">

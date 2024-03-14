@@ -13,22 +13,26 @@ import {
   CardFooter,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import axios from "../../../api/axios";
+import axios from "../../../../api/axios";
 import LibraryBooksAddModal from "./LibraryBooksAddModal";
 import LibraryIssueStudentModal from "./LibraryIssueStudentModal";
-import Banner from "../../Banner/Banner";
-import Spinner from "../../spinner/SpinningLoader";
-import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
+import Banner from "../../../Banner/Banner";
+import Spinner from "../../../spinner/SpinningLoader";
+import useAxiosPrivate from "../../../../Hooks/useAxiosPrivate";
 import LibraryUnIssueStudentModal from "./LibraryUnIssueStudentModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { RouteObjects } from "../../../Routes/RoutObjects";
+import { RouteObjects } from "../../../../Routes/RoutObjects";
+import useAuth from "../../../../Hooks/useAuth";
 
 const StaffIssueBookManagement = () => {
   const { page } = useParams();
   const navigate = useNavigate();
+  const {auth} = useAuth();
+  const schoolId = auth?.userData?.schoolId;
+
 
   const [alertunissue, setAlertunissue] = useState(false);
   const [alertissue, setAlertissue] = useState(false);
@@ -46,9 +50,10 @@ const StaffIssueBookManagement = () => {
 
   const getBooks = async (pageNo) => {
     try {
+      if(!schoolId) return
       setisLoading(true);
-      const response = await axiosPrivate.get(
-        `/library/books/pagination?page=${pageNo}&limit=10`
+      const response = await axiosPrivate.put(
+        `/library/books/pagination/filter?page=${pageNo}&limit=10` ,{schoolId}
       );
       setbookData(response.data.books);
       setpaginationData(response.data.pagination);
@@ -76,8 +81,9 @@ const StaffIssueBookManagement = () => {
   };
   const getSettings = async () => {
     try {
-      const response = await axiosPrivate.get(`librarysettings`);
-      setGenreList(response.data);
+      if (!schoolId) return;
+      const response = await axiosPrivate.put(`librarysettings`, {schoolId});
+      setGenreList(response.data?.libraryGenre);
     } catch (error) {
       console.log(error);
     }
@@ -106,6 +112,11 @@ const StaffIssueBookManagement = () => {
     getBooks(page);
     getSettings();
   }, []);
+  useEffect(() => {
+    getBooks(page);
+    getSettings();
+
+  }, [schoolId]);
 
   useEffect(() => {
     setpageInt(Number(page));

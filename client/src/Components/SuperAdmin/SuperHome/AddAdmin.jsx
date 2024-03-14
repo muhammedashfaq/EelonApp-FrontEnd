@@ -24,7 +24,7 @@ const  AddAdmin = ()=> {
   const handlesumbit = async()=>{
     try {
         const formData ={
-            schoolId:"65ec46a49dde104983cc0b17",
+            schoolId:"65f17d9efb3e2ebc0a113697",
             name:AdminName,
             email,
             password
